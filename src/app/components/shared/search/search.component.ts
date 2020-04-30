@@ -2,13 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FormControl } from '@angular/forms';
 
-
 @Component({
-  selector: "app-search",
+  selector: "app-form-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.scss"],
 })
-export class SearchComponent implements OnInit {
+export class SearchFormComponent implements OnInit {
   faSearch: IconDefinition;
   @Input() searchInput: string;
   formCtrl: FormControl;
@@ -61,7 +60,7 @@ export class SearchComponent implements OnInit {
   filterOptions() {
     this.searchOptions = this.options.filter(element => {
       return element.toLowerCase().includes(this.searchInput);
-    }).sort(function (a, b) {
+    }).sort((a, b) => {
       const newA = a.toLowerCase().replace(/^the/, '').trim();
       const newB = b.toLowerCase().replace(/^the/, '').trim();
       return (newA > newB) ? 1 : ((newA < newB) ? -1 : 0);

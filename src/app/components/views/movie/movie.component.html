@@ -1,1 +1,44 @@
-<p>movie works!</p>
+<div class="movie-container">
+  <div class="search-container">
+    <app-form-search>
+    </app-form-search>
+  </div>
+
+  <header>
+    <div class="title">
+       <h1>Title <small>(year)</small></h1>
+       <span><fa-icon [icon]="faClock" fixedWidth="true"></fa-icon> Duración</span>
+    </div>
+  </header>
+
+  <section class="links">
+    <a href="#">
+      <fa-icon [icon]="faImdb" fixedWidth="true" size="2x"></fa-icon>
+    </a>
+    <a href="#">
+      <fa-icon [icon]="faGlobe" fixedWidth="true" size="2x"></fa-icon>
+    </a>
+  </section>
+
+  <section class="description">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut odio nec nisi sagittis faucibus. Etiam risus
+      nisl, rhoncus vitae nulla non, auctor cursus lacus. In convallis, magna sed lobortis mattis, magna purus efficitur
+      nisi, in scelerisque urna massa non diam. Vestibulum dapibus porttitor enim. Vivamus tincidunt enim sed elementum
+      tempus. Nulla efficitur aliquet tellus, non dapibus nulla posuere porttitor. Phasellus ut vestibulum massa.
+      Suspendisse tristique lorem id purus congue ultricies. Ut placerat tortor est, et mollis arcu mattis nec. Donec
+      gravida ultricies dolor, nec dictum libero cursus nec. Nunc sed nunc vel diam interdum efficitur vitae eu enim.
+    </p>
+  </section>
+
+  <section class="controls">
+    <button mat-raised-button color="primary">
+      Volver al menú principal
+    </button>
+  </section>
+
+
+  <app-footer>
+  </app-footer>
+</div>
+
+
