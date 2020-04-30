@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: "https://api.themoviedb.org/3",
+  apiKey: "ebd8351b7505bd9785d1ea8ffee77e7d",
+  imageBaseUrl: "https://image.tmdb.org/t/p",
+  backdropSize: "/w780",
+  noBackdropUrl: 'https://via.placeholder.com/500?text=No+backdrop+available'
 };
 
 /*

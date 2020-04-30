@@ -11,6 +11,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchFormComponent } from './shared/search/search.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingComponent } from './shared/loading/loading.component';
+import { SearchResultComponent } from './shared/search-result/search-result.component';
+import { CdkModule } from '../modules/cdk/cdk.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SearchViewComponent,
     MovieComponent,
     SearchFormComponent,
-    FooterComponent
+    FooterComponent,
+    LoadingComponent,
+    SearchResultComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CdkModule
   ]
 })
 export class ComponentsModule { }

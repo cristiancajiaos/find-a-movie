@@ -1,6 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FormControl } from '@angular/forms';
+import { MovieService } from 'src/app/services/movie.service';
+import { MovieResult } from 'src/app/interfaces/movie-result';
+import { PageResult } from 'src/app/interfaces/page-result';
+import { LiveSearchResult } from 'src/app/interfaces/live-search-result';
+
 
 @Component({
   selector: "app-form-search",
@@ -9,43 +14,18 @@ import { FormControl } from '@angular/forms';
 })
 export class SearchFormComponent implements OnInit {
   faSearch: IconDefinition;
-  @Input() searchInput: string;
   formCtrl: FormControl;
+  @Input() searchInput: string;
   @Output() searchInputChange = new EventEmitter();
+  @Output() searchSubmit = new EventEmitter();
 
-  options: string[] = [
-    'The Matrix',
-    'Inception',
-    'The Dark Knight',
-    'The Untouchables',
-    'Braveheart',
-    'Spider-Man',
-    'Spider-Man 2',
-    'The Dark Knight Rises',
-    'Iron Man',
-    'Iron Man 2',
-    'The Shining',
-    'Ghostbusters',
-    'Ghostbusters 2',
-    'The Matrix Reloaded',
-    'The Matrix Revolutions',
-    'The Man from U.N.C.L.E',
-    'Suicide Squad',
-    'The Green Mile',
-    'The Prestige',
-    'Fargo',
-    'All The President\'s Men',
-    'Sector 9',
-    'Hoosiers',
-    'The Terminal',
-    'Bull Durham',
-    'Heat',
-    'The Heat'
-  ];
   searchOptions: string[] = [];
+  movieSearchResults: MovieResult[] = [];
+  liveSearchResults: LiveSearchResult[] = [];
 
-  constructor() {
+  constructor(private movieService: MovieService) {
     this.formCtrl = new FormControl();
+    this.movieService = movieService;
   }
 
   ngOnInit() {
@@ -53,21 +33,26 @@ export class SearchFormComponent implements OnInit {
   }
 
   changeInput() {
-    this.searchInputChange.emit(this.searchInput);
-    this.filterOptions();
+    this.liveSearchMovies();
   }
 
-  filterOptions() {
-    this.searchOptions = this.options.filter(element => {
-      return element.toLowerCase().includes(this.searchInput);
-    }).sort((a, b) => {
-      const newA = a.toLowerCase().replace(/^the/, '').trim();
-      const newB = b.toLowerCase().replace(/^the/, '').trim();
-      return (newA > newB) ? 1 : ((newA < newB) ? -1 : 0);
-    }).slice(0, 5);
+  liveSearchMovies() {
+    this.movieService.searchMovies(this.searchInput).subscribe((pageResult) => {
+      this.movieSearchResults = pageResult.results;
+      this.liveSearchResults = this.movieSearchResults
+        .map((element) => {
+          return {
+            title: element.title,
+            release_date: element.release_date,
+            id: element.id,
+          };
+        })
+        .slice(0, 5);
+    });
   }
 
-  fooSubmit() {
-    console.log(this.searchInput);
+  onSubmit() {
+    console.log('onSubmit');
+    this.searchSubmit.emit(this.searchInput);
   }
 }

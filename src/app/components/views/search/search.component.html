@@ -1,11 +1,43 @@
 <div class="search-view-container">
   <div class="search-container">
-    <app-form-search>
+    <app-form-search [searchInput]="searchInput" (searchSubmit)="submitQuery($event)">
     </app-form-search>
   </div>
+
+  <section class="search-results">
+    <div *ngIf="triggerSearch">
+      <div *ngIf="loadingSearch">
+        <app-loading whatToLoad="results">
+        </app-loading>
+      </div>
+      <div *ngIf="!loadingSearch">
+        <div *ngIf="searchResults.length == 0">
+          <p>There are no search results</p>
+        </div>
+        <div *ngIf="searchResults.length > 0">
+          <p>{{searchResults.length}} results were found.</p>
+
+          <mat-grid-list cols="3" rowHeight="300px" gutterSize="10px">
+            <mat-grid-tile *ngFor="let result of searchResults "colspan="1" rowspan="1"
+              [ngStyle]="{'background-image':getBackdropImage(result.backdrop_path)}">
+              <mat-grid-tile-header>
+                {{result.title}}
+                (
+                <span *ngIf="result.release_date">{{result.release_date | date:'yyyy'}}</span>
+                <span *ngIf="!result.release_date">TBA</span>
+                )
+              </mat-grid-tile-header>
+              <mat-grid-tile-footer>
+                {{result.vote_average | number:'1.1'}} / 10
+              </mat-grid-tile-footer>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-footer>
+  </app-footer>
 </div>
 
-<p>Search Component</p>
-
-<app-footer>
-</app-footer>

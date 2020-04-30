@@ -5,6 +5,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule, MatButton } from "@angular/material/button";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatGridListModule } from "@angular/material/grid-list";
+
 
 @NgModule({
   declarations: [],
@@ -15,7 +17,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
     MatToolbarModule,
     MatInputModule,
     MatButtonModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule { }

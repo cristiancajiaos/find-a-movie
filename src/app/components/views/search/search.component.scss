@@ -1,6 +1,28 @@
 .search-view-container {
   position: fixed;
   top: 64px;
+  width: 100%;
   height: calc(100vh - 64px);
+  padding-top: 1rem;
   overflow-y: scroll;
+
+  section.search-results {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+
+    mat-grid-tile {
+      border: 1px solid black;
+      background-position: center;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.5;
+      }
+
+      mat-grid-title-header {
+        font-weight: bold;
+      }
+    }
+  }
 }
