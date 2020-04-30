@@ -1,0 +1,17 @@
+mat-toolbar {
+  position: fixed;
+  z-index: 999;
+
+  a {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+.router-container {
+  position: fixed;
+}

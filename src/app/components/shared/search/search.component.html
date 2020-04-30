@@ -1,0 +1,20 @@
+<form class="search-form" (submit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Type a movie</mat-label>
+    <div class="dflex">
+      <input type="search" matInput placeholder="The Matrix, Inception, The Dark Knight..." name="searchInput"
+        id="searchInput" [(ngModel)]="searchInput" (input)="changeInput()"
+        [matAutocomplete]="auto"/>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let result of liveSearchResults" [value]="result.title">
+          {{result.title}}
+          <span *ngIf="result.release_date">({{result.release_date | date:'yyyy'}})</span>
+          <span *ngIf="!result.release_date">(TBA)</span>
+        </mat-option>
+      </mat-autocomplete>
+      <button mat-raised-button type="submit" color="primary">
+        <fa-icon [icon]="faSearch" fixedWidth="true"></fa-icon>
+      </button>
+    </div>
+  </mat-form-field>
+</form>

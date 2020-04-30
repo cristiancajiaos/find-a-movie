@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <a href="#" [routerLink]="['/home']">
+    <fa-icon [icon]="faSearch" fixedWidth="true"></fa-icon>
+    {{title}}
+  </a>
+</mat-toolbar>
+
+<div class="router-container">
+  <router-outlet></router-outlet>
+</div>

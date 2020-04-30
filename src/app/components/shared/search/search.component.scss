@@ -1,0 +1,13 @@
+form.search-form {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 2rem;
+
+    mat-form-field {
+      width: 100%;
+
+      .dflex {
+        display: flex;
+      }
+    }
+  }
