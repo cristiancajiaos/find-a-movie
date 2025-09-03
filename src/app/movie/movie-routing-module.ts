@@ -10,10 +10,11 @@ const routes: Routes = [
   {
     path: ':id', component: Movie,
     children: [
-      {path: '', component: Overview},
-      {path: 'cast', component: Cast},
-      {path: 'crew', component: Crew},
-      {path: 'full-crew', component: FullCrew }
+      {path: 'overview', component: Overview, pathMatch: 'full'},
+      {path: 'cast', component: Cast, pathMatch: 'full'},
+      {path: 'crew', component: Crew, pathMatch: 'full'},
+      {path: 'full-crew', component: FullCrew, pathMatch: 'full'},
+      {path: '', redirectTo: 'overview', pathMatch: 'full'}
     ]
   }
 ];
