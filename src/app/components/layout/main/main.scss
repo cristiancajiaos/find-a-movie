@@ -1,0 +1,17 @@
+main {
+  margin-top: 4rem;
+
+  .find-movie, .find-people {
+    height: 100vh;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .find-movie-description, .find-people-description {
+    text-align: center;
+    border: 1px solid black;
+    padding: 1rem 2rem;
+  }
+}

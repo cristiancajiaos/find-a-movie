@@ -5,16 +5,16 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LayoutModule } from './components/layout/layout-module';
 
 @NgModule({
   declarations: [
-    App
+    App,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
-    FontAwesomeModule
+    LayoutModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
