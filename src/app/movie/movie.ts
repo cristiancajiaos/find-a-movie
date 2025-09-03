@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MovieService } from '../services/movie-service';
+import { Movie } from '../classes/movie';
 
 @Component({
   selector: 'app-movie',
@@ -7,18 +9,31 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './movie.html',
   styleUrl: './movie.scss'
 })
-export class Movie implements OnInit {
+export class MovieComponent implements OnInit {
 
-  public id: string = '';
+  public id: number = 0;
+  public movie: Movie = new Movie();
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private movieService: MovieService
   ) {
 
   }
 
   ngOnInit(): void {
-    this.id = this.activatedRoute.snapshot.params['id'];
+    this.id = parseInt(this.activatedRoute.snapshot.params['id']);
+    this.getMovie();
+  }
+
+  private getMovie(): void {
+    this.movieService.getMovie(this.id)
+    .then(movie => {
+      this.movie = movie;
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
 }

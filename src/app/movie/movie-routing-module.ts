@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Movie } from './movie';
+import { MovieComponent } from './movie';
 import { Overview } from './overview/overview';
 import { Cast } from './cast/cast';
 import { Crew } from './crew/crew';
@@ -8,7 +8,7 @@ import { FullCrew } from './full-crew/full-crew';
 
 const routes: Routes = [
   {
-    path: ':id', component: Movie,
+    path: ':id', component: MovieComponent,
     children: [
       {path: 'overview', component: Overview, pathMatch: 'full'},
       {path: 'cast', component: Cast, pathMatch: 'full'},
