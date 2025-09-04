@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Movie } from '../classes/movie';
+import { MovieHeader } from './movie-header/movie-header';
 
 @Component({
   selector: 'app-movie',
@@ -9,7 +10,7 @@ import { Movie } from '../classes/movie';
   templateUrl: './movie.html',
   styleUrl: './movie.scss'
 })
-export class MovieComponent implements OnInit, AfterViewInit {
+export class MovieComponent implements OnInit, AfterContentInit {
 
   public id: number = 0;
   public movie: Movie = new Movie();
@@ -17,28 +18,33 @@ export class MovieComponent implements OnInit, AfterViewInit {
   public loadingView: boolean = true;
   public loadingMovie: boolean = false;
 
+  @ViewChild('movieHeader') movieHeader!: MovieHeader;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private movieService: MovieService
+    private movieService: MovieService,
+    private cd: ChangeDetectorRef
   ) {
 
   }
 
   ngOnInit(): void {
+    this.cd.detectChanges();
     this.id = parseInt(this.activatedRoute.snapshot.params['id']);
     this.getMovie();
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentInit(): void {
     this.loadingView = false;
+    this.cd.detectChanges();
   }
 
   private getMovie(): void {
     this.loadingMovie = true;
     this.movieService.getMovie(this.id)
     .then(movie => {
-      console.log(movie);
       this.movie = movie;
+      // this.movieHeader.setYear();
     })
     .catch(error => {
       console.log(error);
