@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Movie } from '../classes/movie';
@@ -9,11 +9,12 @@ import { Movie } from '../classes/movie';
   templateUrl: './movie.html',
   styleUrl: './movie.scss'
 })
-export class MovieComponent implements OnInit {
+export class MovieComponent implements OnInit, AfterViewInit {
 
   public id: number = 0;
   public movie: Movie = new Movie();
 
+  public loadingView: boolean = true;
   public loadingMovie: boolean = false;
 
   constructor(
@@ -28,10 +29,15 @@ export class MovieComponent implements OnInit {
     this.getMovie();
   }
 
+  ngAfterViewInit(): void {
+    this.loadingView = false;
+  }
+
   private getMovie(): void {
     this.loadingMovie = true;
     this.movieService.getMovie(this.id)
     .then(movie => {
+      console.log(movie);
       this.movie = movie;
     })
     .catch(error => {
