@@ -14,6 +14,8 @@ export class MovieComponent implements OnInit {
   public id: number = 0;
   public movie: Movie = new Movie();
 
+  public loadingMovie: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService
@@ -27,13 +29,16 @@ export class MovieComponent implements OnInit {
   }
 
   private getMovie(): void {
+    this.loadingMovie = true;
     this.movieService.getMovie(this.id)
     .then(movie => {
       this.movie = movie;
     })
     .catch(error => {
       console.log(error);
-    })
+    }).finally(() => {
+      this.loadingMovie = false;
+    });
   }
 
 }

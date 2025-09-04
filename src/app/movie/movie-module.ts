@@ -8,6 +8,7 @@ import { Cast } from './cast/cast';
 import { Crew } from './crew/crew';
 import { RouterOutlet } from '@angular/router';
 import { FullCrew } from './full-crew/full-crew';
+import { SharedModule } from '../components/shared/shared-module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FullCrew } from './full-crew/full-crew';
   imports: [
     CommonModule,
     MovieRoutingModule,
-    RouterOutlet
+    SharedModule,
+    RouterOutlet,
   ]
 })
 export class MovieModule { }
