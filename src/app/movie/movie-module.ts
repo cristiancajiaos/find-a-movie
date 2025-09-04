@@ -9,6 +9,7 @@ import { MovieCrew } from './movie-crew/movie-crew';
 import { MovieFullCrew } from './movie-full-crew/movie-full-crew';
 import { MovieOverview } from './movie-overview/movie-overview';
 import { MovieHeader } from './movie-header/movie-header';
+import { MovieSharedModule } from '../components/movie-shared/movie-shared-module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { MovieHeader } from './movie-header/movie-header';
     MovieRoutingModule,
     SharedModule,
     RouterOutlet,
+    MovieSharedModule
   ]
 })
 export class MovieModule { }
