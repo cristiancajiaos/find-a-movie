@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FullCrew } from './full-crew';
+import { MovieFullCrew } from './movie-full-crew';
 
-describe('FullCrew', () => {
-  let component: FullCrew;
-  let fixture: ComponentFixture<FullCrew>;
+describe('MovieFullCrew', () => {
+  let component: MovieFullCrew;
+  let fixture: ComponentFixture<MovieFullCrew>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FullCrew]
+      declarations: [MovieFullCrew]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FullCrew);
+    fixture = TestBed.createComponent(MovieFullCrew);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
