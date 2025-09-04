@@ -4,20 +4,20 @@ import { CommonModule } from '@angular/common';
 import { MovieRoutingModule } from './movie-routing-module';
 import { MovieComponent } from './movie';
 import { Overview } from './overview/overview';
-import { Cast } from './cast/cast';
 import { Crew } from './crew/crew';
 import { RouterOutlet } from '@angular/router';
 import { FullCrew } from './full-crew/full-crew';
 import { SharedModule } from '../components/shared/shared-module';
+import { MovieCast } from './movie-cast/movie-cast';
 
 
 @NgModule({
   declarations: [
     MovieComponent,
     Overview,
-    Cast,
+    MovieCast,
     Crew,
-    FullCrew
+    FullCrew,
   ],
   imports: [
     CommonModule,
