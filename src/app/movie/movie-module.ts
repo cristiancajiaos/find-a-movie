@@ -8,6 +8,7 @@ import { MovieCast } from './movie-cast/movie-cast';
 import { MovieCrew } from './movie-crew/movie-crew';
 import { MovieFullCrew } from './movie-full-crew/movie-full-crew';
 import { MovieOverview } from './movie-overview/movie-overview';
+import { MovieHeader } from './movie-header/movie-header';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { MovieOverview } from './movie-overview/movie-overview';
     MovieCrew,
     MovieFullCrew,
     MovieOverview,
+    MovieHeader,
   ],
   imports: [
     CommonModule,

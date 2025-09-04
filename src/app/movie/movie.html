@@ -7,9 +7,9 @@
       <app-loading message="Loading movie..."></app-loading>
     </ng-container>
     <ng-container *ngIf="!loadingMovie">
-      <header>
-        <h1>{{movie.title}}</h1>
-      </header>
+      <app-movie-header [id]="id">
+
+      </app-movie-header>
       <main>
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
           <div class="container-fluid">
