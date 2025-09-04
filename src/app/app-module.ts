@@ -7,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutModule } from './components/layout/layout-module';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
-import { authInterceptor } from './interceptors/auth-interceptor';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
