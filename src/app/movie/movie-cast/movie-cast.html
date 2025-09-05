@@ -3,7 +3,24 @@
     <app-loading-inline message="Loading cast..."></app-loading-inline>
   </ng-container>
   <ng-container *ngIf="!loadingCast">
-    <p>{{movieCast | json}}</p>
+    <h2>Cast</h2>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th colspan="2">Actor</th>
+            <th>Character</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let castMember of movieCast">
+            <td>{{castMember.name}}</td>
+            <td>as</td>
+            <td>{{castMember.character}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </ng-container>
 </section>
 
