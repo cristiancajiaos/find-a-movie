@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscribable, Subscription } from 'rxjs';
+import { ActivatedRoute} from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CrewMember } from '../../classes/crew-member';
 import { MovieService } from '../../services/movie-service';
 
