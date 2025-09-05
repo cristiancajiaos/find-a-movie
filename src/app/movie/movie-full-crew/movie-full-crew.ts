@@ -33,7 +33,6 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.id = parseInt(this.activatedRoute.snapshot.params['id']);
     this.setId();
 
     this.orderForm = this.fb.group({
