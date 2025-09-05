@@ -11,6 +11,7 @@ import { MovieOverview } from './movie-overview/movie-overview';
 import { MovieHeader } from './movie-header/movie-header';
 import { MovieSharedModule } from '../components/movie-shared/movie-shared-module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     RouterOutlet,
     MovieSharedModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class MovieModule { }
