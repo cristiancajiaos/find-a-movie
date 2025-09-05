@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 import { environment } from '../../environments/environment.development';
+import { CastMember } from '../classes/cast-member';
+import { Credits } from '../classes/credits';
+import { CrewMember } from '../classes/crew-member';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +19,24 @@ export class MovieService {
   public async getMovie(id: number): Promise<Movie> {
     return await lastValueFrom(this.http.get<Movie>(`/movie/${id}`));
   }
+
+  public async getMovieCast(id: number): Promise<CastMember[]> {
+    return await lastValueFrom(
+      this.http.get<Credits>(`/movie/${id}/credits`)
+      .pipe(
+        map(credits => credits.cast)
+      )
+    )
+  }
+
+  public async getMovieCrew(id: number): Promise<CrewMember[]> {
+    return await lastValueFrom(
+      this.http.get<Credits>(`/movie/${id}/credits`)
+      .pipe(
+        map(credits => credits.crew)
+      )
+    )
+  }
+
+
 }

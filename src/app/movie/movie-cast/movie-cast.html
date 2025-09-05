@@ -1,6 +1,9 @@
 <section class="movie-cast">
-  <p>movie-cast works!</p>
-
-  <p>ID: {{id}}</p>
+  <ng-container *ngIf="loadingCast">
+    <app-loading-inline message="Loading cast..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingCast">
+    <p>{{movieCast | json}}</p>
+  </ng-container>
 </section>
 
