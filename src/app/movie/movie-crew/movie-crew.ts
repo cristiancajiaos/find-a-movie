@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscribable, Subscription } from 'rxjs';
+import { CrewMember } from '../../classes/crew-member';
+import { MovieService } from '../../services/movie-service';
 
 @Component({
   selector: 'app-movie-crew',
@@ -12,11 +14,15 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public id: number = 0;
 
+  public movieCrew: CrewMember[] = [];
+
+  public loadingCrew: boolean = false;
+
   public activatedRouteParentSubscription: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private movieService: MovieService
   ) {}
 
 
@@ -27,6 +33,20 @@ export class MovieCrew implements OnInit, OnDestroy {
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(params => {
       this.id = parseInt(params['id']);
+      this.getCrew();
+    });
+  }
+
+  private getCrew(): void {
+    this.loadingCrew = true;
+    this.movieService.getMovieCrew(this.id).then(crew => {
+      this.movieCrew = crew;
+    })
+    .catch(error => {
+
+    })
+    .finally(() => {
+      this.loadingCrew = false;
     });
   }
 

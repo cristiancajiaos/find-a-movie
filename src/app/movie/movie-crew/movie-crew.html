@@ -1,13 +1,14 @@
 <section class="movie-crew">
-  <p>movie-crew works!</p>
+  <ng-container *ngIf="loadingCrew">
+    <app-loading-inline message="Loading crew..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingCrew">
+    <p>{{ movieCrew | json }}</p>
 
-  <p>ID: {{id}}</p>
+    <hr />
 
-  <hr/>
-
-  <div class="d-grid">
-    <a routerLink="../full-crew" class="btn btn-primary mb-2">
-      See Full Crew
-    </a>
-  </div>
+    <div class="d-grid">
+      <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
+    </div>
+  </ng-container>
 </section>
