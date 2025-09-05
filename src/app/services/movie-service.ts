@@ -14,11 +14,6 @@ export class MovieService {
   ) {}
 
   public async getMovie(id: number): Promise<Movie> {
-    return await lastValueFrom(this.http.get<Movie>(`${environment.apiUrl}/movie/${id}`, {
-      headers: {
-        'accept': 'application/json',
-        'Authorization': `Bearer ${environment.authToken}`
-      }
-    }));
+    return await lastValueFrom(this.http.get<Movie>(`/movie/${id}`));
   }
 }
