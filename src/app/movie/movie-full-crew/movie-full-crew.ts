@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie-service';
 import { CrewMember } from '../../classes/crew-member';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { CastMember } from '../../classes/cast-member';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -36,7 +35,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     this.setId();
 
     this.orderForm = this.fb.group({
-      order: new FormControl("1")
+      orderCrew: new FormControl("0")
     });
   }
 
@@ -62,39 +61,31 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   }
 
   public changeCrewOrder(): void {
-    switch (this.orderForm.value['order']) {
+    switch (this.orderForm.value['orderCrew']) {
       case '1': {
         this.movieFullCrew.sort((a, b) => {
-          const crewMemberA: CrewMember = a;
-          const crewMemberB: CrewMember = b;
-          return crewMemberA.name.localeCompare(crewMemberB.name);
+          return a.name.localeCompare(b.name);
         });
         break;
       }
 
       case '2': {
         this.movieFullCrew.sort((a, b) => {
-          const crewMemberA: CrewMember = a;
-          const crewMemberB: CrewMember = b;
-          return crewMemberB.name.localeCompare(crewMemberA.name);
+          return b.name.localeCompare(a.name);
         });
         break;
       }
 
       case '3': {
         this.movieFullCrew.sort((a, b) => {
-          const crewMemberA: CrewMember = a;
-          const crewMemberB: CrewMember = b;
-          return crewMemberA.job.localeCompare(crewMemberB.job);
+          return a.job.localeCompare(b.job);
         });
         break;
       }
 
       case '4': {
         this.movieFullCrew.sort((a, b) => {
-          const crewMemberA: CrewMember = a;
-          const crewMemberB: CrewMember = b;
-          return crewMemberB.job.localeCompare(crewMemberA.job);
+          return b.job.localeCompare(a.job);
         });
         break;
       }
