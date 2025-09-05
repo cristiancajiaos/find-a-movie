@@ -3,9 +3,28 @@
     <app-loading-inline message="Loading crew..."></app-loading-inline>
   </ng-container>
   <ng-container *ngIf="!loadingCrew">
-    <p>{{ movieCrew | json }}</p>
+    <h2>Crew</h2>
 
-    <hr />
+    <ngb-alert type="info" [dismissible]="false">
+      <strong>TODO</strong>: Filter the crew
+    </ngb-alert>
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let crewMember of movieCrew">
+            <td>{{crewMember.name}}</td>
+            <td>{{crewMember.department}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="d-grid">
       <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>

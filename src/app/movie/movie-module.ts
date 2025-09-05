@@ -10,6 +10,7 @@ import { MovieFullCrew } from './movie-full-crew/movie-full-crew';
 import { MovieOverview } from './movie-overview/movie-overview';
 import { MovieHeader } from './movie-header/movie-header';
 import { MovieSharedModule } from '../components/movie-shared/movie-shared-module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MovieSharedModule } from '../components/movie-shared/movie-shared-modul
     MovieRoutingModule,
     SharedModule,
     RouterOutlet,
-    MovieSharedModule
+    MovieSharedModule,
+    NgbModule
   ]
 })
 export class MovieModule { }

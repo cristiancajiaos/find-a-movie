@@ -1,5 +1,24 @@
 <section class="movie-full-crew">
-  <p>movie-full-crew works!</p>
-
-  <p>ID: {{id}}</p>
+  <ng-container *ngIf="loadingFullCrew">
+    <app-loading-inline message="Loading full crew..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingFullCrew">
+    <h2>Crew</h2>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let crewMember of movieFullCrew">
+            <td>{{crewMember.name}}</td>
+            <td>{{crewMember.department}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
 </section>
