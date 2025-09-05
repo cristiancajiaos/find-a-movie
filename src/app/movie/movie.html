@@ -1,10 +1,10 @@
 <section class="movie">
   <ng-container *ngIf="loadingView">
-    <app-loading message="Loading view..."></app-loading>
+    <app-loading-fullscreen message="Loading view..."></app-loading-fullscreen>
   </ng-container>
   <ng-container *ngIf="!loadingView">
     <ng-container *ngIf="loadingMovie">
-      <app-loading message="Loading movie..."></app-loading>
+      <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
     </ng-container>
     <ng-container *ngIf="!loadingMovie">
       <ng-container *ngIf="movie.id == 0">
