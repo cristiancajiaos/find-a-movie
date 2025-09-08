@@ -1,0 +1,13 @@
+<footer class="bg-dark text-white">
+  &#169; Cristian Cajiao Skarnic,
+  <ng-container *ngTemplateOutlet="(creationYear == currentYear) ? year : rangeYears">
+  </ng-container>
+  | Uses the <a href="https://www.themoviedb.org/" target="_blank">TMDB</a> API
+</footer>
+
+<ng-template #year>
+  {{currentYear}}
+</ng-template>
+<ng-template #rangeYears>
+  {{creationYear}} - {{currentYear}}
+</ng-template>

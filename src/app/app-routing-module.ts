@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Main } from './components/layout/main/main';
+import { NotFound } from './components/not-found/not-found';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', component: Main, pathMatch: 'full'},
+  { path: 'movie', loadChildren: () => import('./movie/movie-module').then(m => m.MovieModule) },
+  { path: 'not-found', component: NotFound, pathMatch: 'full'},
+  { path: '**', component: NotFound, pathMatch: 'full'}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

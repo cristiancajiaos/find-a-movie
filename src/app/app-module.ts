@@ -5,19 +5,26 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { LayoutModule } from './components/layout/layout-module';
+import { authInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
     App
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LayoutModule
   ],
   providers: [
-    provideBrowserGlobalErrorListeners()
+    provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
   ],
   bootstrap: [App]
 })

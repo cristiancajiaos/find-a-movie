@@ -1,0 +1,192 @@
+<section class="movie-crew">
+  <ng-container *ngIf="loadingCrew">
+    <app-loading-inline message="Loading crew..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingCrew">
+    <h2>Crew</h2>
+
+    <div class="table-responsive">
+      <table class="table">
+        <tbody>
+          <ng-container *ngIf="direction.length > 0">
+            <tr>
+              <td>Directed By:</td>
+              <td>
+                <ng-container *ngFor="let director of direction">
+                  {{ director }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="writing.length > 0">
+            <tr>
+              <td>Screenplay By:</td>
+              <td>
+                <ng-container *ngFor="let writer of writing">
+                  {{ writer }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="basedOnWorkBy.length > 0">
+            <tr>
+              <td>Based on Work By:</td>
+              <td>
+                <ng-container *ngFor="let author of basedOnWorkBy">
+                  {{ author }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="producing.length > 0">
+            <tr>
+              <td>Produced By:</td>
+              <td>
+                <ng-container *ngFor="let producer of producing">
+                  {{ producer }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="executiveProducing.length > 0">
+            <tr>
+              <td>
+                Executive Producer<ng-container *ngIf="executiveProducing.length > 1"
+                  >s</ng-container
+                >:
+              </td>
+              <td>
+                <ng-container *ngFor="let executiveProducer of executiveProducing">
+                  {{ executiveProducer }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="coProducing.length > 0">
+            <tr>
+              <td>Co-Producer<ng-container *ngIf="coProducing.length > 1">s</ng-container></td>
+              <td>
+                <ng-container *ngFor="let coProducer of coProducing">
+                  {{ coProducer }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="directorsOfPhotography.length > 0">
+            <tr>
+              <td>
+                Director<ng-container *ngIf="directorsOfPhotography.length > 1">s</ng-container> of
+                Photography:
+              </td>
+              <td>
+                <ng-container *ngFor="let directorOfPhotography of directorsOfPhotography">
+                  {{ directorOfPhotography }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="productionDesigners.length > 0">
+            <tr>
+              <td>
+                Production Designer<ng-container *ngIf="productionDesigners.length > 1"
+                  >s</ng-container
+                >:
+              </td>
+              <td>
+                <ng-container *ngFor="let productionDesigner of productionDesigners">
+                  {{ productionDesigner }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="editors.length > 0">
+            <tr>
+              <td>Editor<ng-container *ngIf="editors.length > 1">s</ng-container>:</td>
+              <td>
+                <ng-container *ngFor="let editor of editors">
+                  {{ editor }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="musicComposers.length > 0">
+            <tr>
+              <td>Music By:</td>
+              <td>
+                <ng-container *ngFor="let musicComposer of musicComposers">
+                  {{ musicComposer }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="additionalMusicComposers.length > 0">
+            <tr>
+              <td>Additional Music By:</td>
+              <td>
+                <ng-container *ngFor="let additionalMusicComposer of additionalMusicComposers">
+                  {{ additionalMusicComposer }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="visualEffectsSupervisors.length > 0">
+            <tr>
+              <td>
+                Visual Effects Supervisor<ng-container *ngIf="visualEffectsSupervisors.length > 1"
+                  >s</ng-container
+                >:
+              </td>
+              <td>
+                <ng-container *ngFor="let visualEffectsSupervisor of visualEffectsSupervisors">
+                  {{ visualEffectsSupervisor }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="costumeDesigners.length > 0">
+            <tr>
+              <td>
+                Costume Designer<ng-container *ngIf="costumeDesigners.length > 1">s</ng-container>:
+              </td>
+              <td>
+                <ng-container *ngFor="let costumeDesigner of costumeDesigners">
+                  {{ costumeDesigner }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="castingCrew.length > 0">
+            <tr>
+              <td>
+                Casting By:
+              </td>
+              <td>
+                <ng-container *ngFor="let casting of castingCrew">
+                  {{ casting }}
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-grid">
+      <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
+    </div>
+  </ng-container>
+</section>

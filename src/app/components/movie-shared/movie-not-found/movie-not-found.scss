@@ -1,0 +1,12 @@
+.movie-not-found {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .movie-not-found-description {
+    text-align: center;
+    border: 1px solid black;
+    padding: 1rem 2rem;
+  }
+}
