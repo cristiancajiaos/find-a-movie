@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faF, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +10,7 @@ import { faF, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export class Navbar implements OnInit {
 
   public filmIcon: IconDefinition = faFilm;
-  
+
   ngOnInit(): void {
 
   }
