@@ -18,8 +18,6 @@ import { authInterceptor } from './interceptors/auth-interceptor';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
-    FontAwesomeModule,
     LayoutModule
   ],
   providers: [

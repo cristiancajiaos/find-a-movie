@@ -1,12 +1,73 @@
-<nav class="navbar navbar-dark fixed-top">
+<nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">
-      <fa-icon [icon]="filmIcon"></fa-icon>
+      <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
       Find a Movie
     </a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
+    <div class="ml-auto">
+      <div ngbDropdown class="search-dropdown d-flex">
+        <button
+          type="button"
+          class="btn border text-light me-2"
+          id="selectSearchType"
+          ngbDropdownToggle
+        >
+          <ng-container *ngIf="searchType == 'movie'">
+            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Movie
+          </ng-container>
+          <ng-container *ngIf="searchType == 'people'">
+            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> People
+          </ng-container>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="selectSearchType">
+          <button ngbDropdownItem (click)="selectSearchType('movie')">
+            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
+            Movie
+          </button>
+          <button ngbDropdownItem (click)="selectSearchType('people')">
+            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
+            People
+          </button>
+        </div>
+        <form class="d-flex" role="search">
+          <ng-container *ngIf="searchType == 'movie'">
+            <input class="form-control me-2"
+               type="search"
+               placeholder="Search Movie"
+               aria-label="Search Movie" />
+          </ng-container>
+          <ng-container *ngIf="searchType == 'people'">
+            <input class="form-control me-2"
+               type="search"
+               placeholder="Search People"
+               aria-label="Search People" />
+          </ng-container>
+        <button class="btn border text-light btn-search" type="submit">
+          <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon> Search
+        </button>
+      </form>
+      </div>
+    </div>
+
+    <!--
+    <button class="navbar-toggler" type="button" (click)="toggleCollapse()">
+      <fa-icon [icon]="barsIcon"></fa-icon>
+    </button>
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li class="navbar-item">
+          <a class="navbar-link"> Uno </a>
+        </li>
+        <li class="navbar-item">
+          <a class="navbar-link"> Dos </a>
+        </li>
+        <li class="navbar-item">
+          <a class="navbar-link"> Tres </a>
+        </li>
+      </ul>
+
+
+    </div>
+    -->
   </div>
 </nav>
