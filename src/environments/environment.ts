@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   apiUrl: 'https://api.themoviedb.org/3',
-  authToken: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YTM1MjhmNDU1ZWU0ODQyYWE1YjE5MTNhMzc4ZGU0MyIsIm5iZiI6MTY1MDI5NTA4Mi41MTYsInN1YiI6IjYyNWQ4MTJhZDM4YjU4MTdhZjk3OWExYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.n5hC63m2_Km9T4DmsHuz3tz5A_2a9TOCjd5fYr0oriA',
+  authToken: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYmQ4MzUxYjc1MDViZDk3ODVkMWVhOGZmZWU3N2U3ZCIsIm5iZiI6MTQ2NjAxNTg0Ny4zMDksInN1YiI6IjU3NjFhMDY2OTI1MTQxMDY3ZjAwMDA2OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P5-ylXwQaIEG3wESl5KcKv9LI8nTLTgLsXUA6wyBquk',
   langParameter: '?language=en-US'
 };
