@@ -11,8 +11,7 @@
         <app-movie-not-found></app-movie-not-found>
       </ng-container>
       <ng-container *ngIf="movie.id != 0">
-        <app-movie-header [id]="id" [movie]="movie" #movieHeader>
-        </app-movie-header>
+        <app-movie-header [id]="id" [movie]="movie" #movieHeader> </app-movie-header>
         <main>
           <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
             <div class="container-fluid">
@@ -38,16 +37,21 @@
           </nav>
           <div class="container-fluid">
             <div class="row">
-              <div class="col-12 col-lg-3">
-                <aside>Aside 1</aside>
+              <div class="col-12 col-lg-2">
+                <aside class="aside-1">
+                  <img [src]="posterSizeSmall" [alt]="altPosterText" class="w-100" />
+
+                  <div class="d-grid">
+                    <a [href]="posterSizeOriginal" target="_blank" class="btn btn-outline-primary mb-2">
+                      Open Poster in New Tab
+                    </a>
+                  </div>
+                </aside>
               </div>
-              <div class="col-12 col-lg-6">
+              <div class="col-12 col-lg-8">
                 <router-outlet></router-outlet>
-                <!--
-                <p>{{ movie | json }}</p>
-                -->
               </div>
-              <div class="col-12 col-lg-3">
+              <div class="col-12 col-lg-2">
                 <aside>Aside 2</aside>
               </div>
             </div>

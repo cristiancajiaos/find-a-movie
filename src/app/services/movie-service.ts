@@ -44,5 +44,13 @@ export class MovieService {
     )
   }
 
+  public getFormattedMovieTitle(title: string, releaseDate: string): string {
+    const movieTitle: string = title;
+    const movieYearDate: Date = new Date(releaseDate);
+    const movieYear: number = movieYearDate.getFullYear();
+    const titleStr: string = `${movieTitle}` + (movieYear ? ` (${movieYear})` : '');
+    return titleStr;
+  }
+
 
 }

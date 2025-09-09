@@ -4,6 +4,7 @@ import { MovieService } from '../services/movie-service';
 import { Movie } from '../classes/movie';
 import { MovieHeader } from './movie-header/movie-header';
 import { TitleService } from '../services/title-service';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-movie',
@@ -15,6 +16,12 @@ export class MovieComponent implements OnInit, AfterContentInit {
 
   public id: number = 0;
   public movie: Movie = new Movie();
+
+  public formattedTitle: string = '';
+
+  public altPosterText: string = '';
+  public posterSizeSmall: string = '';
+  public posterSizeOriginal: string = '';
 
   public loadingView: boolean = true;
   public loadingMovie: boolean = false;
@@ -47,6 +54,7 @@ export class MovieComponent implements OnInit, AfterContentInit {
     .then(movie => {
       this.movie = movie;
       this.setTitle();
+      this.setMoviePoster();
     })
     .catch(error => {
       console.log(error);
@@ -57,11 +65,14 @@ export class MovieComponent implements OnInit, AfterContentInit {
   }
 
   private setTitle(): void {
-    const movieTitle: string = this.movie.title;
-    const movieYearDate: Date = new Date(this.movie.release_date);
-    const movieYear: number = movieYearDate.getFullYear();
-    const titleStr: string = `${movieTitle}` + (movieYear ? ` (${movieYear})` : '');
-    this.titleService.setTitle(titleStr);
+    this.formattedTitle = this.movieService.getFormattedMovieTitle(this.movie.title, this.movie.release_date)
+    this.titleService.setTitle(this.formattedTitle);
+  }
+
+  private setMoviePoster(): void {
+    this.posterSizeSmall = `${environment.imgUrl}${environment.posterSizeSmall}${this.movie.poster_path}`;
+    this.posterSizeOriginal = `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie.poster_path}`;
+    this.altPosterText = `Poster from the movie ${this.formattedTitle}`;
   }
 
 }
