@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Movie } from '../../classes/movie';
+import { faFilm, faCircle, faCalendar, faClock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-movie-header',
@@ -8,6 +9,11 @@ import { Movie } from '../../classes/movie';
   styleUrl: './movie-header.scss'
 })
 export class MovieHeader implements OnInit {
+
+  public film: IconDefinition = faFilm
+  public circleSeparator: IconDefinition = faCircle;
+  public calendar: IconDefinition = faCalendar;
+  public clock: IconDefinition = faClock;
 
   @Input() id: number = 0;
   @Input() movie: Movie = new Movie();

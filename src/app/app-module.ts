@@ -9,6 +9,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from './components/layout/layout-module';
 import { authInterceptor } from './interceptors/auth-interceptor';
+import { RuntimePipe } from './pipes/runtime-pipe';
 
 @NgModule({
   declarations: [

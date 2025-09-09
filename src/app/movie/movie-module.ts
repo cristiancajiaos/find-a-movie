@@ -12,6 +12,9 @@ import { MovieHeader } from './movie-header/movie-header';
 import { MovieSharedModule } from '../components/movie-shared/movie-shared-module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppModule } from '../app-module';
+import { PipesModule } from '../pipes/pipes-module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MovieSharedModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule,
+    FontAwesomeModule
   ]
 })
 export class MovieModule { }
