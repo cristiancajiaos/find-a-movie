@@ -1,3 +1,18 @@
-<p>movie-overview works!</p>
+<section class="movie-overview">
+  <ng-container *ngIf="loadingMovie">
+    <ng-container *ngIf="movie.tagline">
+      <section class="movie-tagline">
+        <p>{{movie.tagline}}</p>
+      </section>
+    </ng-container>
 
-<p>ID: {{id}}</p>
+    <ng-container *ngIf="movie.overview">
+      <section class="movie-overview">
+        <p>{{movie.overview}}</p>
+      </section>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!loadingMovie">
+    <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
+  </ng-container>
+</section>

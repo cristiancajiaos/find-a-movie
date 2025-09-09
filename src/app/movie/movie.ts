@@ -44,7 +44,6 @@ export class MovieComponent implements OnInit, AfterContentInit {
     this.movieService.getMovie(this.id)
     .then(movie => {
       this.movie = movie;
-      // this.movieHeader.setYear();
     })
     .catch(error => {
       console.log(error);

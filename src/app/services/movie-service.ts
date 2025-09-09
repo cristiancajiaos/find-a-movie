@@ -20,6 +20,12 @@ export class MovieService {
     return await lastValueFrom(this.http.get<Movie>(`/movie/${id}`));
   }
 
+  public async getMovieCredits(id: number): Promise<Credits> {
+    return await lastValueFrom(
+      this.http.get<Credits>(`/movie/${id}/credits`)
+    );
+  }
+
   public async getMovieCast(id: number): Promise<CastMember[]> {
     return await lastValueFrom(
       this.http.get<Credits>(`/movie/${id}/credits`)
