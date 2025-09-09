@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Movie } from '../classes/movie';
 import { MovieHeader } from './movie-header/movie-header';
+import { TitleService } from '../services/title-service';
 
 @Component({
   selector: 'app-movie',
@@ -23,6 +24,7 @@ export class MovieComponent implements OnInit, AfterContentInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
+    private titleService: TitleService,
     private cd: ChangeDetectorRef
   ) {
 
@@ -44,12 +46,22 @@ export class MovieComponent implements OnInit, AfterContentInit {
     this.movieService.getMovie(this.id)
     .then(movie => {
       this.movie = movie;
+      this.setTitle();
     })
     .catch(error => {
       console.log(error);
+      this.titleService.setTitle("Movie Not Found");
     }).finally(() => {
       this.loadingMovie = false;
     });
+  }
+
+  private setTitle(): void {
+    const movieTitle: string = this.movie.title;
+    const movieYearDate: Date = new Date(this.movie.release_date);
+    const movieYear: number = movieYearDate.getFullYear();
+    const titleStr: string = `${movieTitle}` + (movieYear ? ` (${movieYear})` : '');
+    this.titleService.setTitle(titleStr);
   }
 
 }
