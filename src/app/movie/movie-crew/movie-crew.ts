@@ -16,20 +16,20 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public movieCrew: CrewMember[] = [];
 
-  public direction: string[] = [];
-  public writing: string [] = [];
-  public basedOnWorkBy: string[] = [];
-  public producing: string[] = [];
-  public executiveProducing: string[] = [];
-  public coProducing: string[] = [];
-  public directorsOfPhotography: string[] = [];
-  public productionDesigners: string[] = [];
-  public editors: string[] = [];
-  public musicComposers: string[] = [];
-  public additionalMusicComposers: string[] = [];
-  public visualEffectsSupervisors: string[] = [];
-  public costumeDesigners: string[] = [];
-  public castingCrew: string[] = [];
+  public direction: CrewMember[] = [];
+  public writing: CrewMember[] = [];
+  public basedOnWorkBy: CrewMember[] = [];
+  public producing: CrewMember[] = [];
+  public executiveProducing: CrewMember[] = [];
+  public coProducing: CrewMember[] = [];
+  public directorsOfPhotography: CrewMember[] = [];
+  public productionDesigners: CrewMember[] = [];
+  public editors: CrewMember[] = [];
+  public musicComposers: CrewMember[] = [];
+  public additionalMusicComposers: CrewMember[] = [];
+  public visualEffectsSupervisors: CrewMember[] = [];
+  public costumeDesigners: CrewMember[] = [];
+  public castingCrew: CrewMember[] = [];
 
   public loadingCrew: boolean = false;
 
@@ -68,46 +68,46 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   private filterCrew(): void {
     this.direction = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Director').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Director');
 
     this.writing = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Screenplay').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Screenplay');
 
     this.basedOnWorkBy = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Novel').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Novel');
 
     this.producing = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Producer').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Producer');
 
     this.executiveProducing = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Executive Producer').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Executive Producer');
 
     this.coProducing = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Co-Producer').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Co-Producer');
 
     this.directorsOfPhotography = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Director of Photography').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Director of Photography');
 
     this.productionDesigners = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Production Design').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Production Design')
 
     this.editors = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Editor').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Editor');
 
     this.musicComposers = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Original Music Composer').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Original Music Composer');
 
     this.additionalMusicComposers = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Additional Music').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Additional Music');
 
     this.visualEffectsSupervisors = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Visual Effects Supervisor').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Visual Effects Supervisor');
 
     this.costumeDesigners = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Costume Design').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Costume Design');
 
     this.castingCrew = this.movieCrew
-    .filter(crewMember => crewMember.job == 'Casting').map(crewMember => crewMember.name);
+    .filter(crewMember => crewMember.job == 'Casting');
   }
 
   ngOnDestroy(): void {

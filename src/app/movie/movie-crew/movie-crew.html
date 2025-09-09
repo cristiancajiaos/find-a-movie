@@ -13,7 +13,9 @@
               <td>Directed By:</td>
               <td>
                 <ng-container *ngFor="let director of direction">
-                  {{ director }}
+                  <a [routerLink]="['/person', director.id]">
+                     {{ director.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -24,7 +26,9 @@
               <td>Screenplay By:</td>
               <td>
                 <ng-container *ngFor="let writer of writing">
-                  {{ writer }}
+                  <a [routerLink]="['/person', writer.id]">
+                     {{ writer.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -35,7 +39,9 @@
               <td>Based on Work By:</td>
               <td>
                 <ng-container *ngFor="let author of basedOnWorkBy">
-                  {{ author }}
+                  <a [routerLink]="['/person', author.id]">
+                     {{ author.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -46,7 +52,9 @@
               <td>Produced By:</td>
               <td>
                 <ng-container *ngFor="let producer of producing">
-                  {{ producer }}
+                  <a [routerLink]="['/person', producer.id]">
+                     {{ producer.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -61,7 +69,9 @@
               </td>
               <td>
                 <ng-container *ngFor="let executiveProducer of executiveProducing">
-                  {{ executiveProducer }}
+                  <a [routerLink]="['/person', executiveProducer.id]">
+                     {{ executiveProducer.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -72,7 +82,9 @@
               <td>Co-Producer<ng-container *ngIf="coProducing.length > 1">s</ng-container></td>
               <td>
                 <ng-container *ngFor="let coProducer of coProducing">
-                  {{ coProducer }}
+                  <a [routerLink]="['/person', coProducer.id]">
+                     {{ coProducer.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -86,7 +98,9 @@
               </td>
               <td>
                 <ng-container *ngFor="let directorOfPhotography of directorsOfPhotography">
-                  {{ directorOfPhotography }}
+                  <a [routerLink]="['/person', directorOfPhotography.id]">
+                     {{ directorOfPhotography.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -101,7 +115,9 @@
               </td>
               <td>
                 <ng-container *ngFor="let productionDesigner of productionDesigners">
-                  {{ productionDesigner }}
+                  <a [routerLink]="['/person', productionDesigner.id]">
+                     {{ productionDesigner.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -112,7 +128,9 @@
               <td>Editor<ng-container *ngIf="editors.length > 1">s</ng-container>:</td>
               <td>
                 <ng-container *ngFor="let editor of editors">
-                  {{ editor }}
+                  <a [routerLink]="['/person', editor.id]">
+                     {{ editor.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -123,7 +141,9 @@
               <td>Music By:</td>
               <td>
                 <ng-container *ngFor="let musicComposer of musicComposers">
-                  {{ musicComposer }}
+                  <a [routerLink]="['/person', musicComposer.id]">
+                     {{ musicComposer.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -134,7 +154,9 @@
               <td>Additional Music By:</td>
               <td>
                 <ng-container *ngFor="let additionalMusicComposer of additionalMusicComposers">
-                  {{ additionalMusicComposer }}
+                  <a [routerLink]="['/person', additionalMusicComposer.id]">
+                     {{ additionalMusicComposer.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -149,7 +171,9 @@
               </td>
               <td>
                 <ng-container *ngFor="let visualEffectsSupervisor of visualEffectsSupervisors">
-                  {{ visualEffectsSupervisor }}
+                  <a [routerLink]="['/person', visualEffectsSupervisor.id]">
+                     {{ visualEffectsSupervisor.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -162,7 +186,9 @@
               </td>
               <td>
                 <ng-container *ngFor="let costumeDesigner of costumeDesigners">
-                  {{ costumeDesigner }}
+                  <a [routerLink]="['/person', costumeDesigner.id]">
+                     {{ costumeDesigner.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
@@ -175,7 +201,9 @@
               </td>
               <td>
                 <ng-container *ngFor="let casting of castingCrew">
-                  {{ casting }}
+                  <a [routerLink]="['/person', casting.id]">
+                     {{ casting.name }}
+                  </a>
                   <br />
                 </ng-container>
               </td>
