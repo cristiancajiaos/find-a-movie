@@ -31,43 +31,26 @@
         </div>
         <form class="d-flex" role="search">
           <ng-container *ngIf="searchType == 'movie'">
-            <input class="form-control me-2"
-               type="search"
-               placeholder="Search Movie"
-               aria-label="Search Movie" />
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search Movie"
+              aria-label="Search Movie"
+            />
           </ng-container>
           <ng-container *ngIf="searchType == 'people'">
-            <input class="form-control me-2"
-               type="search"
-               placeholder="Search People"
-               aria-label="Search People" />
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search People"
+              aria-label="Search People"
+            />
           </ng-container>
-        <button class="btn border text-light btn-search" type="submit">
-          <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon> Search
-        </button>
-      </form>
+          <button class="btn border text-light" type="submit">
+            <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
+          </button>
+        </form>
       </div>
     </div>
-
-    <!--
-    <button class="navbar-toggler" type="button" (click)="toggleCollapse()">
-      <fa-icon [icon]="barsIcon"></fa-icon>
-    </button>
-    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-      <ul class="navbar-nav">
-        <li class="navbar-item">
-          <a class="navbar-link"> Uno </a>
-        </li>
-        <li class="navbar-item">
-          <a class="navbar-link"> Dos </a>
-        </li>
-        <li class="navbar-item">
-          <a class="navbar-link"> Tres </a>
-        </li>
-      </ul>
-
-
-    </div>
-    -->
   </div>
 </nav>
