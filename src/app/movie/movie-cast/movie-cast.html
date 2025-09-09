@@ -34,7 +34,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let castMember of movieCast">
-            <td>{{castMember.name}}</td>
+            <td>
+              <a [routerLink]="['/people', castMember.id]">
+                {{castMember.name}}
+              </a>
+            </td>
             <td>as</td>
             <td>{{castMember.character}}</td>
           </tr>
