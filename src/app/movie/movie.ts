@@ -1,10 +1,11 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../services/movie-service';
 import { Movie } from '../classes/movie';
 import { MovieHeader } from './movie-header/movie-header';
 import { TitleService } from '../services/title-service';
 import { environment } from '../../environments/environment.development';
+import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-movie',
@@ -14,6 +15,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class MovieComponent implements OnInit, AfterContentInit {
 
+  public imagePortrait: IconDefinition = faImagePortrait;
   public id: number = 0;
   public movie: Movie = new Movie();
 

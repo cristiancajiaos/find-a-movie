@@ -3,12 +3,17 @@
     nav {
       &.navbar {
         margin-bottom: 1rem;
+        font-family: 'Oswald', 'Arial', sans-serif;
       }
     }
 
     .aside-1 {
       img {
         margin-bottom: 1rem;
+      }
+
+      .btn-poster {
+        font-family: 'Oswald', 'Arial', sans-serif;
       }
     }
   }
