@@ -34,7 +34,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let crewMember of movieFullCrew">
-            <td>{{ crewMember.name }}</td>
+            <td>
+              <a href="" [routerLink]="['/person', crewMember.id]">
+                {{ crewMember.name }}
+              </a>
+            </td>
             <td>{{ crewMember.job }}</td>
           </tr>
         </tbody>
