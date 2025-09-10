@@ -3,46 +3,53 @@
     <app-loading-inline message="Loading full crew..."></app-loading-inline>
   </ng-container>
   <ng-container *ngIf="!loadingFullCrew">
-    <h2>Full Crew</h2>
-    <form [formGroup]="orderForm">
-      <div class="row align-items-center">
-        <label for="orderCrew" class="col-3">Order by</label>
-        <div class="col-9">
-          <select
-            class="form-control"
-            formControlName="orderCrew"
-            (change)="changeCrewOrder()"
-            id="orderCrew"
-            name="orderCrew">
-            <option value="0" selected disabled>Select an order criteria</option>
-            <option value="1">Name (ascending)</option>
-            <option value="2">Name (descending)</option>
-            <option value="3">Role (ascending)</option>
-            <option value="4">Role (descending)</option>
-          </select>
+    <ng-container *ngIf="movieFullCrewError">
+      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadFullCrew($event)">
+      </app-movie-error>
+    </ng-container>
+    <ng-container *ngIf="!movieFullCrewError">
+      <h2>Full Crew</h2>
+      <form [formGroup]="orderForm">
+        <div class="row align-items-center">
+          <label for="orderCrew" class="col-3">Order by</label>
+          <div class="col-9">
+            <select
+              class="form-control"
+              formControlName="orderCrew"
+              (change)="changeCrewOrder()"
+              id="orderCrew"
+              name="orderCrew"
+            >
+              <option value="0" selected disabled>Select an order criteria</option>
+              <option value="1">Name (ascending)</option>
+              <option value="2">Name (descending)</option>
+              <option value="3">Role (ascending)</option>
+              <option value="4">Role (descending)</option>
+            </select>
+          </div>
         </div>
+      </form>
+      <hr />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let crewMember of movieFullCrew">
+              <td>
+                <a href="" [routerLink]="['/person', crewMember.id]">
+                  {{ crewMember.name }}
+                </a>
+              </td>
+              <td>{{ crewMember.job }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </form>
-    <hr />
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let crewMember of movieFullCrew">
-            <td>
-              <a href="" [routerLink]="['/person', crewMember.id]">
-                {{ crewMember.name }}
-              </a>
-            </td>
-            <td>{{ crewMember.job }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    </ng-container>
   </ng-container>
 </section>

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie-service';
 import { CrewMember } from '../../classes/crew-member';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -23,6 +24,10 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   public activatedRouteParentSubscription: Subscription | undefined;
 
   public orderForm: FormGroup = new FormGroup({});
+
+  public fullCrewFound: boolean = false;
+  public movieFullCrewError: boolean = false;
+  public errorMessage: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,17 +52,27 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   }
 
   private getFullCrew(): void {
+    this.movieFullCrewError = false;
     this.loadingFullCrew = true;
     this.movieService.getMovieCrew(this.id).then(crew => {
       this.originalMovieFullCrew = crew;
       this.movieFullCrew = crew;
     })
-    .catch(error => {
-
+    .catch((error: HttpErrorResponse) => {
+      this.handleError(error);
     })
     .finally(() => {
       this.loadingFullCrew = false;
     });
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.movieFullCrewError = true;
+    this.errorMessage = error.message;
+  }
+
+  public reloadFullCrew(event: boolean): void {
+    this.getFullCrew();
   }
 
   public changeCrewOrder(): void {
