@@ -37,6 +37,6 @@ export class MovieHeader implements OnInit {
   }
 
   public setBackdrop(): void {
-    this.backdropImg = `${environment.imgUrl}${environment.backdropSize}${this.movie.backdrop_path}`;
+    this.backdropImg = this.movie.backdrop_path ? `${environment.imgUrl}${environment.backdropSize}${this.movie.backdrop_path}` : 'img/default-images/movie_backdrop_notavailable_w1280.png';
   }
 }

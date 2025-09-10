@@ -51,16 +51,18 @@
                   <aside class="aside-1">
                     <img [src]="posterSizeSmall" [alt]="altPosterText" class="w-100" />
 
-                    <div class="d-grid">
-                      <a
-                        [href]="posterSizeOriginal"
-                        target="_blank"
-                        class="btn btn-outline-primary btn-poster mb-2"
-                      >
-                        <fa-icon [icon]="imagePortrait"></fa-icon>
-                        Open Poster in New Tab
-                      </a>
-                    </div>
+                    <ng-container *ngIf="movie.poster_path">
+                      <div class="d-grid">
+                        <a
+                          [href]="posterSizeOriginal"
+                          target="_blank"
+                          class="btn btn-outline-primary btn-poster mb-2"
+                        >
+                          <fa-icon [icon]="imagePortrait"></fa-icon>
+                          Open Poster in New Tab
+                        </a>
+                      </div>
+                    </ng-container>
                   </aside>
                 </div>
                 <div class="col-12 col-lg-8">
