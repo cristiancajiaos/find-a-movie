@@ -56,6 +56,7 @@ export class MovieComponent implements OnInit, AfterContentInit {
   }
 
   private getMovie(): void {
+    this.movieError = false;
     this.loadingMovie = true;
     this.movieService.getMovie(this.id)
     .then(movie => {
