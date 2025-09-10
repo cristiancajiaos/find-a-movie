@@ -38,10 +38,5 @@ export class MovieHeader implements OnInit {
 
   public setBackdrop(): void {
     this.backdropImg = `${environment.imgUrl}${environment.backdropSize}${this.movie.backdrop_path}`;
-
   }
-
-
-
-
 }
