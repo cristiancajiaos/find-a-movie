@@ -10,30 +10,33 @@
       background-size: cover;
     }
 
-    .header-movie-info {
+    .header-movie-container {
       position: absolute;
       height: inherit;
       width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      align-items: flex-end;
 
-      h1,
-      h2 {
-        width: 100%;
-        color: white;
-
-        margin: 0;
+      .header-movie-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
         background-color: rgba(0, 0, 0, 0.5);
-      }
 
-      h1 {
-        padding: 1rem 1rem 0rem 1rem;
-      }
+        h1, h2 {
+          width: 100%;
+          color: white;
+          margin: 0;
+        }
 
-      h2 {
-        padding: 1rem;
+        h1 {
+          padding: 1rem 1rem 0rem 1rem;
+        }
+
+        h2 {
+          padding: 1rem;
+        }
       }
     }
   }

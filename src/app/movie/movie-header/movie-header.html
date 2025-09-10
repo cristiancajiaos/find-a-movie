@@ -1,22 +1,26 @@
 <section class="movie-header">
   <header>
-    <div class="header-backdrop" [ngStyle]="{'background-image':'url(' + backdropImg + ')'}">
-    </div>
-    <div class="header-movie-info">
-      <h1>
-        <fa-icon [icon]="film" [fixedWidth]="true"></fa-icon>
-        {{ movie.title }}
-      </h1>
-      <h2>
-        <ng-container *ngIf="year">
-          <fa-icon [icon]="calendar" [fixedWidth]="true"></fa-icon> {{ year }}
-        </ng-container>
-        <ng-container *ngIf="!year"> No Release Date </ng-container>
-        <ng-container *ngIf="movie.runtime > 0">
-          <fa-icon [icon]="clock" [fixedWidth]="true"></fa-icon>
-          {{ movie.runtime | runtime }}
-        </ng-container>
-      </h2>
+    <div
+      class="header-backdrop"
+      [ngStyle]="{ 'background-image': 'url(' + backdropImg + ')' }"
+    ></div>
+    <div class="header-movie-container">
+      <div class="header-movie-info">
+        <h1>
+          <fa-icon [icon]="film" [fixedWidth]="true"></fa-icon>
+          {{ movie.title }}
+        </h1>
+        <h2>
+          <ng-container *ngIf="year">
+            <fa-icon [icon]="calendar" [fixedWidth]="true"></fa-icon> {{ year }}
+          </ng-container>
+          <ng-container *ngIf="!year"> No Release Date </ng-container>
+          <ng-container *ngIf="movie.runtime > 0">
+            <fa-icon [icon]="clock" [fixedWidth]="true"></fa-icon>
+            {{ movie.runtime | runtime }}
+          </ng-container>
+        </h2>
+      </div>
     </div>
   </header>
 </section>
