@@ -92,9 +92,9 @@ export class MovieComponent implements OnInit, AfterContentInit {
   }
 
   private setMoviePoster(): void {
-    this.posterSizeSmall = this.movie.poster_path ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie.poster_path}` : 'img/default-images/movie_poster_notavailable_w500.png'
-    this.posterSizeOriginal = `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie.poster_path}`;
-    this.altPosterText = `Poster from the movie ${this.formattedTitle}`;
+    this.posterSizeSmall = this.movie.poster_path ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie.poster_path}` : 'img/default-images/movie_poster_notavailable_w500.png';
+    this.posterSizeOriginal = this.movie.poster_path ? `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie.poster_path}` : '';
+    this.altPosterText = this.movie.poster_path ? `Poster from the movie ${this.formattedTitle}` : `Poster from the movie ${this.formattedTitle} is not available`;
   }
 
 }
