@@ -6,6 +6,7 @@ import { MovieHeader } from './movie-header/movie-header';
 import { TitleService } from '../services/title-service';
 import { environment } from '../../environments/environment.development';
 import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-movie',
@@ -27,6 +28,10 @@ export class MovieComponent implements OnInit, AfterContentInit {
 
   public loadingView: boolean = true;
   public loadingMovie: boolean = false;
+
+  public movieNotFound: boolean = false;
+  public movieError: boolean = false;
+  public errorMessage: string = '';
 
   @ViewChild('movieHeader') movieHeader!: MovieHeader;
 
@@ -58,12 +63,26 @@ export class MovieComponent implements OnInit, AfterContentInit {
       this.setTitle();
       this.setMoviePoster();
     })
-    .catch(error => {
-      console.log(error);
-      this.titleService.setTitle("Movie Not Found");
+    .catch((error: HttpErrorResponse) => {
+      this.handleError(error);
     }).finally(() => {
       this.loadingMovie = false;
     });
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.movieError = true;
+      if (error.status && error.status === 404) {
+        this.movieNotFound = true;
+        this.titleService.setTitle("Movie Not Found");
+      } else {
+        this.errorMessage = error.message;
+        this.titleService.setTitle("Movie Service Error");
+      }
+  }
+
+  public reloadMovie(event: boolean): void {
+    this.getMovie();
   }
 
   private setTitle(): void {

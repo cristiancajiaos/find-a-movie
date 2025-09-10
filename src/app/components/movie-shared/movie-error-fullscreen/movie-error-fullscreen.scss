@@ -1,0 +1,16 @@
+.movie-error-fullscreen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .movie-error-description {
+    text-align: center;
+    border: 1px solid black;
+    padding: 1rem 2rem;
+
+    button {
+      font-family: 'Oswald', 'Arial', sans-serif;
+    }
+  }
+}
