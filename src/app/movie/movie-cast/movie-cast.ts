@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie-service';
 import { CastMember } from '../../classes/cast-member';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-movie-cast',
@@ -22,6 +23,10 @@ export class MovieCast implements OnInit, OnDestroy {
   public orderCastForm: FormGroup = new FormGroup({});
 
   public activatedRouteParentSubscription: Subscription | undefined;
+
+  public castFound: boolean = false;
+  public movieCastError: boolean = false;
+  public errorMessage: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,15 +50,29 @@ export class MovieCast implements OnInit, OnDestroy {
   }
 
   private getCast(): void {
+    this.movieCastError = false;
     this.loadingCast = true;
     this.movieService.getMovieCast(this.id).then(cast => {
       this.movieCast = cast;
-    }).catch(error => {
-
+      this.castFound = true;
+    }).catch((error: HttpErrorResponse) => {
+      console.log(error);
+      this.handleError(error);
     }).finally(() => {
       this.loadingCast = false;
     })
   }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.movieCastError = true;
+    this.errorMessage = error.message;
+  }
+
+  public reloadCast(event: boolean): void {
+    this.getCast();
+  }
+
+
 
   public changeCastOrder(): void {
     switch (this.orderCastForm.value['orderCast']) {

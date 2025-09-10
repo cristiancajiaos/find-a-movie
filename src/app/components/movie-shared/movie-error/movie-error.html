@@ -1,4 +1,7 @@
 <section class="movie-error">
   <h1>Movie Service Error</h1>
-  <p>There was an error getting info for the movie: {{errorMessage}}</p>
+  <p>There was an error getting info for the movie: <strong>{{errorMessage}}</strong></p>
+  <button type="button" class="btn btn-primary" (click)="pressReload()">
+    <fa-icon [icon]="repeat"></fa-icon> Reload
+  </button>
 </section>

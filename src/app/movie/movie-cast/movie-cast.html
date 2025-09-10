@@ -3,48 +3,55 @@
     <app-loading-inline message="Loading cast..."></app-loading-inline>
   </ng-container>
   <ng-container *ngIf="!loadingCast">
-    <h2>Cast</h2>
-    <form [formGroup]="orderCastForm">
-      <div class="row align-items-center">
-        <label class="col-3" for="orderCast">Order by</label>
-        <div class="col-9">
-          <select class="form-control"
-                  formControlName="orderCast"
-                  (change)="changeCastOrder()"
-                  id="orderCast"
-                  name="orderCast">
-            <option value="0" selected disabled>Select an order criteria</option>
-            <option value="1">Default Order (ascending)</option>
-            <option value="2">Default Order (descending)</option>
-            <option value="3">Name (ascending)</option>
-            <option value="4">Name (descending)</option>
-            <option value="5">Character (ascending)</option>
-            <option value="6">Character (descending)</option>
-          </select>
+    <ng-container *ngIf="movieCastError">
+      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCast($event)">
+      </app-movie-error>
+    </ng-container>
+    <ng-container *ngIf="!movieCastError">
+      <h2>Cast</h2>
+      <form [formGroup]="orderCastForm">
+        <div class="row align-items-center">
+          <label class="col-3" for="orderCast">Order by</label>
+          <div class="col-9">
+            <select
+              class="form-control"
+              formControlName="orderCast"
+              (change)="changeCastOrder()"
+              id="orderCast"
+              name="orderCast"
+            >
+              <option value="0" selected disabled>Select an order criteria</option>
+              <option value="1">Default Order (ascending)</option>
+              <option value="2">Default Order (descending)</option>
+              <option value="3">Name (ascending)</option>
+              <option value="4">Name (descending)</option>
+              <option value="5">Character (ascending)</option>
+              <option value="6">Character (descending)</option>
+            </select>
+          </div>
         </div>
+      </form>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="2">Actor</th>
+              <th>Character</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let castMember of movieCast">
+              <td>
+                <a [routerLink]="['/person', castMember.id]">
+                  {{ castMember.name }}
+                </a>
+              </td>
+              <td>as</td>
+              <td>{{ castMember.character }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </form>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th colspan="2">Actor</th>
-            <th>Character</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let castMember of movieCast">
-            <td>
-              <a [routerLink]="['/person', castMember.id]">
-                {{castMember.name}}
-              </a>
-            </td>
-            <td>as</td>
-            <td>{{castMember.character}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    </ng-container>
   </ng-container>
 </section>
-

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-movie-error',
@@ -8,10 +9,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MovieError implements OnInit {
 
+  public repeat: IconDefinition = faRepeat;
+
   @Input() errorMessage: string = '';
+  @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit(): void {
 
+  }
+
+  public pressReload(): void {
+    this.reload.emit(true);
   }
 
 }
