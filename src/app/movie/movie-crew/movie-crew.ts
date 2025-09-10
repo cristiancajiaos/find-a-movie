@@ -3,6 +3,7 @@ import { ActivatedRoute} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CrewMember } from '../../classes/crew-member';
 import { MovieService } from '../../services/movie-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-movie-crew',
@@ -35,6 +36,10 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public activatedRouteParentSubscription: Subscription | undefined;
 
+  public crewFound: boolean = false;
+  public movieCrewError: boolean = false;
+  public errorMessage: string = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService
@@ -53,17 +58,27 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private getCrew(): void {
+    this.movieCrewError = false; 
     this.loadingCrew = true;
     this.movieService.getMovieCrew(this.id).then(crew => {
       this.movieCrew = crew;
       this.filterCrew();
     })
-    .catch(error => {
-
+    .catch((error: HttpErrorResponse) => {
+      this.handleError(error);
     })
     .finally(() => {
       this.loadingCrew = false;
     });
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.movieCrewError = true;
+    this.errorMessage = error.message;
+  }
+
+  public reloadCrew(event: boolean): void {
+    this.getCrew();
   }
 
   private filterCrew(): void {
