@@ -1,9 +1,10 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '../services/title-service';
 import { Person } from '../classes/person';
 import { PersonService } from '../services/person-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PersonHeader } from './person-header/person-header';
 
 @Component({
   selector: 'app-person',
@@ -23,6 +24,8 @@ export class PersonComponent implements OnInit, AfterContentInit {
   public personNotFound: boolean = false;
   public personError: boolean = false;
   public errorMessage: string = '';
+
+  @ViewChild('personHeader') personHeader!: PersonHeader;
 
   constructor(
     private activatedRoute: ActivatedRoute,

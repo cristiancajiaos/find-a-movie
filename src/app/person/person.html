@@ -16,11 +16,16 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="!personError">
+        <app-person-header [id]="id" [person]="person" #personHeader>
+        </app-person-header>
+        
         <p>person works!</p>
 
         <p>id: {{ id }}</p>
 
         <p>{{ person | json }}</p>
+
+        <router-outlet></router-outlet>
       </ng-container>
     </ng-container>
   </ng-container>

@@ -1,0 +1,15 @@
+.person-header {
+  header {
+    background-color: rgba(204, 204, 204, 1);
+    padding: 5rem 1rem 1rem 1rem;
+
+    .person-header-profile-img {
+      border: 1px solid black;
+      box-shadow: 1px 1px 5px black;
+
+      @media screen and (max-width: 767px) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}

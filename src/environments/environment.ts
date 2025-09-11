@@ -6,5 +6,6 @@ export const environment = {
   imgUrl: 'https://image.tmdb.org/t/p',
   backdropSize: '/w1280',
   posterSizeSmall: '/w500',
-  posterSizeOriginal: '/original'
+  posterSizeOriginal: '/original',
+  profileSizeSmall: '/w185'
 };

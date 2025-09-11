@@ -1,0 +1,27 @@
+<section class="person-header">
+  <header>
+    <div class="row align-items-lg-center">
+      <div class="col-12 col-lg-2">
+        <img
+          class="person-header-profile-img"
+          [src]="profileImg"
+          [alt]="profileImgAltText"
+        />
+      </div>
+      <div class="col-12 col-lg-10">
+        <h1>
+          <fa-icon [icon]="user"></fa-icon>
+          {{ name }}
+          <small>
+            <ng-container *ngIf="this.person.birthday || this.person.deathday">
+              ({{ birthYear }} -
+              <ng-container *ngIf="this.person.deathday">{{ deathYear }}</ng-container
+              >)
+            </ng-container>
+          </small>
+        </h1>
+        <h2><fa-icon [icon]="film"></fa-icon> Known for: {{ knownFor }}</h2>
+      </div>
+    </div>
+  </header>
+</section>
