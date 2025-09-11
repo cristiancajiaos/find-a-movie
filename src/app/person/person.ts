@@ -25,6 +25,8 @@ export class PersonComponent implements OnInit, AfterContentInit {
   public personError: boolean = false;
   public errorMessage: string = '';
 
+  public personBiography: string = '';
+
   @ViewChild('personHeader') personHeader!: PersonHeader;
 
   constructor(
@@ -52,12 +54,16 @@ export class PersonComponent implements OnInit, AfterContentInit {
     .then(person => {
       this.person = person;
       this.setPersonTitle();
+      this.setPersonBiography();
     }).catch((error: HttpErrorResponse) => {
       this.handleError(error);
     }).finally(() => {
       this.loadingPerson = false;
     });
+  }
 
+  private setPersonBiography(): void {
+    this.personBiography = this.person.biography;
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -69,6 +75,10 @@ export class PersonComponent implements OnInit, AfterContentInit {
       this.errorMessage = this.errorMessage;
       this.titleService.setTitle("PersonService Error");
     }
+  }
+
+  public reloadPerson(event: boolean): void {
+    this.getPerson();
   }
 
   private setPersonTitle(): void {

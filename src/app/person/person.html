@@ -12,20 +12,52 @@
           <app-person-not-found></app-person-not-found>
         </ng-container>
         <ng-container *ngIf="!personNotFound">
-          <app-person-error-fullscreen [errorMessage]="errorMessage"> </app-person-error-fullscreen>
+          <app-person-error-fullscreen
+            [errorMessage]="errorMessage"
+            (reload)="reloadPerson($event)"
+          >
+          </app-person-error-fullscreen>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="!personError">
-        <app-person-header [id]="id" [person]="person" #personHeader>
-        </app-person-header>
-        
-        <p>person works!</p>
+        <app-person-header [id]="id" [person]="person" #personHeader> </app-person-header>
+        <main>
+          <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+            <div class="container-fluid">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    aria-current="page"
+                    routerLink="overview"
+                    routerLinkActive="active"
+                  >
+                    Overview
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="movie-credits" routerLinkActive="active"
+                    >Movie Credits</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 col-lg-8">
+                <ng-container *ngIf="person.biography">
+                  <p>{{personBiography}}</p>
+                </ng-container>
 
-        <p>id: {{ id }}</p>
-
-        <p>{{ person | json }}</p>
-
-        <router-outlet></router-outlet>
+                <router-outlet></router-outlet>
+              </div>
+              <div class="col-12 col-lg-4">
+                <aside class="aside-1">Aside 2</aside>
+              </div>
+            </div>
+          </div>
+        </main>
       </ng-container>
     </ng-container>
   </ng-container>
