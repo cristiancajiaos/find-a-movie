@@ -1,4 +1,19 @@
 <section class="person-overview">
-  <p>person-overview works!</p>
-  <p>ID: {{id}}</p>
+  <ng-container *ngIf="loadingPerson">
+    <app-loading-inline message="Loading person..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingPerson">
+    <ng-container *ngIf="personOverviewError">
+      <app-person-error [errorMessage]="errorMessage" (reload)="reloadOverview($event)">
+      </app-person-error>
+    </ng-container>
+    <ng-container *ngIf="!personOverviewError">
+      <ng-container *ngIf="person.biography">
+        <p>{{personBiography}}</p>
+      </ng-container>
+      <ng-container *ngIf="person.biography.length === 0">
+        <p class="no-biography">No Biography Available</p>
+      </ng-container>
+    </ng-container>
+  </ng-container>
 </section>
