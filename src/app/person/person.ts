@@ -1,6 +1,9 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '../services/title-service';
+import { Person } from '../classes/person';
+import { PersonService } from '../services/person-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-person',
@@ -12,24 +15,61 @@ export class PersonComponent implements OnInit, AfterContentInit {
 
   public id: number = 0;
 
+  public person: Person = new Person();
+
+  public loadingView: boolean = true;
+  public loadingPerson: boolean = false;
+
+  public personNotFound: boolean = false;
+  public personError: boolean = false;
+  public errorMessage: string = '';
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private titleService: TitleService,
+    private personService: PersonService,
     private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.cd.detectChanges();
     this.id = parseInt(this.activatedRoute.snapshot.params['id']);
-    this.setTitle();
+    this.getPerson();
   }
 
   ngAfterContentInit(): void {
+    this.loadingView = false;
     this.cd.detectChanges();
   }
 
-  private setTitle(): void {
-    this.titleService.setTitle(`Person with ID ${this.id}`)
+  private getPerson(): void {
+    this.personError = false;
+    this.loadingPerson = true;
+    this.personService.getPerson(this.id)
+    .then(person => {
+      this.person = person;
+      this.setPersonTitle();
+    }).catch((error: HttpErrorResponse) => {
+      this.handleError(error);
+    }).finally(() => {
+      this.loadingPerson = false;
+    });
+
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.personError = true;
+    if (error.status && error.status === 404) {
+      this.personNotFound = true;
+      this.titleService.setTitle("Person Not Found");
+    } else {
+      this.errorMessage = this.errorMessage;
+      this.titleService.setTitle("PersonService Error");
+    }
+  }
+
+  private setPersonTitle(): void {
+    this.titleService.setTitle(this.person.name);
   }
 
 }

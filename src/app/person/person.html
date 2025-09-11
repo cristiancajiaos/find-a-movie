@@ -1,6 +1,27 @@
 <section class="person">
-  <p>person works!</p>
+  <ng-container *ngIf="loadingView">
+    <app-loading-fullscreen message="Loading view..."></app-loading-fullscreen>
+  </ng-container>
+  <ng-container *ngIf="!loadingView">
+    <ng-container *ngIf="loadingPerson">
+      <app-loading-fullscreen message="Loading person..."></app-loading-fullscreen>
+    </ng-container>
+    <ng-container *ngIf="!loadingPerson">
+      <ng-container *ngIf="personError">
+        <ng-container *ngIf="personNotFound">
+          <app-person-not-found></app-person-not-found>
+        </ng-container>
+        <ng-container *ngIf="!personNotFound">
+          <app-person-error-fullscreen [errorMessage]="errorMessage"> </app-person-error-fullscreen>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!personError">
+        <p>person works!</p>
 
-  <p>id: {{id}}</p>
+        <p>id: {{ id }}</p>
+
+        <p>{{ person | json }}</p>
+      </ng-container>
+    </ng-container>
+  </ng-container>
 </section>
-

@@ -1,0 +1,9 @@
+<section class="person-error-fullscreen">
+  <div class="person-error-description">
+    <h1>Person Service Error</h1>
+    <p>There was an error trying to get person info: <strong>{{ errorMessage }}</strong></p>
+    <button type="button" class="btn btn-primary" (click)="pressReload()">
+      <fa-icon [icon]="repeat"></fa-icon> Reload
+    </button>
+  </div>
+</section>
