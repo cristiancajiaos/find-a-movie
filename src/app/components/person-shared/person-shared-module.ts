@@ -4,12 +4,16 @@ import { PersonError } from './person-error/person-error';
 import { PersonErrorFullscreen } from './person-error-fullscreen/person-error-fullscreen';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PersonNotFound } from './person-not-found/person-not-found';
+import { PersonCastCredit } from './person-cast-credit/person-cast-credit';
+import { PersonCrewCredit } from './person-crew-credit/person-crew-credit';
 
 @NgModule({
   declarations: [
     PersonError,
     PersonErrorFullscreen,
-    PersonNotFound
+    PersonNotFound,
+    PersonCastCredit,
+    PersonCrewCredit
   ],
   imports: [
     CommonModule,
@@ -18,7 +22,9 @@ import { PersonNotFound } from './person-not-found/person-not-found';
   exports: [
     PersonError,
     PersonErrorFullscreen,
-    PersonNotFound
+    PersonNotFound,
+    PersonCastCredit,
+    PersonCrewCredit
   ]
 })
 export class PersonSharedModule { }
