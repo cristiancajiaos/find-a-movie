@@ -1,5 +1,39 @@
 <section class="person-movie-credits">
-  <p>person-movie-credits works!</p>
+  <ng-container *ngIf="loadingPersonMovieCredits">
+    <app-loading-inline message="Loading movie credits for this person..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingPersonMovieCredits">
+    <ng-container *ngIf="personMovieCreditsError">
+      <app-person-error [errorMessage]="errorMessage" (reload)="reloadMovieCredits($event)">
+      </app-person-error>
+    </ng-container>
+    <ng-container *ngIf="!personMovieCreditsError">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <button ngbNavLink>As Cast</button>
+          <ng-template ngbNavContent>
+            <ng-container *ngIf="personMovieCredits.cast.length === 0">
+              <p>This person has no acting roles in movies</p>
+            </ng-container>
+            <ng-container *ngIf="personMovieCredits.cast.length > 0">
+              <p>{{ personMovieCredits.cast | json }}</p>
+            </ng-container>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <button ngbNavLink>As Crew</button>
+          <ng-template ngbNavContent>
+            <ng-container *ngIf="personMovieCredits.crew.length === 0">
+              <p>This person has no technical or production roles in movies</p>
+            </ng-container>
+            <ng-container *ngIf="personMovieCredits.crew.length > 0">
+              <p>{{ personMovieCredits.crew | json }}</p>
+            </ng-container>
+          </ng-template>
+        </li>
+      </ul>
 
-  <p>ID: {{id}}</p>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </ng-container>
+  </ng-container>
 </section>
