@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PersonNotFound } from './person-not-found/person-not-found';
 import { PersonCastCredit } from './person-cast-credit/person-cast-credit';
 import { PersonCrewCredit } from './person-crew-credit/person-crew-credit';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PersonCrewCredit } from './person-crew-credit/person-crew-credit';
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    RouterModule
   ],
   exports: [
     PersonError,

@@ -1,0 +1,65 @@
+.person-credit {
+  margin-bottom: 1rem;
+
+  a {
+    text-decoration: none;
+
+    .person-link {
+      height: 350px;
+      position: relative;
+
+      &.person-cast-credit,
+      &.person-crew-credit {
+        .person-poster {
+          height: inherit;
+          width: 100%;
+          border: 1px solid black;
+          position: absolute;
+          background-size: cover;
+        }
+
+        .person-info {
+          height: inherit;
+          position: absolute;
+          display: flex;
+          width: 100%;
+          flex-direction: column;
+          justify-content: flex-end;
+
+          .person-info-container {
+            font-family: 'Oswald', 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+
+            span {
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+
+    /*
+    &:hover {
+      .person-link {
+        &.person-cast-credit,
+        &.person-crew-credit {
+          .person-poster {
+          }
+
+          .person-info {
+            .person-info-container {
+              opacity: 0;
+            }
+          }
+        }
+      }
+    }
+    */
+  }
+}

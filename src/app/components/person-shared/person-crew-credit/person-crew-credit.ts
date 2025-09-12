@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-person-crew-credit',
@@ -6,6 +8,26 @@ import { Component } from '@angular/core';
   templateUrl: './person-crew-credit.html',
   styleUrl: './person-crew-credit.scss'
 })
-export class PersonCrewCredit {
+export class PersonCrewCredit implements OnInit {
+
+  @Input() crewRole: ResponsePersonCrewCredit = new ResponsePersonCrewCredit();
+
+  public posterSizeSmall: string = '';
+  public releaseYear: number = 0;
+
+  ngOnInit(): void {
+    this.setPoster();
+    this.setYear();
+  }
+
+  public setPoster(): void {
+    this.posterSizeSmall = this.crewRole.poster_path ? `${environment.imgUrl}${environment.posterSizeSmall}${this.crewRole.poster_path}` : 'img/default-images/movie_poster_notavailable_w500.png';
+    console.log(this.posterSizeSmall);
+  }
+
+  public setYear(): void {
+    const releaseDate: Date = new Date(this.crewRole.release_date);
+    this.releaseYear = releaseDate.getFullYear();
+  }
 
 }

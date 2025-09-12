@@ -16,7 +16,13 @@
               <p>This person has no acting roles in movies</p>
             </ng-container>
             <ng-container *ngIf="personMovieCredits.cast.length > 0">
-              <p>{{ personMovieCredits.cast | json }}</p>
+              <div class="row">
+                <ng-container *ngFor="let castRole of personMovieCredits.cast">
+                  <div class="col-12 col-lg-3">
+                    <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
+                  </div>
+                </ng-container>
+              </div>
             </ng-container>
           </ng-template>
         </li>
@@ -27,7 +33,13 @@
               <p>This person has no technical or production roles in movies</p>
             </ng-container>
             <ng-container *ngIf="personMovieCredits.crew.length > 0">
-              <p>{{ personMovieCredits.crew | json }}</p>
+              <div class="row">
+                <ng-container *ngFor="let crewRole of personMovieCredits.crew">
+                  <div class="col-12 col-lg-3">
+                    <app-person-crew-credit [crewRole]="crewRole"> </app-person-crew-credit>
+                  </div>
+                </ng-container>
+              </div>
             </ng-container>
           </ng-template>
         </li>

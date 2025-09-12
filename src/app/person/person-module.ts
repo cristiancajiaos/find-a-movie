@@ -9,6 +9,7 @@ import { PersonSharedModule } from '../components/person-shared/person-shared-mo
 import { PersonHeader } from './person-header/person-header';
 import { PersonOverview } from './person-overview/person-overview';
 import { PersonMovieCredits } from './person-movie-credits/person-movie-credits';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { PersonMovieCredits } from './person-movie-credits/person-movie-credits'
     SharedModule,
     NgbModule,
     FontAwesomeModule,
-    PersonSharedModule
+    PersonSharedModule,
+    RouterModule
   ]
 })
 export class PersonModule { }

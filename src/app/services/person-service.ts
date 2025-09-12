@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Person } from '../classes/person';
 import { lastValueFrom } from 'rxjs';
 import { Credits } from '../classes/credits';
+import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class PersonService {
     return await lastValueFrom(this.http.get<Person>(`/person/${id}`));
   }
 
-  public async getCredits(id: number): Promise<Credits> {
-    return await lastValueFrom(this.http.get<Credits>(`/person/${id}/movie_credits`) );
+  public async getCredits(id: number): Promise<ResponsePersonMovieCredits> {
+    return await lastValueFrom(this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`) );
   }
 
 }

@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Person } from '../../classes/person';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../services/person-service';
-import { Credits } from '../../classes/credits';
+import { ResponsePersonMovieCredits } from '../../classes/response-person-movie-credits';
 
 @Component({
   selector: 'app-person-movie-credits',
@@ -17,7 +16,7 @@ export class PersonMovieCredits implements OnInit, OnDestroy {
   public id: number = 0;
   public activeTab: number = 1;
 
-  public personMovieCredits: Credits = new Credits();
+  public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
 
   public loadingPersonMovieCredits: boolean = false;
 
@@ -48,8 +47,8 @@ export class PersonMovieCredits implements OnInit, OnDestroy {
     this.personMovieCreditsError = false;
     this.loadingPersonMovieCredits = true;
     this.personService.getCredits(this.id)
-    .then((credits) => {
-      this.personMovieCredits = credits;
+    .then((personMovieCredits) => {
+      this.personMovieCredits = personMovieCredits;
       this.personMovieCreditsFound = true;
     }).catch((error: HttpErrorResponse) => {
       this.handleError(error);
