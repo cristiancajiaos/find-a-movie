@@ -1,22 +1,41 @@
 <section class="person-credit">
-  <a [routerLink]="['/movie', castRole.id]">
+  <a
+    [routerLink]="['/movie', castRole.id]"
+    placement="bottom"
+    [popoverTitle]="castPopTitle"
+    [ngbPopover]="castPopContent"
+    [container]="'body'"
+    [popoverClass]="'person-popover'"
+    triggers="hover"
+  >
     <section class="person-link person-cast-credit">
-      <section class="person-poster"
-               [ngStyle]="{'background-image':'url('+posterSizeSmall+')'}">
-      </section>
+      <section
+        class="person-poster"
+        [ngStyle]="{ 'background-image': 'url(' + posterSizeSmall + ')' }"
+      ></section>
       <section class="person-info">
         <section class="person-info-container">
-          <span>{{castRole.title}}
-            (<ng-container *ngIf="releaseYear">{{releaseYear}}</ng-container>
+          <span
+            >{{ castRole.title }} (<ng-container *ngIf="releaseYear">{{
+              releaseYear
+            }}</ng-container>
             <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
           </span>
           <span>
-            <ng-container *ngIf="castRole.character"> {{castRole.character}}</ng-container>
+            <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
             <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
-
           </span>
         </section>
       </section>
     </section>
   </a>
+  <ng-template #castPopTitle>
+    {{ castRole.title }}
+    (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+    <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+  </ng-template>
+  <ng-template #castPopContent>
+    <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
+    <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
+  </ng-template>
 </section>

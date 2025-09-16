@@ -23,7 +23,6 @@ export class PersonCastCredit implements OnInit {
     this.posterSizeSmall = this.castRole.poster_path
       ? `${environment.imgUrl}${environment.posterSizeSmall}${this.castRole.poster_path}`
       : 'img/default-images/movie_poster_notavailable_w500.png';
-   console.log(this.posterSizeSmall);
   }
 
   public setYear(): void {

@@ -7,6 +7,7 @@ import { PersonNotFound } from './person-not-found/person-not-found';
 import { PersonCastCredit } from './person-cast-credit/person-cast-credit';
 import { PersonCrewCredit } from './person-crew-credit/person-crew-credit';
 import { RouterModule } from '@angular/router';
+import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     FontAwesomeModule,
-    RouterModule
+    RouterModule,
+    NgbModule
   ],
   exports: [
     PersonError,
