@@ -27,11 +27,13 @@ export class MovieOverview implements OnInit, OnDestroy {
   public responseVideo: ResponseVideo = new ResponseVideo();
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
+  public movieHomepage: string = '';
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
   public movieError: boolean = false;
   public errorMessage: string = '';
+
 
   public loadingCredits: boolean = false;
   public loadingVideo: boolean = false;
@@ -66,6 +68,7 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.movieFound = true;
         this.setReleaseDate();
         this.setMovieIMDB();
+        this.setMovieHomepage();
       })
       .catch((error: HttpErrorResponse) => {
         this.handleError(error);
@@ -110,6 +113,12 @@ export class MovieOverview implements OnInit, OnDestroy {
   private setMovieIMDB(): void {
     if (this.movie.imdb_id) {
        this.movieIMDB = `https://www.imdb.com/title/${this.movie.imdb_id}/`;
+    }
+  }
+
+  private setMovieHomepage(): void {
+    if (this.movie.homepage) {
+      this.movieHomepage = `${this.movie.homepage}`;
     }
   }
 
