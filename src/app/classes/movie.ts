@@ -1,4 +1,6 @@
 import { Genre } from "./movie/genre";
+import { ProductionCompany } from "./movie/production-company";
+import { ProductionCountry } from "./movie/production-country";
 import { SpokenLanguage } from "./movie/spoken-language";
 
 export class Movie {
@@ -16,6 +18,8 @@ export class Movie {
   public overview: string;
   public popularity: number;
   public poster_path: string;
+  public production_companies: ProductionCompany[];
+  public production_countries: ProductionCountry[];
   public release_date: string;
   public revenue: number;
   public runtime: number;
@@ -42,6 +46,8 @@ export class Movie {
     this.overview = '';
     this.popularity = 0;
     this.poster_path = '';
+    this.production_companies = [];
+    this.production_countries = [];
     this.release_date = '';
     this.revenue = 0;
     this.runtime = 0;

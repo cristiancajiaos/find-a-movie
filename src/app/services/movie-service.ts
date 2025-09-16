@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { lastValueFrom, map } from 'rxjs';
+import { filter, lastValueFrom, map } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { CastMember } from '../classes/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/crew-member';
+import { ResponseVideo } from '../classes/response-video';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,12 @@ export class MovieService {
         map(credits => credits.crew)
       )
     )
+  }
+
+  public async getMovieVideos(id: number): Promise<ResponseVideo> {
+    return await lastValueFrom(
+      this.http.get<ResponseVideo>(`/movie/${id}/videos`)
+    );
   }
 
   public getFormattedMovieTitle(title: string, releaseDate: string): string {

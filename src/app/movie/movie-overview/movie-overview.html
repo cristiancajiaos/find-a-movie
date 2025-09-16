@@ -4,7 +4,10 @@
   </ng-container>
   <ng-container *ngIf="!loadingMovie">
     <ng-container *ngIf="movieError">
-      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadMovieOverview($event)"></app-movie-error>
+      <app-movie-error
+        [errorMessage]="errorMessage"
+        (reload)="reloadMovieOverview($event)"
+      ></app-movie-error>
     </ng-container>
     <ng-container *ngIf="!movieError">
       <ng-container *ngIf="movie.tagline">
@@ -17,6 +20,149 @@
           <p>{{ movie.overview }}</p>
         </section>
       </ng-container>
+      <!-- Cast / Credits -->
+      <ng-container *ngIf="!loadingCredits">
+        <section class="movie-general-credits">
+          <h3>Cast / Credits</h3>
+          <!---
+          <p>{{credits | json}}</p>
+          -->
+          <div class="row">
+            <div class="col-12 col-lg-4">
+              <div class="d-grid">
+                <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
+                  See Full Cast
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="d-grid">
+                <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
+                  See Featured Crew</a
+                >
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="d-grid">
+                <a [routerLink]="['/movie', movie.id, 'full-crew']" class="btn btn-primary">
+                  See Full Crew</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </ng-container>
+      <!-- Video -->
+      <ng-container *ngIf="!loadingVideo">
+        <ng-container *ngIf="responseVideo.results.length > 0">
+          <section class="movie-video">
+            <h3>Video</h3>
+            <p>Here goes video</p>
+            <!--
+            <p>{{responseVideo | json}}</p>
+            -->
+          </section>
+        </ng-container>
+      </ng-container>
+
+      <hr />
+      <!-- Movie Info -->
+      <section class="movie-info">
+        <h3>Movie Info</h3>
+        <div class="table table-responsive">
+          <table class="table">
+            <tbody>
+              <ng-container *ngIf="movie.genres.length > 0">
+                <tr>
+                  <td>Genre<ng-container *ngIf="movie.genres.length > 1">s</ng-container>:</td>
+                  <td>
+                    <ng-container *ngFor="let genres of movie.genres">
+                      {{ genres.name }}
+                      <br />
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="movie.production_companies.length > 0">
+                <tr>
+                  <td>
+                    Production Compan<ng-container *ngIf="movie.production_companies.length == 1"
+                      >y</ng-container
+                    >
+                    <ng-container *ngIf="movie.production_companies.length > 1">ies</ng-container>:
+                  </td>
+                  <td>
+                    <ng-container *ngFor="let productionCompany of movie.production_companies">
+                      {{ productionCompany.name }}
+                      <br />
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="movie.production_countries.length > 0">
+                <tr>
+                  <td>
+                    Production Countr<ng-container *ngIf="movie.production_countries.length == 1"
+                      >y</ng-container
+                    >
+                    <ng-container *ngIf="movie.production_countries.length > 1">ies</ng-container>:
+                  </td>
+                  <td>
+                    <ng-container *ngFor="let productionCountry of movie.production_countries">
+                      {{ productionCountry.name }}
+                      <br />
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container>
+                <tr>
+                  <td>Release Date:</td>
+                  <td>{{ movieReleaseDate | date : 'longDate' }}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="movie.runtime && movie.runtime > 0">
+                <tr>
+                  <td>Runtime:</td>
+                  <td>{{ movie.runtime }} min</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="movie.budget && movie.budget > 0">
+                <tr>
+                  <td>Budget:</td>
+                  <td>{{ movie.budget | currency : 'USD' }}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="movie.revenue && movie.revenue > 0">
+                <tr>
+                  <td>Box Office:</td>
+                  <td>{{ movie.revenue | currency : 'USD' }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- External Links -->
+      <section class="movie-external-links">
+        <h3>External Links</h3>
+        <ng-container *ngIf="movie.imdb_id">
+          <div class="d-grid mb-2">
+            <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
+              <fa-icon [icon]="imdbIcon"></fa-icon>
+              View IMDB
+            </a>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="movie.homepage">
+          <div class="d-grid mb-2">
+            <a [href]="movie.homepage" class="btn btn-primary" target="_blank">
+              <fa-icon [icon]="globeIcon"></fa-icon>
+              View Homepage
+            </a>
+          </div>
+        </ng-container>
+      </section>
     </ng-container>
   </ng-container>
 </section>
