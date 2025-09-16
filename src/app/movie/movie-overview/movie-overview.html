@@ -1,18 +1,22 @@
 <section class="movie-overview">
   <ng-container *ngIf="loadingMovie">
-    <ng-container *ngIf="movie.tagline">
-      <section class="movie-tagline">
-        <p>{{movie.tagline}}</p>
-      </section>
-    </ng-container>
-
-    <ng-container *ngIf="movie.overview">
-      <section class="movie-overview">
-        <p>{{movie.overview}}</p>
-      </section>
-    </ng-container>
+    <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
   </ng-container>
   <ng-container *ngIf="!loadingMovie">
-    <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
+    <ng-container *ngIf="movieError">
+      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadMovieOverview($event)"></app-movie-error>
+    </ng-container>
+    <ng-container *ngIf="!movieError">
+      <ng-container *ngIf="movie.tagline">
+        <section class="movie-tagline">
+          <p>{{ movie.tagline }}</p>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="movie.overview">
+        <section class="movie-overview">
+          <p>{{ movie.overview }}</p>
+        </section>
+      </ng-container>
+    </ng-container>
   </ng-container>
 </section>
