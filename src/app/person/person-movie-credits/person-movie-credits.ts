@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../services/person-service';
 import { ResponsePersonMovieCredits } from '../../classes/response-person-movie-credits';
+import { LocalStorageService } from '../../services/local-storage-service';
 
 @Component({
   selector: 'app-person-movie-credits',
@@ -28,7 +29,9 @@ export class PersonMovieCredits implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private personService: PersonService
+    private personService: PersonService,
+    private localStorageService: LocalStorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +67,10 @@ export class PersonMovieCredits implements OnInit, OnDestroy {
 
   public reloadMovieCredits(event: boolean): void {
     this.getPersonMovieCredits();
+  }
+
+  public foo(): void {
+    this.router.navigateByUrl('/person/18', {replaceUrl: true});
   }
 
   ngOnDestroy(): void {

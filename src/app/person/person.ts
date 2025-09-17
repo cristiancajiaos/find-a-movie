@@ -1,10 +1,12 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TitleService } from '../services/title-service';
 import { Person } from '../classes/person';
 import { PersonService } from '../services/person-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonHeader } from './person-header/person-header';
+import { LocalStorageService } from '../services/local-storage-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-person',
@@ -12,7 +14,7 @@ import { PersonHeader } from './person-header/person-header';
   templateUrl: './person.html',
   styleUrl: './person.scss'
 })
-export class PersonComponent implements OnInit, AfterContentInit {
+export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
 
   public id: number = 0;
 
@@ -27,19 +29,24 @@ export class PersonComponent implements OnInit, AfterContentInit {
 
   public personBiography: string = '';
 
+  public routeSubscription!: Subscription;
+
   @ViewChild('personHeader') personHeader!: PersonHeader;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private titleService: TitleService,
     private personService: PersonService,
-    private cd: ChangeDetectorRef
+    private localStorageService: LocalStorageService,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.cd.detectChanges();
-    this.id = parseInt(this.activatedRoute.snapshot.params['id']);
-    this.getPerson();
+    this.routeSubscription = this.activatedRoute.params.subscribe(params => {
+      this.id = parseInt(params['id']);
+      this.getPerson();
+    });
   }
 
   ngAfterContentInit(): void {
@@ -53,6 +60,7 @@ export class PersonComponent implements OnInit, AfterContentInit {
     this.personService.getPerson(this.id)
     .then(person => {
       this.person = person;
+      this.localStorageService.setItem("person", person);
       this.setPersonTitle();
       this.setPersonBiography();
     }).catch((error: HttpErrorResponse) => {
@@ -83,6 +91,12 @@ export class PersonComponent implements OnInit, AfterContentInit {
 
   private setPersonTitle(): void {
     this.titleService.setTitle(this.person.name);
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 
 }
