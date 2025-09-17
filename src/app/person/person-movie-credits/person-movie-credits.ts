@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../services/person-service';
 import { ResponsePersonMovieCredits } from '../../classes/response-person-movie-credits';
+import { LocalStorageService } from '../../services/local-storage-service';
 
 @Component({
   selector: 'app-person-movie-credits',
@@ -28,7 +29,8 @@ export class PersonMovieCredits implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private personService: PersonService
+    private personService: PersonService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {

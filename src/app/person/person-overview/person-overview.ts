@@ -4,15 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../services/person-service';
+import { LocalStorageService } from '../../services/local-storage-service';
 
 @Component({
   selector: 'app-person-overview',
   standalone: false,
   templateUrl: './person-overview.html',
-  styleUrl: './person-overview.scss'
+  styleUrl: './person-overview.scss',
 })
 export class PersonOverview implements OnInit, OnDestroy {
-
   public id: number = 0;
 
   public person: Person = new Person();
@@ -29,36 +29,48 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private personService: PersonService
-  ) {
-
-  }
-
+    private personService: PersonService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.setId();
   }
 
   private setId(): void {
-    this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(params => {
-      this.id = parseInt(params['id']);
-      this.getPerson();
-    });
+    this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
+      (params) => {
+        this.id = parseInt(params['id']);
+        this.getPerson();
+      }
+    );
   }
 
   private getPerson(): void {
     this.personOverviewError = false;
     this.loadingPerson = true;
-    this.personService.getPerson(this.id)
-    .then((person) => {
-      this.person = person;
-      this.personFound = true;
-      this.setPersonBiography();
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
+
+    const localPerson: Person = this.localStorageService.getItem('person');
+    
+    if (localPerson) {
+      this.person = localPerson;
       this.loadingPerson = false;
-    });
+      this.setPersonBiography();
+    } else {
+      this.personService
+        .getPerson(this.id)
+        .then((person) => {
+          this.person = person;
+          this.personFound = true;
+          this.setPersonBiography();
+        })
+        .catch((error: HttpErrorResponse) => {
+          this.handleError(error);
+        })
+        .finally(() => {
+          this.loadingPerson = false;
+        });
+    }
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -81,5 +93,4 @@ export class PersonOverview implements OnInit, OnDestroy {
       this.activatedRouteParentSubscription.unsubscribe();
     }
   }
-
 }

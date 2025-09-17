@@ -5,6 +5,7 @@ import { Person } from '../classes/person';
 import { PersonService } from '../services/person-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonHeader } from './person-header/person-header';
+import { LocalStorageService } from '../services/local-storage-service';
 
 @Component({
   selector: 'app-person',
@@ -33,6 +34,7 @@ export class PersonComponent implements OnInit, AfterContentInit {
     private activatedRoute: ActivatedRoute,
     private titleService: TitleService,
     private personService: PersonService,
+    private localStorageService: LocalStorageService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -53,6 +55,7 @@ export class PersonComponent implements OnInit, AfterContentInit {
     this.personService.getPerson(this.id)
     .then(person => {
       this.person = person;
+      this.localStorageService.setItem("person", person);
       this.setPersonTitle();
       this.setPersonBiography();
     }).catch((error: HttpErrorResponse) => {
