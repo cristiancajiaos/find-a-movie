@@ -165,13 +165,13 @@
               <ng-container *ngIf="movie.budget && movie.budget > 0">
                 <tr>
                   <td>Budget:</td>
-                  <td>USD {{ movie.budget | currency : 'USD' }}</td>
+                  <td>USD {{ movie.budget | currency: 'USD':'symbol':'1.0' }}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="movie.revenue && movie.revenue > 0">
                 <tr>
                   <td>Box Office:</td>
-                  <td>USD {{ movie.revenue | currency : 'USD' }}</td>
+                  <td>USD {{ movie.revenue | currency: 'USD':'symbol':'1.0' }}</td>
                 </tr>
               </ng-container>
             </tbody>
