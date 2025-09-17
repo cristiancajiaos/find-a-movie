@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseVideo } from '../../classes/response-video';
 import { faImdb, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { LocalStorageService } from '../../services/local-storage-service';
 
 @Component({
   selector: 'app-movie-overview',
@@ -16,7 +17,6 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './movie-overview.scss',
 })
 export class MovieOverview implements OnInit, OnDestroy {
-
   public imdbIcon: IconDefinition = faImdb;
   public globeIcon: IconDefinition = faGlobe;
 
@@ -31,24 +31,25 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
-  public movieError: boolean = false;
+  public movieOverviewError: boolean = false;
   public errorMessage: string = '';
-
 
   public loadingCredits: boolean = false;
   public loadingVideo: boolean = false;
 
   public activatedRouteParentSubscription: Subscription | undefined;
 
-  constructor(private activatedRoute: ActivatedRoute, private movieService: MovieService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private movieService: MovieService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.setId();
   }
 
   private setId(): void {
-    this.movieError = false;
-    this.loadingMovie = true;
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
         this.id = parseInt(params['id']);
@@ -60,22 +61,34 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private getMovie() {
+    this.movieOverviewError = false;
     this.loadingMovie = true;
-    this.movieService
-      .getMovie(this.id)
-      .then((movie) => {
-        this.movie = movie;
-        this.movieFound = true;
-        this.setReleaseDate();
-        this.setMovieIMDB();
-        this.setMovieHomepage();
-      })
-      .catch((error: HttpErrorResponse) => {
-        this.handleError(error);
-      })
-      .finally(() => {
-        this.loadingMovie = false;
-      });
+
+    const localMovie: Movie = this.localStorageService.getItem('movie');
+    
+    if (localMovie) {
+      this.movie = localMovie;
+      this.loadingMovie = false;
+      this.setReleaseDate();
+      this.setMovieIMDB();
+      this.setMovieHomepage();
+    } else {
+      this.movieService
+        .getMovie(this.id)
+        .then((movie) => {
+          this.movie = movie;
+          this.movieFound = true;
+          this.setReleaseDate();
+          this.setMovieIMDB();
+          this.setMovieHomepage();
+        })
+        .catch((error: HttpErrorResponse) => {
+          this.handleError(error);
+        })
+        .finally(() => {
+          this.loadingMovie = false;
+        });
+    }
   }
 
   private getCredits() {
@@ -112,7 +125,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   private setMovieIMDB(): void {
     if (this.movie.imdb_id) {
-       this.movieIMDB = `https://www.imdb.com/title/${this.movie.imdb_id}/`;
+      this.movieIMDB = `https://www.imdb.com/title/${this.movie.imdb_id}/`;
     }
   }
 
@@ -122,9 +135,8 @@ export class MovieOverview implements OnInit, OnDestroy {
     }
   }
 
-
   private handleError(error: HttpErrorResponse): void {
-    this.movieError = true;
+    this.movieOverviewError = true;
     this.errorMessage = error.message;
   }
 
