@@ -8,7 +8,7 @@
       </app-movie-error>
     </ng-container>
     <ng-container *ngIf="!movieCrewError">
-      <h2>Crew</h2>
+      <h2>Featured Crew</h2>
       <div class="table-responsive">
         <table class="table">
           <tbody>
@@ -83,7 +83,7 @@
             </ng-container>
             <ng-container *ngIf="coProducing.length > 0">
               <tr>
-                <td>Co-Producer<ng-container *ngIf="coProducing.length > 1">s</ng-container></td>
+                <td>Co-Producer<ng-container *ngIf="coProducing.length > 1">s</ng-container>:</td>
                 <td>
                   <ng-container *ngFor="let coProducer of coProducing">
                     <a [routerLink]="['/person', coProducer.id]">

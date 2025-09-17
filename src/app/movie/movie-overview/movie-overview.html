@@ -19,31 +19,66 @@
         <section class="movie-overview">
           <p>{{ movie.overview }}</p>
         </section>
+        <hr/>
       </ng-container>
-      <!-- Cast / Credits -->
       <ng-container *ngIf="!loadingCredits">
-        <section class="movie-general-credits">
-          <h3>Cast / Credits</h3>
-          <!---
-          <p>{{credits | json}}</p>
-          -->
+        <section class="movie-main-cast">
+          <h3>Main Cast</h3>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Starring:</td>
+                  <td>...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-grid mb-2">
+            <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
+              See Full Cast
+            </a>
+          </div>
+        </section>
+        <hr/>
+        <section class="movie-main-crew">
+          <h3>Main Crew</h3>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Directed By:</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>Written By:</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>Based on the Work and/or Characters By (if applies):</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>Produced By:</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>Starring:</td>
+                  <td>...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="row">
-            <div class="col-12 col-lg-4">
-              <div class="d-grid">
-                <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
-                  See Full Cast
-                </a>
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="d-grid">
+            <div class="col-12 col-lg-6">
+              <div class="d-grid mb-2">
                 <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
                   See Featured Crew</a
                 >
               </div>
             </div>
-            <div class="col-12 col-lg-4">
-              <div class="d-grid">
+            <div class="col-12 col-lg-6">
+              <div class="d-grid mb-2">
                 <a [routerLink]="['/movie', movie.id, 'full-crew']" class="btn btn-primary">
                   See Full Crew</a
                 >
@@ -51,6 +86,7 @@
             </div>
           </div>
         </section>
+        <hr/>
       </ng-container>
       <!-- Video -->
       <ng-container *ngIf="!loadingVideo">
@@ -62,10 +98,9 @@
             <p>{{responseVideo | json}}</p>
             -->
           </section>
+          <hr/>
         </ng-container>
       </ng-container>
-
-      <hr />
       <!-- Movie Info -->
       <section class="movie-info">
         <h3>Movie Info</h3>
@@ -130,19 +165,20 @@
               <ng-container *ngIf="movie.budget && movie.budget > 0">
                 <tr>
                   <td>Budget:</td>
-                  <td>{{ movie.budget | currency : 'USD' }}</td>
+                  <td>USD {{ movie.budget | currency : 'USD' }}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="movie.revenue && movie.revenue > 0">
                 <tr>
                   <td>Box Office:</td>
-                  <td>{{ movie.revenue | currency : 'USD' }}</td>
+                  <td>USD {{ movie.revenue | currency : 'USD' }}</td>
                 </tr>
               </ng-container>
             </tbody>
           </table>
         </div>
       </section>
+      <hr/>
       <!-- External Links -->
       <section class="movie-external-links">
         <h3>External Links</h3>
