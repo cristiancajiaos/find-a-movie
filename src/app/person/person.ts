@@ -38,7 +38,6 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
     private titleService: TitleService,
     private personService: PersonService,
     private localStorageService: LocalStorageService,
-    private router: Router,
     private cd: ChangeDetectorRef,
   ) {}
 
