@@ -9,6 +9,8 @@ import { ResponseVideo } from '../../classes/response-video';
 import { faImdb, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../services/local-storage-service';
+import { CastMember } from '../../classes/credits/cast-member';
+import { CrewMember } from '../../classes/credits/crew-member';
 
 @Component({
   selector: 'app-movie-overview',
@@ -28,6 +30,15 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
+
+  public mainCast: CastMember[] = [];
+
+  public direction: CrewMember[] = [];
+  public writing: CrewMember[] = [];
+  public story: CrewMember[] = [];
+  public basedOnWorkBy: CrewMember[] = [];
+  public producing: CrewMember[] = [];
+  public executiveProducing: CrewMember[] = [];
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
@@ -65,7 +76,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.loadingMovie = true;
 
     const localMovie: Movie = this.localStorageService.getItem('movie');
-    
+
     if (localMovie) {
       this.movie = localMovie;
       this.loadingMovie = false;
@@ -97,6 +108,8 @@ export class MovieOverview implements OnInit, OnDestroy {
       .getMovieCredits(this.id)
       .then((credits) => {
         this.credits = credits;
+        this.setMainCast();
+        this.setAndFilterMainCrew();
       })
       .catch((error) => {})
       .finally(() => {
@@ -133,6 +146,29 @@ export class MovieOverview implements OnInit, OnDestroy {
     if (this.movie.homepage) {
       this.movieHomepage = `${this.movie.homepage}`;
     }
+  }
+
+  private setMainCast(): void {
+    if (this.credits) {
+      this.mainCast = this.credits.cast.slice(0,7);
+    }
+  }
+
+  private setAndFilterMainCrew(): void {
+    if (this.credits) {
+      this.direction = this.credits.crew.filter(crewMember => crewMember.job == 'Director');
+
+      this.writing = this.credits.crew.filter(crewMember => crewMember.job == 'Screenplay');
+
+      this.story = this.credits.crew.filter(crewMember => crewMember.job == 'Story');
+
+      this.basedOnWorkBy = this.credits.crew.filter(crewMember => crewMember.job == 'Novel');
+
+      this.producing = this.credits.crew.filter(crewMember => crewMember.job == 'Producer');
+
+      this.executiveProducing = this.credits.crew.filter(crewMember => crewMember.job == 'Executive Producer');
+    }
+
   }
 
   private handleError(error: HttpErrorResponse): void {

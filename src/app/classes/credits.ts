@@ -1,5 +1,5 @@
-import { CastMember } from "./cast-member";
-import { CrewMember } from "./crew-member";
+import { CastMember } from "./credits/cast-member";
+import { CrewMember } from "./credits/crew-member";
 
 export class Credits {
   public id: number;

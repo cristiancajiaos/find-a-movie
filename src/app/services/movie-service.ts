@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
 import { filter, lastValueFrom, map } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { CastMember } from '../classes/cast-member';
+import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
-import { CrewMember } from '../classes/crew-member';
+import { CrewMember } from '../classes/credits/crew-member';
 import { ResponseVideo } from '../classes/response-video';
 
 @Injectable({

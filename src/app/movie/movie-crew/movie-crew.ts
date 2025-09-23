@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CrewMember } from '../../classes/crew-member';
+import { CrewMember } from '../../classes/credits/crew-member';
 import { MovieService } from '../../services/movie-service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -58,7 +58,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private getCrew(): void {
-    this.movieCrewError = false; 
+    this.movieCrewError = false;
     this.loadingCrew = true;
     this.movieService.getMovieCrew(this.id).then(crew => {
       this.movieCrew = crew;

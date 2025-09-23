@@ -19,74 +19,150 @@
         <section class="movie-overview">
           <p>{{ movie.overview }}</p>
         </section>
-        <hr/>
+        <hr />
       </ng-container>
       <ng-container *ngIf="!loadingCredits">
-        <section class="movie-main-cast">
-          <h3>Main Cast</h3>
-          <div class="table-responsive">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>Starring:</td>
-                  <td>...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="d-grid mb-2">
-            <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
-              See Full Cast
-            </a>
-          </div>
-        </section>
-        <hr/>
-        <section class="movie-main-crew">
-          <h3>Main Crew</h3>
-          <div class="table-responsive">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>Directed By:</td>
-                  <td>...</td>
-                </tr>
-                <tr>
-                  <td>Written By:</td>
-                  <td>...</td>
-                </tr>
-                <tr>
-                  <td>Based on the Work and/or Characters By (if applies):</td>
-                  <td>...</td>
-                </tr>
-                <tr>
-                  <td>Produced By:</td>
-                  <td>...</td>
-                </tr>
-                <tr>
-                  <td>Starring:</td>
-                  <td>...</td>
-                </tr>
-              </tbody>
-            </table>
+        <section class="movie-main-credits">
+          <div class="row">
+            <div class="col-12 col-lg-4">
+              <h3>Main Cast</h3>
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>Starring:</td>
+                      <td class="text-end">
+                        <ng-container *ngFor="let cast of mainCast">
+                          <a [routerLink]="['/person', cast.id]">
+                            {{ cast.name }}
+                          </a>
+                          <br />
+                        </ng-container>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-12 col-lg-8">
+              <section class="movie-main-crew">
+                <h3>Main Crew</h3>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <ng-container *ngIf="direction.length > 0">
+                        <tr>
+                          <td>Directed By:</td>
+                          <td class="text-end">
+                            <ng-container *ngFor="let director of direction">
+                              <a [routerLink]="['/person', director.id]">
+                                {{ director.name }}
+                              </a>
+                              <br />
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="writing.length > 0">
+                        <tr>
+                          <td>Written By:</td>
+                          <td class="text-end">
+                            <ng-container *ngFor="let writer of writing">
+                              <a [routerLink]="['/person', writer.id]">
+                                {{ writer.name }}
+                              </a>
+                              <br />
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="story.length > 0">
+                        <tr>
+                          <td>Story By:</td>
+                          <td class="text-end">
+                            <ng-container *ngFor="let storyArtist of story">
+                              <a [routerLink]="['/person', storyArtist.id]">
+                                {{ storyArtist.name }}
+                              </a>
+                              <br />
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="basedOnWorkBy.length > 0">
+                        <tr>
+                          <td>Based on the Work By:</td>
+                          <td class="text-end">
+                            <ng-container *ngFor="let author of basedOnWorkBy">
+                              <a [routerLink]="['/person', author.id]">
+                                {{ author.name }}
+                              </a>
+                              <br />
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="producing.length > 0">
+                        <tr>
+                          <td>Produced By:</td>
+                          <td class="text-end">
+                            <ng-container *ngFor="let producer of producing">
+                              <a [routerLink]="['/person', producer.id]">
+                                {{ producer.name }}
+                              </a>
+                              <br />
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="executiveProducing.length > 0">
+                        <tr>
+                          <td>
+                            Executive Producer<ng-container *ngIf="executiveProducing.length > 1"
+                              >s</ng-container
+                            >:
+                          </td>
+                          <td class="text-end">
+                            <ng-container *ngFor="let executiveProducer of executiveProducing">
+                              <a [routerLink]="['/person', executiveProducer.id]">
+                                {{ executiveProducer.name }}
+                              </a>
+                              <br />
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
           </div>
           <div class="row">
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
-                  See Featured Crew</a
-                >
+                <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
+                  See Full Cast
+                </a>
               </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-4">
+              <div class="d-grid mb-2">
+                <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
+                  See Featured Crew
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
                 <a [routerLink]="['/movie', movie.id, 'full-crew']" class="btn btn-primary">
-                  See Full Crew</a
-                >
+                  See Full Crew
+                </a>
               </div>
             </div>
           </div>
         </section>
-        <hr/>
+        <hr />
       </ng-container>
       <!-- Video -->
       <ng-container *ngIf="!loadingVideo">
@@ -98,7 +174,7 @@
             <p>{{responseVideo | json}}</p>
             -->
           </section>
-          <hr/>
+          <hr />
         </ng-container>
       </ng-container>
       <!-- Movie Info -->
@@ -165,20 +241,20 @@
               <ng-container *ngIf="movie.budget && movie.budget > 0">
                 <tr>
                   <td>Budget:</td>
-                  <td>USD {{ movie.budget | currency: 'USD':'symbol':'1.0' }}</td>
+                  <td>USD {{ movie.budget | currency : 'USD' : 'symbol' : '1.0' }}</td>
                 </tr>
               </ng-container>
               <ng-container *ngIf="movie.revenue && movie.revenue > 0">
                 <tr>
                   <td>Box Office:</td>
-                  <td>USD {{ movie.revenue | currency: 'USD':'symbol':'1.0' }}</td>
+                  <td>USD {{ movie.revenue | currency : 'USD' : 'symbol' : '1.0' }}</td>
                 </tr>
               </ng-container>
             </tbody>
           </table>
         </div>
       </section>
-      <hr/>
+      <hr />
       <!-- External Links -->
       <section class="movie-external-links">
         <h3>External Links</h3>

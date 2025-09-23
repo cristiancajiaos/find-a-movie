@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie-service';
-import { CrewMember } from '../../classes/crew-member';
+import { CrewMember } from '../../classes/credits/crew-member';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
