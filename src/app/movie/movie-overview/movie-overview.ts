@@ -46,10 +46,14 @@ export class MovieOverview implements OnInit, OnDestroy {
   public errorMessage: string = '';
 
   public loadingCredits: boolean = false;
-  public loadingVideo: boolean = false;
   public movieCreditsFound: boolean = false;
   public movieCreditsError: boolean = false;
   public movieCreditsErrorMessage: string = '';
+
+  public loadingTrailer: boolean = false;
+  public movieTrailerFound: boolean = false;
+  public movieTrailerError: boolean = false;
+  public movieTrailerErrorMessage: string = '';
 
   public activatedRouteParentSubscription: Subscription | undefined;
 
@@ -124,15 +128,18 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private getVideo(): void {
-    this.loadingVideo = true;
+    this.loadingTrailer = true;
     this.movieService
       .getMovieVideos(this.id)
       .then((responseVideo) => {
         this.responseVideo = responseVideo;
+        this.movieTrailerFound = true;
       })
-      .catch((error) => {})
+      .catch((error: HttpErrorResponse) => {
+        this.handleTrailerError(error);
+      })
       .finally(() => {
-        this.loadingVideo = false;
+        this.loadingTrailer = false;
       });
   }
 
@@ -185,7 +192,11 @@ export class MovieOverview implements OnInit, OnDestroy {
   private handleCreditsError(error: HttpErrorResponse): void {
     this.movieCreditsError = true;
     this.movieCreditsErrorMessage = error.message;
+  }
 
+  private handleTrailerError(error: HttpErrorResponse): void {
+    this.movieTrailerError = true;
+    this.movieTrailerErrorMessage = error.message;
   }
 
   public reloadMovieOverview(event: boolean) {
