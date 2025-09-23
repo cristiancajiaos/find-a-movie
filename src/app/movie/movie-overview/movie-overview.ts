@@ -158,7 +158,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     if (this.credits) {
       this.direction = this.credits.crew.filter(crewMember => crewMember.job == 'Director');
 
-      this.writing = this.credits.crew.filter(crewMember => crewMember.job == 'Screenplay');
+      this.writing = this.credits.crew.filter(crewMember => crewMember.job == 'Screenplay' || crewMember.job == 'Writer');
 
       this.story = this.credits.crew.filter(crewMember => crewMember.job == 'Story');
 
