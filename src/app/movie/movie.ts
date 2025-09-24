@@ -103,6 +103,7 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   private setTitle(): void {
     this.formattedTitle = this.movieService.getFormattedMovieTitle(
       this.movie.title,
+      this.movie.original_title,
       this.movie.release_date
     );
     this.titleService.setTitle(this.formattedTitle);

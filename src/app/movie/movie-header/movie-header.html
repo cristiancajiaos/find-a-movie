@@ -8,7 +8,12 @@
       <div class="header-movie-info">
         <h1>
           <fa-icon [icon]="film" [fixedWidth]="true"></fa-icon>
-          {{ movie.title }}
+          <ng-container *ngIf="movie.title == movie.original_title">
+            {{ movie.title }}
+          </ng-container>
+          <ng-container *ngIf="movie.title != movie.original_title">
+            {{movie.original_title}} <small>({{movie.title}})</small>
+          </ng-container>
         </h1>
         <h2>
           <ng-container *ngIf="year">

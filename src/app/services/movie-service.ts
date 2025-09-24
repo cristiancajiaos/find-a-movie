@@ -51,11 +51,17 @@ export class MovieService {
     );
   }
 
-  public getFormattedMovieTitle(title: string, releaseDate: string): string {
+  public getFormattedMovieTitle(title: string, originalTitle: string, releaseDate: string): string {
     const movieTitle: string = title;
     const movieYearDate: Date = new Date(releaseDate);
     const movieYear: number = movieYearDate.getFullYear();
-    const titleStr: string = `${movieTitle}` + (movieYear ? ` (${movieYear})` : '');
+    let movieFormattedTitle: string = '';
+    if (movieTitle == originalTitle) {
+      movieFormattedTitle = `${movieTitle}`;
+    } else {
+      movieFormattedTitle = `${originalTitle} (${movieTitle})`;
+    }
+    const titleStr: string = `${movieFormattedTitle} ${movieYear ? '(' : ''}${movieYear ? movieYear : ''}${movieYear ? ')' : ''}`;
     return titleStr;
   }
 
