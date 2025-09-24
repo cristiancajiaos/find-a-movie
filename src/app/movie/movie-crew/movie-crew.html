@@ -38,6 +38,19 @@
                 </td>
               </tr>
             </ng-container>
+            <ng-container *ngIf="story.length > 0">
+              <tr>
+                <td>Story By:</td>
+                <td>
+                  <ng-container *ngFor="let storyArtist of story">
+                    <a [routerLink]="['/person', storyArtist.id]">
+                      {{ storyArtist.name }}
+                    </a>
+                    <br />
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
             <ng-container *ngIf="basedOnWorkBy.length > 0">
               <tr>
                 <td>Based on Work By:</td>
