@@ -187,9 +187,24 @@
             <ng-container *ngIf="movieTrailerFound">
               <section class="movie-video">
                 <h3>Trailer</h3>
-                <p>Here goes video</p>
+                <ng-container *ngIf="movieTrailerFound">
+                  <div class="row">
+                    <div class="col-12">
+                      <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="!movieTrailerFound">
+                  <ng-container *ngIf="!movieTrailerError">
+                    <p>No trailer found</p>
+                  </ng-container>
+                  <ng-container *ngIf="movieTrailerError">
+                    <p>
+                      Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
+                    </p>
+                  </ng-container>
+                </ng-container>
               </section>
-              <hr />
             </ng-container>
             <ng-container *ngIf="!movieTrailerFound">
               <ng-container *ngIf="movieTrailerError">
@@ -201,10 +216,10 @@
               </ng-container>
               <ng-container *ngIf="!movieTrailerError">
                 <section class="no-trailer-available">
+                  <h3>Trailer</h3>
                   <p>No trailer available</p>
                 </section>
               </ng-container>
-              <hr />
             </ng-container>
           </ng-container>
         </div>
@@ -294,25 +309,27 @@
         </div>
       </div>
       <hr />
-      <section class="movie-external-links">
-        <h3>External Links</h3>
-        <ng-container *ngIf="movie.imdb_id">
-          <div class="d-grid mb-2">
-            <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
-              <fa-icon [icon]="imdbIcon"></fa-icon>
-              View IMDB
-            </a>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="movie.homepage">
-          <div class="d-grid mb-2">
-            <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
-              <fa-icon [icon]="globeIcon"></fa-icon>
-              View Homepage
-            </a>
-          </div>
-        </ng-container>
-      </section>
+      <ng-container *ngIf="movie.imdb_id || movie.homepage">
+        <section class="movie-external-links">
+          <h3>External Links</h3>
+          <ng-container *ngIf="movie.imdb_id">
+            <div class="d-grid mb-2">
+              <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
+                <fa-icon [icon]="imdbIcon"></fa-icon>
+                View IMDB
+              </a>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="movie.homepage">
+            <div class="d-grid mb-2">
+              <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
+                <fa-icon [icon]="globeIcon"></fa-icon>
+                View Homepage
+              </a>
+            </div>
+          </ng-container>
+        </section>
+      </ng-container>
     </ng-container>
   </ng-container>
 </section>

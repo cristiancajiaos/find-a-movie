@@ -11,6 +11,8 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../services/local-storage-service';
 import { CastMember } from '../../classes/credits/cast-member';
 import { CrewMember } from '../../classes/credits/crew-member';
+import { environment } from '../../../environments/environment.development';
+import { ResponseVideoResult } from '../../classes/response-video/response-video-result';
 
 @Component({
   selector: 'app-movie-overview',
@@ -39,6 +41,9 @@ export class MovieOverview implements OnInit, OnDestroy {
   public basedOnWorkBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
+
+  public movieTrailerUrl: string = '';
+  public movieDefaultUrl: string = 'https://www.youtube.com/embed/ohkW_xbPl9A';
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
@@ -133,7 +138,7 @@ export class MovieOverview implements OnInit, OnDestroy {
       .getMovieVideos(this.id)
       .then((responseVideo) => {
         this.responseVideo = responseVideo;
-        this.movieTrailerFound = true;
+        this.setMovieTrailer();
       })
       .catch((error: HttpErrorResponse) => {
         this.handleTrailerError(error);
@@ -181,7 +186,17 @@ export class MovieOverview implements OnInit, OnDestroy {
 
       this.executiveProducing = this.credits.crew.filter(crewMember => crewMember.job == 'Executive Producer');
     }
+  }
 
+  private setMovieTrailer(): void {
+    if (this.responseVideo.results.length > 0) {
+        this.movieTrailerFound = true;
+    } else {
+      return;
+    }
+    const responseVideoResult: ResponseVideoResult = this.responseVideo.results.filter(responseVideoResult => responseVideoResult.type == 'Trailer').slice(0,1)[0];
+    const key: string = responseVideoResult.key;
+    this.movieTrailerUrl = `${environment.youtubeEmbedUrl}${key}`;
   }
 
   private handleError(error: HttpErrorResponse): void {

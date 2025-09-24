@@ -7,5 +7,6 @@ export const environment = {
   backdropSize: '/w1280',
   posterSizeSmall: '/w500',
   posterSizeOriginal: '/original',
-  profileSizeSmall: '/w185'
+  profileSizeSmall: '/w185',
+  youtubeEmbedUrl: 'https://www.youtube.com/embed/'
 };
