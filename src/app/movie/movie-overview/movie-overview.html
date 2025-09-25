@@ -305,31 +305,29 @@
                 </tbody>
               </table>
             </div>
+            <ng-container *ngIf="movie.imdb_id || movie.homepage">
+              <section class="movie-external-links">
+                <ng-container *ngIf="movie.imdb_id">
+                  <div class="d-grid mb-2">
+                    <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
+                      <fa-icon [icon]="imdbIcon"></fa-icon>
+                      View IMDB
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="movie.homepage">
+                  <div class="d-grid mb-2">
+                    <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
+                      <fa-icon [icon]="globeIcon"></fa-icon>
+                      View Homepage
+                    </a>
+                  </div>
+                </ng-container>
+              </section>
+            </ng-container>
           </section>
         </div>
       </div>
-      <hr />
-      <ng-container *ngIf="movie.imdb_id || movie.homepage">
-        <section class="movie-external-links">
-          <h3>External Links</h3>
-          <ng-container *ngIf="movie.imdb_id">
-            <div class="d-grid mb-2">
-              <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
-                <fa-icon [icon]="imdbIcon"></fa-icon>
-                View IMDB
-              </a>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="movie.homepage">
-            <div class="d-grid mb-2">
-              <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
-                <fa-icon [icon]="globeIcon"></fa-icon>
-                View Homepage
-              </a>
-            </div>
-          </ng-container>
-        </section>
-      </ng-container>
     </ng-container>
   </ng-container>
 </section>
