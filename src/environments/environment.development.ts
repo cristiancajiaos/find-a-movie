@@ -8,5 +8,7 @@ export const environment = {
   posterSizeSmall: '/w500',
   posterSizeOriginal: '/original',
   profileSizeSmall: '/w185',
-  youtubeEmbedUrl: 'https://www.youtube.com/embed/'
+  youtubeEmbedUrl: 'https://www.youtube.com/embed/',
+  imdbPersonUrl: 'https://www.imdb.com/name/',
+  imdbMovieUrl: 'https://www.imdb.com/title/'
 };

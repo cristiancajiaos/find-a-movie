@@ -1,5 +1,14 @@
 .person-overview {
-  .no-biography {
+  .person-biography {
+    margin-bottom: 1rem;
+  }
+
+  .no-person-biography-available {
     font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .person-infotable {
+    margin-bottom: 1rem;
   }
 }

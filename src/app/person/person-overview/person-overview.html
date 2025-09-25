@@ -8,12 +8,74 @@
       </app-person-error>
     </ng-container>
     <ng-container *ngIf="!personOverviewError">
-      <ng-container *ngIf="person.biography">
-        <p>{{personBiography}}</p>
+      <div class="row">
+        <div class="col-12 col-lg-8">
+          <ng-container *ngIf="person.biography">
+        <section class="person-biography">
+          <h2>Biography</h2>
+          <p>{{ personBiography }}</p>
+        </section>
       </ng-container>
       <ng-container *ngIf="person.biography.length === 0">
-        <p class="no-biography">No Biography Available</p>
+        <section class="no-person-biography-available">
+          <p>No Biography Available</p>
+        </section>
       </ng-container>
+        </div>
+        <div class="col-12 col-lg-4">
+          <section class="person-infotable">
+            <h2>General Information</h2>
+            <div class="table table-responsive">
+              <table class="table">
+                <tbody>
+                  <ng-container *ngIf="person.birthday">
+                    <tr>
+                      <td>Born:</td>
+                      <td>
+                        {{personBirthDay | date: 'longDate'}}
+                        <ng-container *ngIf="person.place_of_birth">
+                          <br/>
+                          in {{personPlaceBirth}}
+                        </ng-container>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="person.deathday">
+                    <tr>
+                      <td>Died:</td>
+                      <td>
+                        {{personDeathDay | date: 'longDate'}}
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="person.known_for_department">
+                    <tr>
+                      <td>Main occupation:</td>
+                      <td>
+                        {{personMainOccupation}}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+            <ng-container *ngIf="person.imdb_id">
+              <div class="d-grid mb-2">
+                <a [href]="personIMDBUrl" class="btn btn-primary" target="_blank">
+                  <fa-icon [icon]="imdbIcon"></fa-icon> View IMDB
+                </a>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="person.homepage">
+              <div class="d-grid mb-2">
+                <a [href]="personHomepageUrl" class="btn btn-primary" target="_blank">
+                  <fa-icon [icon]="globeIcon"></fa-icon> View Homepage
+                </a>
+              </div>
+            </ng-container>
+          </section>
+        </div>
+      </div>
     </ng-container>
   </ng-container>
 </section>
