@@ -11,6 +11,7 @@ import { PersonOverview } from './person-overview/person-overview';
 import { PersonMovieCredits } from './person-movie-credits/person-movie-credits';
 import { RouterModule } from '@angular/router';
 import { PersonMovieCreditsCast } from './person-movie-credits/person-movie-credits-cast/person-movie-credits-cast';
+import { PersonMovieCreditsCrew } from './person-movie-credits/person-movie-credits-crew/person-movie-credits-crew';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PersonMovieCreditsCast } from './person-movie-credits/person-movie-cred
     PersonHeader,
     PersonOverview,
     PersonMovieCredits,
-    PersonMovieCreditsCast
+    PersonMovieCreditsCast,
+    PersonMovieCreditsCrew
   ],
   imports: [
     CommonModule,
