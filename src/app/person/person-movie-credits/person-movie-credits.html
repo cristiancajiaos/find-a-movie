@@ -17,11 +17,18 @@
             </ng-container>
             <ng-container *ngIf="personMovieCredits.cast.length > 0">
               <div class="row">
-                <ng-container *ngFor="let castRole of personMovieCredits.cast">
-                  <div class="col-12 col-lg-3">
-                    <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
+                <div class="col-12 col-lg-4">
+                  <p>Here goes the filters</p>
+                </div>
+                <div class="col-12 col-lg-8">
+                  <div class="row">
+                    <ng-container *ngFor="let castRole of personMovieCredits.cast">
+                      <div class="col-12 col-lg-3">
+                        <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
+                      </div>
+                    </ng-container>
                   </div>
-                </ng-container>
+                </div>
               </div>
             </ng-container>
           </ng-template>
@@ -34,11 +41,18 @@
             </ng-container>
             <ng-container *ngIf="personMovieCredits.crew.length > 0">
               <div class="row">
-                <ng-container *ngFor="let crewRole of personMovieCredits.crew">
-                  <div class="col-12 col-lg-3">
-                    <app-person-crew-credit [crewRole]="crewRole"> </app-person-crew-credit>
+                <div class="col-12 col-lg-4">
+                  <p>Here goes the filters</p>
+                </div>
+                <div class="col-12 col-lg-8">
+                  <div class="row">
+                    <ng-container *ngFor="let crewRole of personMovieCredits.crew">
+                      <div class="col-12 col-lg-3">
+                        <app-person-crew-credit [crewRole]="crewRole"> </app-person-crew-credit>
+                      </div>
+                    </ng-container>
                   </div>
-                </ng-container>
+                </div>
               </div>
             </ng-container>
           </ng-template>
