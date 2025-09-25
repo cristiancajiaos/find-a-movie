@@ -43,7 +43,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public executiveProducing: CrewMember[] = [];
 
   public movieTrailerUrl: string = '';
-  public movieDefaultUrl: string = 'https://www.youtube.com/embed/ohkW_xbPl9A';
+  public movieDefaultUrl: string = '';
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
@@ -156,7 +156,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   private setMovieIMDB(): void {
     if (this.movie.imdb_id) {
-      this.movieIMDB = `https://www.imdb.com/title/${this.movie.imdb_id}/`;
+      this.movieIMDB = `${environment.imdbMovieUrl}${this.movie.imdb_id}/`;
     }
   }
 
