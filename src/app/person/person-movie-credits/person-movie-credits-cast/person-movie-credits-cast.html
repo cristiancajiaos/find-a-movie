@@ -1,0 +1,17 @@
+<section class="person-movie-credits-cast">
+  <div class="row">
+    <div class="col-12 col-lg-4">
+      <p>Here goes the filters</p>
+    </div>
+    <div class="col-12 col-lg-8">
+      <div class="row">
+        <ng-container *ngFor="let castRole of castCredits">
+          <div class="col-12 col-lg-3">
+            <app-person-cast-credit [castRole]="castRole">
+            </app-person-cast-credit>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>

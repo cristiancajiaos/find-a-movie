@@ -10,6 +10,7 @@ import { PersonHeader } from './person-header/person-header';
 import { PersonOverview } from './person-overview/person-overview';
 import { PersonMovieCredits } from './person-movie-credits/person-movie-credits';
 import { RouterModule } from '@angular/router';
+import { PersonMovieCreditsCast } from './person-movie-credits/person-movie-credits-cast/person-movie-credits-cast';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { RouterModule } from '@angular/router';
     PersonComponent,
     PersonHeader,
     PersonOverview,
-    PersonMovieCredits
+    PersonMovieCredits,
+    PersonMovieCreditsCast
   ],
   imports: [
     CommonModule,

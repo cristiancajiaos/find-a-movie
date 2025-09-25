@@ -16,20 +16,8 @@
               <p>This person has no acting roles in movies</p>
             </ng-container>
             <ng-container *ngIf="personMovieCredits.cast.length > 0">
-              <div class="row">
-                <div class="col-12 col-lg-4">
-                  <p>Here goes the filters</p>
-                </div>
-                <div class="col-12 col-lg-8">
-                  <div class="row">
-                    <ng-container *ngFor="let castRole of personMovieCredits.cast">
-                      <div class="col-12 col-lg-3">
-                        <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
-                      </div>
-                    </ng-container>
-                  </div>
-                </div>
-              </div>
+              <app-person-movie-credits-cast [castCredits]="personMovieCredits.cast">
+              </app-person-movie-credits-cast>
             </ng-container>
           </ng-template>
         </li>
