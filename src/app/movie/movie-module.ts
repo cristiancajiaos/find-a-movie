@@ -17,6 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MovieOverviewMainCast } from './movie-overview/movie-overview-main-cast/movie-overview-main-cast';
 import { MovieOverviewMainCrew } from './movie-overview/movie-overview-main-crew/movie-overview-main-crew';
 import { MovieOverviewTrailer } from './movie-overview/movie-overview-trailer/movie-overview-trailer';
+import { MovieOverviewInfotable } from './movie-overview/movie-overview-infotable/movie-overview-infotable';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { MovieOverviewTrailer } from './movie-overview/movie-overview-trailer/mo
     MovieOverviewMainCast,
     MovieOverviewMainCrew,
     MovieOverviewTrailer,
+    MovieOverviewInfotable,
   ],
   imports: [
     CommonModule,

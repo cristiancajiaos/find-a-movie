@@ -5,11 +5,7 @@ import { MovieService } from '../../services/movie-service';
 import { Movie } from '../../classes/movie';
 import { Credits } from '../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseVideo } from '../../classes/response-video';
-import { faImdb, IconDefinition } from '@fortawesome/free-brands-svg-icons';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../services/local-storage-service';
-import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-movie-overview',
@@ -18,19 +14,13 @@ import { environment } from '../../../environments/environment.development';
   styleUrl: './movie-overview.scss',
 })
 export class MovieOverview implements OnInit, OnDestroy {
-  public imdbIcon: IconDefinition = faImdb;
-  public globeIcon: IconDefinition = faGlobe;
-
   public id: number = 0;
 
   public movie: Movie = new Movie();
   public credits: Credits = new Credits();
-  public responseVideo: ResponseVideo = new ResponseVideo();
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
-
-  public movieDefaultUrl: string = '';
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
@@ -73,18 +63,12 @@ export class MovieOverview implements OnInit, OnDestroy {
     if (localMovie) {
       this.movie = localMovie;
       this.loadingMovie = false;
-      this.setReleaseDate();
-      this.setMovieIMDB();
-      this.setMovieHomepage();
     } else {
       this.movieService
         .getMovie(this.id)
         .then((movie) => {
           this.movie = movie;
           this.movieFound = true;
-          this.setReleaseDate();
-          this.setMovieIMDB();
-          this.setMovieHomepage();
         })
         .catch((error: HttpErrorResponse) => {
           this.handleError(error);
@@ -109,24 +93,6 @@ export class MovieOverview implements OnInit, OnDestroy {
       .finally(() => {
         this.loadingCredits = false;
       });
-  }
-
-  private setReleaseDate(): void {
-    if (this.movie.release_date) {
-      this.movieReleaseDate = new Date(this.movie.release_date);
-    }
-  }
-
-  private setMovieIMDB(): void {
-    if (this.movie.imdb_id) {
-      this.movieIMDB = `${environment.imdbMovieUrl}${this.movie.imdb_id}/`;
-    }
-  }
-
-  private setMovieHomepage(): void {
-    if (this.movie.homepage) {
-      this.movieHomepage = `${this.movie.homepage}`;
-    }
   }
 
   private handleError(error: HttpErrorResponse): void {
