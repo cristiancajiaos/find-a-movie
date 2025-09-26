@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../pipes/pipes-module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MovieOverviewMainCast } from './movie-overview/movie-overview-main-cast/movie-overview-main-cast';
+import { MovieOverviewMainCrew } from './movie-overview/movie-overview-main-crew/movie-overview-main-crew';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { MovieOverviewMainCast } from './movie-overview/movie-overview-main-cast
     MovieOverview,
     MovieHeader,
     MovieOverviewMainCast,
+    MovieOverviewMainCrew,
   ],
   imports: [
     CommonModule,

@@ -9,13 +9,14 @@ import { CastMember } from '../../../classes/credits/cast-member';
 })
 export class MovieOverviewMainCast implements OnInit {
 
-  @Input() movieMainCast: CastMember[] = [];
+  @Input() movieCast: CastMember[] = [];
+  public movieMainCast: CastMember[] = [];
 
   ngOnInit(): void {
     this.setMainCast();
   }
 
   private setMainCast(): void {
-    this.movieMainCast = this.movieMainCast.slice(0, 7);
+    this.movieMainCast = this.movieCast.slice(0, 7);
   }
 }

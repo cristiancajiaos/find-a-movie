@@ -118,7 +118,6 @@ export class MovieOverview implements OnInit, OnDestroy {
       .then((credits) => {
         this.credits = credits;
         this.movieCreditsFound = true;
-        this.setAndFilterMainCrew();
       })
       .catch((error: HttpErrorResponse) => {
         this.handleCreditsError(error);
@@ -159,22 +158,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   private setMovieHomepage(): void {
     if (this.movie.homepage) {
       this.movieHomepage = `${this.movie.homepage}`;
-    }
-  }
-
-  private setAndFilterMainCrew(): void {
-    if (this.credits) {
-      this.direction = this.credits.crew.filter(crewMember => crewMember.job == 'Director');
-
-      this.writing = this.credits.crew.filter(crewMember => crewMember.job == 'Screenplay' || crewMember.job == 'Writer');
-
-      this.story = this.credits.crew.filter(crewMember => crewMember.job == 'Story');
-
-      this.basedOnWorkBy = this.credits.crew.filter(crewMember => crewMember.job == 'Novel');
-
-      this.producing = this.credits.crew.filter(crewMember => crewMember.job == 'Producer');
-
-      this.executiveProducing = this.credits.crew.filter(crewMember => crewMember.job == 'Executive Producer');
     }
   }
 
