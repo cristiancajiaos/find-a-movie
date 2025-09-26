@@ -1,0 +1,25 @@
+<section class="movie-overview-main-cast">
+  <h3>Main Cast</h3>
+  <ng-container *ngIf="movieMainCast.length > 1">
+    <div class="table-responsive">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>Starring:</td>
+            <td class="text-end">
+              <ng-container *ngFor="let cast of movieMainCast">
+                <a [routerLink]="['/person', cast.id]">
+                  {{ cast.name }}
+                </a>
+                <br />
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="movieMainCast.length == 0">
+    <p>This movie has no recongizable cast</p>
+  </ng-container>
+</section>

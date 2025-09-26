@@ -9,7 +9,6 @@ import { ResponseVideo } from '../../classes/response-video';
 import { faImdb, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../services/local-storage-service';
-import { CastMember } from '../../classes/credits/cast-member';
 import { CrewMember } from '../../classes/credits/crew-member';
 import { environment } from '../../../environments/environment.development';
 import { ResponseVideoResult } from '../../classes/response-video/response-video-result';
@@ -32,8 +31,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
-
-  public mainCast: CastMember[] = [];
 
   public direction: CrewMember[] = [];
   public writing: CrewMember[] = [];
@@ -121,7 +118,6 @@ export class MovieOverview implements OnInit, OnDestroy {
       .then((credits) => {
         this.credits = credits;
         this.movieCreditsFound = true;
-        this.setMainCast();
         this.setAndFilterMainCrew();
       })
       .catch((error: HttpErrorResponse) => {
@@ -163,12 +159,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   private setMovieHomepage(): void {
     if (this.movie.homepage) {
       this.movieHomepage = `${this.movie.homepage}`;
-    }
-  }
-
-  private setMainCast(): void {
-    if (this.credits) {
-      this.mainCast = this.credits.cast.slice(0,7);
     }
   }
 

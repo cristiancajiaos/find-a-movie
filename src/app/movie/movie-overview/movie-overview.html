@@ -29,29 +29,8 @@
           <section class="movie-main-credits">
             <div class="row">
               <div class="col-12 col-lg-4">
-                <h3>Main Cast</h3>
-                <ng-container *ngIf="mainCast.length > 1">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <td>Starring:</td>
-                          <td class="text-end">
-                            <ng-container *ngFor="let cast of mainCast">
-                              <a [routerLink]="['/person', cast.id]">
-                                {{ cast.name }}
-                              </a>
-                              <br />
-                            </ng-container>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="mainCast.length == 0">
-                  <p>This movie has no recongizable cast</p>
-                </ng-container>
+                <app-movie-overview-main-cast [movieMainCast]="credits.cast">
+                </app-movie-overview-main-cast>
               </div>
               <div class="col-12 col-lg-8">
                 <section class="movie-main-crew">
