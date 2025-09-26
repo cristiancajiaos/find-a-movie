@@ -73,45 +73,8 @@
       </ng-container>
       <div class="row">
         <div class="col-12 col-lg-6">
-          <ng-container *ngIf="!loadingTrailer">
-            <ng-container *ngIf="movieTrailerFound">
-              <section class="movie-video">
-                <h3>Trailer</h3>
-                <ng-container *ngIf="movieTrailerFound">
-                  <div class="row">
-                    <div class="col-12">
-                      <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
-                    </div>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="!movieTrailerFound">
-                  <ng-container *ngIf="!movieTrailerError">
-                    <p>No trailer found</p>
-                  </ng-container>
-                  <ng-container *ngIf="movieTrailerError">
-                    <p>
-                      Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
-                    </p>
-                  </ng-container>
-                </ng-container>
-              </section>
-            </ng-container>
-            <ng-container *ngIf="!movieTrailerFound">
-              <ng-container *ngIf="movieTrailerError">
-                <section class="error-trailer">
-                  <p>
-                    Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
-                  </p>
-                </section>
-              </ng-container>
-              <ng-container *ngIf="!movieTrailerError">
-                <section class="no-trailer-available">
-                  <h3>Trailer</h3>
-                  <p>No trailer available</p>
-                </section>
-              </ng-container>
-            </ng-container>
-          </ng-container>
+          <app-movie-overview-trailer [movieId]="id">
+          </app-movie-overview-trailer>
         </div>
         <div class="col-12 col-lg-6">
           <section class="movie-info">

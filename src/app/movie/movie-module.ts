@@ -16,6 +16,7 @@ import { PipesModule } from '../pipes/pipes-module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MovieOverviewMainCast } from './movie-overview/movie-overview-main-cast/movie-overview-main-cast';
 import { MovieOverviewMainCrew } from './movie-overview/movie-overview-main-crew/movie-overview-main-crew';
+import { MovieOverviewTrailer } from './movie-overview/movie-overview-trailer/movie-overview-trailer';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { MovieOverviewMainCrew } from './movie-overview/movie-overview-main-crew
     MovieHeader,
     MovieOverviewMainCast,
     MovieOverviewMainCrew,
+    MovieOverviewTrailer,
   ],
   imports: [
     CommonModule,
