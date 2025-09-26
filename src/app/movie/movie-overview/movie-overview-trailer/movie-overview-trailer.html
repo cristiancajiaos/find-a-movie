@@ -10,16 +10,6 @@
             </div>
           </div>
         </ng-container>
-        <ng-container *ngIf="!movieTrailerFound">
-          <ng-container *ngIf="!movieTrailerError">
-            <p>No trailer found</p>
-          </ng-container>
-          <ng-container *ngIf="movieTrailerError">
-            <p>
-              Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
-            </p>
-          </ng-container>
-        </ng-container>
       </section>
     </ng-container>
     <ng-container *ngIf="!movieTrailerFound">
@@ -33,7 +23,7 @@
       <ng-container *ngIf="!movieTrailerError">
         <section class="no-trailer-available">
           <h3>Trailer</h3>
-          <p>No trailer available</p>
+          <img src="img/default-images/movie_trailer_not_available.png" alt="No trailer available" class="img-fluid"/>
         </section>
       </ng-container>
     </ng-container>
