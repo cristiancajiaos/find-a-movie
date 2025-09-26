@@ -9,9 +9,7 @@ import { ResponseVideo } from '../../classes/response-video';
 import { faImdb, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../services/local-storage-service';
-import { CrewMember } from '../../classes/credits/crew-member';
 import { environment } from '../../../environments/environment.development';
-import { ResponseVideoResult } from '../../classes/response-video/response-video-result';
 
 @Component({
   selector: 'app-movie-overview',
@@ -32,14 +30,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieIMDB: string = '';
   public movieHomepage: string = '';
 
-  public direction: CrewMember[] = [];
-  public writing: CrewMember[] = [];
-  public story: CrewMember[] = [];
-  public basedOnWorkBy: CrewMember[] = [];
-  public producing: CrewMember[] = [];
-  public executiveProducing: CrewMember[] = [];
-
-  public movieTrailerUrl: string = '';
   public movieDefaultUrl: string = '';
 
   public loadingMovie: boolean = false;
@@ -51,11 +41,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieCreditsFound: boolean = false;
   public movieCreditsError: boolean = false;
   public movieCreditsErrorMessage: string = '';
-
-  public loadingTrailer: boolean = false;
-  public movieTrailerFound: boolean = false;
-  public movieTrailerError: boolean = false;
-  public movieTrailerErrorMessage: string = '';
 
   public activatedRouteParentSubscription: Subscription | undefined;
 
@@ -75,7 +60,6 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.id = parseInt(params['id']);
         this.getMovie();
         this.getCredits();
-        this.getVideo();
       }
     );
   }
@@ -127,22 +111,6 @@ export class MovieOverview implements OnInit, OnDestroy {
       });
   }
 
-  private getVideo(): void {
-    this.loadingTrailer = true;
-    this.movieService
-      .getMovieVideos(this.id)
-      .then((responseVideo) => {
-        this.responseVideo = responseVideo;
-        this.setMovieTrailer();
-      })
-      .catch((error: HttpErrorResponse) => {
-        this.handleTrailerError(error);
-      })
-      .finally(() => {
-        this.loadingTrailer = false;
-      });
-  }
-
   private setReleaseDate(): void {
     if (this.movie.release_date) {
       this.movieReleaseDate = new Date(this.movie.release_date);
@@ -161,17 +129,6 @@ export class MovieOverview implements OnInit, OnDestroy {
     }
   }
 
-  private setMovieTrailer(): void {
-    if (this.responseVideo.results.length > 0) {
-        this.movieTrailerFound = true;
-    } else {
-      return;
-    }
-    const responseVideoResult: ResponseVideoResult = this.responseVideo.results.filter(responseVideoResult => responseVideoResult.type == 'Trailer').slice(0,1)[0];
-    const key: string = responseVideoResult.key;
-    this.movieTrailerUrl = `${environment.youtubeEmbedUrl}${key}`;
-  }
-
   private handleError(error: HttpErrorResponse): void {
     this.movieOverviewError = true;
     this.errorMessage = error.message;
@@ -180,11 +137,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   private handleCreditsError(error: HttpErrorResponse): void {
     this.movieCreditsError = true;
     this.movieCreditsErrorMessage = error.message;
-  }
-
-  private handleTrailerError(error: HttpErrorResponse): void {
-    this.movieTrailerError = true;
-    this.movieTrailerErrorMessage = error.message;
   }
 
   public reloadMovieOverview(event: boolean) {
