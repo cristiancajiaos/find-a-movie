@@ -3,6 +3,7 @@ import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { Person } from '../../../classes/person';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-person-movie-credits-cast',
@@ -12,12 +13,17 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class PersonMovieCreditsCast implements OnInit {
 
+  public gridIcon: IconDefinition = faGrip;
+  public listIcon: IconDefinition = faList;
+
   @Input() castCredits: ResponsePersonCastCredit[] = [];
 
   @ViewChild('starringParagraph') starringParagraph!: ElementRef;
   @ViewChild('castCreditsList') castCreditsList!: ElementRef;
 
   public loadingPerson: boolean = false;
+
+  public displayMode: string = 'grid';
 
   public currentPerson!: Person;
   public filterCastCredits: ResponsePersonCastCredit[] = [];
@@ -108,6 +114,10 @@ export class PersonMovieCreditsCast implements OnInit {
   public changePage(pageNumber: number) {
     this.page = pageNumber;
     this.starringParagraph.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
+  public toggleDisplay(display: string) {
+    this.displayMode = display
   }
 
 }

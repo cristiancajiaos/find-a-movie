@@ -1,44 +1,96 @@
 <section class="person-movie-credits-cast">
   <div class="row">
-    <div class="col-12 col-lg-4">
-      <form [formGroup]="orderCastCreditsForm">
-        <div class="form-group">
-          <label>Order by:</label>
-          <select class="form-control"
-                  id="orderCastCredits"
-                  name="orderCastCredits "
-                  formControlName="orderCastCredits"
-                  (change)="changeCastCreditsOrder()">
-            <option value="0" selected disabled>Select an order criteria</option>
-            <option value="1">Title (ascending)</option>
-            <option value="2">Title (descending)</option>
-            <option value="3">Character Name (ascending)</option>
-            <option value="4">Character Name (descending)</option>
-            <option value="5">Release Date (ascending)</option>
-            <option value="6">Release Date (descending)</option>
-            <option value="7">Default Order - Resets to order by default</option>
-          </select>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <section class="cast-credits-display">
+            <div class="form-group mb-3">
+              <label>Display:</label>
+              <br />
+              <div class="btn-group">
+                <button
+                  type="button"
+                  class="btn border"
+                  (click)="toggleDisplay('grid')"
+                  ngbTooltip="as Grid"
+                  [ngClass]="{ 'btn-primary': displayMode == 'grid' }"
+                >
+                  <fa-icon [icon]="gridIcon"></fa-icon>
+                </button>
+                <button
+                  type="button"
+                  class="btn border"
+                  ngbTooltip="as List"
+                  (click)="toggleDisplay('list')"
+                  [ngClass]="{ 'btn-primary': displayMode == 'list' }"
+                >
+                  <fa-icon [icon]="listIcon"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </section>
         </div>
-      </form>
-    </div>
-    <div class="col-12 col-lg-8">
-      <p #starringParagraph>
-        <strong>{{currentPerson.name}}</strong> has starred in the following movies:
-      </p>
-      <div class="row" #castCreditsList>
-        <ng-container
-          *ngFor="let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }"
-        >
-          <div class="col-12 col-lg-3">
-            <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
-          </div>
-        </ng-container>
-
-        <div class="d-flex justify-content-end">
-          <pagination-controls (pageChange)="changePage($event)">
-          </pagination-controls>
+        <div class="col-12 col-lg-6">
+          <section class="cast-credits-order">
+            <form [formGroup]="orderCastCreditsForm">
+              <div class="form-group mb-3">
+                <label for="orderCastCredits">Order by:</label>
+                <select
+                  class="form-control"
+                  id="orderCastCredits"
+                  name="orderCastCredits"
+                  formControlName="orderCastCredits"
+                  (change)="changeCastCreditsOrder()"
+                >
+                  <option value="0" selected disabled>Select an order criteria</option>
+                  <option value="1">Title (ascending)</option>
+                  <option value="2">Title (descending)</option>
+                  <option value="3">Character Name (ascending)</option>
+                  <option value="4">Character Name (descending)</option>
+                  <option value="5">Release Date (ascending)</option>
+                  <option value="6">Release Date (descending)</option>
+                  <option value="7">Default Order - Resets to order by default</option>
+                </select>
+              </div>
+            </form>
+          </section>
         </div>
       </div>
+      <section class="cast-credits">
+        <p #starringParagraph>
+          <strong>{{ currentPerson.name }}</strong> has starred in the following movies:
+        </p>
+        <ng-container *ngIf="displayMode == 'grid'">
+          <section class="cast-credits-display-grid">
+            <div class="row" #castCreditsList>
+              <ng-container *ngFor=" let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }">
+                <div class="col-12 col-lg-3">
+                  <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
+                </div>
+              </ng-container>
+            </div>
+          </section>
+        </ng-container>
+        <ng-container *ngIf="displayMode == 'list'">
+          <section class="cast-credits-display-list">
+            <ng-container *ngFor="let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }">
+              <div class="row">
+                <div class="col-4">
+
+                </div>
+                <div class="col-8">
+                  {{castRole.title}}
+                </div>
+              </div>
+            </ng-container>
+          </section>
+        </ng-container>
+        <section class="cast-credits-pagination">
+          <div class="d-flex justify-content-center">
+            <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
+          </div>
+        </section>
+      </section>
     </div>
   </div>
 </section>
