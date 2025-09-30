@@ -12,7 +12,7 @@ import { PersonMovieCredits } from './person-movie-credits/person-movie-credits'
 import { RouterModule } from '@angular/router';
 import { PersonMovieCreditsCast } from './person-movie-credits/person-movie-credits-cast/person-movie-credits-cast';
 import { PersonMovieCreditsCrew } from './person-movie-credits/person-movie-credits-crew/person-movie-credits-crew';
-
+import { NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { PersonMovieCreditsCrew } from './person-movie-credits/person-movie-cred
     NgbModule,
     FontAwesomeModule,
     PersonSharedModule,
-    RouterModule
+    RouterModule,
+    NgxPaginationModule
   ]
 })
 export class PersonModule { }

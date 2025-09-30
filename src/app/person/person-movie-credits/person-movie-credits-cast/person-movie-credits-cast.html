@@ -4,13 +4,22 @@
       <p>Here goes the filters</p>
     </div>
     <div class="col-12 col-lg-8">
-      <div class="row">
-        <ng-container *ngFor="let castRole of castCredits">
+      <p #starringParagraph>
+        <strong>{{currentPerson.name}}</strong> has starred in the following movies:
+      </p>
+      <div class="row" #castCreditsList>
+        <ng-container
+          *ngFor="let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }"
+        >
           <div class="col-12 col-lg-3">
-            <app-person-cast-credit [castRole]="castRole">
-            </app-person-cast-credit>
+            <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
           </div>
         </ng-container>
+
+        <div class="d-flex justify-content-end">
+          <pagination-controls (pageChange)="changePage($event)">
+          </pagination-controls>
+        </div>
       </div>
     </div>
   </div>
