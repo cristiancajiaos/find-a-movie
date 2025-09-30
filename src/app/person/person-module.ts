@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { PersonMovieCreditsCast } from './person-movie-credits/person-movie-credits-cast/person-movie-credits-cast';
 import { PersonMovieCreditsCrew } from './person-movie-credits/person-movie-credits-crew/person-movie-credits-crew';
 import { NgxPaginationModule} from 'ngx-pagination';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { NgxPaginationModule} from 'ngx-pagination';
     FontAwesomeModule,
     PersonSharedModule,
     RouterModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PersonModule { }
