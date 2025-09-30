@@ -5,14 +5,7 @@ import { MovieService } from '../../services/movie-service';
 import { Movie } from '../../classes/movie';
 import { Credits } from '../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseVideo } from '../../classes/response-video';
-import { faImdb, IconDefinition } from '@fortawesome/free-brands-svg-icons';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { LocalStorageService } from '../../services/local-storage-service';
-import { CastMember } from '../../classes/credits/cast-member';
-import { CrewMember } from '../../classes/credits/crew-member';
-import { environment } from '../../../environments/environment.development';
-import { ResponseVideoResult } from '../../classes/response-video/response-video-result';
 
 @Component({
   selector: 'app-movie-overview',
@@ -21,29 +14,13 @@ import { ResponseVideoResult } from '../../classes/response-video/response-video
   styleUrl: './movie-overview.scss',
 })
 export class MovieOverview implements OnInit, OnDestroy {
-  public imdbIcon: IconDefinition = faImdb;
-  public globeIcon: IconDefinition = faGlobe;
-
   public id: number = 0;
 
   public movie: Movie = new Movie();
   public credits: Credits = new Credits();
-  public responseVideo: ResponseVideo = new ResponseVideo();
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
-
-  public mainCast: CastMember[] = [];
-
-  public direction: CrewMember[] = [];
-  public writing: CrewMember[] = [];
-  public story: CrewMember[] = [];
-  public basedOnWorkBy: CrewMember[] = [];
-  public producing: CrewMember[] = [];
-  public executiveProducing: CrewMember[] = [];
-
-  public movieTrailerUrl: string = '';
-  public movieDefaultUrl: string = '';
 
   public loadingMovie: boolean = false;
   public movieFound: boolean = false;
@@ -54,11 +31,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieCreditsFound: boolean = false;
   public movieCreditsError: boolean = false;
   public movieCreditsErrorMessage: string = '';
-
-  public loadingTrailer: boolean = false;
-  public movieTrailerFound: boolean = false;
-  public movieTrailerError: boolean = false;
-  public movieTrailerErrorMessage: string = '';
 
   public activatedRouteParentSubscription: Subscription | undefined;
 
@@ -78,7 +50,6 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.id = parseInt(params['id']);
         this.getMovie();
         this.getCredits();
-        this.getVideo();
       }
     );
   }
@@ -92,18 +63,12 @@ export class MovieOverview implements OnInit, OnDestroy {
     if (localMovie) {
       this.movie = localMovie;
       this.loadingMovie = false;
-      this.setReleaseDate();
-      this.setMovieIMDB();
-      this.setMovieHomepage();
     } else {
       this.movieService
         .getMovie(this.id)
         .then((movie) => {
           this.movie = movie;
           this.movieFound = true;
-          this.setReleaseDate();
-          this.setMovieIMDB();
-          this.setMovieHomepage();
         })
         .catch((error: HttpErrorResponse) => {
           this.handleError(error);
@@ -121,8 +86,6 @@ export class MovieOverview implements OnInit, OnDestroy {
       .then((credits) => {
         this.credits = credits;
         this.movieCreditsFound = true;
-        this.setMainCast();
-        this.setAndFilterMainCrew();
       })
       .catch((error: HttpErrorResponse) => {
         this.handleCreditsError(error);
@@ -130,73 +93,6 @@ export class MovieOverview implements OnInit, OnDestroy {
       .finally(() => {
         this.loadingCredits = false;
       });
-  }
-
-  private getVideo(): void {
-    this.loadingTrailer = true;
-    this.movieService
-      .getMovieVideos(this.id)
-      .then((responseVideo) => {
-        this.responseVideo = responseVideo;
-        this.setMovieTrailer();
-      })
-      .catch((error: HttpErrorResponse) => {
-        this.handleTrailerError(error);
-      })
-      .finally(() => {
-        this.loadingTrailer = false;
-      });
-  }
-
-  private setReleaseDate(): void {
-    if (this.movie.release_date) {
-      this.movieReleaseDate = new Date(this.movie.release_date);
-    }
-  }
-
-  private setMovieIMDB(): void {
-    if (this.movie.imdb_id) {
-      this.movieIMDB = `${environment.imdbMovieUrl}${this.movie.imdb_id}/`;
-    }
-  }
-
-  private setMovieHomepage(): void {
-    if (this.movie.homepage) {
-      this.movieHomepage = `${this.movie.homepage}`;
-    }
-  }
-
-  private setMainCast(): void {
-    if (this.credits) {
-      this.mainCast = this.credits.cast.slice(0,7);
-    }
-  }
-
-  private setAndFilterMainCrew(): void {
-    if (this.credits) {
-      this.direction = this.credits.crew.filter(crewMember => crewMember.job == 'Director');
-
-      this.writing = this.credits.crew.filter(crewMember => crewMember.job == 'Screenplay' || crewMember.job == 'Writer');
-
-      this.story = this.credits.crew.filter(crewMember => crewMember.job == 'Story');
-
-      this.basedOnWorkBy = this.credits.crew.filter(crewMember => crewMember.job == 'Novel');
-
-      this.producing = this.credits.crew.filter(crewMember => crewMember.job == 'Producer');
-
-      this.executiveProducing = this.credits.crew.filter(crewMember => crewMember.job == 'Executive Producer');
-    }
-  }
-
-  private setMovieTrailer(): void {
-    if (this.responseVideo.results.length > 0) {
-        this.movieTrailerFound = true;
-    } else {
-      return;
-    }
-    const responseVideoResult: ResponseVideoResult = this.responseVideo.results.filter(responseVideoResult => responseVideoResult.type == 'Trailer').slice(0,1)[0];
-    const key: string = responseVideoResult.key;
-    this.movieTrailerUrl = `${environment.youtubeEmbedUrl}${key}`;
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -207,11 +103,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   private handleCreditsError(error: HttpErrorResponse): void {
     this.movieCreditsError = true;
     this.movieCreditsErrorMessage = error.message;
-  }
-
-  private handleTrailerError(error: HttpErrorResponse): void {
-    this.movieTrailerError = true;
-    this.movieTrailerErrorMessage = error.message;
   }
 
   public reloadMovieOverview(event: boolean) {

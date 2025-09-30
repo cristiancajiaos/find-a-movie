@@ -1,0 +1,10 @@
+.movie-overview-trailer {
+  margin-bottom: 1rem;
+
+  .movie-trailer {
+    iframe {
+      width: inherit;
+      height: 350px;
+    }
+  }
+}

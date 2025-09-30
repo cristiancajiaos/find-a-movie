@@ -29,121 +29,13 @@
           <section class="movie-main-credits">
             <div class="row">
               <div class="col-12 col-lg-4">
-                <h3>Main Cast</h3>
-                <ng-container *ngIf="mainCast.length > 1">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <td>Starring:</td>
-                          <td class="text-end">
-                            <ng-container *ngFor="let cast of mainCast">
-                              <a [routerLink]="['/person', cast.id]">
-                                {{ cast.name }}
-                              </a>
-                              <br />
-                            </ng-container>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="mainCast.length == 0">
-                  <p>This movie has no recongizable cast</p>
-                </ng-container>
+                <app-movie-overview-main-cast [movieCast]="credits.cast">
+                </app-movie-overview-main-cast>
               </div>
               <div class="col-12 col-lg-8">
                 <section class="movie-main-crew">
-                  <h3>Main Crew</h3>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tbody>
-                        <ng-container *ngIf="direction.length > 0">
-                          <tr>
-                            <td>Directed By:</td>
-                            <td class="text-end">
-                              <ng-container *ngFor="let director of direction">
-                                <a [routerLink]="['/person', director.id]">
-                                  {{ director.name }}
-                                </a>
-                                <br />
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </ng-container>
-                        <ng-container *ngIf="writing.length > 0">
-                          <tr>
-                            <td>Written By:</td>
-                            <td class="text-end">
-                              <ng-container *ngFor="let writer of writing">
-                                <a [routerLink]="['/person', writer.id]">
-                                  {{ writer.name }}
-                                </a>
-                                <br />
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </ng-container>
-                        <ng-container *ngIf="story.length > 0">
-                          <tr>
-                            <td>Story By:</td>
-                            <td class="text-end">
-                              <ng-container *ngFor="let storyArtist of story">
-                                <a [routerLink]="['/person', storyArtist.id]">
-                                  {{ storyArtist.name }}
-                                </a>
-                                <br />
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </ng-container>
-                        <ng-container *ngIf="basedOnWorkBy.length > 0">
-                          <tr>
-                            <td>Based on the Work By:</td>
-                            <td class="text-end">
-                              <ng-container *ngFor="let author of basedOnWorkBy">
-                                <a [routerLink]="['/person', author.id]">
-                                  {{ author.name }}
-                                </a>
-                                <br />
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </ng-container>
-                        <ng-container *ngIf="producing.length > 0">
-                          <tr>
-                            <td>Produced By:</td>
-                            <td class="text-end">
-                              <ng-container *ngFor="let producer of producing">
-                                <a [routerLink]="['/person', producer.id]">
-                                  {{ producer.name }}
-                                </a>
-                                <br />
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </ng-container>
-                        <ng-container *ngIf="executiveProducing.length > 0">
-                          <tr>
-                            <td>
-                              Executive Producer<ng-container *ngIf="executiveProducing.length > 1"
-                                >s</ng-container
-                              >:
-                            </td>
-                            <td class="text-end">
-                              <ng-container *ngFor="let executiveProducer of executiveProducing">
-                                <a [routerLink]="['/person', executiveProducer.id]">
-                                  {{ executiveProducer.name }}
-                                </a>
-                                <br />
-                              </ng-container>
-                            </td>
-                          </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-                  </div>
+                  <app-movie-overview-main-crew [movieCrew]="credits.crew">
+                  </app-movie-overview-main-crew>
                 </section>
               </div>
             </div>
@@ -174,157 +66,20 @@
         </ng-container>
         <ng-container *ngIf="!movieCreditsFound">
           <section class="error-credits">
-            <p>
-              Error showing credits: <strong>{{ movieCreditsErrorMessage }}</strong>
-            </p>
+            <p>Error showing credits: <strong>{{ movieCreditsErrorMessage }}</strong></p>
           </section>
         </ng-container>
         <hr />
       </ng-container>
       <div class="row">
         <div class="col-12 col-lg-6">
-          <ng-container *ngIf="!loadingTrailer">
-            <ng-container *ngIf="movieTrailerFound">
-              <section class="movie-video">
-                <h3>Trailer</h3>
-                <ng-container *ngIf="movieTrailerFound">
-                  <div class="row">
-                    <div class="col-12">
-                      <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
-                    </div>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="!movieTrailerFound">
-                  <ng-container *ngIf="!movieTrailerError">
-                    <p>No trailer found</p>
-                  </ng-container>
-                  <ng-container *ngIf="movieTrailerError">
-                    <p>
-                      Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
-                    </p>
-                  </ng-container>
-                </ng-container>
-              </section>
-            </ng-container>
-            <ng-container *ngIf="!movieTrailerFound">
-              <ng-container *ngIf="movieTrailerError">
-                <section class="error-trailer">
-                  <p>
-                    Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
-                  </p>
-                </section>
-              </ng-container>
-              <ng-container *ngIf="!movieTrailerError">
-                <section class="no-trailer-available">
-                  <h3>Trailer</h3>
-                  <p>No trailer available</p>
-                </section>
-              </ng-container>
-            </ng-container>
-          </ng-container>
+          <app-movie-overview-trailer [movieId]="id">
+          </app-movie-overview-trailer>
         </div>
         <div class="col-12 col-lg-6">
           <section class="movie-info">
-            <h3>Movie Info</h3>
-            <div class="table table-responsive">
-              <table class="table">
-                <tbody>
-                  <ng-container *ngIf="movie.genres.length > 0">
-                    <tr>
-                      <td>Genre<ng-container *ngIf="movie.genres.length > 1">s</ng-container>:</td>
-                      <td>
-                        <ng-container *ngFor="let genres of movie.genres">
-                          {{ genres.name }}
-                          <br />
-                        </ng-container>
-                      </td>
-                    </tr>
-                  </ng-container>
-                  <ng-container *ngIf="movie.production_companies.length > 0">
-                    <tr>
-                      <td>
-                        Production Compan<ng-container
-                          *ngIf="movie.production_companies.length == 1"
-                          >y</ng-container
-                        >
-                        <ng-container *ngIf="movie.production_companies.length > 1"
-                          >ies</ng-container
-                        >:
-                      </td>
-                      <td>
-                        <ng-container *ngFor="let productionCompany of movie.production_companies">
-                          {{ productionCompany.name }}
-                          <br />
-                        </ng-container>
-                      </td>
-                    </tr>
-                  </ng-container>
-                  <ng-container *ngIf="movie.production_countries.length > 0">
-                    <tr>
-                      <td>
-                        Production Countr<ng-container
-                          *ngIf="movie.production_countries.length == 1"
-                          >y</ng-container
-                        >
-                        <ng-container *ngIf="movie.production_countries.length > 1"
-                          >ies</ng-container
-                        >:
-                      </td>
-                      <td>
-                        <ng-container *ngFor="let productionCountry of movie.production_countries">
-                          {{ productionCountry.name }}
-                          <br />
-                        </ng-container>
-                      </td>
-                    </tr>
-                  </ng-container>
-                  <ng-container>
-                    <tr>
-                      <td>Release Date:</td>
-                      <td>{{ movieReleaseDate | date : 'longDate' }}</td>
-                    </tr>
-                  </ng-container>
-                  <ng-container *ngIf="movie.runtime && movie.runtime > 0">
-                    <tr>
-                      <td>Runtime:</td>
-                      <td>{{ movie.runtime }} min</td>
-                    </tr>
-                  </ng-container>
-                  <ng-container *ngIf="movie.budget && movie.budget > 0">
-                    <tr>
-                      <td>Budget:</td>
-                      <td>USD {{ movie.budget | currency : 'USD' : 'symbol' : '1.0' }}</td>
-                    </tr>
-                  </ng-container>
-                  <ng-container *ngIf="movie.revenue && movie.revenue > 0">
-                    <tr>
-                      <td>Box Office:</td>
-                      <td>USD {{ movie.revenue | currency : 'USD' : 'symbol' : '1.0' }}</td>
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-            </div>
-            <ng-container *ngIf="movie.imdb_id || movie.homepage">
-              <section class="movie-external-links">
-                <ng-container *ngIf="movie.imdb_id">
-                  <div class="d-grid mb-2">
-                    <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
-                      <fa-icon [icon]="imdbIcon"></fa-icon>
-                      View IMDB
-                    </a>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="movie.homepage">
-                  <div class="d-grid mb-2">
-                    <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
-                      <fa-icon [icon]="globeIcon"></fa-icon>
-                      View Homepage
-                    </a>
-                  </div>
-                </ng-container>
-              </section>
-            </ng-container>
+            <app-movie-overview-infotable [movie]="movie">
+            </app-movie-overview-infotable>
           </section>
         </div>
       </div>

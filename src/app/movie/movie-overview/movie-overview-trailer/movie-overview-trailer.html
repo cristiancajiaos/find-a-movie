@@ -1,0 +1,31 @@
+<section class="movie-overview-trailer">
+  <ng-container *ngIf="!loadingTrailer">
+    <ng-container *ngIf="movieTrailerFound">
+      <section class="movie-trailer">
+        <h3>Trailer</h3>
+        <ng-container *ngIf="movieTrailerFound">
+          <div class="row">
+            <div class="col-12">
+              <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
+            </div>
+          </div>
+        </ng-container>
+      </section>
+    </ng-container>
+    <ng-container *ngIf="!movieTrailerFound">
+      <ng-container *ngIf="movieTrailerError">
+        <section class="error-trailer">
+          <p>
+            Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
+          </p>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="!movieTrailerError">
+        <section class="no-trailer-available">
+          <h3>Trailer</h3>
+          <img src="img/default-images/movie_trailer_not_available.png" alt="No trailer available" class="img-fluid"/>
+        </section>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</section>
