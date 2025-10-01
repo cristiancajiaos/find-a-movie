@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonCastCredit } from './person-cast-credit';
+import { PersonCastCreditGrid } from './person-cast-credit-grid';
 
-describe('PersonCastCredit', () => {
-  let component: PersonCastCredit;
-  let fixture: ComponentFixture<PersonCastCredit>;
+describe('PersonCastCreditGrid', () => {
+  let component: PersonCastCreditGrid;
+  let fixture: ComponentFixture<PersonCastCreditGrid>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PersonCastCredit]
+      declarations: [PersonCastCreditGrid]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PersonCastCredit);
+    fixture = TestBed.createComponent(PersonCastCreditGrid);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

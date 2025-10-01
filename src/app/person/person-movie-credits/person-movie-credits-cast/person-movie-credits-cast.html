@@ -65,7 +65,8 @@
             <div class="row" #castCreditsList>
               <ng-container *ngFor=" let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }">
                 <div class="col-12 col-lg-3">
-                  <app-person-cast-credit [castRole]="castRole"> </app-person-cast-credit>
+                  <app-person-cast-credit-grid [castRole]="castRole">
+                  </app-person-cast-credit-grid>
                 </div>
               </ng-container>
             </div>
