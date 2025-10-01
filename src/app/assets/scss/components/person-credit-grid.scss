@@ -6,6 +6,7 @@
 
     .person-link {
       height: 350px;
+      box-shadow: 3px 3px 10px black;
       position: relative;
 
       &.person-cast-credit,
@@ -13,7 +14,7 @@
         .person-poster {
           height: inherit;
           width: 100%;
-          border: 1px solid black;
+          border: 3px solid black;
           position: absolute;
           background-size: cover;
         }
