@@ -3,12 +3,12 @@ import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/
 import { environment } from '../../../../environments/environment.development';
 
 @Component({
-  selector: 'app-person-cast-credit-grid',
+  selector: 'app-person-cast-credit-list',
   standalone: false,
-  templateUrl: './person-cast-credit-grid.html',
-  styleUrl: './person-cast-credit-grid.scss',
+  templateUrl: './person-cast-credit-list.html',
+  styleUrl: './person-cast-credit-list.scss',
 })
-export class PersonCastCreditGrid implements OnInit {
+export class PersonCastCreditList implements OnInit {
   @Input() castRole: ResponsePersonCastCredit = new ResponsePersonCastCredit();
 
   public posterSizeSmall: string = '';

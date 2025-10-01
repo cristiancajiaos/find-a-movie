@@ -8,6 +8,7 @@ import { PersonCrewCredit } from './person-crew-credit/person-crew-credit';
 import { RouterModule } from '@angular/router';
 import { NgbModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { PersonCastCreditGrid } from './person-cast-credit-grid/person-cast-credit-grid';
+import { PersonCastCreditList } from './person-cast-credit-list/person-cast-credit-list';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PersonCastCreditGrid } from './person-cast-credit-grid/person-cast-cred
     PersonErrorFullscreen,
     PersonNotFound,
     PersonCrewCredit,
-    PersonCastCreditGrid
+    PersonCastCreditGrid,
+    PersonCastCreditList
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { PersonCastCreditGrid } from './person-cast-credit-grid/person-cast-cred
     PersonErrorFullscreen,
     PersonNotFound,
     PersonCrewCredit,
-    PersonCastCreditGrid
+    PersonCastCreditGrid,
+    PersonCastCreditList
   ]
 })
 export class PersonSharedModule { }

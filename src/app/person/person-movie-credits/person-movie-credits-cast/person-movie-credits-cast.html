@@ -75,14 +75,7 @@
         <ng-container *ngIf="displayMode == 'list'">
           <section class="cast-credits-display-list">
             <ng-container *ngFor="let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }">
-              <div class="row">
-                <div class="col-4">
-
-                </div>
-                <div class="col-8">
-                  {{castRole.title}}
-                </div>
-              </div>
+              <app-person-cast-credit-list [castRole]="castRole"></app-person-cast-credit-list>
             </ng-container>
           </section>
         </ng-container>

@@ -1,0 +1,44 @@
+.person-cast-credit-list,
+.person-crew-credit-list {
+  margin-bottom: 1rem;
+  border: 3px solid black;
+  box-shadow: 3px 3px 10px black;
+
+  a {
+    text-decoration: none;
+    color: black;
+
+    .list-content {
+      display: flex;
+      align-items: center;
+      transition: color 0.1s linear, background-color 0.1s linear;
+
+      img {
+        width: 100px;
+        border-right: 3px solid black;
+        margin-right: 1rem;
+      }
+
+      h3 {
+        padding-bottom: 0.5rem;
+      }
+
+      .list-detail {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-family: 'Oswald', 'Arial', sans-serif;
+      }
+    }
+  }
+
+  a {
+    &:hover {
+      .list-content {
+        color: white;
+        background-color: black;
+      }
+    }
+  }
+}

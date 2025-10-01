@@ -1,0 +1,18 @@
+<section class="person-cast-credit-list">
+  <a [routerLink]="['/movie', castRole.id]">
+    <div class="list-content">
+      <img [src]="posterSizeSmall" />
+      <div class="list-detail">
+        <span>
+          {{ castRole.title }} (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+          <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+        </span>
+        <br/>
+        <span>
+          <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
+          <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
+        </span>
+      </div>
+    </div>
+  </a>
+</section>
