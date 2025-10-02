@@ -1,1 +1,20 @@
-<p>person-crew-credits works!</p>
+<section class="person-crew-credits">
+  <ng-container *ngIf="loadingPersonMovieCredits">
+    <app-loading-inline message="Loading movie credits for this person..."></app-loading-inline>
+  </ng-container>
+  <ng-container *ngIf="!loadingPersonMovieCredits">
+    <ng-container *ngIf="personMovieCreditsError">
+      <app-person-error [errorMessage]="errorMessage" (reload)="reloadMovieCredits($event)">
+      </app-person-error>
+    </ng-container>
+    <ng-container *ngIf="!personMovieCreditsError">
+      <ng-container *ngIf="personMovieCredits.crew.length === 0">
+        <p>This person has no technical or production roles in movies</p>
+      </ng-container>
+      <ng-container *ngIf="personMovieCredits.crew.length > 0">
+        <app-person-movie-credits-crew [crewCredits]="personMovieCredits.crew">
+        </app-person-movie-credits-crew>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</section>
