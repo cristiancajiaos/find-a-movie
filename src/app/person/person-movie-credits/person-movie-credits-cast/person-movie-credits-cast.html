@@ -3,32 +3,8 @@
     <div class="col-12">
       <div class="row">
         <div class="col-12 col-lg-6">
-          <section class="cast-credits-display">
-            <div class="form-group mb-3">
-              <label>Display:</label>
-              <br />
-              <div class="btn-group">
-                <button
-                  type="button"
-                  class="btn border"
-                  (click)="toggleDisplay('grid')"
-                  ngbTooltip="as Grid"
-                  [ngClass]="{ 'btn-primary': displayMode == 'grid' }"
-                >
-                  <fa-icon [icon]="gridIcon"></fa-icon>
-                </button>
-                <button
-                  type="button"
-                  class="btn border"
-                  ngbTooltip="as List"
-                  (click)="toggleDisplay('list')"
-                  [ngClass]="{ 'btn-primary': displayMode == 'list' }"
-                >
-                  <fa-icon [icon]="listIcon"></fa-icon>
-                </button>
-              </div>
-            </div>
-          </section>
+          <app-display-selector (onDisplayChange)="changeDisplay($event)">
+          </app-display-selector>
         </div>
         <div class="col-12 col-lg-6">
           <section class="cast-credits-order">

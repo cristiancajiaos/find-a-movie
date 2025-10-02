@@ -116,8 +116,7 @@ export class PersonMovieCreditsCast implements OnInit {
     this.starringParagraph.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
 
-  public toggleDisplay(display: string) {
-    this.displayMode = display
+  public changeDisplay(display: string) {
+    this.displayMode = display;
   }
-
 }

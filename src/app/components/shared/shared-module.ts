@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoadingFullscreen } from './loading-fullscreen/loading-fullscreen';
 import { LoadingInline } from './loading-inline/loading-inline';
+import { DisplaySelector } from './display-selector/display-selector';
 
 @NgModule({
   declarations: [
     LoadingFullscreen,
-    LoadingInline
+    LoadingInline,
+    DisplaySelector
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { LoadingInline } from './loading-inline/loading-inline';
   ],
   exports: [
     LoadingFullscreen,
-    LoadingInline
+    LoadingInline,
+    DisplaySelector
   ]
 })
 export class SharedModule { }
