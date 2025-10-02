@@ -14,6 +14,8 @@ import { PersonMovieCreditsCast } from './person-movie-credits/person-movie-cred
 import { PersonMovieCreditsCrew } from './person-movie-credits/person-movie-credits-crew/person-movie-credits-crew';
 import { NgxPaginationModule} from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PersonCastCredits } from './person-cast-credits/person-cast-credits';
+import { PersonCrewCredits } from './person-crew-credits/person-crew-credits';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PersonOverview,
     PersonMovieCredits,
     PersonMovieCreditsCast,
-    PersonMovieCreditsCrew
+    PersonMovieCreditsCrew,
+    PersonCastCredits,
+    PersonCrewCredits
   ],
   imports: [
     CommonModule,
