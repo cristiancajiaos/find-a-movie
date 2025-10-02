@@ -22,7 +22,6 @@ export class PersonCrewCredit implements OnInit {
 
   public setPoster(): void {
     this.posterSizeSmall = this.crewRole.poster_path ? `${environment.imgUrl}${environment.posterSizeSmall}${this.crewRole.poster_path}` : 'img/default-images/movie_poster_notavailable_w500.png';
-    console.log(this.posterSizeSmall);
   }
 
   public setYear(): void {

@@ -1,17 +1,47 @@
 <section class="person-movie-credits-crew">
   <div class="row">
-    <div class="col-12 col-lg-4">
-      <p>Here goes the filters</p>
-    </div>
-    <div class="col-12 col-lg-8">
+    <div class="col-12">
       <div class="row">
-        <ng-container *ngFor="let crewRole of crewCredits">
-          <div class="col-12 col-lg-3">
-            <app-person-crew-credit [crewRole]="crewRole">
-            </app-person-crew-credit>
-          </div>
-        </ng-container>
+        <div class="col-12 col-lg-6">
+          <app-display-selector (onDisplayChange)="changeDisplay($event)">
+          </app-display-selector>
+        </div>
+        <div class="col-12 col-lg-6">
+          <app-order-select
+            [orderCriterias]="orderCriterias"
+            (onOrderCriteriaChange)="orderCriteriaChange($event)">
+          </app-order-select>
+        </div>
       </div>
+      <section class="crew-credits">
+        <p #crewParagraph>
+          <strong>{{ currentPerson.name }}</strong> has been part of the crew in the following
+          movies:
+        </p>
+        <ng-container *ngIf="displayMode == 'grid'">
+          <section class="crew-credits-display-grid">
+            <div class="row" #crewCreditsGrid>
+              <ng-container *ngFor="let crewRole of filterCrewCredits | paginate : { itemsPerPage: 20, currentPage: page }">
+                <div class="col-12 col-lg-3">
+                  <app-person-crew-credit-grid [crewRole]="crewRole"></app-person-crew-credit-grid>
+                </div>
+              </ng-container>
+            </div>
+          </section>
+        </ng-container>
+        <ng-container *ngIf="displayMode == 'list'">
+          <section class="crew-credits-display-list">
+            <ng-container *ngFor="let crewRole of filterCrewCredits | paginate : { itemsPerPage: 20, currentPage: page }">
+              <app-person-crew-credit-list [crewRole]="crewRole"></app-person-crew-credit-list>
+            </ng-container>
+          </section>
+        </ng-container>
+      </section>
+      <section class="crew-credits-pagination">
+        <div class="d-flex justify-content-center">
+          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+        </div>
+      </section>
     </div>
   </div>
 </section>
