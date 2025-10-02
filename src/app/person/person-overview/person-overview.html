@@ -15,6 +15,24 @@
           <h2>Biography</h2>
           <p>{{ personBiography }}</p>
         </section>
+        <section class="person-links">
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="d-grid">
+                <a [routerLink]="['/person', id, 'cast-credits']" class="btn btn-primary mb-2">
+                  View Cast Credits
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="d-grid">
+                <a [routerLink]="['/person', id, 'crew-credits']" class="btn btn-primary mb-2">
+                  View Crew Credits
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
       </ng-container>
       <ng-container *ngIf="person.biography.length === 0">
         <section class="no-person-biography-available">
