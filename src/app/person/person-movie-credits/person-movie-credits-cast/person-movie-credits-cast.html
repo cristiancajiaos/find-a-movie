@@ -7,28 +7,10 @@
           </app-display-selector>
         </div>
         <div class="col-12 col-lg-6">
-          <section class="cast-credits-order">
-            <form [formGroup]="orderCastCreditsForm">
-              <div class="form-group mb-3">
-                <label for="orderCastCredits">Order by:</label>
-                <select
-                  class="form-control"
-                  id="orderCastCredits"
-                  name="orderCastCredits"
-                  formControlName="orderCastCredits"
-                  (change)="changeCastCreditsOrder()"
-                >
-                  <option value="0" selected disabled>Select an order criteria</option>
-                  <option value="1">Title (ascending)</option>
-                  <option value="2">Title (descending)</option>
-                  <option value="3">Character Name (ascending)</option>
-                  <option value="4">Character Name (descending)</option>
-                  <option value="5">Release Date (ascending)</option>
-                  <option value="6">Release Date (descending)</option>
-                  <option value="7">Default Order - Resets to order by default</option>
-                </select>
-              </div>
-            </form>
+          <section>
+            <app-order-select [orderCriterias]="orderCriterias"
+                              (onOrderCriteriaChange)="orderCriteriaChange($event)">
+            </app-order-select>
           </section>
         </div>
       </div>

@@ -1,0 +1,19 @@
+<section class="order-select">
+  <form [formGroup]="orderForm">
+    <div class="form-group">
+      <label for="order">Order by:</label>
+      <select
+        class="form-control"
+        id="order"
+        name="order"
+        formControlName="order"
+        (change)="orderCriteriaChange()"
+      >
+        <option value="0" selected disabled>Select an order criteria</option>
+        <option *ngFor="let orderCriteria of orderCriterias" [value]="orderCriteria.id">
+          {{ orderCriteria.orderCriteriaName }}
+        </option>
+      </select>
+    </div>
+  </form>
+</section>
