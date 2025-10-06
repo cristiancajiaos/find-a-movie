@@ -1,1 +1,14 @@
-<p>search-movie works!</p>
+<section class="search-movie">
+  <header>
+    <div class="row align-items-center">
+      <h1>
+        <fa-icon [icon]="searchIcon"></fa-icon>
+        Search Movie
+      </h1>
+      <h2>
+         <fa-icon [icon]="movieIcon"></fa-icon>
+        {{searchQuery}}
+      </h2>
+    </div>
+  </header>
+</section>

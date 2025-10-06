@@ -9,9 +9,11 @@ const routes: Routes = [
   { path: '',
     component: Search,
     children: [
-      {path: 'movie', component: SearchMovie, pathMatch: 'full'},
-      {path: 'person', component: SearchPerson, pathMatch: 'full'},
+      {path: 'movie/:searchQuery', component: SearchMovie, pathMatch: 'full'},
+      {path: 'person/:searchQuery', component: SearchPerson, pathMatch: 'full'},
       {path: 'main', component: SearchMain, pathMatch: 'full'},
+      {path: 'movie', redirectTo: '/search/main', pathMatch: 'full'},
+      {path: 'person', redirectTo: '/search/main', pathMatch: 'full'},
       {path: '**', redirectTo: '/search/main', pathMatch: 'full'}
     ]
   }];
