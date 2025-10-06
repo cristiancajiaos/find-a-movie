@@ -1,22 +1,43 @@
 .search-main {
-  margin-top: 4rem;
+  @media screen and (max-width: 991px) {
+    margin-top: 8rem;
+  }
+
+  @media screen and (min-width: 991px) {
+    margin-top: 10rem;
+  }
 
   header {
-
-    @media screen and (max-width: 991px) {
-      height: 20vh;
-    }
-
-    @media screen and (min-width: 992px) {
-      height: 40vh;
-    }
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media screen and (max-width: 991px) {
+      margin-bottom: 4rem;
+    }
+
+    @media screen and (min-width: 991px) {
+      margin-bottom: 5rem;
+    }
   }
 
-  .search-movie, .search-person  {
-    height: 25vh;
+  .bar-search-movie {
+    @media screen and (max-width: 991px) {
+      margin-bottom: 4rem;
+    }
+
+    @media screen and (min-width: 991px) {
+      margin-bottom: 5rem;
+    }
+  }
+
+  .bar-search-person {
+    @media screen and (max-width: 991px) {
+      margin-bottom: 10rem;
+    }
+
+    @media screen and (min-width: 991px) {
+      margin-bottom: 5rem;
+    }
   }
 }

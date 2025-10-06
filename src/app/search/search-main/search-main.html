@@ -9,15 +9,23 @@
       </header>
 
       <main>
-        <section class="search-movie">
+        <section class="bar-search-movie">
           <h2 class="text-center"><fa-icon [icon]="movieIcon"></fa-icon> Search a Movie</h2>
-          <form class="search-movie">
+          <form class="search-movie"
+                role="search"
+                [formGroup]="movieSearchForm"
+                (ngSubmit)="sendMovieQuery()">
             <div class="form-group mb-3">
               <div class="input-group">
                 <label class="input-group-text" for="searchMovie">
                   <fa-icon [icon]="movieIcon"></fa-icon>
                 </label>
-                <input type="search" class="form-control" placeholder="Type Movie to Search" id="searchMovie" name="searchMovie" />
+                <input type="search"
+                       class="form-control"
+                       placeholder="Type Movie to Search"
+                       id="searchMovie"
+                       name="searchMovie"
+                       formControlName="movieSearch" />
                 <button type="submit" class="btn btn-primary">
                   <fa-icon [icon]="searchIcon"></fa-icon> Search Movie
                 </button>
@@ -26,15 +34,23 @@
           </form>
         </section>
 
-        <section class="search-person">
+        <section class="bar-search-person">
           <h2 class="text-center"><fa-icon [icon]="userIcon"></fa-icon> Search a Person</h2>
-          <form>
+          <form class="search-person"
+                role="search"
+                [formGroup]="personSearchForm"
+                (ngSubmit)="sendPersonQuery()">
             <div class="form-group mb-3">
               <div class="input-group">
                 <label class="input-group-text" for="searchPerson">
                   <fa-icon [icon]="userIcon"></fa-icon>
                 </label>
-                <input type="search" class="form-control" placeholder="Type Person to Search" id="searchPerson" name="searchPerson" />
+                <input type="search"
+                       class="form-control"
+                       placeholder="Type Person to Search"
+                       id="searchPerson"
+                       name="searchPerson"
+                       formControlName="personSearch" />
                 <button type="submit" class="btn btn-primary">
                   <fa-icon [icon]="searchIcon"></fa-icon> Search Person
                 </button>
