@@ -15,8 +15,8 @@
           <ng-container *ngIf="searchType == 'movie'">
             <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Movie
           </ng-container>
-          <ng-container *ngIf="searchType == 'people'">
-            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> People
+          <ng-container *ngIf="searchType == 'person'">
+            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> Person
           </ng-container>
         </button>
         <div ngbDropdownMenu aria-labelledby="selectSearchType">
@@ -24,26 +24,32 @@
             <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
             Movie
           </button>
-          <button ngbDropdownItem (click)="selectSearchType('people')">
+          <button ngbDropdownItem (click)="selectSearchType('person')">
             <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
-            People
+            Person
           </button>
+
         </div>
-        <form class="d-flex" role="search">
+        <form class="d-flex"
+              role="search"
+              [formGroup]="searchNavbarForm"
+              (ngSubmit)="processSearch()">
           <ng-container *ngIf="searchType == 'movie'">
             <input
               class="form-control me-2"
               type="search"
               placeholder="Search Movie"
               aria-label="Search Movie"
+              formControlName="movieSearch"
             />
           </ng-container>
-          <ng-container *ngIf="searchType == 'people'">
+          <ng-container *ngIf="searchType == 'person'">
             <input
               class="form-control me-2"
               type="search"
               placeholder="Search People"
               aria-label="Search People"
+              formControlName="personSearch"
             />
           </ng-container>
           <button class="btn border text-light" type="submit">

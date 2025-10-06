@@ -15,7 +15,7 @@ import { authInterceptor } from './interceptors/auth-interceptor';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    LayoutModule
+    LayoutModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
