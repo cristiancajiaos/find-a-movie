@@ -1,8 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Search } from './search';
+import { SearchMovie } from './search-movie/search-movie';
+import { SearchPerson } from './search-person/search-person';
+import { SearchMain } from './search-main/search-main';
 
-const routes: Routes = [{ path: '', component: Search }];
+const routes: Routes = [
+  { path: '',
+    component: Search,
+    children: [
+      {path: 'movie', component: SearchMovie, pathMatch: 'full'},
+      {path: 'person', component: SearchPerson, pathMatch: 'full'},
+      {path: 'main', component: SearchMain, pathMatch: 'full'},
+      {path: '**', redirectTo: '/search/main', pathMatch: 'full'}
+    ]
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
