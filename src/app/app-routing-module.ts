@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'movie', loadChildren: () => import('./movie/movie-module').then(m => m.MovieModule) },
   { path: 'person', loadChildren: () => import('./person/person-module').then(m => m.PersonModule) },
   { path: 'not-found', component: NotFound, pathMatch: 'full'},
+  { path: 'search', loadChildren: () => import('./search/search-module').then(m => m.SearchModule) },
   { path: '**', component: NotFound, pathMatch: 'full'}
 ];
 
