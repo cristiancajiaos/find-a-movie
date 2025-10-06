@@ -6,6 +6,8 @@ import { Search } from './search';
 import { SearchMovie } from './search-movie/search-movie';
 import { SearchPerson } from './search-person/search-person';
 import { SearchMain } from './search-main/search-main';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { SearchMain } from './search-main/search-main';
   ],
   imports: [
     CommonModule,
-    SearchRoutingModule
+    SearchRoutingModule,
+    NgbModule,
+    FontAwesomeModule
   ]
 })
 export class SearchModule { }

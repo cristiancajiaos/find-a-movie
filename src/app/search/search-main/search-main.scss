@@ -1,0 +1,22 @@
+.search-main {
+  margin-top: 4rem;
+
+  header {
+
+    @media screen and (max-width: 991px) {
+      height: 20vh;
+    }
+
+    @media screen and (min-width: 992px) {
+      height: 40vh;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-movie, .search-person  {
+    height: 25vh;
+  }
+}
