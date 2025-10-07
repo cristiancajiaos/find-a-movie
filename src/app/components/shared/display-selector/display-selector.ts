@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,8 +12,7 @@ export class DisplaySelector implements OnInit {
   public gridIcon: IconDefinition = faGrip;
   public listIcon: IconDefinition = faList;
 
-  public displayMode: string = 'grid';
-
+  @Input() displayMode: string = 'grid';
   @Output() onDisplayChange: EventEmitter<string> = new EventEmitter<string>();
 
   ngOnInit(): void {

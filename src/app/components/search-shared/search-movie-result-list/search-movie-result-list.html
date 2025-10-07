@@ -1,0 +1,34 @@
+<section class="search-result-list movie-result-list">
+  <a
+    [routerLink]="['/movie', movieResult.id]"
+    [ngbTooltip]="fullTitleYear"
+    placement="bottom"
+    tooltipClass="search-tooltip"
+  >
+    <section class="search-result-content">
+      <section class="movie-poster">
+        <img [src]="posterSizeSmall" />
+      </section>
+      <section class="movie-description">
+        <ng-container *ngIf="movieResult.title == movieResult.original_title">
+          {{ movieResult.title }}
+        </ng-container>
+        <ng-container *ngIf="movieResult.title != movieResult.original_title">
+          {{ movieResult.original_title }} ({{ movieResult.title }})
+        </ng-container>
+        (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+        <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+      </section>
+    </section>
+  </a>
+  <ng-template #fullTitleYear>
+    <ng-container *ngIf="movieResult.title == movieResult.original_title">
+      {{ movieResult.title }}
+    </ng-container>
+    <ng-container *ngIf="movieResult.title != movieResult.original_title">
+      {{ movieResult.original_title }} ({{ movieResult.title }})
+    </ng-container>
+    (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+    <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+  </ng-template>
+</section>

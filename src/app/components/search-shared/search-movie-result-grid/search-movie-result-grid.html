@@ -1,14 +1,14 @@
-<section class="search-result search-movie-result">
+<section class="search-result-grid movie-result-grid">
   <a
     [routerLink]="['/movie', movieResult.id]"
     [ngbTooltip]="fullTitleYear"
     placement="bottom"
     tooltipClass="search-tooltip"
   >
-    <div class="search-movie-poster">
+    <div class="movie-poster">
       <img [src]="posterSizeSmall" class="w-100" />
     </div>
-    <div class="search-movie-description">
+    <div class="movie-description">
       <ng-container *ngIf="movieResult.title == movieResult.original_title">
         {{ movieResult.title }}
       </ng-container>

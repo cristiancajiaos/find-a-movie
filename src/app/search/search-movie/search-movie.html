@@ -35,7 +35,8 @@
               <section class="search-movie-controls">
                 <div class="row">
                   <div class="col-12 col-lg-6">
-                    <app-display-selector (onDisplayChange)="changeDisplay($event)">
+                    <app-display-selector [displayMode]="displayMode"
+                                          (onDisplayChange)="changeDisplay($event)">
                     </app-display-selector>
                   </div>
                 </div>
@@ -67,7 +68,24 @@
                   </div>
                 </ng-container>
                 <ng-container *ngIf="displayMode == 'list'">
-                  <p>Here goes the list</p>
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let movieResult of movieResults
+                          | paginate
+                            : {
+                                itemsPerPage: 20,
+                                currentPage: currentPage,
+                                totalItems: totalResults
+                              }
+                      "
+                    >
+                      <div class="col-12">
+                        <app-search-movie-result-list [movieResult]="movieResult">
+                        </app-search-movie-result-list>
+                      </div>
+                    </ng-container>
+                  </div>
                 </ng-container>
               </section>
               <div class="d-flex justify-content-center align-items-center">

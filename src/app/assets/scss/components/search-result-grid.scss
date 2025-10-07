@@ -1,10 +1,11 @@
-.search-result {
+.search-result-grid {
   position: relative;
   margin-bottom: 1rem;
   box-shadow: 3px 3px 10px black;
+  border: 3px solid black;
 
   a {
-    .search-movie-poster {
+    .movie-poster {
       z-index: 1;
 
       img {
@@ -12,7 +13,7 @@
       }
     }
 
-    .search-movie-description {
+    .movie-description {
       position: absolute;
       bottom: 0;
       color: white;
@@ -28,7 +29,7 @@
     }
 
     &:hover {
-      .search-movie-description {
+      .movie-description {
         opacity: 0;
       }
     }
@@ -38,3 +39,4 @@
 .search-tooltip {
   font-family: 'Oswald', 'Arial', sans-serif;
 }
+

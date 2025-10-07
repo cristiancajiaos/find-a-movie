@@ -6,12 +6,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchErrorFullscreen } from './search-error-fullscreen/search-error-fullscreen';
 import { RouterModule } from '@angular/router';
 import { SearchMovieResultGrid } from './search-movie-result-grid/search-movie-result-grid';
+import { SearchMovieResultList } from './search-movie-result-list/search-movie-result-list';
 
 @NgModule({
   declarations: [
     SearchError,
     SearchErrorFullscreen,
-    SearchMovieResultGrid
+    SearchMovieResultGrid,
+    SearchMovieResultList
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { SearchMovieResultGrid } from './search-movie-result-grid/search-movie-r
   exports: [
     SearchError,
     SearchErrorFullscreen,
-    SearchMovieResultGrid
+    SearchMovieResultGrid,
+    SearchMovieResultList
   ]
 })
 export class SearchSharedModule { }

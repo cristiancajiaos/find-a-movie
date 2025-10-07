@@ -1,0 +1,48 @@
+.search-result-list {
+  position: relative;
+  margin-bottom: 1rem;
+  box-shadow: 3px 3px 10px black;
+  border: 3px solid black;
+
+  a {
+    text-decoration: none;
+    color: black;
+
+    .search-result-content {
+      display: flex;
+      align-items: center;
+      transition: color 0.1s linear, background-color 0.1s linear;
+
+      .movie-poster {
+        z-index: 1;
+
+        img {
+          height: 100px;
+          border-right: 3px solid black;
+        }
+      }
+
+      .movie-description {
+        padding: 1rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-family: 'Oswald', 'Arial', sans-serif;
+        transition: opacity 0.1s linear;
+        z-index: 2;
+        width: 100%;
+      }
+    }
+
+    &:hover {
+      .search-result-content {
+        color: white;
+        background-color: black;
+      }
+    }
+  }
+}
+
+.search-tooltip {
+  font-family: 'Oswald', 'Arial', sans-serif;
+}
