@@ -4,14 +4,14 @@ import { SearchError } from './search-error/search-error';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchErrorFullscreen } from './search-error-fullscreen/search-error-fullscreen';
-import { SearchMovieResult } from './search-movie-result/search-movie-result';
 import { RouterModule } from '@angular/router';
+import { SearchMovieResultGrid } from './search-movie-result-grid/search-movie-result-grid';
 
 @NgModule({
   declarations: [
     SearchError,
     SearchErrorFullscreen,
-    SearchMovieResult
+    SearchMovieResultGrid
   ],
   imports: [
     CommonModule,
@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
   exports: [
     SearchError,
     SearchErrorFullscreen,
-    SearchMovieResult
+    SearchMovieResultGrid
   ]
 })
 export class SearchSharedModule { }

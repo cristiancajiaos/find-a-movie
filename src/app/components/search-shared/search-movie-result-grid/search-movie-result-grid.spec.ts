@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchMovieResult } from './search-movie-result';
+import { SearchMovieResultGrid } from './search-movie-result-grid';
 
-describe('SearchMovieResult', () => {
-  let component: SearchMovieResult;
-  let fixture: ComponentFixture<SearchMovieResult>;
+describe('SearchMovieResultGrid', () => {
+  let component: SearchMovieResultGrid;
+  let fixture: ComponentFixture<SearchMovieResultGrid>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchMovieResult]
+      declarations: [SearchMovieResultGrid]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SearchMovieResult);
+    fixture = TestBed.createComponent(SearchMovieResultGrid);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

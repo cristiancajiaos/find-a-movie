@@ -3,13 +3,12 @@ import { ResponseMovieResult } from '../../../classes/response-search-movie/resp
 import { environment } from '../../../../environments/environment.development';
 
 @Component({
-  selector: 'app-search-movie-result',
+  selector: 'app-search-movie-result-grid',
   standalone: false,
-  templateUrl: './search-movie-result.html',
-  styleUrl: './search-movie-result.scss'
+  templateUrl: './search-movie-result-grid.html',
+  styleUrl: './search-movie-result-grid.scss'
 })
-export class SearchMovieResult implements OnInit {
-
+export class SearchMovieResultGrid implements OnInit {
   public posterSizeSmall: string = '';
   public releaseYear: number = 0;
 
