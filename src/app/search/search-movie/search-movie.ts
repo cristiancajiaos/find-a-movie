@@ -65,9 +65,11 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
-    console.log(responseSearchMovie);
     this.responseSearchMovie = responseSearchMovie;
     this.movieResults = responseSearchMovie.results;
+    if (this.movieResults.length == 0) {
+      this.noResults = true;
+    }
   }
 
   private handleError(error: HttpErrorResponse) {

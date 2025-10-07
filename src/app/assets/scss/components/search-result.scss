@@ -1,0 +1,40 @@
+.search-result {
+  position: relative;
+  margin-bottom: 1rem;
+  box-shadow: 3px 3px 10px black;
+
+  a {
+    .search-movie-poster {
+      z-index: 1;
+
+      img {
+        height: 350px;
+      }
+    }
+
+    .search-movie-description {
+      position: absolute;
+      bottom: 0;
+      color: white;
+      background-color: rgba(0,0,0,0.75);
+      width: 100%;
+      padding: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-family: 'Oswald', 'Arial', sans-serif;
+      transition: opacity 0.1s linear;
+      z-index: 2;
+    }
+
+    &:hover {
+      .search-movie-description {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.search-tooltip {
+  font-family: 'Oswald', 'Arial', sans-serif;
+}

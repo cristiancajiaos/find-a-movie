@@ -1,0 +1,20 @@
+<section class="search-result search-movie-result">
+  <a [routerLink]="['/movie', movieResult.id]"
+     [ngbTooltip]="fullTitleYear"
+     placement="bottom"
+     tooltipClass="search-tooltip">
+    <div class="search-movie-poster">
+      <img [src]="posterSizeSmall" class="w-100" />
+    </div>
+    <div class="search-movie-description">
+      {{ movieResult.title }}
+      (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+      <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+    </div>
+  </a>
+  <ng-template #fullTitleYear>
+    {{ movieResult.title }}
+    (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+    <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+  </ng-template>
+</section>

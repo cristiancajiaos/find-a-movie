@@ -25,7 +25,33 @@
           </div>
         </header>
         <main>
-          <p>Foo</p>
+          <div class="container-fluid">
+            <ng-container *ngIf="noResults">
+              <p><strong>{{searchQuery}}</strong> returned no results.</p>
+            </ng-container>
+            <ng-container *ngIf="!noResults">
+              <section class="search-movie-controls">
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <app-display-selector></app-display-selector>
+                  </div>
+                  <div class="col-12 col-lg-6">
+                    <app-order-select></app-order-select>
+                  </div>
+                </div>
+              </section>
+              <section class="search-movie-results">
+                <p><strong>{{searchQuery}}</strong> returned {{responseSearchMovie.total_results}} results. Showing...</p>
+                <div class="row">
+                  <ng-container *ngFor="let movieResult of movieResults">
+                    <div class="col-12 col-lg-2">
+                      <app-search-movie-result [movieResult]="movieResult"></app-search-movie-result>
+                    </div>
+                  </ng-container>
+                </div>
+              </section>
+            </ng-container>
+          </div>
         </main>
       </ng-container>
     </ng-container>
