@@ -80,7 +80,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
       this.personNotFound = true;
       this.titleService.setTitle("Person Not Found");
     } else {
-      this.errorMessage = this.errorMessage;
+      this.errorMessage = error.message;
       this.titleService.setTitle("PersonService Error");
     }
   }

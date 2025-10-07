@@ -1,14 +1,33 @@
 <section class="search-movie">
-  <header>
-    <div class="row align-items-center">
-      <h1>
-        <fa-icon [icon]="searchIcon"></fa-icon>
-        Search Movie
-      </h1>
-      <h2>
-         <fa-icon [icon]="movieIcon"></fa-icon>
-        {{searchQuery}}
-      </h2>
-    </div>
-  </header>
+  <ng-container *ngIf="loadingView">
+    <app-loading-fullscreen message="Loading view..."></app-loading-fullscreen>
+  </ng-container>
+  <ng-container *ngIf="!loadingView">
+    <ng-container *ngIf="loadingSearchMovie">
+      <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
+    </ng-container>
+    <ng-container *ngIf="!loadingSearchMovie">
+      <ng-container *ngIf="searchError">
+        <app-search-error-fullscreen [errorMessage]="errorMessage" (reload)="searchMovie()">
+        </app-search-error-fullscreen>
+      </ng-container>
+      <ng-container *ngIf="!searchError">
+        <header>
+          <div class="row align-items-center">
+            <h1>
+              <fa-icon [icon]="searchIcon"></fa-icon>
+              Search Movie
+            </h1>
+            <h2>
+              <fa-icon [icon]="movieIcon"></fa-icon>
+              {{ searchQuery }}
+            </h2>
+          </div>
+        </header>
+        <main>
+          <p>Foo</p>
+        </main>
+      </ng-container>
+    </ng-container>
+  </ng-container>
 </section>

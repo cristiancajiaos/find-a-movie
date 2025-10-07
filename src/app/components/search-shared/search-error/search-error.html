@@ -1,0 +1,9 @@
+<section class="search-error">
+  <h2>Search Service Error</h2>
+  <p>
+    There was an error while performing the search: <strong>{{ errorMessage }}</strong>
+  </p>
+  <button type="button" class="btn btn-primary" (click)="pressReload()">
+    <fa-icon [icon]="repeatIcon"></fa-icon> Reload
+  </button>
+</section>

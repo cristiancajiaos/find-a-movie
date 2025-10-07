@@ -10,6 +10,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../components/shared/shared-module';
+import { SearchSharedModule } from '../components/search-shared/search-shared-module';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FontAwesomeModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
+    SearchSharedModule
   ]
 })
 export class SearchModule { }
