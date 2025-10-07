@@ -12,11 +12,12 @@ export class SearchService {
     private http: HttpClient
   ){}
 
-  public async searchMovie(query: string): Promise<ResponseSearchMovie> {
+  public async searchMovie(query: string, page: number = 1): Promise<ResponseSearchMovie> {
     return await lastValueFrom(this.http.get<ResponseSearchMovie>(
       `/search/movie?query=${query}`, {
         params: {
-          language: 'en-US'
+          language: 'en-US',
+          page: page
         }
       }
     ));

@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../components/shared/shared-module';
 import { SearchSharedModule } from '../components/search-shared/search-shared-module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { SearchSharedModule } from '../components/search-shared/search-shared-mo
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    SearchSharedModule
+    SearchSharedModule,
+    NgxPaginationModule
   ]
 })
 export class SearchModule { }

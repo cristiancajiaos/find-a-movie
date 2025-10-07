@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFilm, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -20,17 +20,28 @@ export class SearchMovie implements OnInit, OnDestroy {
   public movieIcon: IconDefinition = faFilm;
 
   public searchQuery: string = '';
+  public currentPage: number = 1;
+  public itemsPerPage: number = 20;
+  public totalResults: number = 0;
+
+  public currentPageStart: number = 0;
+  public currentPageEnd: number = 0;
 
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public movieResults: ResponseMovieResult[] = [];
 
+  public displayMode: string = 'grid';
 
   public loadingView: boolean = false;
   public loadingSearchMovie: boolean = false;
+  public loadingPage: boolean = false;
 
   public noResults: boolean = false;
   public searchError: boolean = false;
   public errorMessage: string = '';
+
+  @ViewChild('header') header!: ElementRef;
+  @ViewChild('resultsReturned') resultsReturned!: ElementRef;
 
   private routeSubscription?: Subscription;
 
@@ -64,17 +75,47 @@ export class SearchMovie implements OnInit, OnDestroy {
     });
   }
 
+  public changePage(page: number) {
+    this.searchMovieUpdatePage(page);
+    this.header.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'})
+  }
+
+  public searchMovieUpdatePage(page: number) {
+    this.searchError = false;
+    this.loadingSearchMovie = true;
+    this.searchService.searchMovie(this.searchQuery, page)
+    .then(responseSearchMovie => {
+      this.handleMovieResults(responseSearchMovie);
+    }).catch((error: HttpErrorResponse) => {
+      this.handleError(error);
+    }).finally(() => {
+      this.loadingSearchMovie = false;
+    });
+  }
+
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
     this.responseSearchMovie = responseSearchMovie;
     this.movieResults = responseSearchMovie.results;
+    this.totalResults = responseSearchMovie.total_results;
+    this.currentPage = responseSearchMovie.page;
+    this.calculatePageLimits();
     if (this.movieResults.length == 0) {
       this.noResults = true;
     }
   }
 
+  private calculatePageLimits(): void {
+    this.currentPageStart = 1 + (this.currentPage - 1) * this.itemsPerPage;
+    this.currentPageEnd = ((this.totalResults - (this.currentPage * this.itemsPerPage)) > 0) ? this.currentPage * this.itemsPerPage : this.totalResults;
+  }
+
   private handleError(error: HttpErrorResponse) {
     this.searchError = true;
     this.errorMessage = error.message;
+  }
+
+  public changeDisplay(display: string) {
+    this.displayMode = display;
   }
 
   private setSearchMovieTitle(query: string) {
