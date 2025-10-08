@@ -56,7 +56,6 @@ export class SearchMovie implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe(params => {
       this.searchQuery = params['searchQuery'];
-      console.log(this.searchQuery);
       this.setSearchMovieTitle(this.searchQuery);
       this.searchMovie();
     });
