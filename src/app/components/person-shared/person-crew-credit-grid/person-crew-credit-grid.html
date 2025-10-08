@@ -8,21 +8,16 @@
     [popoverClass]="'person-popover'"
     triggers="hover"
   >
-    <section class="person-link person-crew-credit">
-      <section
-        class="person-poster"
-        [ngStyle]="{ 'background-image': 'url(' + posterSizeSmall + ')' }"
-      ></section>
-      <section class="person-info">
-        <section class="person-info-container">
-          <span>
-            {{ crewRole.title }}
-            (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-            <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
-          </span>
-          <span>{{ crewRole.job }}</span>
-        </section>
-      </section>
+    <section class="credit-poster">
+      <img [src]="posterSizeSmall" class="w-100" />
+    </section>
+    <section class="credit-info">
+      <span>
+        {{ crewRole.title }}
+        (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+        <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+      </span>
+      <span>{{ crewRole.job }}</span>
     </section>
   </a>
   <ng-template #crewPopTitle>

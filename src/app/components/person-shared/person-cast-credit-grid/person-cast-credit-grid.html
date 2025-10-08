@@ -8,25 +8,18 @@
     [popoverClass]="'person-popover'"
     triggers="hover"
   >
-    <section class="person-link person-cast-credit">
-      <section
-        class="person-poster"
-        [ngStyle]="{ 'background-image': 'url(' + posterSizeSmall + ')' }"
-      ></section>
-      <section class="person-info">
-        <section class="person-info-container">
-          <span
-            >{{ castRole.title }} (<ng-container *ngIf="releaseYear">{{
-              releaseYear
-            }}</ng-container>
-            <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
-          </span>
-          <span>
-            <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
-            <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
-          </span>
-        </section>
-      </section>
+    <section class="credit-poster">
+      <img [src]="posterSizeSmall" class="w-100" />
+    </section>
+    <section class="credit-info">
+      <span>
+        {{ castRole.title }} (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+        <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+      </span>
+      <span>
+        <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
+        <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
+      </span>
     </section>
   </a>
   <ng-template #castPopTitle>
