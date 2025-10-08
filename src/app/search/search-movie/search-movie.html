@@ -1,100 +1,87 @@
 <section class="search-movie">
-  <header #header>
-    <div class="row align-items-center">
-      <h1>
-        <fa-icon [icon]="searchIcon"></fa-icon>
-        Search Movie
-      </h1>
-      <h2>
-        <fa-icon [icon]="movieIcon"></fa-icon>
-        {{ searchQuery }}
-      </h2>
-    </div>
-  </header>
-  <main>
-    <ng-container *ngIf="loadingView">
-      <app-loading-fullscreen message="Loading view..."></app-loading-fullscreen>
-    </ng-container>
-    <ng-container *ngIf="!loadingView">
-      <ng-container *ngIf="loadingSearchMovie">
-        <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
+  <ng-container *ngIf="loadingSearchMovie">
+    <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
+  </ng-container>
+  <ng-container *ngIf="!loadingSearchMovie">
+    <header #header>
+      <div class="row align-items-center">
+        <h1>
+          <fa-icon [icon]="searchIcon"></fa-icon>
+          Search Movie
+        </h1>
+        <h2>
+          <fa-icon [icon]="movieIcon"></fa-icon>
+          {{ searchQuery }}
+        </h2>
+      </div>
+    </header>
+    <main>
+      <ng-container *ngIf="searchError">
+        <app-search-error-fullscreen [errorMessage]="errorMessage" (reload)="searchMovie()">
+        </app-search-error-fullscreen>
       </ng-container>
-      <ng-container *ngIf="!loadingSearchMovie">
-        <ng-container *ngIf="searchError">
-          <app-search-error-fullscreen [errorMessage]="errorMessage" (reload)="searchMovie()">
-          </app-search-error-fullscreen>
-        </ng-container>
-        <ng-container *ngIf="!searchError">
-          <div class="container-fluid">
-            <ng-container *ngIf="noResults">
-              <p>
-                <strong>{{ searchQuery }}</strong> returned no results.
-              </p>
-            </ng-container>
-            <ng-container *ngIf="!noResults">
-              <section class="search-movie-controls">
-                <div class="row">
-                  <div class="col-12 col-lg-6">
-                    <app-display-selector [displayMode]="displayMode"
-                                          (onDisplayChange)="changeDisplay($event)">
-                    </app-display-selector>
-                  </div>
+      <ng-container *ngIf="!searchError">
+        <div class="container-fluid">
+          <ng-container *ngIf="noResults">
+            <p>
+              <strong>{{ searchQuery }}</strong> returned no results.
+            </p>
+          </ng-container>
+          <ng-container *ngIf="!noResults">
+            <section class="search-movie-controls">
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <app-display-selector
+                    [displayMode]="displayMode"
+                    (onDisplayChange)="changeDisplay($event)"
+                  >
+                  </app-display-selector>
                 </div>
-              </section>
-              <section class="search-movie-results">
-                <p #resultsReturned>
-                  <strong>{{ searchQuery }}</strong> returned
-                  {{ responseSearchMovie.total_results }} results. Showing results
-                  {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
-                </p>
-                <ng-container *ngIf="displayMode == 'grid'">
-                  <div class="row">
-                    <ng-container
-                      *ngFor="
-                        let movieResult of movieResults
-                          | paginate
-                            : {
-                                itemsPerPage: 20,
-                                currentPage: currentPage,
-                                totalItems: totalResults
-                              }
-                      "
-                    >
-                      <div class="col-12 col-sm-4 col-lg-2">
-                        <app-search-movie-result-grid [movieResult]="movieResult">
-                        </app-search-movie-result-grid>
-                      </div>
-                    </ng-container>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="displayMode == 'list'">
-                  <div class="row">
-                    <ng-container
-                      *ngFor="
-                        let movieResult of movieResults
-                          | paginate
-                            : {
-                                itemsPerPage: 20,
-                                currentPage: currentPage,
-                                totalItems: totalResults
-                              }
-                      "
-                    >
-                      <div class="col-12">
-                        <app-search-movie-result-list [movieResult]="movieResult">
-                        </app-search-movie-result-list>
-                      </div>
-                    </ng-container>
-                  </div>
-                </ng-container>
-              </section>
-              <div class="d-flex justify-content-center align-items-center">
-                <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
               </div>
-            </ng-container>
-          </div>
-        </ng-container>
+            </section>
+            <section class="search-movie-results">
+              <p>
+                <strong>{{ searchQuery }}</strong> returned
+                {{ responseSearchMovie.total_results }} results. Showing results
+                {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
+              </p>
+              <ng-container *ngIf="displayMode == 'grid'">
+                <div class="row">
+                  <ng-container *ngFor="let movieResult of movieResults | paginate: {itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults}">
+                    <div class="col-12 col-sm-4 col-lg-2">
+                      <app-search-movie-result-grid [movieResult]="movieResult">
+                      </app-search-movie-result-grid>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="displayMode == 'list'">
+                <div class="row">
+                  <ng-container
+                    *ngFor="
+                      let movieResult of movieResults
+                        | paginate
+                          : {
+                              itemsPerPage: 20,
+                              currentPage: currentPage,
+                              totalItems: totalResults
+                            }
+                    "
+                  >
+                    <div class="col-12">
+                      <app-search-movie-result-list [movieResult]="movieResult">
+                      </app-search-movie-result-list>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </section>
+            <div class="d-flex justify-content-center align-items-center">
+              <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
+            </div>
+          </ng-container>
+        </div>
       </ng-container>
-    </ng-container>
-  </main>
+    </main>
+  </ng-container>
 </section>

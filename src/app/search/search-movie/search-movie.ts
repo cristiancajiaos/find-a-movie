@@ -32,7 +32,6 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public displayMode: string = 'grid';
 
-  public loadingView: boolean = false;
   public loadingSearchMovie: boolean = false;
   public loadingPage: boolean = false;
 
@@ -41,7 +40,6 @@ export class SearchMovie implements OnInit, OnDestroy {
   public errorMessage: string = '';
 
   @ViewChild('header') header!: ElementRef;
-  @ViewChild('resultsReturned') resultsReturned!: ElementRef;
 
   private routeSubscription?: Subscription;
 
@@ -76,7 +74,7 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public changePage(page: number) {
     this.searchMovieUpdatePage(page);
-    this.header.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'})
+    this.header.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
 
   public searchMovieUpdatePage(page: number) {
