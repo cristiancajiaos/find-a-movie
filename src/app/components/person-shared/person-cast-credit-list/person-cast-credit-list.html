@@ -1,7 +1,7 @@
 <section class="person-cast-credit-list">
   <a [routerLink]="['/movie', castRole.id]">
     <div class="list-content">
-      <img [src]="posterSizeSmall" [alt]="'Poster for ' + castRole.title" />
+      <img [src]="posterSizeSmall" [alt]="altPosterText" />
       <div class="list-detail">
         <span>
           <ng-container *ngIf="castRole.title == castRole.original_title">

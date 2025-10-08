@@ -9,33 +9,17 @@
     triggers="hover"
   >
     <section class="credit-poster">
-      <img [src]="posterSizeSmall" class="w-100" />
+      <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
     </section>
     <section class="credit-info">
       <span>
-        <ng-container *ngIf="crewRole.title == crewRole.original_title">
-          {{ crewRole.title }}
-        </ng-container>
-        <ng-container *ngIf="crewRole.title != crewRole.original_title">
-          {{ crewRole.original_title }} ({{ crewRole.title }})
-        </ng-container>
-        (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-        <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+        {{formattedTitle}}
       </span>
       <span>{{ crewRole.job }}</span>
     </section>
   </a>
   <ng-template #crewPopTitle>
-    <span>
-      <ng-container *ngIf="crewRole.title == crewRole.original_title">
-        {{ crewRole.title }}
-      </ng-container>
-      <ng-container *ngIf="crewRole.title != crewRole.original_title">
-        {{ crewRole.original_title }} ({{ crewRole.title }})
-      </ng-container>
-      (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-      <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
-    </span>
+    {{formattedTitle}}
   </ng-template>
   <ng-template #crewPopContent>
     <span>{{ crewRole.job }}</span>

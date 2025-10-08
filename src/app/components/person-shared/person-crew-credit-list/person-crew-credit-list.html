@@ -1,17 +1,10 @@
 <section class="person-cast-credit-list">
   <a [routerLink]="['/movie', crewRole.id]">
     <div class="list-content">
-      <img [src]="posterSizeSmall" [alt]="'Poster for ' + crewRole.title" />
+      <img [src]="posterSizeSmall" [alt]="altPosterText" />
       <div class="list-detail">
         <span>
-          <ng-container *ngIf="crewRole.title == crewRole.original_title">
-            {{ crewRole.title }}
-          </ng-container>
-          <ng-container *ngIf="crewRole.title != crewRole.original_title">
-            {{ crewRole.original_title }} ({{ crewRole.title }})
-          </ng-container>
-          (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-          <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+          {{formattedTitle}}
         </span>
         <br />
         <span>
