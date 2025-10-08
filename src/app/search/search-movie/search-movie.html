@@ -23,9 +23,9 @@
         </ng-container>
         <ng-container *ngIf="!searchError">
           <ng-container *ngIf="noResults">
-            <p>
+            <section class="search-movie-no-results">
               <strong>{{ searchQuery }}</strong> returned no results.
-            </p>
+            </section>
           </ng-container>
           <ng-container *ngIf="!noResults">
             <section class="search-movie-controls">
@@ -41,31 +41,52 @@
             </section>
             <section class="search-movie-results">
               <p>
-                <strong>{{ searchQuery }}</strong> returned
-                {{ responseSearchMovie.total_results }} results. Showing results
-                {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
+                <strong>{{ searchQuery }}</strong> returned {{ totalResults }} results. Showing
+                results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
               </p>
               <ng-container *ngIf="displayMode == 'grid'">
-                <div class="row">
-                  <ng-container
-                    *ngFor="let movieResult of movieResults | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults }">
-                    <div class="col-12 col-sm-4 col-lg-2">
-                      <app-search-movie-result-grid [movieResult]="movieResult">
-                      </app-search-movie-result-grid>
-                    </div>
-                  </ng-container>
-                </div>
+                <section class="search-movie-results-grid">
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let movieResult of movieResults
+                          | paginate
+                            : {
+                                itemsPerPage: 20,
+                                currentPage: currentPage,
+                                totalItems: totalResults
+                              }
+                      "
+                    >
+                      <div class="col-12 col-sm-4 col-lg-2">
+                        <app-search-movie-result-grid [movieResult]="movieResult">
+                        </app-search-movie-result-grid>
+                      </div>
+                    </ng-container>
+                  </div>
+                </section>
               </ng-container>
               <ng-container *ngIf="displayMode == 'list'">
-                <div class="row">
-                  <ng-container
-                    *ngFor="let movieResult of movieResults | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults }">
-                    <div class="col-12">
-                      <app-search-movie-result-list [movieResult]="movieResult">
-                      </app-search-movie-result-list>
-                    </div>
-                  </ng-container>
-                </div>
+                <section class="search-mode-results-list">
+                  <div class="row">
+                    <ng-container
+                      *ngFor="
+                        let movieResult of movieResults
+                        | paginate
+                            : {
+                                itemsPerPage: 20,
+                                currentPage: currentPage,
+                                totalItems: totalResults
+                              }
+                      "
+                    >
+                      <div class="col-12">
+                        <app-search-movie-result-list [movieResult]="movieResult">
+                        </app-search-movie-result-list>
+                      </div>
+                    </ng-container>
+                  </div>
+                </section>
               </ng-container>
             </section>
             <div class="d-flex justify-content-center align-items-center">
