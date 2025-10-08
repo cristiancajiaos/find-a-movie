@@ -16,14 +16,12 @@
       </div>
     </header>
     <main>
-      <ng-container *ngIf="searchError">
-        <div class="container-fluid">
+      <div class="container-fluid">
+        <ng-container *ngIf="searchError">
           <app-search-error [errorMessage]="errorMessage" (reload)="searchMovie()">
           </app-search-error>
-        </div>
-      </ng-container>
-      <ng-container *ngIf="!searchError">
-        <div class="container-fluid">
+        </ng-container>
+        <ng-container *ngIf="!searchError">
           <ng-container *ngIf="noResults">
             <p>
               <strong>{{ searchQuery }}</strong> returned no results.
@@ -49,7 +47,8 @@
               </p>
               <ng-container *ngIf="displayMode == 'grid'">
                 <div class="row">
-                  <ng-container *ngFor="let movieResult of movieResults| paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults }">
+                  <ng-container
+                    *ngFor="let movieResult of movieResults | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults }">
                     <div class="col-12 col-sm-4 col-lg-2">
                       <app-search-movie-result-grid [movieResult]="movieResult">
                       </app-search-movie-result-grid>
@@ -59,7 +58,8 @@
               </ng-container>
               <ng-container *ngIf="displayMode == 'list'">
                 <div class="row">
-                  <ng-container *ngFor="let movieResult of movieResults | paginate: {itemsPerPage: 20, currentPage: currentPage,totalItems: totalResults}">
+                  <ng-container
+                    *ngFor="let movieResult of movieResults | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults }">
                     <div class="col-12">
                       <app-search-movie-result-list [movieResult]="movieResult">
                       </app-search-movie-result-list>
@@ -72,8 +72,8 @@
               <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
             </div>
           </ng-container>
-        </div>
-      </ng-container>
+        </ng-container>
+      </div>
     </main>
   </ng-container>
 </section>
