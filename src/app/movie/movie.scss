@@ -8,8 +8,39 @@
     }
 
     .aside-1 {
-      img {
+      .movie-poster {
+        position: relative;
         margin-bottom: 1rem;
+
+        img {
+          position: absolute;
+          height: 350px;
+          z-index: 1;
+        }
+
+        .open-poster {
+          position: absolute;
+          z-index: 2;
+          width: 100%;
+
+          a {
+            height: 350px;
+            width: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.1s linear;
+            opacity: 0;
+            color: white;
+            text-decoration: none;
+            font-family: 'Oswald', 'Arial', sans-serif;
+
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.75);
+              opacity: 1;
+            }
+          }
+        }
       }
 
       .btn-poster {
