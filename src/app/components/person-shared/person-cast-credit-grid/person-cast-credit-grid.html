@@ -9,18 +9,11 @@
     triggers="hover"
   >
     <section class="credit-poster">
-      <img [src]="posterSizeSmall" class="w-100" />
+      <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
     </section>
     <section class="credit-info">
       <span>
-        <ng-container *ngIf="castRole.title == castRole.original_title">
-          {{ castRole.title }}
-        </ng-container>
-        <ng-container *ngIf="castRole.title != castRole.original_title">
-          {{ castRole.original_title }} ({{ castRole.title }})
-        </ng-container>
-        (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-        <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+        {{formattedTitle}}
       </span>
       <span>
         <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
@@ -29,14 +22,7 @@
     </section>
   </a>
   <ng-template #castPopTitle>
-    <ng-container *ngIf="castRole.title == castRole.original_title">
-      {{ castRole.title }}
-    </ng-container>
-    <ng-container *ngIf="castRole.title != castRole.original_title">
-      {{ castRole.original_title }} ({{ castRole.title }})
-    </ng-container>
-    (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-    <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+    {{formattedTitle}}
   </ng-template>
   <ng-template #castPopContent>
     <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
