@@ -1,15 +1,56 @@
 <section class="search-person">
-  <header>
-    <div class="row align-items-center">
-      <h1>
-        <fa-icon [icon]="searchIcon"></fa-icon>
-        Search Person
-      </h1>
-      <h2>
-         <fa-icon [icon]="userIcon"></fa-icon>
-        {{searchQuery}}
-      </h2>
-    </div>
-  </header>
+  <ng-container *ngIf="loadingSearchPerson">
+    <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
+  </ng-container>
+  <ng-container *ngIf="!loadingSearchPerson">
+    <header #header>
+      <div class="align-items-center">
+        <h1>
+          <fa-icon [icon]="searchIcon"></fa-icon>
+          Search Person
+        </h1>
+        <h2>
+          <fa-icon [icon]="userIcon"></fa-icon>
+          {{ searchQuery }}
+        </h2>
+      </div>
+    </header>
+    <main>
+      <div class="container-fluid">
+        <ng-container *ngIf="searchError">
+          <app-search-error [errorMessage]="errorMessage" (reload)="searchPerson()">
+          </app-search-error>
+        </ng-container>
+        <ng-container *ngIf="!searchError">
+          <ng-container *ngIf="noResults">
+            <section class="search-person-no-results">
+              <strong>{{ searchQuery }}</strong> returned no results.
+            </section>
+          </ng-container>
+          <ng-container *ngIf="!noResults">
+            <section class="search-person-controls">
+              <app-display-selector
+                [displayMode]="displayMode"
+                (onDisplayChange)="changeDisplay($event)"
+              >
+              </app-display-selector>
+            </section>
+            <section class="search-person-results">
+              <p>
+                <strong>{{ searchQuery }}</strong> returned
+                {{ totalResults }} results. Showing results
+                {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
+              </p>
+              <ng-container *ngIf="displayMode == 'grid'">
+                <p>Display Mode Grid</p>
+              </ng-container>
+              <ng-container *ngIf="displayMode == 'list'">
+                <p>Display Mode List</p>
+              </ng-container>
+            </section>
+          </ng-container>
+        </ng-container>
+      </div>
+    </main>
+  </ng-container>
 </section>
-
