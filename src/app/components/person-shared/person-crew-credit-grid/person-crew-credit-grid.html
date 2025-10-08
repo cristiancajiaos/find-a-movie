@@ -13,7 +13,12 @@
     </section>
     <section class="credit-info">
       <span>
-        {{ crewRole.title }}
+        <ng-container *ngIf="crewRole.title == crewRole.original_title">
+          {{ crewRole.title }}
+        </ng-container>
+        <ng-container *ngIf="crewRole.title != crewRole.original_title">
+          {{ crewRole.original_title }} ({{ crewRole.title }})
+        </ng-container>
         (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
         <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
       </span>
@@ -22,7 +27,12 @@
   </a>
   <ng-template #crewPopTitle>
     <span>
-      {{ crewRole.title }}
+      <ng-container *ngIf="crewRole.title == crewRole.original_title">
+        {{ crewRole.title }}
+      </ng-container>
+      <ng-container *ngIf="crewRole.title != crewRole.original_title">
+        {{ crewRole.original_title }} ({{ crewRole.title }})
+      </ng-container>
       (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
       <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
     </span>

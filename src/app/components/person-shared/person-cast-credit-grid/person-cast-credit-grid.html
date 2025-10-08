@@ -13,7 +13,13 @@
     </section>
     <section class="credit-info">
       <span>
-        {{ castRole.title }} (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+        <ng-container *ngIf="castRole.title == castRole.original_title">
+          {{ castRole.title }}
+        </ng-container>
+        <ng-container *ngIf="castRole.title != castRole.original_title">
+          {{ castRole.original_title }} ({{ castRole.title }})
+        </ng-container>
+        (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
         <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
       </span>
       <span>
@@ -23,7 +29,12 @@
     </section>
   </a>
   <ng-template #castPopTitle>
-    {{ castRole.title }}
+    <ng-container *ngIf="castRole.title == castRole.original_title">
+      {{ castRole.title }}
+    </ng-container>
+    <ng-container *ngIf="castRole.title != castRole.original_title">
+      {{ castRole.original_title }} ({{ castRole.title }})
+    </ng-container>
     (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
     <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
   </ng-template>

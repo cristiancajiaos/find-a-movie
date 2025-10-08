@@ -4,10 +4,16 @@
       <img [src]="posterSizeSmall" [alt]="'Poster for ' + castRole.title" />
       <div class="list-detail">
         <span>
-          {{ castRole.title }} (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
+          <ng-container *ngIf="castRole.title == castRole.original_title">
+            {{ castRole.title }}
+          </ng-container>
+          <ng-container *ngIf="castRole.title != castRole.original_title">
+            {{ castRole.original_title }} ({{ castRole.title }})
+          </ng-container>
+          (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
           <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
         </span>
-        <br/>
+        <br />
         <span>
           <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
           <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
