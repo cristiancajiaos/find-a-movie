@@ -22,6 +22,7 @@ export class MovieOverviewTrailer implements OnInit {
   public movieTrailerFound: boolean = false;
   public movieTrailerError: boolean = false;
   public movieTrailerErrorMessage: string = '';
+  public movieTrailerKey: string = '';
 
   constructor(private movieService: MovieService) {}
 
@@ -46,15 +47,21 @@ export class MovieOverviewTrailer implements OnInit {
   }
 
   private setMovieTrailer(): void {
-    if (this.responseVideo.results.length > 0) {
-      this.movieTrailerFound = true;
-    } else {
+    if (this.responseVideo.results.length == 0) {
       return;
     }
     const responseVideoResult: ResponseVideoResult = this.responseVideo.results
       .filter((responseVideoResult) => responseVideoResult.type == 'Trailer')
       .slice(0, 1)[0];
+
+    if (responseVideoResult) {
+      this.movieTrailerFound = true;
+    } else {
+      return;
+    }
+    
     const key: string = responseVideoResult.key;
+    this.movieTrailerKey = responseVideoResult.key ? responseVideoResult.key : '';
     this.movieTrailerUrl = `${environment.youtubeEmbedUrl}${key}`;
   }
 
