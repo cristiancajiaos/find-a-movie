@@ -29,9 +29,11 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public personBiography: string = '';
 
+  public personAlsoKnownAs: string[] = [];
   public personBirthDay?: Date;
   public personDeathDay?: Date;
   public personPlaceBirth: string = '';
+  public personGender: string = '';
   public personMainOccupation: string = '';
   public personIMDBUrl: string = '';
   public personHomepageUrl: string = '';
@@ -104,6 +106,9 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private setPersonInfotable(): void {
+    if (this.person.also_known_as.length > 0) {
+      this.personAlsoKnownAs = this.person.also_known_as;
+    }
     if (this.person.birthday) {
       this.personBirthDay = new Date(this.person.birthday);
     }
@@ -112,6 +117,9 @@ export class PersonOverview implements OnInit, OnDestroy {
     }
     if (this.person.deathday) {
       this.personDeathDay = new Date(this.person.deathday);
+    }
+    if (this.person.gender) {
+      this.personGender = (this.person.gender == 1) ? 'Female' : 'Male';
     }
     if (this.person.known_for_department) {
       this.personMainOccupation = this.person.known_for_department;

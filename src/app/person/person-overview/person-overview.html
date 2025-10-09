@@ -11,34 +11,34 @@
       <div class="row">
         <div class="col-12 col-lg-8">
           <ng-container *ngIf="person.biography">
-        <section class="person-biography">
-          <h2>Biography</h2>
-          <p>{{ personBiography }}</p>
-        </section>
-        <section class="person-links">
-          <div class="row">
-            <div class="col-12 col-lg-6">
-              <div class="d-grid">
-                <a [routerLink]="['/person', id, 'cast-credits']" class="btn btn-primary mb-2">
-                  View Cast Credits
-                </a>
+            <section class="person-biography">
+              <h2>Biography</h2>
+              <p>{{ personBiography }}</p>
+            </section>
+            <section class="person-links">
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <div class="d-grid">
+                    <a [routerLink]="['/person', id, 'cast-credits']" class="btn btn-primary mb-2">
+                      View Cast Credits
+                    </a>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <div class="d-grid">
+                    <a [routerLink]="['/person', id, 'crew-credits']" class="btn btn-primary mb-2">
+                      View Crew Credits
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-lg-6">
-              <div class="d-grid">
-                <a [routerLink]="['/person', id, 'crew-credits']" class="btn btn-primary mb-2">
-                  View Crew Credits
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </ng-container>
-      <ng-container *ngIf="person.biography.length === 0">
-        <section class="no-person-biography-available">
-          <p>No Biography Available</p>
-        </section>
-      </ng-container>
+            </section>
+          </ng-container>
+          <ng-container *ngIf="person.biography.length === 0">
+            <section class="no-person-biography-available">
+              <p>No Biography Available</p>
+            </section>
+          </ng-container>
         </div>
         <div class="col-12 col-lg-4">
           <section class="person-infotable">
@@ -50,10 +50,10 @@
                     <tr>
                       <td>Born:</td>
                       <td>
-                        {{personBirthDay | date: 'longDate'}}
+                        {{ personBirthDay | date : 'longDate' }}
                         <ng-container *ngIf="person.place_of_birth">
-                          <br/>
-                          in {{personPlaceBirth}}
+                          <br />
+                          in {{ personPlaceBirth }}
                         </ng-container>
                       </td>
                     </tr>
@@ -62,7 +62,15 @@
                     <tr>
                       <td>Died:</td>
                       <td>
-                        {{personDeathDay | date: 'longDate'}}
+                        {{ personDeathDay | date : 'longDate' }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="person.gender">
+                    <tr>
+                      <td>Gender:</td>
+                      <td>
+                        {{ personGender }}
                       </td>
                     </tr>
                   </ng-container>
@@ -70,7 +78,17 @@
                     <tr>
                       <td>Main occupation:</td>
                       <td>
-                        {{personMainOccupation}}
+                        {{ personMainOccupation }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="person.also_known_as.length > 0">
+                    <tr>
+                      <td>Also known as:</td>
+                      <td>
+                        <ng-container *ngFor="let personAlternateName of personAlsoKnownAs">
+                          {{ personAlternateName }}<br />
+                        </ng-container>
                       </td>
                     </tr>
                   </ng-container>
