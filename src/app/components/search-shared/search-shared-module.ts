@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { SearchMovieResultGrid } from './search-movie-result-grid/search-movie-result-grid';
 import { SearchMovieResultList } from './search-movie-result-list/search-movie-result-list';
 import { SearchPersonResultGrid } from './search-person-result-grid/search-person-result-grid';
+import { SearchPersonResultList } from './search-person-result-list/search-person-result-list';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SearchPersonResultGrid } from './search-person-result-grid/search-perso
     SearchErrorFullscreen,
     SearchMovieResultGrid,
     SearchMovieResultList,
-    SearchPersonResultGrid
+    SearchPersonResultGrid,
+    SearchPersonResultList
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { SearchPersonResultGrid } from './search-person-result-grid/search-perso
     SearchErrorFullscreen,
     SearchMovieResultGrid,
     SearchMovieResultList,
-    SearchPersonResultGrid
+    SearchPersonResultGrid,
+    SearchPersonResultList
   ]
 })
 export class SearchSharedModule { }

@@ -13,7 +13,7 @@
       align-items: center;
       transition: color 0.1s linear, background-color 0.1s linear;
 
-      .movie-poster {
+      .movie-poster, .person-profile-img {
         z-index: 1;
 
         img {
@@ -22,7 +22,7 @@
         }
       }
 
-      .movie-description {
+      .movie-description, .person-name {
         padding: 1rem;
         overflow: hidden;
         white-space: nowrap;

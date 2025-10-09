@@ -1,0 +1,14 @@
+<section class="search-result-list person-result-list">
+  <a [routerLink]="['/person', personResult.id]">
+    <section class="search-result-content">
+      <section class="person-profile-img">
+        <img [src]="profileImg" />
+      </section>
+      <section class="person-name">
+        {{personResult.name}}
+        <br/>
+        Known for: {{personResult.known_for_department}}
+      </section>
+    </section>
+  </a>
+</section>

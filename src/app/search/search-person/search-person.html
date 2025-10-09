@@ -54,7 +54,14 @@
                 </section>
               </ng-container>
               <ng-container *ngIf="displayMode == 'list'">
-                <p>Display Mode List</p>
+                <section class="search-person-results-list">
+                  <div class="row">
+                    <ng-container *ngFor="let personResult of personResults | paginate: {itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults}">
+                      <app-search-person-result-list [personResult]="personResult">
+                      </app-search-person-result-list>
+                    </ng-container>
+                  </div>
+                </section>
               </ng-container>
               <div class="d-flex justify-content-center align-items-center">
                 <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
