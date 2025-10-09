@@ -17,7 +17,6 @@ export class SearchMovieResultGrid implements OnInit {
   ngOnInit(): void {
     this.setPoster();
     this.setYear();
-
   }
 
   public setPoster(): void {

@@ -1,0 +1,20 @@
+<section class="search-result-grid person-result-grid">
+  <a [routerLink]="['/person', personResult.id]"
+     [ngbTooltip]="fullName"
+     placement="bottom"
+     tooltipClass="search-tooltip">
+    <div class="person-profile-img">
+      <img [src]="profileImg" class="w-100" [alt]="'Profile image for ' + personResult.name" />
+    </div>
+    <div class="person-name">
+      {{ personResult.name }}
+      <br />
+      Known for: {{ personResult.known_for_department }}
+    </div>
+  </a>
+  <ng-template #fullName>
+    {{ personResult.name }}
+    <br />
+    Known for: {{ personResult.known_for_department }}
+  </ng-template>
+</section>

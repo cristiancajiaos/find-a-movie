@@ -75,6 +75,24 @@ export class SearchPerson implements OnInit, OnDestroy {
     });
   }
 
+  public changePage(page: number) {
+    this.searchPersonUpdatePage(page);
+    this.header.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+
+  public searchPersonUpdatePage(page: number) {
+    this.searchError = false;
+    this.loadingSearchPerson = true;
+    this.searchService.searchPerson(this.searchQuery, page)
+    .then(responseSearchPerson => {
+      this.handlePersonResults(responseSearchPerson);
+    }).catch((error: HttpErrorResponse) => {
+      this.handleError(error);
+    }).finally(() => {
+      this.loadingSearchPerson = false;
+    });
+  }
+
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
     this.responseSearchPerson = responseSearchPerson;
     this.personResults = responseSearchPerson.results;

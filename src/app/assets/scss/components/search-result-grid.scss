@@ -5,15 +5,15 @@
   border: 3px solid black;
 
   a {
-    .movie-poster {
+    .movie-poster, .person-profile-img {
       z-index: 1;
 
       img {
-        height: 350px;
+        height: 500px;
       }
     }
 
-    .movie-description {
+    .movie-description, .person-name {
       position: absolute;
       bottom: 0;
       color: white;
@@ -29,7 +29,7 @@
     }
 
     &:hover {
-      .movie-description {
+      .movie-description, .person-name {
         opacity: 0;
       }
     }

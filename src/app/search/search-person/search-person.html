@@ -42,11 +42,23 @@
                 {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
               </p>
               <ng-container *ngIf="displayMode == 'grid'">
-                <p>Display Mode Grid</p>
+                <section class="search-person-results-grid">
+                  <div class="row">
+                    <ng-container *ngFor="let personResult of personResults | paginate: {itemsPerPage: 20, currentPage: currentPage, totalItems: totalResults}">
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <app-search-person-result-grid [personResult]="personResult">
+                        </app-search-person-result-grid>
+                      </div>
+                    </ng-container>
+                  </div>
+                </section>
               </ng-container>
               <ng-container *ngIf="displayMode == 'list'">
                 <p>Display Mode List</p>
               </ng-container>
+              <div class="d-flex justify-content-center align-items-center">
+                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+              </div>
             </section>
           </ng-container>
         </ng-container>

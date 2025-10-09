@@ -7,13 +7,15 @@ import { SearchErrorFullscreen } from './search-error-fullscreen/search-error-fu
 import { RouterModule } from '@angular/router';
 import { SearchMovieResultGrid } from './search-movie-result-grid/search-movie-result-grid';
 import { SearchMovieResultList } from './search-movie-result-list/search-movie-result-list';
+import { SearchPersonResultGrid } from './search-person-result-grid/search-person-result-grid';
 
 @NgModule({
   declarations: [
     SearchError,
     SearchErrorFullscreen,
     SearchMovieResultGrid,
-    SearchMovieResultList
+    SearchMovieResultList,
+    SearchPersonResultGrid
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { SearchMovieResultList } from './search-movie-result-list/search-movie-r
     SearchError,
     SearchErrorFullscreen,
     SearchMovieResultGrid,
-    SearchMovieResultList
+    SearchMovieResultList,
+    SearchPersonResultGrid
   ]
 })
 export class SearchSharedModule { }
