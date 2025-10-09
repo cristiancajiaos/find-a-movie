@@ -24,7 +24,9 @@
         <ng-container *ngIf="!searchError">
           <ng-container *ngIf="noResults">
             <section class="search-person-no-results">
-              <strong>{{ searchQuery }}</strong> returned no results.
+              <p>
+                <strong>{{ searchQuery }}</strong> returned no results.
+              </p>
             </section>
           </ng-container>
           <ng-container *ngIf="!noResults">
