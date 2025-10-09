@@ -12,10 +12,12 @@
       <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
     </section>
     <section class="credit-info">
-      <span>
+      <div class="credit-formatted-title">
         {{formattedTitle}}
-      </span>
-      <span>{{ crewRole.job }}</span>
+      </div>
+      <div class="credit-job">
+        {{crewRole.job}}
+      </div>
     </section>
   </a>
   <ng-template #crewPopTitle>

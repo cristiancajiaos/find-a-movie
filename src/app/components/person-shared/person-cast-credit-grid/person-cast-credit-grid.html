@@ -12,13 +12,13 @@
       <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
     </section>
     <section class="credit-info">
-      <span>
+      <div class="credit-formatted-title">
         {{formattedTitle}}
-      </span>
-      <span>
+      </div>
+      <div class="credit-role">
         <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
         <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
-      </span>
+      </div>
     </section>
   </a>
   <ng-template #castPopTitle>
