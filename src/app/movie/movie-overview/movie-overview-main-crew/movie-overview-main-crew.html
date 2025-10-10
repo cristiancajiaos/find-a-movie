@@ -20,6 +20,19 @@
               </td>
             </tr>
           </ng-container>
+          <ng-container *ngIf="coDirection.length > 0">
+            <tr>
+              <td>Co-Directed By:</td>
+              <td class="text-end">
+                <ng-container *ngFor="let coDirector of coDirection">
+                  <a [routerLink]="['/person', coDirector.id]">
+                    {{ coDirector.name }}
+                  </a>
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
           <ng-container *ngIf="writing.length > 0">
             <tr>
               <td>Screenplay By:</td>

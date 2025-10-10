@@ -12,6 +12,7 @@ export class MovieOverviewMainCrew implements OnInit {
   @Input() movieCrew: CrewMember[] = [];
 
   public direction: CrewMember[] = [];
+  public coDirection: CrewMember[] = [];
   public writing: CrewMember[] = [];
   public story: CrewMember[] = [];
   public basedOnWorkBy: CrewMember[] = [];
@@ -26,6 +27,8 @@ export class MovieOverviewMainCrew implements OnInit {
   private filterMainCrew(): void {
     if (this.movieCrew.length > 0) {
       this.direction = this.movieCrew.filter(crewMember => crewMember.job == 'Director');
+
+      this.coDirection = this.movieCrew.filter(crewMember => crewMember.job == 'Co-Director');
 
       this.writing = this.movieCrew.filter(crewMember => crewMember.job == 'Screenplay' || crewMember.job == 'Writer');
 
