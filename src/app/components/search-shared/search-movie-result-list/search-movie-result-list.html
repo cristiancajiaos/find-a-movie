@@ -1,34 +1,18 @@
 <section class="search-result-list movie-result-list">
-  <a
-    [routerLink]="['/movie', movieResult.id]"
-    [ngbTooltip]="fullTitleYear"
-    placement="bottom"
-    tooltipClass="search-tooltip"
-  >
+  <a [routerLink]="['/movie', movieResult.id]"
+     [ngbTooltip]="fullTitleYear"
+     placement="bottom"
+     tooltipClass="search-tooltip">
     <section class="search-result-content">
       <section class="movie-poster">
-        <img [src]="posterSizeSmall" />
+        <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
       </section>
       <section class="movie-description">
-        <ng-container *ngIf="movieResult.title == movieResult.original_title">
-          {{ movieResult.title }}
-        </ng-container>
-        <ng-container *ngIf="movieResult.title != movieResult.original_title">
-          {{ movieResult.original_title }} ({{ movieResult.title }})
-        </ng-container>
-        (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-        <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+        {{formattedTitle}}
       </section>
     </section>
   </a>
   <ng-template #fullTitleYear>
-    <ng-container *ngIf="movieResult.title == movieResult.original_title">
-      {{ movieResult.title }}
-    </ng-container>
-    <ng-container *ngIf="movieResult.title != movieResult.original_title">
-      {{ movieResult.original_title }} ({{ movieResult.title }})
-    </ng-container>
-    (<ng-container *ngIf="releaseYear">{{ releaseYear }}</ng-container>
-    <ng-container *ngIf="!releaseYear">No Release Year</ng-container>)
+    {{formattedTitle}}
   </ng-template>
 </section>
