@@ -48,7 +48,7 @@
           </ng-container>
           <ng-container *ngIf="basedOnWorkBy.length > 0">
             <tr>
-              <td>Based on the Work By:</td>
+              <td>Based on Work By:</td>
               <td class="text-end">
                 <ng-container *ngFor="let author of basedOnWorkBy">
                   <a [routerLink]="['/person', author.id]">
