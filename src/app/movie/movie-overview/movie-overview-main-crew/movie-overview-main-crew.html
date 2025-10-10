@@ -59,6 +59,19 @@
               </td>
             </tr>
           </ng-container>
+          <ng-container *ngIf="basedOnCharactersBy.length > 0">
+            <tr>
+              <td>Based on Characters Created By:</td>
+              <td class="text-end">
+                <ng-container *ngFor="let author of basedOnCharactersBy">
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
           <ng-container *ngIf="producing.length > 0">
             <tr>
               <td>Produced By:</td>
