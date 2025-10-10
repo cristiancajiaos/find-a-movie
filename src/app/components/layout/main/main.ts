@@ -9,6 +9,8 @@ import { TitleService } from '../../../services/title-service';
 })
 export class Main implements OnInit {
 
+  public bgImage: string = 'img/bg/home-bg.png';
+
   constructor(
     private titleService: TitleService
   ) {
