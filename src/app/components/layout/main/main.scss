@@ -1,17 +1,21 @@
 main {
-  margin-top: 4rem;
+  background-image: url('/img/default-images/home-bg.png');
+  background-size: cover;
 
-  .find-movie, .find-people {
+  .find-movie {
     height: 100vh;
-    border-bottom: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .find-movie-description, .find-people-description {
+  .find-movie-description {
     text-align: center;
-    border: 1px solid black;
+    border: 3px solid black;
+    box-shadow: 3px 3px 10px black;
     padding: 1rem 2rem;
+    margin: 1rem 1rem;
+    background-color: black;
+    color: white;
   }
 }
