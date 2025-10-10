@@ -55,15 +55,9 @@ export class MovieService {
     const movieTitle: string = title;
     const movieYearDate: Date = new Date(releaseDate);
     const movieYear: number = movieYearDate.getFullYear();
-    let movieFormattedTitle: string = '';
-    if (movieTitle.toLowerCase().includes(originalTitle.toLowerCase())) {
-      movieFormattedTitle = `${movieTitle}`;
-    } else {
-      movieFormattedTitle = `${originalTitle} (${movieTitle})`;
-    }
-    const titleStr: string = `${movieFormattedTitle} ${movieYear ? '(' : ''}${movieYear ? movieYear : ''}${movieYear ? ')' : ''}`;
+    let movieFormattedTitle: string = movieTitle.toLowerCase().includes(originalTitle.toLowerCase()) ? `${movieTitle}` : `${originalTitle} (${movieTitle})`;
+    let movieFormattedYear: string = movieYear ? `${movieYear}` : 'No Release Date';
+    const titleStr: string = `${movieFormattedTitle} (${movieFormattedYear})`;
     return titleStr;
   }
-
-
 }
