@@ -56,7 +56,7 @@ export class MovieService {
     const movieYearDate: Date = new Date(releaseDate);
     const movieYear: number = movieYearDate.getFullYear();
     let movieFormattedTitle: string = '';
-    if (movieTitle == originalTitle) {
+    if (movieTitle.toLowerCase().includes(originalTitle.toLowerCase())) {
       movieFormattedTitle = `${movieTitle}`;
     } else {
       movieFormattedTitle = `${originalTitle} (${movieTitle})`;
