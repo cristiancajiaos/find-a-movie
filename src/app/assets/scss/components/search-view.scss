@@ -1,7 +1,23 @@
-.search-movie, .search-person {
+.search-movie,
+.search-person {
   header {
-    height: 200px;
     background-color: rgba(204, 204, 204, 1);
-    padding: 5rem 1rem 1rem 1rem;
+  }
+
+  @media screen and (max-width: 991px) {
+    header {
+      margin-top: 2rem;
+      padding: 5rem 1rem 1rem 1rem;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    header {
+      padding: 5rem 1rem 1rem 1rem;
+    }
+  }
+
+  main {
+    margin-top: 1rem;
   }
 }

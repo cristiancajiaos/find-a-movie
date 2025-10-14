@@ -1,19 +1,15 @@
-<section class="search-movie">
+<section class="search search-movie">
   <ng-container *ngIf="loadingSearchMovie">
     <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
   </ng-container>
   <ng-container *ngIf="!loadingSearchMovie">
     <header #header>
-      <div class="row align-items-center">
-        <h1>
-          <fa-icon [icon]="searchIcon"></fa-icon>
-          Search Movie
-        </h1>
-        <h2>
-          <fa-icon [icon]="movieIcon"></fa-icon>
-          {{ searchQuery }}
-        </h2>
-      </div>
+      <h1>
+        <fa-icon [icon]="searchIcon"></fa-icon> Search Movie
+      </h1>
+      <h2>
+        <fa-icon [icon]="movieIcon"></fa-icon> {{ searchQuery }}
+      </h2>
     </header>
     <main>
       <div class="container-fluid">
@@ -24,7 +20,9 @@
         <ng-container *ngIf="!searchError">
           <ng-container *ngIf="noResults">
             <section class="search-movie-no-results">
-              <p><strong>{{ searchQuery }}</strong> returned no results.</p>
+              <p>
+                <strong>{{ searchQuery }}</strong> returned no results.
+              </p>
             </section>
           </ng-container>
           <ng-container *ngIf="!noResults">
@@ -72,7 +70,7 @@
                     <ng-container
                       *ngFor="
                         let movieResult of movieResults
-                        | paginate
+                          | paginate
                             : {
                                 itemsPerPage: 20,
                                 currentPage: currentPage,
