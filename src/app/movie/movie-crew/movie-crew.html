@@ -28,7 +28,7 @@
             <ng-container *ngIf="coDirection.length > 0">
             <tr>
               <td>Co-Directed By:</td>
-              <td class="text-end">
+              <td>
                 <ng-container *ngFor="let coDirector of coDirection">
                   <a [routerLink]="['/person', coDirector.id]">
                     {{ coDirector.name }}
