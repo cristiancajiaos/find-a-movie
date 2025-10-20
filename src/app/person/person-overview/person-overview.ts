@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../services/person-service';
 import { LocalStorageService } from '../../services/local-storage-service';
 import { environment } from '../../../environments/environment.development';
-import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faGlobe, faMars, faVenus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
@@ -16,6 +16,8 @@ import { faImdb } from '@fortawesome/free-brands-svg-icons';
   styleUrl: './person-overview.scss',
 })
 export class PersonOverview implements OnInit, OnDestroy {
+  public maleIcon: IconDefinition = faMars;
+  public femaleIcon: IconDefinition = faVenus;
   public imdbIcon: IconDefinition = faImdb;
   public globeIcon: IconDefinition = faGlobe;
 
@@ -34,6 +36,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   public personDeathDay?: Date;
   public personPlaceBirth: string = '';
   public personGender: string = '';
+  public personGenderIcon?: IconDefinition;
   public personMainOccupation: string = '';
   public personIMDBUrl: string = '';
   public personHomepageUrl: string = '';
@@ -120,6 +123,7 @@ export class PersonOverview implements OnInit, OnDestroy {
     }
     if (this.person.gender) {
       this.personGender = (this.person.gender == 1) ? 'Female' : 'Male';
+      this.personGenderIcon = (this.person.gender == 1) ? this.femaleIcon : this.maleIcon;
     }
     if (this.person.known_for_department) {
       this.personMainOccupation = this.person.known_for_department;
