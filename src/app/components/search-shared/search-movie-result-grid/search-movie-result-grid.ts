@@ -24,7 +24,6 @@ export class SearchMovieResultGrid implements OnInit {
   ngOnInit(): void {
     this.setTitle();
     this.setPoster();
-    this.setYear();
   }
 
   public setTitle(): void {
@@ -43,10 +42,5 @@ export class SearchMovieResultGrid implements OnInit {
       ? `Poster from the movie ${this.formattedTitle}`
       : `Poster from the movie ${this.formattedTitle} is not available`;
     }
-
-  public setYear(): void {
-    const releaseDate: Date = new Date(this.movieResult.release_date);
-    this.releaseYear = releaseDate.getFullYear();
-  }
 
 }

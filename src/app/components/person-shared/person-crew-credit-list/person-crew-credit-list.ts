@@ -24,7 +24,6 @@ export class PersonCrewCreditList implements OnInit {
   ngOnInit(): void {
     this.setTitle();
     this.setPoster();
-    this.setYear();
   }
 
   public setTitle(): void {
@@ -42,11 +41,6 @@ export class PersonCrewCreditList implements OnInit {
       this.altPosterText = this.crewRole.poster_path
         ? `Poster from the movie ${this.formattedTitle}`
         : `Poster from the movie ${this.formattedTitle} is not available`;
-    }
-
-    public setYear(): void {
-      const releaseDate: Date = new Date(this.crewRole.release_date);
-      this.releaseYear = releaseDate.getFullYear();
     }
 
 }

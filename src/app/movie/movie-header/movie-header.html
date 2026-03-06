@@ -12,7 +12,8 @@
             {{ movie.title }}
           </ng-container>
           <ng-container *ngIf="movie.title != movie.original_title">
-            {{movie.original_title}} <small>({{movie.title}})</small>
+            {{movie.title}}
+            <small>({{movie.original_title}})</small>
           </ng-container>
         </h1>
         <h2>
