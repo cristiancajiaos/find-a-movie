@@ -3,6 +3,12 @@
   <div class="table table-responsive">
     <table class="table">
       <tbody>
+        <ng-container *ngIf="movie.original_language != 'en'">
+          <tr>
+            <td>Original Title:</td>
+            <td>{{movie.original_title}}</td>
+          </tr>
+        </ng-container>
         <ng-container *ngIf="movie.genres.length > 0">
           <tr>
             <td>Genre<ng-container *ngIf="movie.genres.length > 1">s</ng-container>:</td>
