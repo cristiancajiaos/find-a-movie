@@ -48,7 +48,14 @@
                   </a>
                 </td>
                 <td>as</td>
-                <td>{{ castMember.character }}</td>
+                <ng-container *ngIf="castMember.character; else unknownCharacter">
+                  <td>{{ castMember.character }}</td>
+                </ng-container>
+                <ng-template #unknownCharacter>
+                  <td>
+                    <i>A character not defined </i>
+                  </td>
+                </ng-template>
               </tr>
             </tbody>
           </table>
