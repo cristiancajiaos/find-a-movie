@@ -1,39 +1,56 @@
 <section class="person-movie-credits-crew">
   <div class="row">
     <div class="col-12">
-      <div class="row">
-        <div class="col-12 col-lg-6">
-          <app-display-selector (onDisplayChange)="changeDisplay($event)"></app-display-selector>
-        </div>
-        <div class="col-12 col-lg-6">
-          <app-order-select
-            [orderCriterias]="orderCriterias"
-            (onOrderCriteriaChange)="orderCriteriaChange($event)"
-          >
-          </app-order-select>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="form-group">
-            <label for="filterRole" (click)="focusSelectRole()">
-              Filter by role <fa-icon [icon]="faCircleInfo" [fixedWidth]="true" [ngbTooltip]="filterByRoleTooltip"></fa-icon>:
-            </label>
-            <ng-select #selectRole 
-                       multiple="true" 
-                       bindLabel="filterRole" 
-                       [(ngModel)]="selectedRoles"
-                       (change)="changeFilterRoles($event)">
-              @for (role of roles; track role) {
-                <ng-option [value]="role">
-                  {{ role }}
-                </ng-option>
-              }
-            </ng-select>
-            <ng-template #filterByRoleTooltip>
-              Now you can filter the crew credits by one or various roles. Just select here the role(s) you want to filter.
-            </ng-template>
+      <section class="person-crew-credits-controls">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <app-display-selector (onDisplayChange)="changeDisplay($event)"></app-display-selector>
+          </div>
+          <div class="col-12 col-lg-6">
+            <app-order-select
+              [orderCriterias]="orderCriterias"
+              (onOrderCriteriaChange)="orderCriteriaChange($event)"
+            >
+            </app-order-select>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="form-group mb-3">
+              <label for="filterRole" (click)="focusSelectRole()">
+                Filter by role
+                <fa-icon
+                  [icon]="faCircleInfo"
+                  [fixedWidth]="true"
+                  [ngbTooltip]="filterByRoleTooltip"
+                ></fa-icon
+                >:
+              </label>
+              <ng-select
+                #selectRole
+                multiple="true"
+                bindLabel="filterRole"
+                [(ngModel)]="selectedRoles"
+                (change)="changeFilterRoles($event)"
+              >
+                @for (role of roles; track role) {
+                  <ng-option [value]="role">
+                    {{ role }}
+                  </ng-option>
+                }
+              </ng-select>
+              <ng-template #filterByRoleTooltip>
+                Now you can filter the crew credits by one or various roles. Just select here the
+                role(s) you want to filter.
+              </ng-template>
+            </div>
           </div>
         </div>
-      </div>
+        <button class="btn btn-danger" (click)="resetFiltersByDefault()">
+          <fa-icon [icon]="faArrowRotateLeft"
+                   [fixedWidth]="true">
+          </fa-icon> 
+          Reset filters by default
+        </button>
+      </section>
       <hr #crewParagraph />
       <section class="crew-credits">
         <ng-container *ngIf="displayMode == 'grid'">

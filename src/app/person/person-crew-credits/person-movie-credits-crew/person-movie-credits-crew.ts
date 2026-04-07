@@ -4,7 +4,7 @@ import { LocalStorageService } from '../../../services/local-storage-service';
 import { Person } from '../../../classes/person';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -16,6 +16,7 @@ import { IconDefinition } from '@fortawesome/angular-fontawesome';
 export class PersonMovieCreditsCrew implements OnInit {
 
   public faCircleInfo: IconDefinition = faCircleInfo;
+  public faArrowRotateLeft: IconDefinition = faArrowRotateLeft;
   @Input() crewCredits: ResponsePersonCrewCredit[] = [];
   public roles: string[] = [];
 
@@ -69,7 +70,6 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public changeFilterRoles(event: string[]): void {
-    console.log('changeFilterRoles()');
     this.page = 1;
     if (this.selectedRoles.length > 0) {
       this.filterCrewCredits = this.crewCredits.filter(crewCredit => this.selectedRoles.includes(crewCredit.job));
@@ -144,5 +144,12 @@ export class PersonMovieCreditsCrew implements OnInit {
         break;
       }
     }
+  }
+
+  public resetFiltersByDefault(): void {
+    this.displayMode = 'grid';
+    this.orderCriteriaChange('1');
+    this.selectedRoles = [];
+    this.page = 1;
   }
 }
