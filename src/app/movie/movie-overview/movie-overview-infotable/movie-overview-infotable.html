@@ -46,6 +46,17 @@
             </td>
           </tr>
         </ng-container>
+        <ng-container *ngIf="movie.spoken_languages.length > 0">
+          <td>
+            Language<ng-container *ngIf="movie.spoken_languages.length > 1">s</ng-container>:
+          </td>
+          <td>
+            <ng-container *ngFor="let spokenLanguage of movie.spoken_languages">
+              {{spokenLanguage.english_name}}
+              <br/>
+            </ng-container>
+          </td>
+        </ng-container>
         <ng-container>
           <tr>
             <td>Release Date:</td>
