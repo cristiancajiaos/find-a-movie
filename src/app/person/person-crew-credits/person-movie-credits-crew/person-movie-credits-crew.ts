@@ -3,6 +3,9 @@ import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { Person } from '../../../classes/person';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -12,13 +15,19 @@ import { OrderCriteria } from '../../../interfaces/order-criteria';
 })
 export class PersonMovieCreditsCrew implements OnInit {
 
+  public faCircleInfo: IconDefinition = faCircleInfo;
   @Input() crewCredits: ResponsePersonCrewCredit[] = [];
+  public roles: string[] = [];
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
+  @ViewChild('selectRole') selectRole: NgSelectComponent;
 
   public loadingPerson: boolean = false;
 
   public displayMode: string = 'grid';
+
+  public selectedRoles: string[] = [];
+  public selectedOrderCriteria: string = '1';
 
   public orderCriterias: OrderCriteria[] = [
     {id: 1, orderCriteriaName: 'Default Order'},
@@ -42,12 +51,34 @@ export class PersonMovieCreditsCrew implements OnInit {
   ngOnInit(): void {
     this.filterCrewCredits = structuredClone(this.crewCredits);
     this.getPerson();
+    this.setRoles();
+  }
 
+  public focusSelectRole(): void {
+    this.selectRole.focus();
+  }
+
+  private setRoles(): void {
+    const roles: string[] = this.crewCredits.map(crewCredit => crewCredit.job);
+    this.roles = [...new Set(roles)];
   }
 
   private getPerson(): void {
     this.loadingPerson = true;
     this.currentPerson = this.localStorageService.getItem('person');
+  }
+
+  public changeFilterRoles(event: string[]): void {
+    console.log('changeFilterRoles()');
+    this.page = 1;
+    if (this.selectedRoles.length > 0) {
+      this.filterCrewCredits = this.crewCredits.filter(crewCredit => this.selectedRoles.includes(crewCredit.job));
+    } else {
+      this.filterCrewCredits = structuredClone(this.crewCredits);
+    }
+    if (this.selectedOrderCriteria != '1') {
+      this.orderCriteriaChange(this.selectedOrderCriteria);
+    }
   }
 
   public changePage(pageNumber: number) {
@@ -60,6 +91,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public orderCriteriaChange(orderCriteria: string) {
+    this.selectedOrderCriteria = orderCriteria;
     switch(orderCriteria) {
       case '1': {
         this.filterCrewCredits = structuredClone(this.crewCredits);

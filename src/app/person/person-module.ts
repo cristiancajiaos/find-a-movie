@@ -15,6 +15,7 @@ import { NgxPaginationModule} from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PersonCastCredits } from './person-cast-credits/person-cast-credits';
 import { PersonCrewCredits } from './person-crew-credits/person-crew-credits';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PersonCrewCredits } from './person-crew-credits/person-crew-credits';
     RouterModule,
     NgxPaginationModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class PersonModule { }

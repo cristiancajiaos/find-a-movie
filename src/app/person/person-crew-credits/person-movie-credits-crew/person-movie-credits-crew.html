@@ -3,25 +3,48 @@
     <div class="col-12">
       <div class="row">
         <div class="col-12 col-lg-6">
-          <app-display-selector (onDisplayChange)="changeDisplay($event)">
-          </app-display-selector>
+          <app-display-selector (onDisplayChange)="changeDisplay($event)"></app-display-selector>
         </div>
         <div class="col-12 col-lg-6">
           <app-order-select
             [orderCriterias]="orderCriterias"
-            (onOrderCriteriaChange)="orderCriteriaChange($event)">
+            (onOrderCriteriaChange)="orderCriteriaChange($event)"
+          >
           </app-order-select>
         </div>
+        <div class="col-12 col-lg-6">
+          <div class="form-group">
+            <label for="filterRole" (click)="focusSelectRole()">
+              Filter by role <fa-icon [icon]="faCircleInfo" [fixedWidth]="true" [ngbTooltip]="filterByRoleTooltip"></fa-icon>:
+            </label>
+            <ng-select #selectRole 
+                       multiple="true" 
+                       bindLabel="filterRole" 
+                       [(ngModel)]="selectedRoles"
+                       (change)="changeFilterRoles($event)">
+              @for (role of roles; track role) {
+                <ng-option [value]="role">
+                  {{ role }}
+                </ng-option>
+              }
+            </ng-select>
+            <ng-template #filterByRoleTooltip>
+              Now you can filter the crew credits by one or various roles. Just select here the role(s) you want to filter.
+            </ng-template>
+          </div>
+        </div>
       </div>
+      <hr #crewParagraph />
       <section class="crew-credits">
-        <p #crewParagraph>
-          <strong>{{ currentPerson.name }}</strong> has been part of the crew in the following
-          movies:
-        </p>
         <ng-container *ngIf="displayMode == 'grid'">
           <section class="crew-credits-display-grid">
             <div class="row" #crewCreditsGrid>
-              <ng-container *ngFor="let crewRole of filterCrewCredits | paginate : { itemsPerPage: 20, currentPage: page }">
+              <ng-container
+                *ngFor="
+                  let crewRole of filterCrewCredits
+                    | paginate: { itemsPerPage: 20, currentPage: page }
+                "
+              >
                 <div class="col-12 col-sm-4 col-lg-2">
                   <app-person-crew-credit-grid [crewRole]="crewRole"></app-person-crew-credit-grid>
                 </div>
@@ -31,7 +54,12 @@
         </ng-container>
         <ng-container *ngIf="displayMode == 'list'">
           <section class="crew-credits-display-list">
-            <ng-container *ngFor="let crewRole of filterCrewCredits | paginate : { itemsPerPage: 20, currentPage: page }">
+            <ng-container
+              *ngFor="
+                let crewRole of filterCrewCredits
+                  | paginate: { itemsPerPage: 20, currentPage: page }
+              "
+            >
               <app-person-crew-credit-list [crewRole]="crewRole"></app-person-crew-credit-list>
             </ng-container>
           </section>
