@@ -1,6 +1,8 @@
 .person-header {
   header {
-    background-color: rgba(204, 204, 204, 1);
+    background-image: url("/img/default-images/bg_person_header.jpg");
+    background-size: cover;
+    background-position: center;
     padding: 5rem 1rem 1rem 1rem;
 
     .person-header-profile-img {
