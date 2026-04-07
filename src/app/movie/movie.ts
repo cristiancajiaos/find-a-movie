@@ -112,7 +112,7 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   private setMoviePoster(): void {
     this.posterSizeSmall = this.movie.poster_path
       ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie.poster_path}`
-      : 'img/default-images/movie_poster_notavailable_w500.png';
+      : 'img/default-images/movie_poster_notavailable_w500.jpg';
     this.posterSizeOriginal = this.movie.poster_path
       ? `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie.poster_path}`
       : '';

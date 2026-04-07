@@ -63,7 +63,7 @@ export class PersonHeader implements OnInit {
 
   public setProfileImg(): void {
 
-    this.profileImg = this.person.profile_path ? `${environment.imgUrl}${environment.profileSizeSmall}${this.person.profile_path}` : 'img/default-images/profile_image_notavailable_w185.png'
+    this.profileImg = this.person.profile_path ? `${environment.imgUrl}${environment.profileSizeSmall}${this.person.profile_path}` : 'img/default-images/profile_image_notavailable_w185.jpg'
     this.profileImgAltText = this.person.profile_path ? `Profile path for ${this.person.name}` : `Profile path for ${this.person.name} is not available`;
   }
 

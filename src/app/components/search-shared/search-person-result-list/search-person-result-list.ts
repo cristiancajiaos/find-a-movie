@@ -20,6 +20,6 @@ export class SearchPersonResultList implements OnInit {
   public setProfileImg(): void {
     this.profileImg = this.personResult.profile_path
       ? `${environment.imgUrl}${environment.profileSizeSmall}${this.personResult.profile_path}`
-      : 'img/default-images/profile_image_notavailable_w500.png';
+      : 'img/default-images/profile_image_notavailable_w500.jpg';
   }
 }
