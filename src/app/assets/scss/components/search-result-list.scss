@@ -1,7 +1,6 @@
 .search-result-list {
   position: relative;
   margin-bottom: 1rem;
-  box-shadow: 3px 3px 10px black;
   border: 3px solid black;
 
   a {
@@ -12,6 +11,9 @@
       display: flex;
       align-items: center;
       transition: color 0.1s linear, background-color 0.1s linear;
+      background-image: url("/img/bg/bg_generic_3.jpg");
+      background-size: cover;
+      background-position: center;
 
       .movie-poster, .person-profile-img {
         z-index: 1;
@@ -36,8 +38,7 @@
 
     &:hover {
       .search-result-content {
-        color: white;
-        background-color: black;
+        box-shadow: 4px 4px 5px black;
       }
     }
   }

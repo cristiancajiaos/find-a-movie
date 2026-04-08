@@ -2,6 +2,7 @@
 .search-person {
   header {
     background-color: rgba(204, 204, 204, 1);
+    box-shadow: 0px 5px 15px rgba(0,0,0);
   }
 
   @media screen and (max-width: 991px) {
@@ -19,5 +20,21 @@
 
   main {
     margin-top: 1rem;
+  }
+}
+
+.search-movie {
+  header {
+    background-image: url("/img/bg/bg_generic_1.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+.search-person {
+  header {
+    background-image: url("/img/bg/bg_generic_2.jpg");
+    background-size: cover;
+    background-position: center;
   }
 }
