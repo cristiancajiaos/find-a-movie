@@ -1,6 +1,6 @@
 <section class="search-result-list person-result-list">
   <a [routerLink]="['/person', personResult.id]">
-    <section class="search-result-content">
+    <section class="search-result-content" [ngStyle]="{backgroundImage: 'url(' + bgImage + ')'}">
       <section class="person-profile-img">
         <img [src]="profileImg" />
       </section>

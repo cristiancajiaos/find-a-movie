@@ -3,7 +3,7 @@
      [ngbTooltip]="fullTitleYear"
      placement="bottom"
      tooltipClass="search-tooltip">
-    <section class="search-result-content">
+    <section class="search-result-content" [ngStyle]="{backgroundImage: 'url(' + bgImage + ')'}">
       <section class="movie-poster">
         <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
       </section>

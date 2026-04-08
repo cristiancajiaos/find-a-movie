@@ -20,6 +20,8 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchIcon: IconDefinition = faSearch;
   public userIcon: IconDefinition = faUser;
 
+  public bgImage: string = 'img/bg/bg_generic_2.jpg';
+
   public searchQuery: string = '';
   public currentPage: number = 1;
   public itemsPerPage: number = 20;

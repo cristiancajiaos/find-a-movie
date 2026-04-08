@@ -10,10 +10,13 @@ import { MovieService } from '../../../services/movie-service';
   styleUrl: './search-movie-result-list.scss',
 })
 export class SearchMovieResultList implements OnInit {
+
   public posterSizeSmall: string = '';
   public releaseYear: number = 0;
   public formattedTitle: string = '';
   public altPosterText: string = '';
+
+  public bgImage: string = 'img/bg/bg_generic_3.jpg';
 
   @Input() movieResult: ResponseMovieResult = new ResponseMovieResult();
 

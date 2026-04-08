@@ -3,7 +3,7 @@
     <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
   </ng-container>
   <ng-container *ngIf="!loadingSearchMovie">
-    <header #header>
+    <header #header [ngStyle]="{backgroundImage: 'url(' + bgImage + ')'}">
       <h1>
         <fa-icon [icon]="searchIcon"></fa-icon> Search Movie
       </h1>
