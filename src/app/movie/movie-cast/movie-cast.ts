@@ -82,7 +82,7 @@ export class MovieCast implements OnInit, OnDestroy {
     this.getCast();
   }
 
-  public orderCriteriaChange(orderCriteria: OrderCriteria) {
+  public orderCriteriaChange(orderCriteria: OrderCriteria): void {
     if (orderCriteria.id  == Order.CastOrderAsc) {
       this.movieCast.sort((a, b) => {
         return a.order - b.order;
