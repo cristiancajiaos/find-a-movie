@@ -8,6 +8,7 @@
           </div>
           <div class="col-12 col-lg-6">
             <app-order-select
+              #orderSelectPersonCrewCredits
               [orderCriterias]="orderCriterias"
               (onOrderCriteriaChange)="orderCriteriaChange($event)"
             >
@@ -47,7 +48,7 @@
         <button class="btn btn-danger" (click)="resetFiltersByDefault()">
           <fa-icon [icon]="faArrowRotateLeft"
                    [fixedWidth]="true">
-          </fa-icon> 
+          </fa-icon>
           Reset filters to default
         </button>
       </section>

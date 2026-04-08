@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { Order } from '../../../enums/order';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-order-select',
@@ -10,11 +12,13 @@ import { OrderCriteria } from '../../../interfaces/order-criteria';
 })
 export class OrderSelect implements OnInit {
 
-  @Input() orderCriterias: OrderCriteria[] = [];
-
   public orderForm: FormGroup = new FormGroup({});
 
-  @Output() onOrderCriteriaChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() orderCriterias: OrderCriteria[] = [];
+
+  @Output() onOrderCriteriaChange: EventEmitter<Order> = new EventEmitter<Order>();
+
+  @ViewChild("orderSelect") orderSelect: NgSelectComponent;
 
   constructor(
     private fb: FormBuilder
@@ -24,15 +28,17 @@ export class OrderSelect implements OnInit {
 
   ngOnInit(): void {
     this.orderForm = this.fb.group({
-      order: new FormControl(0)
+      order: new FormControl(Order.DefaultOrder)
     });
   }
 
-  public orderCriteriaChange(): void {
-    const orderCriteriaValue: string = this.orderForm.controls['order'].value;
+  public orderCriteriaChange(event: Order): void {
+    this.orderForm.controls['order'].setValue(event);
+    const orderCriteriaValue: Order = this.orderForm.controls['order'].value;
     this.onOrderCriteriaChange.emit(orderCriteriaValue);
   }
 
-
-
+  public focusSelect(): void {
+    this.orderSelect.focus();
+  }
 }
