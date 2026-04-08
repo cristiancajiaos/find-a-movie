@@ -5,14 +5,13 @@
         Order by:
       </label>
       <ng-select #orderSelect
-                 (change)="orderCriteriaChange($event)"
                  formControlName="order"
-                 clearable="false">
-        @for (orderCriteria of orderCriterias; track orderCriteria.id) {
-          <ng-option [value]="orderCriteria.id">
-            {{ orderCriteria.orderCriteriaName }}
-          </ng-option>
-        }
+                 clearable="false"
+                 [placeholder]="placeholderText"
+                 [items]="orderCriterias"
+                 bindLabel="orderCriteriaName"
+                 bindValue="id"
+                 (change)="orderCriteriaChange($event)">
       </ng-select>
     </div>
   </form>

@@ -64,32 +64,32 @@ export class PersonMovieCreditsCast implements OnInit {
     this.displayMode = display;
   }
 
-  public orderCriteriaChange(orderCriteria: Order) {
-    if (orderCriteria == Order.DefaultOrder) {
+  public orderCriteriaChange(orderCriteria: OrderCriteria) {
+    if (orderCriteria.id == Order.DefaultOrder) {
       this.filterCastCredits = structuredClone(this.castCredits);
-    } else if (orderCriteria == Order.TitleAsc) {
+    } else if (orderCriteria.id == Order.TitleAsc) {
       this.filterCastCredits.sort((a, b) => {
         return a.title.localeCompare(b.title);
       });
-    } else if (orderCriteria == Order.TitleDesc) {
+    } else if (orderCriteria.id == Order.TitleDesc) {
       this.filterCastCredits.sort((a, b) => {
         return b.title.localeCompare(a.title);
       });
-    } else if (orderCriteria == Order.CharacterNameAsc) {
+    } else if (orderCriteria.id == Order.CharacterNameAsc) {
       this.filterCastCredits.sort((a, b) => {
         return a.character.localeCompare(b.character);
       });
-    } else if (orderCriteria == Order.CharacterNameDesc) {
+    } else if (orderCriteria.id == Order.CharacterNameDesc) {
       this.filterCastCredits.sort((a, b) => {
         return b.character.localeCompare(a.character);
       });
-    } else if (orderCriteria == Order.ReleaseDateAsc) {
+    } else if (orderCriteria.id == Order.ReleaseDateAsc) {
       this.filterCastCredits.sort((a, b) => {
         const aDate: Date = new Date(a.release_date);
         const bDate: Date = new Date(b.release_date);
         return aDate.getTime() - bDate.getTime();
       });
-    } else if (orderCriteria == Order.ReleaseDateDesc) {
+    } else if (orderCriteria.id == Order.ReleaseDateDesc) {
       this.filterCastCredits.sort((a, b) => {
         const aDate: Date = new Date(a.release_date);
         const bDate: Date = new Date(b.release_date);

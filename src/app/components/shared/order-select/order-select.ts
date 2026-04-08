@@ -14,9 +14,12 @@ export class OrderSelect implements OnInit {
 
   public orderForm: FormGroup = new FormGroup({});
 
-  @Input() orderCriterias: OrderCriteria[] = [];
+  public defaultOrderCriteria: OrderCriteria;
 
-  @Output() onOrderCriteriaChange: EventEmitter<Order> = new EventEmitter<Order>();
+  @Input() orderCriterias: OrderCriteria[] = [];
+  @Input() placeholderText: string = 'Select an order criteria';
+
+  @Output() onOrderCriteriaChange: EventEmitter<OrderCriteria> = new EventEmitter<OrderCriteria>();
 
   @ViewChild("orderSelect") orderSelect: NgSelectComponent;
 
@@ -27,18 +30,22 @@ export class OrderSelect implements OnInit {
   }
 
   ngOnInit(): void {
+    this.defaultOrderCriteria = this.orderCriterias[0];
     this.orderForm = this.fb.group({
-      order: new FormControl(Order.DefaultOrder)
+      order: new FormControl(this.defaultOrderCriteria.id)
     });
   }
 
-  public orderCriteriaChange(event: Order): void {
-    this.orderForm.controls['order'].setValue(event);
-    const orderCriteriaValue: Order = this.orderForm.controls['order'].value;
-    this.onOrderCriteriaChange.emit(orderCriteriaValue);
+  public orderCriteriaChange(orderCriteria: OrderCriteria): void {
+    this.onOrderCriteriaChange.emit(orderCriteria);
   }
 
   public focusSelect(): void {
     this.orderSelect.focus();
+  }
+
+  public setDefaultOrderCriteria(): void {
+    this.orderForm.controls['order'].setValue(this.defaultOrderCriteria.id);
+    this.orderCriteriaChange(this.defaultOrderCriteria);
   }
 }

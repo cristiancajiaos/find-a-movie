@@ -26,7 +26,6 @@ export class PersonMovieCreditsCrew implements OnInit {
   public displayMode: string = 'grid';
 
   public selectedRoles: string[] = [];
-  public selectedOrderCriteria: Order = Order.DefaultOrder;
 
   public orderCriterias: OrderCriteria[] = [
     {id: Order.DefaultOrder, orderCriteriaName: 'Default Order'},
@@ -37,6 +36,9 @@ export class PersonMovieCreditsCrew implements OnInit {
     {id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)'},
     {id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)'},
   ];
+
+  public defaultOrder: OrderCriteria = this.orderCriterias[0];
+  public selectedOrderCriteria: OrderCriteria = this.defaultOrder;
 
   public currentPerson!: Person;
   public filterCrewCredits: ResponsePersonCrewCredit[] = [];
@@ -80,7 +82,7 @@ export class PersonMovieCreditsCrew implements OnInit {
     } else {
       this.filterCrewCredits = structuredClone(this.crewCredits);
     }
-    if (this.selectedOrderCriteria != Order.DefaultOrder) {
+    if (this.selectedOrderCriteria.id != Order.DefaultOrder) {
       this.orderCriteriaChange(this.selectedOrderCriteria);
     }
   }
@@ -94,33 +96,33 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.displayMode = display;
   }
 
-  public orderCriteriaChange(orderCriteria: Order) {
+  public orderCriteriaChange(orderCriteria: OrderCriteria) {
     this.selectedOrderCriteria = orderCriteria;
-    if (orderCriteria == Order.DefaultOrder) {
+    if (orderCriteria.id == Order.DefaultOrder) {
       this.filterCrewCredits = structuredClone(this.crewCredits);
-    } else if (orderCriteria == Order.TitleAsc) {
+    } else if (orderCriteria.id == Order.TitleAsc) {
       this.filterCrewCredits.sort((a, b) => {
           return a.title.localeCompare(b.title);
         });
-    } else if (orderCriteria == Order.TitleDesc) {
+    } else if (orderCriteria.id == Order.TitleDesc) {
       this.filterCrewCredits.sort((a, b) => {
           return b.title.localeCompare(a.title);
         });
-    } else if (orderCriteria == Order.JobAsc) {
+    } else if (orderCriteria.id == Order.JobAsc) {
       this.filterCrewCredits.sort((a, b) => {
           return a.job.localeCompare(b.job);
         });
-    } else if (orderCriteria == Order.JobDesc) {
+    } else if (orderCriteria.id == Order.JobDesc) {
       this.filterCrewCredits.sort((a, b) => {
           return b.job.localeCompare(a.job);
         });
-    } else if (orderCriteria == Order.ReleaseDateAsc) {
+    } else if (orderCriteria.id == Order.ReleaseDateAsc) {
       this.filterCrewCredits.sort((a, b) => {
           const aDate: Date = new Date(a.release_date);
           const bDate: Date = new Date(b.release_date);
           return aDate.getTime() - bDate.getTime();
         });
-    } else if (orderCriteria == Order.ReleaseDateDesc) {
+    } else if (orderCriteria.id == Order.ReleaseDateDesc) {
       this.filterCrewCredits.sort((a, b) => {
           const aDate: Date = new Date(a.release_date);
           const bDate: Date = new Date(b.release_date);
@@ -131,7 +133,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public resetFiltersByDefault(): void {
     this.displayMode = 'grid';
-    this.orderSelectPersonCrewCredits.orderCriteriaChange(Order.DefaultOrder);
+    this.orderSelectPersonCrewCredits.setDefaultOrderCriteria();
     this.selectedRoles = [];
     this.page = 1;
   }
