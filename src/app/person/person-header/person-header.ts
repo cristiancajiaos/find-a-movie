@@ -14,8 +14,7 @@ export class PersonHeader implements OnInit {
   public user: IconDefinition = faUser;
   public film: IconDefinition = faFilm;
 
-  @Input() id: number = 0;
-  @Input() person: Person = new Person();
+  public bgImage: string = 'img/default-images/bg_person_header.jpg';
 
   public name: string = '';
   public birthYear: number = 0;
@@ -24,6 +23,9 @@ export class PersonHeader implements OnInit {
   public profileImg: string = '';
 
   public profileImgAltText: string = '';
+
+  @Input() id: number = 0;
+  @Input() person: Person = new Person();
 
   constructor() {}
 
