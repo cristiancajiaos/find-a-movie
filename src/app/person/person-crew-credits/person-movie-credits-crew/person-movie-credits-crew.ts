@@ -6,6 +6,8 @@ import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { faCircleInfo, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
+import { Order } from '../../../enums/order';
+import { OrderSelect } from '../../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -17,33 +19,37 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public faCircleInfo: IconDefinition = faCircleInfo;
   public faArrowRotateLeft: IconDefinition = faArrowRotateLeft;
-  @Input() crewCredits: ResponsePersonCrewCredit[] = [];
   public roles: string[] = [];
-
-  @ViewChild('crewParagraph') crewParagraph!: ElementRef;
-  @ViewChild('selectRole') selectRole: NgSelectComponent;
 
   public loadingPerson: boolean = false;
 
   public displayMode: string = 'grid';
 
   public selectedRoles: string[] = [];
-  public selectedOrderCriteria: string = '1';
 
   public orderCriterias: OrderCriteria[] = [
-    {id: 1, orderCriteriaName: 'Default Order'},
-    {id: 2, orderCriteriaName: 'Title (ascending)'},
-    {id: 3, orderCriteriaName: 'Title (descending)'},
-    {id: 4, orderCriteriaName: 'Job (ascending)'},
-    {id: 5, orderCriteriaName: 'Job (descending)'},
-    {id: 6, orderCriteriaName: 'Release Date (ascending)'},
-    {id: 7, orderCriteriaName: 'Release Date (descending)'},
+    {id: Order.DefaultOrder, orderCriteriaName: 'Default Order'},
+    {id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)'},
+    {id: Order.TitleDesc, orderCriteriaName: 'Title (descending)'},
+    {id: Order.JobAsc, orderCriteriaName: 'Job (ascending)'},
+    {id: Order.JobDesc, orderCriteriaName: 'Job (descending)'},
+    {id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)'},
+    {id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)'},
   ];
+
+  public defaultOrder: OrderCriteria = this.orderCriterias[0];
+  public selectedOrderCriteria: OrderCriteria = this.defaultOrder;
 
   public currentPerson!: Person;
   public filterCrewCredits: ResponsePersonCrewCredit[] = [];
 
   public page: number = 1;
+
+  @Input() crewCredits: ResponsePersonCrewCredit[] = [];
+
+  @ViewChild('crewParagraph') crewParagraph!: ElementRef;
+  @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
+  @ViewChild('selectRole') selectRole: NgSelectComponent;
 
   constructor(
     private localStorageService: LocalStorageService
@@ -76,7 +82,7 @@ export class PersonMovieCreditsCrew implements OnInit {
     } else {
       this.filterCrewCredits = structuredClone(this.crewCredits);
     }
-    if (this.selectedOrderCriteria != '1') {
+    if (this.selectedOrderCriteria.id != Order.DefaultOrder) {
       this.orderCriteriaChange(this.selectedOrderCriteria);
     }
   }
@@ -90,65 +96,44 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.displayMode = display;
   }
 
-  public orderCriteriaChange(orderCriteria: string) {
+  public orderCriteriaChange(orderCriteria: OrderCriteria) {
     this.selectedOrderCriteria = orderCriteria;
-    switch(orderCriteria) {
-      case '1': {
-        this.filterCrewCredits = structuredClone(this.crewCredits);
-        break;
-      }
-
-      case '2': {
-        this.filterCrewCredits.sort((a, b) => {
+    if (orderCriteria.id == Order.DefaultOrder) {
+      this.filterCrewCredits = structuredClone(this.crewCredits);
+    } else if (orderCriteria.id == Order.TitleAsc) {
+      this.filterCrewCredits.sort((a, b) => {
           return a.title.localeCompare(b.title);
         });
-        break;
-      }
-
-      case '3': {
-        this.filterCrewCredits.sort((a, b) => {
+    } else if (orderCriteria.id == Order.TitleDesc) {
+      this.filterCrewCredits.sort((a, b) => {
           return b.title.localeCompare(a.title);
         });
-        break;
-      }
-
-      case '4': {
-        this.filterCrewCredits.sort((a, b) => {
+    } else if (orderCriteria.id == Order.JobAsc) {
+      this.filterCrewCredits.sort((a, b) => {
           return a.job.localeCompare(b.job);
         });
-        break;
-      }
-
-      case '5': {
-        this.filterCrewCredits.sort((a, b) => {
+    } else if (orderCriteria.id == Order.JobDesc) {
+      this.filterCrewCredits.sort((a, b) => {
           return b.job.localeCompare(a.job);
         });
-        break;
-      }
-
-      case '6': {
-        this.filterCrewCredits.sort((a, b) => {
+    } else if (orderCriteria.id == Order.ReleaseDateAsc) {
+      this.filterCrewCredits.sort((a, b) => {
           const aDate: Date = new Date(a.release_date);
           const bDate: Date = new Date(b.release_date);
           return aDate.getTime() - bDate.getTime();
         });
-        break;
-      }
-
-      case '7': {
-        this.filterCrewCredits.sort((a, b) => {
+    } else if (orderCriteria.id == Order.ReleaseDateDesc) {
+      this.filterCrewCredits.sort((a, b) => {
           const aDate: Date = new Date(a.release_date);
           const bDate: Date = new Date(b.release_date);
           return bDate.getTime() - aDate.getTime();
         });
-        break;
-      }
     }
   }
 
   public resetFiltersByDefault(): void {
     this.displayMode = 'grid';
-    this.orderCriteriaChange('1');
+    this.orderSelectPersonCrewCredits.setDefaultOrderCriteria();
     this.selectedRoles = [];
     this.page = 1;
   }

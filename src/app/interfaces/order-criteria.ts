@@ -1,4 +1,6 @@
+import { Order } from "../enums/order";
+
 export interface OrderCriteria {
-  id: number;
+  id: Order;
   orderCriteriaName: string;
 }

@@ -1,26 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../services/movie-service';
 import { CastMember } from '../../classes/credits/cast-member';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Order } from '../../enums/order';
+import { OrderCriteria } from '../../interfaces/order-criteria';
+import { OrderSelect } from '../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-movie-cast',
   standalone: false,
   templateUrl: './movie-cast.html',
-  styleUrl: './movie-cast.scss'
+  styleUrl: './movie-cast.scss',
 })
 export class MovieCast implements OnInit, OnDestroy {
-
   public id: number = 0;
 
   public movieCast: CastMember[] = [];
 
   public loadingCast: boolean = false;
-
-  public orderCastForm: FormGroup = new FormGroup({});
 
   public activatedRouteParentSubscription: Subscription | undefined;
 
@@ -28,38 +27,50 @@ export class MovieCast implements OnInit, OnDestroy {
   public movieCastError: boolean = false;
   public errorMessage: string = '';
 
+  public orderCriterias: OrderCriteria[] = [
+    { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order (ascending)' },
+    { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order (descending)' },
+    { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
+    { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
+    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name (ascending)' },
+    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name (descending)' },
+  ];
+
+  @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
-    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.setId();
-
-    this.orderCastForm = this.fb.group({
-      orderCast: new FormControl('1')
-    });
   }
 
   private setId(): void {
-    this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(params => {
-      this.id = parseInt(params['id']);
-      this.getCast();
-    });
+    this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
+      (params) => {
+        this.id = parseInt(params['id']);
+        this.getCast();
+      },
+    );
   }
 
   private getCast(): void {
     this.movieCastError = false;
     this.loadingCast = true;
-    this.movieService.getMovieCast(this.id).then(cast => {
-      this.movieCast = cast;
-      this.castFound = true;
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
-      this.loadingCast = false;
-    })
+    this.movieService
+      .getMovieCast(this.id)
+      .then((cast) => {
+        this.movieCast = cast;
+        this.castFound = true;
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.handleError(error);
+      })
+      .finally(() => {
+        this.loadingCast = false;
+      });
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -71,60 +82,35 @@ export class MovieCast implements OnInit, OnDestroy {
     this.getCast();
   }
 
-
-
-  public changeCastOrder(): void {
-    switch (this.orderCastForm.value['orderCast']) {
-      case '1': {
-        this.movieCast.sort((a, b) => {
-          return a.order - b.order;
-        });
-        break;
-      }
-
-      case '2': {
-        this.movieCast.sort((a, b) => {
-          return b.order - a.order;
-        });
-        break;
-      }
-
-      case '3': {
-        this.movieCast.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
-        break;
-      }
-
-      case '4': {
-        this.movieCast.sort((a, b) => {
-          return b.name.localeCompare(a.name);
-        });
-        break;
-      }
-
-      case '5': {
-        this.movieCast.sort((a, b) => {
-          return a.character.localeCompare(b.character);
-        });
-        break;
-      }
-
-      case '6': {
-        this.movieCast.sort((a, b) => {
-          return b.character.localeCompare(a.character);
-        });
-        break;
-      }
-
-      default: {
-        break;
-      }
+  public orderCriteriaChange(orderCriteria: OrderCriteria): void {
+    if (orderCriteria.id  == Order.CastOrderAsc) {
+      this.movieCast.sort((a, b) => {
+        return a.order - b.order;
+      });
+    } else if (orderCriteria.id == Order.CastOrderDesc) {
+      this.movieCast.sort((a, b) => {
+        return b.order - a.order;
+      });
+    } else if (orderCriteria.id == Order.NameAsc) {
+      this.movieCast.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    } else if (orderCriteria.id == Order.NameDesc) {
+      this.movieCast.sort((a, b) => {
+        return b.name.localeCompare(a.name);
+      });
+    } else if (orderCriteria.id == Order.CharacterNameAsc) {
+      this.movieCast.sort((a, b) => {
+        return a.character.localeCompare(b.character);
+      });
+    } else if (orderCriteria.id == Order.CharacterNameDesc) {
+      this.movieCast.sort((a, b) => {
+        return b.character.localeCompare(a.character);
+      });
     }
   }
 
   ngOnDestroy(): void {
     this.activatedRouteParentSubscription?.unsubscribe();
   }
-
 }

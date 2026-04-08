@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { Order } from '../../../enums/order';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-order-select',
@@ -10,11 +12,16 @@ import { OrderCriteria } from '../../../interfaces/order-criteria';
 })
 export class OrderSelect implements OnInit {
 
-  @Input() orderCriterias: OrderCriteria[] = [];
-
   public orderForm: FormGroup = new FormGroup({});
 
-  @Output() onOrderCriteriaChange: EventEmitter<string> = new EventEmitter<string>();
+  public defaultOrderCriteria: OrderCriteria;
+
+  @Input() orderCriterias: OrderCriteria[] = [];
+  @Input() placeholderText: string = 'Select an order criteria';
+
+  @Output() onOrderCriteriaChange: EventEmitter<OrderCriteria> = new EventEmitter<OrderCriteria>();
+
+  @ViewChild("orderSelect") orderSelect: NgSelectComponent;
 
   constructor(
     private fb: FormBuilder
@@ -23,16 +30,22 @@ export class OrderSelect implements OnInit {
   }
 
   ngOnInit(): void {
+    this.defaultOrderCriteria = this.orderCriterias[0];
     this.orderForm = this.fb.group({
-      order: new FormControl(0)
+      order: new FormControl(this.defaultOrderCriteria.id)
     });
   }
 
-  public orderCriteriaChange(): void {
-    const orderCriteriaValue: string = this.orderForm.controls['order'].value;
-    this.onOrderCriteriaChange.emit(orderCriteriaValue);
+  public orderCriteriaChange(orderCriteria: OrderCriteria): void {
+    this.onOrderCriteriaChange.emit(orderCriteria);
   }
 
+  public focusSelect(): void {
+    this.orderSelect.focus();
+  }
 
-
+  public setDefaultOrderCriteria(): void {
+    this.orderForm.controls['order'].setValue(this.defaultOrderCriteria.id);
+    this.orderCriteriaChange(this.defaultOrderCriteria);
+  }
 }

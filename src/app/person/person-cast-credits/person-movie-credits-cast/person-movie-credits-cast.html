@@ -7,8 +7,10 @@
           </app-display-selector>
         </div>
         <div class="col-12 col-lg-6">
-          <app-order-select [orderCriterias]="orderCriterias"
-                              (onOrderCriteriaChange)="orderCriteriaChange($event)">
+          <app-order-select
+            #orderSelectPersonCastCredits
+            [orderCriterias]="orderCriterias"
+            (onOrderCriteriaChange)="orderCriteriaChange($event)">
           </app-order-select>
         </div>
       </div>

@@ -4,35 +4,32 @@ import { LocalStorageService } from '../../../services/local-storage-service';
 import { Person } from '../../../classes/person';
 import { faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { Order } from '../../../enums/order';
+import { OrderSelect } from '../../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-person-movie-credits-cast',
   standalone: false,
   templateUrl: './person-movie-credits-cast.html',
-  styleUrl: './person-movie-credits-cast.scss'
+  styleUrl: './person-movie-credits-cast.scss',
 })
 export class PersonMovieCreditsCast implements OnInit {
 
   public gridIcon: IconDefinition = faGrip;
   public listIcon: IconDefinition = faList;
 
-  @Input() castCredits: ResponsePersonCastCredit[] = [];
-
-  @ViewChild('starringParagraph') starringParagraph!: ElementRef;
-  @ViewChild('castCreditsList') castCreditsList!: ElementRef;
-
   public loadingPerson: boolean = false;
 
   public displayMode: string = 'grid';
 
   public orderCriterias: OrderCriteria[] = [
-    {id: 1, orderCriteriaName: 'Default Order'},
-    {id: 2, orderCriteriaName: 'Title (ascending)'},
-    {id: 3, orderCriteriaName: 'Title (descending)'},
-    {id: 4, orderCriteriaName: 'Character Name (ascending)'},
-    {id: 5, orderCriteriaName: 'Character Name (descending)'},
-    {id: 6, orderCriteriaName: 'Release Date (ascending)'},
-    {id: 7, orderCriteriaName: 'Release Date (descending)'},
+    { id: Order.DefaultOrder, orderCriteriaName: 'Default Order' },
+    { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
+    { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' },
+    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character Name (ascending)' },
+    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character Name (descending)' },
+    { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)' },
+    { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)' },
   ];
 
   public currentPerson!: Person;
@@ -40,11 +37,13 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public page: number = 1;
 
-  constructor(
-    private localStorageService: LocalStorageService,
-  ) {
+  @Input() castCredits: ResponsePersonCastCredit[] = [];
 
-  }
+  @ViewChild('starringParagraph') starringParagraph!: ElementRef;
+  @ViewChild('orderSelectPersonCastCredits') orderSelectPersonCastCredits: OrderSelect;
+  @ViewChild('castCreditsList') castCreditsList!: ElementRef;
+
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.filterCastCredits = structuredClone(this.castCredits);
@@ -58,65 +57,44 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public changePage(pageNumber: number) {
     this.page = pageNumber;
-    this.starringParagraph.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+    this.starringParagraph.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   public changeDisplay(display: string) {
     this.displayMode = display;
   }
 
-  public orderCriteriaChange(orderCriteria: string) {
-    switch(orderCriteria) {
-      case '1': {
-        this.filterCastCredits = structuredClone(this.castCredits);
-        break;
-      }
-
-      case '2': {
-        this.filterCastCredits.sort((a, b) => {
-          return a.title.localeCompare(b.title);
-        });
-        break;
-      }
-
-      case '3': {
-        this.filterCastCredits.sort((a, b) => {
-          return b.title.localeCompare(a.title);
-        });
-        break;
-      }
-
-      case '4': {
-        this.filterCastCredits.sort((a, b) => {
-          return a.character.localeCompare(b.character);
-        });
-        break;
-      }
-
-      case '5': {
-        this.filterCastCredits.sort((a, b) => {
-          return b.character.localeCompare(a.character);
-        });
-        break;
-      }
-
-      case '6': {
-        this.filterCastCredits.sort((a, b) => {
-          const aDate: Date = new Date(a.release_date);
-          const bDate: Date = new Date(b.release_date);
-          return aDate.getTime() - bDate.getTime();
-        });
-        break;
-      }
-
-      case '7': {
-        this.filterCastCredits.sort((a, b) => {
-          const aDate: Date = new Date(a.release_date);
-          const bDate: Date = new Date(b.release_date);
-          return bDate.getTime() - aDate.getTime();
-        });
-        break;
-      }
+  public orderCriteriaChange(orderCriteria: OrderCriteria) {
+    if (orderCriteria.id == Order.DefaultOrder) {
+      this.filterCastCredits = structuredClone(this.castCredits);
+    } else if (orderCriteria.id == Order.TitleAsc) {
+      this.filterCastCredits.sort((a, b) => {
+        return a.title.localeCompare(b.title);
+      });
+    } else if (orderCriteria.id == Order.TitleDesc) {
+      this.filterCastCredits.sort((a, b) => {
+        return b.title.localeCompare(a.title);
+      });
+    } else if (orderCriteria.id == Order.CharacterNameAsc) {
+      this.filterCastCredits.sort((a, b) => {
+        return a.character.localeCompare(b.character);
+      });
+    } else if (orderCriteria.id == Order.CharacterNameDesc) {
+      this.filterCastCredits.sort((a, b) => {
+        return b.character.localeCompare(a.character);
+      });
+    } else if (orderCriteria.id == Order.ReleaseDateAsc) {
+      this.filterCastCredits.sort((a, b) => {
+        const aDate: Date = new Date(a.release_date);
+        const bDate: Date = new Date(b.release_date);
+        return aDate.getTime() - bDate.getTime();
+      });
+    } else if (orderCriteria.id == Order.ReleaseDateDesc) {
+      this.filterCastCredits.sort((a, b) => {
+        const aDate: Date = new Date(a.release_date);
+        const bDate: Date = new Date(b.release_date);
+        return bDate.getTime() - aDate.getTime();
+      });
     }
   }
 }

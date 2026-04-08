@@ -10,28 +10,12 @@
     <ng-container *ngIf="!movieCastError">
       <h2>Cast</h2>
       <ng-container *ngIf="movieCast.length > 0">
-        <form [formGroup]="orderCastForm">
-          <div class="row align-items-center">
-            <label class="col-3" for="orderCast">Order by</label>
-            <div class="col-9">
-              <select
-                class="form-control"
-                formControlName="orderCast"
-                (change)="changeCastOrder()"
-                id="orderCast"
-                name="orderCast"
-              >
-                <option value="0" selected disabled>Select an order criteria</option>
-                <option value="1">Default Order (ascending)</option>
-                <option value="2">Default Order (descending)</option>
-                <option value="3">Name (ascending)</option>
-                <option value="4">Name (descending)</option>
-                <option value="5">Character (ascending)</option>
-                <option value="6">Character (descending)</option>
-              </select>
-            </div>
-          </div>
-        </form>
+        <app-order-select
+          #orderSelectMovieCast
+          [orderCriterias]="orderCriterias"
+          (onOrderCriteriaChange)="orderCriteriaChange($event)">
+        </app-order-select>
+        <hr/>
         <div class="table-responsive">
           <table class="table">
             <thead>
