@@ -9,6 +9,6 @@ export enum Order {
   ReleaseDateDesc = 7,
   NameAsc = 8,
   NameDesc = 9,
-  CharacterAsc = 10,
-  CharacterDesc = 11
+  CharacterNameAsc = 10,
+  CharacterNameDesc = 11
 }
