@@ -8,8 +8,17 @@
         </span>
         <br />
         <span>
-          <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
-          <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
+          <ng-container *ngIf="castRole.character">
+            <ng-container *ngIf="castRole.character == '(uncredited)'; else character">
+              as an uncredited character
+            </ng-container>
+            <ng-template #character>
+              as {{ castRole.character }}
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="!castRole.character">
+            as a role not defined
+          </ng-container>
         </span>
       </div>
     </div>

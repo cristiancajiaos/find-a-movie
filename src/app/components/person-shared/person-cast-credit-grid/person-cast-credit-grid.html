@@ -13,19 +13,29 @@
     </section>
     <section class="credit-info">
       <div class="credit-formatted-title">
-        {{formattedTitle}}
+        {{ formattedTitle }}
       </div>
       <div class="credit-role">
-        <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
-        <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
+        <ng-container *ngIf="castRole.character">
+          <ng-container *ngIf="castRole.character == '(uncredited)'; else character">
+            as an uncredited character
+          </ng-container>
+          <ng-template #character> as {{ castRole.character }} </ng-template>
+        </ng-container>
+        <ng-container *ngIf="!castRole.character">as a role not defined</ng-container>
       </div>
     </section>
   </a>
   <ng-template #castPopTitle>
-    {{formattedTitle}}
+    {{ formattedTitle }}
   </ng-template>
   <ng-template #castPopContent>
-    <ng-container *ngIf="castRole.character">as {{ castRole.character }}</ng-container>
-    <ng-container *ngIf="!castRole.character">No Role Defined</ng-container>
+    <ng-container *ngIf="castRole.character">
+      <ng-container *ngIf="castRole.character == '(uncredited)'; else character">
+        as an uncredited character
+      </ng-container>
+      <ng-template #character> as {{ castRole.character }} </ng-template>
+    </ng-container>
+    <ng-container *ngIf="!castRole.character">as a role not defined</ng-container>
   </ng-template>
 </section>
