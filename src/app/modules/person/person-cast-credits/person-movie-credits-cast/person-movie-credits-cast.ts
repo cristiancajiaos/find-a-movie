@@ -1,11 +1,11 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/response-person-cast-credit';
-import { LocalStorageService } from '../../../services/local-storage-service';
-import { Person } from '../../../classes/person';
+import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
+import { LocalStorageService } from '../../../../services/local-storage-service';
+import { Person } from '../../../../classes/person';
 import { faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { OrderCriteria } from '../../../interfaces/order-criteria';
-import { Order } from '../../../enums/order';
-import { OrderSelect } from '../../../components/shared/order-select/order-select';
+import { OrderCriteria } from '../../../../interfaces/order-criteria';
+import { Order } from '../../../../enums/order';
+import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-person-movie-credits-cast',

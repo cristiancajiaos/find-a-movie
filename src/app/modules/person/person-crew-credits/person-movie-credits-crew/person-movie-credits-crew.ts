@@ -1,13 +1,13 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
-import { LocalStorageService } from '../../../services/local-storage-service';
-import { Person } from '../../../classes/person';
-import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
+import { LocalStorageService } from '../../../../services/local-storage-service';
+import { Person } from '../../../../classes/person';
+import { OrderCriteria } from '../../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { faCircleInfo, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
-import { Order } from '../../../enums/order';
-import { OrderSelect } from '../../../components/shared/order-select/order-select';
+import { Order } from '../../../../enums/order';
+import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-person-movie-credits-crew',

@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'person',
-    loadChildren: () => import('./person/person-module').then((m) => m.PersonModule),
+    loadChildren: () => import('./modules/person/person-module').then((m) => m.PersonModule),
   },
   {
     path: 'search',

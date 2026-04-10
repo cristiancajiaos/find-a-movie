@@ -1,11 +1,11 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { TitleService } from '../services/title-service';
-import { Person } from '../classes/person';
-import { PersonService } from '../services/person-service';
+import { TitleService } from '../../services/title-service';
+import { Person } from '../../classes/person';
+import { PersonService } from '../../services/person-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonHeader } from './person-header/person-header';
-import { LocalStorageService } from '../services/local-storage-service';
+import { LocalStorageService } from '../../services/local-storage-service';
 import { Subscription } from 'rxjs';
 
 @Component({

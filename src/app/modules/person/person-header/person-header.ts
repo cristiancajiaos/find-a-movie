@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { Person } from '../../classes/person';
-import { environment } from '../../../environments/environment.development';
+import { Person } from '../../../classes/person';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-person-header',

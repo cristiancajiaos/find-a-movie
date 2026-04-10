@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Person } from '../../classes/person';
+import { Person } from '../../../classes/person';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PersonService } from '../../services/person-service';
-import { LocalStorageService } from '../../services/local-storage-service';
-import { environment } from '../../../environments/environment.development';
+import { PersonService } from '../../../services/person-service';
+import { LocalStorageService } from '../../../services/local-storage-service';
+import { environment } from '../../../../environments/environment.development';
 import { faGlobe, faMars, faVenus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 
