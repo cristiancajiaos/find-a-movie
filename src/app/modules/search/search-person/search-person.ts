@@ -2,10 +2,10 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ActivatedRoute } from '@angular/router';
 import { faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { ResponseSearchPerson } from '../../classes/response-search-person';
-import { ResponsePersonResult } from '../../classes/response-search-person/response-person-result';
-import { SearchService } from '../../services/search-service';
-import { TitleService } from '../../services/title-service';
+import { ResponseSearchPerson } from '../../../classes/response-search-person';
+import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
+import { SearchService } from '../../../services/search-service';
+import { TitleService } from '../../../services/title-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SearchMovie } from '../search-movie/search-movie';
 
@@ -13,10 +13,9 @@ import { SearchMovie } from '../search-movie/search-movie';
   selector: 'app-search-person',
   standalone: false,
   templateUrl: './search-person.html',
-  styleUrl: './search-person.scss'
+  styleUrl: './search-person.scss',
 })
 export class SearchPerson implements OnInit, OnDestroy {
-
   public searchIcon: IconDefinition = faSearch;
   public userIcon: IconDefinition = faUser;
 
@@ -49,13 +48,11 @@ export class SearchPerson implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService,
-    private titleService: TitleService
-  ) {
-
-  }
+    private titleService: TitleService,
+  ) {}
 
   ngOnInit(): void {
-    this.routeSubscription = this.activatedRoute.params.subscribe(params => {
+    this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery = params['searchQuery'];
       this.setSearchPersonTitle(this.searchQuery);
       this.searchPerson();
@@ -65,34 +62,38 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchPerson(): void {
     this.searchError = false;
     this.loadingSearchPerson = true;
-    this.searchService.searchPerson(this.searchQuery)
-    .then(responseSearchPerson => {
-      this.handlePersonResults(responseSearchPerson);
-    })
-    .catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    })
-    .finally(() => {
-      this.loadingSearchPerson = false;
-    });
+    this.searchService
+      .searchPerson(this.searchQuery)
+      .then((responseSearchPerson) => {
+        this.handlePersonResults(responseSearchPerson);
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.handleError(error);
+      })
+      .finally(() => {
+        this.loadingSearchPerson = false;
+      });
   }
 
   public changePage(page: number) {
     this.searchPersonUpdatePage(page);
-    this.header.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+    this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   public searchPersonUpdatePage(page: number) {
     this.searchError = false;
     this.loadingSearchPerson = true;
-    this.searchService.searchPerson(this.searchQuery, page)
-    .then(responseSearchPerson => {
-      this.handlePersonResults(responseSearchPerson);
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
-      this.loadingSearchPerson = false;
-    });
+    this.searchService
+      .searchPerson(this.searchQuery, page)
+      .then((responseSearchPerson) => {
+        this.handlePersonResults(responseSearchPerson);
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.handleError(error);
+      })
+      .finally(() => {
+        this.loadingSearchPerson = false;
+      });
   }
 
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
@@ -101,12 +102,15 @@ export class SearchPerson implements OnInit, OnDestroy {
     this.totalResults = responseSearchPerson.total_results;
     this.currentPage = responseSearchPerson.page;
     this.calculatePageLimits();
-    this.noResults = (this.personResults.length == 0);
+    this.noResults = this.personResults.length == 0;
   }
 
   private calculatePageLimits(): void {
     this.currentPageStart = 1 + (this.currentPage - 1) * this.itemsPerPage;
-    this.currentPageEnd = ((this.totalResults - (this.currentPage * this.itemsPerPage)) > 0) ? this.currentPage * this.itemsPerPage : this.totalResults;
+    this.currentPageEnd =
+      this.totalResults - this.currentPage * this.itemsPerPage > 0
+        ? this.currentPage * this.itemsPerPage
+        : this.totalResults;
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -127,5 +131,4 @@ export class SearchPerson implements OnInit, OnDestroy {
       this.routeSubscription.unsubscribe();
     }
   }
-
 }

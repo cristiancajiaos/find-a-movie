@@ -10,18 +10,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../components/shared/shared-module';
-import { SearchSharedModule } from '../components/search-shared/search-shared-module';
+import { SharedModule } from '../../components/shared/shared-module';
+import { SearchSharedModule } from '../../components/search-shared/search-shared-module';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-
 @NgModule({
-  declarations: [
-    Search,
-    SearchMovie,
-    SearchPerson,
-    SearchMain
-  ],
+  declarations: [Search, SearchMovie, SearchPerson, SearchMain],
   imports: [
     CommonModule,
     SearchRoutingModule,
@@ -32,7 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     SharedModule,
     SearchSharedModule,
-    NgxPaginationModule
-  ]
+    NgxPaginationModule,
+  ],
 })
-export class SearchModule { }
+export class SearchModule {}

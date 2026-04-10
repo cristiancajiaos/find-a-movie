@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faFilm, faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { TitleService } from '../../services/title-service';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-search-main',
@@ -21,24 +21,24 @@ export class SearchMain implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private titleService: TitleService
+    private titleService: TitleService,
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('Choose what do you want to search')
+    this.titleService.setTitle('Choose what do you want to search');
     this.movieSearchForm = this.fb.group({
-      movieSearch: new FormControl('')
+      movieSearch: new FormControl(''),
     });
 
     this.personSearchForm = this.fb.group({
-      personSearch: new FormControl('')
+      personSearch: new FormControl(''),
     });
   }
 
   public sendMovieQuery(): void {
     const movieQuery = this.movieSearchForm.value['movieSearch'];
 
-    if (!movieQuery || movieQuery.length == 0 ) {
+    if (!movieQuery || movieQuery.length == 0) {
       return;
     }
 
@@ -53,6 +53,5 @@ export class SearchMain implements OnInit {
     }
 
     this.router.navigate(['search', 'person', personQuery]);
-
   }
 }

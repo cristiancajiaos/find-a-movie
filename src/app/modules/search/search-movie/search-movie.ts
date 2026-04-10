@@ -2,20 +2,19 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ActivatedRoute } from '@angular/router';
 import { faFilm, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { SearchService } from '../../services/search-service';
-import { TitleService } from '../../services/title-service';
+import { SearchService } from '../../../services/search-service';
+import { TitleService } from '../../../services/title-service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseSearchMovie } from '../../classes/response-search-movie';
-import { ResponseMovieResult } from '../../classes/response-search-movie/response-movie-result';
+import { ResponseSearchMovie } from '../../../classes/response-search-movie';
+import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 
 @Component({
   selector: 'app-search-movie',
   standalone: false,
   templateUrl: './search-movie.html',
-  styleUrl: './search-movie.scss'
+  styleUrl: './search-movie.scss',
 })
 export class SearchMovie implements OnInit, OnDestroy {
-
   public searchIcon: IconDefinition = faSearch;
   public movieIcon: IconDefinition = faFilm;
 
@@ -48,13 +47,11 @@ export class SearchMovie implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService,
-    private titleService: TitleService
-  ) {
-
-  }
+    private titleService: TitleService,
+  ) {}
 
   ngOnInit(): void {
-    this.routeSubscription = this.activatedRoute.params.subscribe(params => {
+    this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery = params['searchQuery'];
       this.setSearchMovieTitle(this.searchQuery);
       this.searchMovie();
@@ -64,32 +61,38 @@ export class SearchMovie implements OnInit, OnDestroy {
   public searchMovie(): void {
     this.searchError = false;
     this.loadingSearchMovie = true;
-    this.searchService.searchMovie(this.searchQuery)
-    .then(responseSearchMovie => {
-      this.handleMovieResults(responseSearchMovie);
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
-      this.loadingSearchMovie = false;
-    });
+    this.searchService
+      .searchMovie(this.searchQuery)
+      .then((responseSearchMovie) => {
+        this.handleMovieResults(responseSearchMovie);
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.handleError(error);
+      })
+      .finally(() => {
+        this.loadingSearchMovie = false;
+      });
   }
 
   public changePage(page: number) {
     this.searchMovieUpdatePage(page);
-    this.header.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+    this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   public searchMovieUpdatePage(page: number) {
     this.searchError = false;
     this.loadingSearchMovie = true;
-    this.searchService.searchMovie(this.searchQuery, page)
-    .then(responseSearchMovie => {
-      this.handleMovieResults(responseSearchMovie);
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
-      this.loadingSearchMovie = false;
-    });
+    this.searchService
+      .searchMovie(this.searchQuery, page)
+      .then((responseSearchMovie) => {
+        this.handleMovieResults(responseSearchMovie);
+      })
+      .catch((error: HttpErrorResponse) => {
+        this.handleError(error);
+      })
+      .finally(() => {
+        this.loadingSearchMovie = false;
+      });
   }
 
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
@@ -105,7 +108,10 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   private calculatePageLimits(): void {
     this.currentPageStart = 1 + (this.currentPage - 1) * this.itemsPerPage;
-    this.currentPageEnd = ((this.totalResults - (this.currentPage * this.itemsPerPage)) > 0) ? this.currentPage * this.itemsPerPage : this.totalResults;
+    this.currentPageEnd =
+      this.totalResults - this.currentPage * this.itemsPerPage > 0
+        ? this.currentPage * this.itemsPerPage
+        : this.totalResults;
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -126,5 +132,4 @@ export class SearchMovie implements OnInit, OnDestroy {
       this.routeSubscription.unsubscribe();
     }
   }
-
 }

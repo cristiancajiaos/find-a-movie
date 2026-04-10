@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'search',
-    loadChildren: () => import('./search/search-module').then((m) => m.SearchModule),
+    loadChildren: () => import('./modules/search/search-module').then((m) => m.SearchModule),
   },
   { path: 'not-found', component: NotFound, pathMatch: 'full' },
   { path: '**', component: NotFound, pathMatch: 'full' },
