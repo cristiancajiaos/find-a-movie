@@ -1,6 +1,6 @@
 <section class="person-cast-credit-list">
   <a [routerLink]="['/movie', castRole.id]">
-    <div class="list-content">
+    <div class="list-content" [ngStyle]="{backgroundImage: 'url(' + bgImage + ')'}">
       <img [src]="posterSizeSmall" [alt]="altPosterText" />
       <div class="list-detail">
         <span class="list-formatted-title">

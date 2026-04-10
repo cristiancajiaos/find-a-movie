@@ -17,6 +17,8 @@ export class PersonCrewCreditList implements OnInit {
   public formattedTitle: string = '';
   public altPosterText: string = '';
 
+  public bgImage: string = 'img/bg/bg_generic_2.jpg';
+
   constructor(
     private movieService: MovieService
   ) {}
