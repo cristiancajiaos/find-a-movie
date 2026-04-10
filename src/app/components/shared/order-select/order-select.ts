@@ -32,7 +32,7 @@ export class OrderSelect implements OnInit {
   ngOnInit(): void {
     this.defaultOrderCriteria = this.orderCriterias[0];
     this.orderForm = this.fb.group({
-      order: new FormControl(this.defaultOrderCriteria.id)
+      order: new FormControl()
     });
   }
 
