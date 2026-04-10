@@ -17,17 +17,12 @@
           <div class="col-12 col-lg-6">
             <div class="form-group mb-3">
               <label for="filterRole" (click)="focusSelectRole()">
-                Filter by role
-                <fa-icon
-                  [icon]="faCircleInfo"
-                  [fixedWidth]="true"
-                  [ngbTooltip]="filterByRoleTooltip"
-                ></fa-icon
-                >:
+                Filter by role:
               </label>
               <ng-select
                 #selectRole
                 multiple="true"
+                [placeholder]="placeholderRole"
                 bindLabel="filterRole"
                 [(ngModel)]="selectedRoles"
                 (change)="changeFilterRoles($event)"
@@ -38,17 +33,27 @@
                   </ng-option>
                 }
               </ng-select>
-              <ng-template #filterByRoleTooltip>
-                Now you can filter the crew credits by one or various roles. Just select here the
-                role(s) you want to filter.
-              </ng-template>
             </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <app-from-select
+              #fromSelect
+              [yearsFrom]="yearsFrom"
+              (onSelectFromYear)="setYearFrom($event)"
+              (onClearSelectFromYear)="clearSelectYearFrom($event)">
+            </app-from-select>
+          </div>
+          <div class="col-6 col-lg-3">
+            <app-to-select
+              #toSelect
+              [yearsTo]="yearsTo"
+              (onSelectToYear)="setYearTo($event)"
+              (onClearSelectToYear)="clearSelectYearTo($event)">
+            </app-to-select>
           </div>
         </div>
         <button class="btn btn-danger" (click)="resetFiltersByDefault()">
-          <fa-icon [icon]="faArrowRotateLeft"
-                   [fixedWidth]="true">
-          </fa-icon>
+          <fa-icon [icon]="faArrowRotateLeft" [fixedWidth]="true"> </fa-icon>
           Reset filters to default
         </button>
       </section>

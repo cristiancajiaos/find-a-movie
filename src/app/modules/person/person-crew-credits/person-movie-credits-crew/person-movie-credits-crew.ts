@@ -8,6 +8,8 @@ import { faCircleInfo, faArrowRotateLeft } from '@fortawesome/free-solid-svg-ico
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
+import { FromSelect } from '../../../../components/shared/from-select/from-select';
+import { ToSelect } from '../../../../components/shared/to-select/to-select';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -19,6 +21,9 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public faCircleInfo: IconDefinition = faCircleInfo;
   public faArrowRotateLeft: IconDefinition = faArrowRotateLeft;
+
+  public placeholderRole: string = 'Select a role';
+
   public roles: string[] = [];
 
   public loadingPerson: boolean = false;
@@ -26,6 +31,10 @@ export class PersonMovieCreditsCrew implements OnInit {
   public displayMode: string = 'grid';
 
   public selectedRoles: string[] = [];
+  public yearsFrom: number[] = [];
+  public yearsTo: number[] = [];
+
+  public lastYear: number;
 
   public orderCriterias: OrderCriteria[] = [
     {id: Order.DefaultOrder, orderCriteriaName: 'Default Order'},
@@ -50,6 +59,8 @@ export class PersonMovieCreditsCrew implements OnInit {
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
   @ViewChild('selectRole') selectRole: NgSelectComponent;
+  @ViewChild('fromSelect') fromSelect: FromSelect;
+  @ViewChild('toSelect') toSelect: ToSelect;
 
   constructor(
     private localStorageService: LocalStorageService
@@ -59,6 +70,7 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.filterCrewCredits = structuredClone(this.crewCredits);
     this.getPerson();
     this.setRoles();
+    this.setYearsFrom();
   }
 
   public focusSelectRole(): void {
@@ -85,6 +97,43 @@ export class PersonMovieCreditsCrew implements OnInit {
     if (this.selectedOrderCriteria.id != Order.DefaultOrder) {
       this.orderCriteriaChange(this.selectedOrderCriteria);
     }
+  }
+
+  private setYearsFrom(): void {
+    let years: number[] = this.crewCredits.map(crewCredit => {
+      const date = new Date(crewCredit.release_date);
+      return date.getFullYear();
+    });
+    const firstYear: number = years.filter(year => !isNaN(year)).reduce((min, year) => year < min ? year: min);
+    this.lastYear = years.filter(year => !isNaN(year)).reduce((max, year) => year > max ? year: max);
+    for (let i = firstYear; i <= this.lastYear; i++) {
+      this.yearsFrom.push(i);
+    }
+  }
+
+  public setYearFrom(year: number): void {
+    let yearsTo: number[] = [];
+    this.toSelect.yearsToSelectForm.reset();
+    for (let i = year; i <= this.lastYear; i++) {
+      yearsTo.push(i);
+      this.toSelect.yearsToSelectForm.controls['toYear'].enable();
+    }
+    this.yearsTo = structuredClone(yearsTo);
+  }
+
+  public clearSelectYearFrom(event: boolean) {
+    this.yearsTo = [];
+    this.fromSelect.yearsFromSelectForm.reset();
+    this.toSelect.yearsToSelectForm.reset();
+    this.toSelect.yearsToSelectForm.controls['toYear'].disable();
+  }
+
+  public setYearTo(year: number): void {
+    console.log(`setYearTo(${year})`);
+  }
+
+  public clearSelectYearTo(event: boolean) {
+    console.log(`clearSelectYearTo(${event})`);
   }
 
   public changePage(pageNumber: number) {
@@ -136,5 +185,6 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.orderSelectPersonCrewCredits.setDefaultOrderCriteria();
     this.selectedRoles = [];
     this.page = 1;
+    this.clearSelectYearFrom(true);
   }
 }
