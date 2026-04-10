@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CastMember } from '../../../classes/credits/cast-member';
+import { CastMember } from '../../../../classes/credits/cast-member';
 
 @Component({
   selector: 'app-movie-overview-main-cast',
   standalone: false,
   templateUrl: './movie-overview-main-cast.html',
-  styleUrl: './movie-overview-main-cast.scss'
+  styleUrl: './movie-overview-main-cast.scss',
 })
 export class MovieOverviewMainCast implements OnInit {
-
   @Input() movieCast: CastMember[] = [];
   public movieMainCast: CastMember[] = [];
 

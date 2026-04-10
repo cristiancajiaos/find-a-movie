@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Movie } from '../../../classes/movie';
-import { environment } from '../../../../environments/environment.development';
+import { Movie } from '../../../../classes/movie';
+import { environment } from '../../../../../environments/environment.development';
 import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 
@@ -11,8 +11,7 @@ import { faImdb } from '@fortawesome/free-brands-svg-icons';
   styleUrl: './movie-overview-infotable.scss',
 })
 export class MovieOverviewInfotable implements OnInit {
-
-  public imdbIcon: IconDefinition = faImdb
+  public imdbIcon: IconDefinition = faImdb;
   public globeIcon: IconDefinition = faGlobe;
 
   @Input() movie: Movie = new Movie();

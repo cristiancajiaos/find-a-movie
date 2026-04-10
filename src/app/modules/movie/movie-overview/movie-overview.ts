@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MovieService } from '../../services/movie-service';
-import { Movie } from '../../classes/movie';
-import { Credits } from '../../classes/credits';
+import { MovieService } from '../../../services/movie-service';
+import { Movie } from '../../../classes/movie';
+import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStorageService } from '../../services/local-storage-service';
+import { LocalStorageService } from '../../../services/local-storage-service';
 
 @Component({
   selector: 'app-movie-overview',
@@ -37,7 +37,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.id = parseInt(params['id']);
         this.getMovie();
         this.getCredits();
-      }
+      },
     );
   }
 

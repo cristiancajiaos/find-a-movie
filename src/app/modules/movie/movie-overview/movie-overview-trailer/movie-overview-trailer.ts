@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MovieService } from '../../../services/movie-service';
-import { ResponseVideo } from '../../../classes/response-video';
+import { MovieService } from '../../../../services/movie-service';
+import { ResponseVideo } from '../../../../classes/response-video';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
-import { environment } from '../../../../environments/environment.development';
+import { ResponseVideoResult } from '../../../../classes/response-video/response-video-result';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-movie-overview-trailer',
@@ -59,7 +59,7 @@ export class MovieOverviewTrailer implements OnInit {
     } else {
       return;
     }
-    
+
     const key: string = responseVideoResult.key;
     this.movieTrailerKey = responseVideoResult.key ? responseVideoResult.key : '';
     this.movieTrailerUrl = `${environment.youtubeEmbedUrl}${key}`;

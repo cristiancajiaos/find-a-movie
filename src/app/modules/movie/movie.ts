@@ -7,14 +7,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MovieService } from '../services/movie-service';
-import { Movie } from '../classes/movie';
+import { MovieService } from '../../services/movie-service';
+import { Movie } from '../../classes/movie';
 import { MovieHeader } from './movie-header/movie-header';
-import { TitleService } from '../services/title-service';
-import { environment } from '../../environments/environment.development';
+import { TitleService } from '../../services/title-service';
+import { environment } from '../../../environments/environment.development';
 import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStorageService } from '../services/local-storage-service';
+import { LocalStorageService } from '../../services/local-storage-service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -50,7 +50,7 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
     private movieService: MovieService,
     private titleService: TitleService,
     private localStorageService: LocalStorageService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -104,7 +104,7 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
     this.formattedTitle = this.movieService.getFormattedMovieTitle(
       this.movie.title,
       this.movie.original_title,
-      this.movie.release_date
+      this.movie.release_date,
     );
     this.titleService.setTitle(this.formattedTitle);
   }

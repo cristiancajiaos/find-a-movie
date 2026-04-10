@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MovieService } from '../../services/movie-service';
-import { CastMember } from '../../classes/credits/cast-member';
+import { MovieService } from '../../../services/movie-service';
+import { CastMember } from '../../../classes/credits/cast-member';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Order } from '../../enums/order';
-import { OrderCriteria } from '../../interfaces/order-criteria';
-import { OrderSelect } from '../../components/shared/order-select/order-select';
+import { Order } from '../../../enums/order';
+import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { OrderSelect } from '../../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-movie-cast',
@@ -83,7 +83,7 @@ export class MovieCast implements OnInit, OnDestroy {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
-    if (orderCriteria.id  == Order.CastOrderAsc) {
+    if (orderCriteria.id == Order.CastOrderAsc) {
       this.movieCast.sort((a, b) => {
         return a.order - b.order;
       });

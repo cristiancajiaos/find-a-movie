@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { MovieService } from '../../services/movie-service';
-import { CrewMember } from '../../classes/credits/crew-member';
+import { MovieService } from '../../../services/movie-service';
+import { CrewMember } from '../../../classes/credits/crew-member';
 import { HttpErrorResponse } from '@angular/common/http';
-import { OrderCriteria } from '../../interfaces/order-criteria';
-import { Order } from '../../enums/order';
-import { OrderSelect } from '../../components/shared/order-select/order-select';
+import { OrderCriteria } from '../../../interfaces/order-criteria';
+import { Order } from '../../../enums/order';
+import { OrderSelect } from '../../../components/shared/order-select/order-select';
 
 @Component({
   selector: 'app-movie-full-crew',

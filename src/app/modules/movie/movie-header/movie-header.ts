@@ -1,17 +1,22 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Movie } from '../../classes/movie';
-import { faFilm, faCircle, faCalendar, faClock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../../environments/environment.development';
+import { Movie } from '../../../classes/movie';
+import {
+  faFilm,
+  faCircle,
+  faCalendar,
+  faClock,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-movie-header',
   standalone: false,
   templateUrl: './movie-header.html',
-  styleUrl: './movie-header.scss'
+  styleUrl: './movie-header.scss',
 })
 export class MovieHeader implements OnInit {
-
-  public film: IconDefinition = faFilm
+  public film: IconDefinition = faFilm;
   public circleSeparator: IconDefinition = faCircle;
   public calendar: IconDefinition = faCalendar;
   public clock: IconDefinition = faClock;
@@ -22,9 +27,7 @@ export class MovieHeader implements OnInit {
   public year: number = 0;
   public backdropImg: string = '';
 
-  constructor(
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.setYear();
@@ -37,6 +40,8 @@ export class MovieHeader implements OnInit {
   }
 
   public setBackdrop(): void {
-    this.backdropImg = this.movie.backdrop_path ? `${environment.imgUrl}${environment.backdropSize}${this.movie.backdrop_path}` : 'img/default-images/movie_backdrop_notavailable_w1280.jpg';
+    this.backdropImg = this.movie.backdrop_path
+      ? `${environment.imgUrl}${environment.backdropSize}${this.movie.backdrop_path}`
+      : 'img/default-images/movie_backdrop_notavailable_w1280.jpg';
   }
 }
