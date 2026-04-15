@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FromSelect } from './from-select/from-select';
 import { ToSelect } from './to-select/to-select';
+import { RoleSelect } from './role-select/role-select';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ToSelect } from './to-select/to-select';
     DisplaySelector,
     OrderSelect,
     FromSelect,
-    ToSelect
+    ToSelect,
+    RoleSelect
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { ToSelect } from './to-select/to-select';
     DisplaySelector,
     OrderSelect,
     FromSelect,
-    ToSelect
+    ToSelect,
+    RoleSelect
   ]
 })
 export class SharedModule { }

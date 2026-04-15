@@ -10,28 +10,19 @@
             <app-order-select
               #orderSelectPersonCrewCredits
               [orderCriterias]="orderCriterias"
+              [defaultOrderCriteria]="defaultOrder"
               (onOrderCriteriaChange)="orderCriteriaChange($event)"
+              (onClearOrderCriteria)="clearOrderCriteria($event)"
             >
             </app-order-select>
           </div>
           <div class="col-12 col-lg-6">
-            <div class="form-group mb-3">
-              <label for="filterRole" (click)="focusSelectRole()"> Filter by role: </label>
-              <ng-select
-                #selectRole
-                multiple="true"
-                [placeholder]="placeholderRole"
-                bindLabel="filterRole"
-                [(ngModel)]="selectedRoles"
-                (change)="changeFilterRoles($event)"
-              >
-                @for (role of roles; track role) {
-                  <ng-option [value]="role">
-                    {{ role }}
-                  </ng-option>
-                }
-              </ng-select>
-            </div>
+            <app-role-select
+              #roleSelect
+              [roles]="roles"
+              (onRoleSelectChange)="defineSelectedRoles($event)"
+              (onClearRoleSelect)="clearRoleSelect($event)">
+            </app-role-select>
           </div>
           <div class="col-6 col-lg-3">
             <app-from-select
@@ -52,10 +43,16 @@
             </app-to-select>
           </div>
         </div>
-        <button class="btn btn-danger" (click)="resetFiltersByDefault()">
-          <fa-icon [icon]="faArrowRotateLeft" [fixedWidth]="true"> </fa-icon>
-          Reset filters to default
-        </button>
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+          <button class="btn btn-primary mb-3" (click)="filterCredits()">
+            <fa-icon [icon]="faFilter" [fixedWidth]="true"></fa-icon>
+            Filter
+          </button>
+          <button class="btn btn-danger mb-3" (click)="resetFiltersByDefault()">
+            <fa-icon [icon]="faArrowRotateLeft" [fixedWidth]="true"></fa-icon>
+            Reset filters to default
+          </button>
+        </div>
       </section>
       <hr #crewParagraph />
       <section class="crew-credits">
@@ -91,9 +88,7 @@
             </section>
           </ng-container>
         </ng-container>
-        <ng-template #noResults>
-          No results
-        </ng-template>
+        <ng-template #noResults> No results </ng-template>
       </section>
       <section class="crew-credits-pagination">
         <div class="d-flex justify-content-center">

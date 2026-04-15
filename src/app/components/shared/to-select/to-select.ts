@@ -12,7 +12,8 @@ export class ToSelect implements OnInit {
 
   public yearsToSelectForm: FormGroup;
 
-  public placeholderTo: string = 'Select a year';
+  public toSelectLabel: string = 'To:';
+  public toSelectPlaceholder: string = 'Select a year';
 
   public isDisabled: boolean = true;
 

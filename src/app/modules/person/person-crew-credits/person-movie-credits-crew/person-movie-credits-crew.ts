@@ -4,12 +4,14 @@ import { LocalStorageService } from '../../../../services/local-storage-service'
 import { Person } from '../../../../classes/person';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { faCircleInfo, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faArrowRotateLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
+import { PersonService } from '../../../../services/person-service';
+import { RoleSelect } from '../../../../components/shared/role-select/role-select';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -20,6 +22,7 @@ import { ToSelect } from '../../../../components/shared/to-select/to-select';
 export class PersonMovieCreditsCrew implements OnInit {
   public faCircleInfo: IconDefinition = faCircleInfo;
   public faArrowRotateLeft: IconDefinition = faArrowRotateLeft;
+  public faFilter: IconDefinition = faFilter;
 
   public placeholderRole: string = 'Select a role';
 
@@ -33,9 +36,9 @@ export class PersonMovieCreditsCrew implements OnInit {
   public yearsFrom: number[] = [];
   public yearsTo: number[] = [];
 
-  public fromYear: number;
-  public toYear: number;
-  public lastYear: number;
+  public fromYear: number = null;
+  public toYear: number = null;
+  public lastYear: number = null;
 
   public orderCriterias: OrderCriteria[] = [
     { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
@@ -61,21 +64,20 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
-  @ViewChild('selectRole') selectRole: NgSelectComponent;
+  @ViewChild('roleSelect') roleSelect: RoleSelect;
   @ViewChild('fromSelect') fromSelect: FromSelect;
   @ViewChild('toSelect') toSelect: ToSelect;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private personService: PersonService
+  ) {}
 
   ngOnInit(): void {
     this.filterCrewCredits = structuredClone(this.crewCredits);
     this.getPerson();
     this.setRoles();
     this.setYearsLimit();
-  }
-
-  public focusSelectRole(): void {
-    this.selectRole.focus();
   }
 
   private setRoles(): void {
@@ -100,6 +102,10 @@ export class PersonMovieCreditsCrew implements OnInit {
     if (this.selectedOrderCriteria.id != Order.DefaultOrder) {
       this.orderCriteriaChange(this.selectedOrderCriteria);
     }
+  }
+
+  public defineSelectedRoles(roles: string[]): void {
+    this.selectedRoles = roles;
   }
 
   private setYearsLimit(): void {
@@ -129,17 +135,6 @@ export class PersonMovieCreditsCrew implements OnInit {
       }
       if (year) {
         this.yearsTo = structuredClone(yearsTo);
-        this.filterCrewCredits = structuredClone(this.crewCredits);
-        this.filterCrewCredits = this.filterCrewCredits
-          .filter((crewCredit) => {
-            const date = new Date(crewCredit.release_date);
-            return !isNaN(date.getFullYear());
-          })
-          .filter((crewCredit) => {
-            const date = new Date(crewCredit.release_date);
-            return this.fromYear <= date.getFullYear();
-          });
-        this.orderCriteriaChange(this.selectedOrderCriteria);
       }
     } else {
       this.fromYear = null;
@@ -147,6 +142,8 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public clearSelectYearFrom(event: boolean) {
+    this.fromYear = null;
+    this.toYear = null;
     this.yearsTo = [];
     this.fromSelect.yearsFromSelectForm.reset();
     this.toSelect.yearsToSelectForm.reset();
@@ -156,20 +153,6 @@ export class PersonMovieCreditsCrew implements OnInit {
   public setYearTo(year: number): void {
     if (year) {
       this.toYear = year;
-      this.filterCrewCredits = structuredClone(this.crewCredits);
-      this.filterCrewCredits = this.filterCrewCredits
-        .filter((crewCredit) => {
-          const date = new Date(crewCredit.release_date);
-          return !isNaN(date.getFullYear());
-        })
-        .filter((crewCredit) => {
-          const date = new Date(crewCredit.release_date);
-          return date.getFullYear() >= this.fromYear
-        }).filter((crewCredit) => {
-          const date = new Date(crewCredit.release_date);
-          return date.getFullYear() <= this.toYear;
-        });
-      this.orderCriteriaChange(this.selectedOrderCriteria);
     } else {
       this.toYear = null;
     }
@@ -189,43 +172,38 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
-    this.selectedOrderCriteria = orderCriteria;
-    if (orderCriteria.id == Order.TitleAsc) {
-      this.filterCrewCredits.sort((a, b) => {
-        return a.title.localeCompare(b.title);
-      });
-    } else if (orderCriteria.id == Order.TitleDesc) {
-      this.filterCrewCredits.sort((a, b) => {
-        return b.title.localeCompare(a.title);
-      });
-    } else if (orderCriteria.id == Order.JobAsc) {
-      this.filterCrewCredits.sort((a, b) => {
-        return a.job.localeCompare(b.job);
-      });
-    } else if (orderCriteria.id == Order.JobDesc) {
-      this.filterCrewCredits.sort((a, b) => {
-        return b.job.localeCompare(a.job);
-      });
-    } else if (orderCriteria.id == Order.ReleaseDateAsc) {
-      this.filterCrewCredits.sort((a, b) => {
-        const aDate: Date = new Date(a.release_date);
-        const bDate: Date = new Date(b.release_date);
-        return aDate.getTime() - bDate.getTime();
-      });
-    } else if (orderCriteria.id == Order.ReleaseDateDesc) {
-      this.filterCrewCredits.sort((a, b) => {
-        const aDate: Date = new Date(a.release_date);
-        const bDate: Date = new Date(b.release_date);
-        return bDate.getTime() - aDate.getTime();
-      });
+    this.selectedOrderCriteria = orderCriteria ? orderCriteria : null;
+  }
+
+  public clearOrderCriteria(event: boolean): void {
+    this.selectedOrderCriteria = this.defaultOrder;
+  }
+
+  public clearRoleSelect(event: boolean): void {
+    this.selectedRoles = [];
+  }
+
+  public filterCredits(): void {
+    this.filterCrewCredits = structuredClone(this.crewCredits);
+    if (this.selectedRoles.length > 0) {
+      this.filterCrewCredits = this.personService.filterCrewCreditsByRole(this.filterCrewCredits, this.selectedRoles);
     }
+    if (this.fromYear) {
+      if (this.toYear) {
+        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFromTo(this.filterCrewCredits, this.fromYear, this.toYear);
+      } else {
+        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFrom(this.filterCrewCredits, this.fromYear);
+      }
+    }
+    this.filterCrewCredits = this.personService.orderCrewCreditsByOrderCriteria(this.filterCrewCredits, this.selectedOrderCriteria);
   }
 
   public resetFiltersByDefault(): void {
-    this.displayMode = 'grid';
-    this.orderSelectPersonCrewCredits.setDefaultOrderCriteria();
-    this.selectedRoles = [];
     this.page = 1;
+    this.displayMode = 'grid';
+    this.orderSelectPersonCrewCredits.clearOrderCriteria();
+    this.roleSelect.clearRoleSelect();
+    this.selectedRoles = [];
     this.clearSelectYearFrom(true);
     this.filterCrewCredits = structuredClone(this.crewCredits);
   }
