@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Main } from './components/layout/main/main';
 import { NotFound } from './components/not-found/not-found';
 
 const routes: Routes = [
-  { path: '', component: Main, pathMatch: 'full' },
+  {
+    path: '',
+    loadChildren: () => import('./modules/home/home-module').then(m => m.HomeModule)
+  },
   {
     path: 'movie',
     loadChildren: () => import('./modules/movie/movie-module').then((m) => m.MovieModule),
