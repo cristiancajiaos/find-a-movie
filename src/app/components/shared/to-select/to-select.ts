@@ -16,6 +16,7 @@ export class ToSelect implements OnInit {
   public toSelectPlaceholder: string = 'Select a year';
 
   public isDisabled: boolean = true;
+  public selectPlaceholder: string = '';
 
   @ViewChild('toSelect') toSelect: NgSelectComponent;
 
@@ -47,5 +48,16 @@ export class ToSelect implements OnInit {
 
   public onClearSelect() {
     this.onClearSelectToYear.emit(true);
+  }
+
+  public enableSelect(): void {
+    this.selectPlaceholder = this.toSelectPlaceholder;
+    this.yearsToSelectForm.controls['toYear'].enable();
+  }
+
+  public disableSelect(): void {
+    this.yearsToSelectForm.reset();
+    this.yearsToSelectForm.controls['toYear'].disable();
+    this.selectPlaceholder = '';
   }
 }

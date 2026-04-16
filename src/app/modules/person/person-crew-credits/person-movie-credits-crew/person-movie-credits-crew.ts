@@ -114,7 +114,7 @@ export class PersonMovieCreditsCrew implements OnInit {
       this.toSelect.yearsToSelectForm.reset();
       for (let i = year; i <= this.lastYear; i++) {
         yearsTo.push(i);
-        this.toSelect.yearsToSelectForm.controls['toYear'].enable();
+        this.toSelect.enableSelect();
       }
       if (year) {
         this.yearsTo = structuredClone(yearsTo);
@@ -129,8 +129,7 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.toYear = null;
     this.yearsTo = [];
     this.fromSelect.yearsFromSelectForm.reset();
-    this.toSelect.yearsToSelectForm.reset();
-    this.toSelect.yearsToSelectForm.controls['toYear'].disable();
+    this.toSelect.disableSelect();
   }
 
   public setYearTo(year: number): void {
