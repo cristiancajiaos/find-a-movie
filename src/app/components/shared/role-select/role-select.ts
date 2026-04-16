@@ -17,7 +17,7 @@ export class RoleSelect implements OnInit {
   public selectedRoles: string[] = [];
 
   public roleSelectLabel: string = 'Filter by role:';
-  public roleSelectPlaceholder: string = 'Select a role';
+  public roleSelectPlaceholder: string = 'Select one or various roles';
 
   @Output() onRoleSelectChange: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() onClearRoleSelect: EventEmitter<boolean> = new EventEmitter<boolean>();
