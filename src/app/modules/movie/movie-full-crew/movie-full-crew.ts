@@ -7,6 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { Order } from '../../../enums/order';
 import { OrderSelect } from '../../../components/shared/order-select/order-select';
+import { Movie } from '../../../classes/movie';
+import { LocalStorageService } from '../../../services/local-storage-service';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -16,6 +19,8 @@ import { OrderSelect } from '../../../components/shared/order-select/order-selec
 })
 export class MovieFullCrew implements OnInit, OnDestroy {
   public id: number = 0;
+
+  private movie: Movie;
 
   public originalMovieFullCrew: CrewMember[] = [];
   public movieFullCrew: CrewMember[] = [];
@@ -35,15 +40,28 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
   ];
 
+  public defaultOrder: OrderCriteria = {
+    id: Order.DefaultOrder,
+    orderCriteriaName: 'Default Order',
+  };
+
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
+    private localStorageService: LocalStorageService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
+    this.getMovie();
     this.setId();
+  }
+
+  private getMovie(): void {
+    this.movie = this.localStorageService.getItem('movie');
+    this.setTitle();
   }
 
   private setId(): void {
@@ -53,6 +71,13 @@ export class MovieFullCrew implements OnInit, OnDestroy {
         this.getFullCrew();
       },
     );
+  }
+
+  private setTitle(): void {
+    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+      this.movie.title, this.movie.original_title, this.movie.release_date
+    );
+    this.titleService.setMovieFullCrewTitle(formattedTitle);
   }
 
   private getFullCrew(): void {

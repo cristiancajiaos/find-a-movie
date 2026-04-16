@@ -89,10 +89,10 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
     this.movieError = true;
     if (error.status && error.status === 404) {
       this.movieNotFound = true;
-      this.titleService.setTitle('Movie Not Found');
+      this.titleService.setMovieNotFoundTitle();
     } else {
       this.errorMessage = error.message;
-      this.titleService.setTitle('Movie Service Error');
+      this.titleService.setMovieServiceErrorTitle();
     }
   }
 

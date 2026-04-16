@@ -1,0 +1,19 @@
+<section class="from-year-select">
+  <form [formGroup]="yearsFromSelectForm">
+    <div class="form-group mb-3">
+      <label (click)="focusSelect()">
+        {{fromSelectLabel}}
+      </label>
+      <ng-select
+        #fromSelect
+        formControlName="fromYear"
+        [placeholder]="fromSelectPlaceholder"
+        (change)="onFromYearChange($event)"
+        (clear)="onClearSelect()">
+        @for (year of yearsFrom; track year) {
+          <ng-option [value]="year">{{ year }}</ng-option>
+        }
+      </ng-select>
+    </div>
+  </form>
+</section>

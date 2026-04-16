@@ -8,13 +8,19 @@ import { OrderSelect } from './order-select/order-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FromSelect } from './from-select/from-select';
+import { ToSelect } from './to-select/to-select';
+import { RoleSelect } from './role-select/role-select';
 
 @NgModule({
   declarations: [
     LoadingFullscreen,
     LoadingInline,
     DisplaySelector,
-    OrderSelect
+    OrderSelect,
+    FromSelect,
+    ToSelect,
+    RoleSelect
   ],
   imports: [
     CommonModule,
@@ -28,7 +34,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LoadingFullscreen,
     LoadingInline,
     DisplaySelector,
-    OrderSelect
+    OrderSelect,
+    FromSelect,
+    ToSelect,
+    RoleSelect
   ]
 })
 export class SharedModule { }

@@ -7,6 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../../enums/order';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { OrderSelect } from '../../../components/shared/order-select/order-select';
+import { LocalStorageService } from '../../../services/local-storage-service';
+import { Movie } from '../../../classes/movie';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-movie-cast',
@@ -17,6 +20,7 @@ import { OrderSelect } from '../../../components/shared/order-select/order-selec
 export class MovieCast implements OnInit, OnDestroy {
   public id: number = 0;
 
+  private movie: Movie;
   public movieCast: CastMember[] = [];
 
   public loadingCast: boolean = false;
@@ -36,15 +40,28 @@ export class MovieCast implements OnInit, OnDestroy {
     { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name (descending)' },
   ];
 
+  public defaultOrder: OrderCriteria = {
+    id: Order.DefaultOrder,
+    orderCriteriaName: 'Default Order',
+  };
+
   @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
+    private localStorageService: LocalStorageService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
+    this.getMovie();
     this.setId();
+  }
+
+  private getMovie(): void {
+    this.movie = this.localStorageService.getItem('movie');
+    this.setTitle();
   }
 
   private setId(): void {
@@ -54,6 +71,13 @@ export class MovieCast implements OnInit, OnDestroy {
         this.getCast();
       },
     );
+  }
+
+  private setTitle() {
+    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+      this.movie.title, this.movie.original_title, this.movie.release_date
+    );
+    this.titleService.setMovieCastTitle(formattedTitle);
   }
 
   private getCast(): void {

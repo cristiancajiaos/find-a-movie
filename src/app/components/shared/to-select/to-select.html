@@ -1,0 +1,19 @@
+<section class="to-year-select">
+  <form [formGroup]="yearsToSelectForm">
+    <div class="form-group mb-3">
+      <label (click)="focusSelect()">
+        {{toSelectLabel}}
+      </label>
+      <ng-select
+        #toSelect
+        formControlName="toYear"
+        [placeholder]="selectPlaceholder"
+        (change)="onToYearChange($event)"
+        (clear)="onClearSelect()">
+        @for (year of yearsTo; track year) {
+          <ng-option [value]="year">{{ year }}</ng-option>
+        }
+      </ng-select>
+    </div>
+  </form>
+</section>
