@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 import { CrewMember } from '../../../classes/credits/crew-member';
 import { MovieService } from '../../../services/movie-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LocalStorageService } from '../../../services/local-storage-service';
+import { TitleService } from '../../../services/title-service';
+import { Movie } from '../../../classes/movie';
 
 @Component({
   selector: 'app-movie-crew',
@@ -13,6 +16,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class MovieCrew implements OnInit, OnDestroy {
   public id: number = 0;
+
+  private movie: Movie;
 
   public movieCrew: CrewMember[] = [];
 
@@ -45,10 +50,18 @@ export class MovieCrew implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
+    private localStorageService: LocalStorageService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
+    this.getMovie();
     this.setId();
+  }
+
+  private getMovie(): void {
+    this.movie = this.localStorageService.getItem('movie');
+    this.setTitle();
   }
 
   private setId(): void {
@@ -58,6 +71,13 @@ export class MovieCrew implements OnInit, OnDestroy {
         this.getCrew();
       },
     );
+  }
+
+  private setTitle(): void {
+    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+      this.movie.title, this.movie.original_title, this.movie.release_date
+    );
+    this.titleService.setMovieFeaturedCrewTitle(formattedTitle);
   }
 
   private getCrew(): void {

@@ -6,6 +6,7 @@ import { Movie } from '../../../classes/movie';
 import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../../services/local-storage-service';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-movie-overview',
@@ -38,6 +39,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
     private localStorageService: LocalStorageService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +65,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     if (localMovie) {
       this.movie = localMovie;
       this.loadingMovie = false;
+      this.setTitle();
     } else {
       this.movieService
         .getMovie(this.id)
@@ -75,6 +78,7 @@ export class MovieOverview implements OnInit, OnDestroy {
         })
         .finally(() => {
           this.loadingMovie = false;
+          this.setTitle();
         });
     }
   }
@@ -93,6 +97,13 @@ export class MovieOverview implements OnInit, OnDestroy {
       .finally(() => {
         this.loadingCredits = false;
       });
+  }
+
+  private setTitle(): void {
+    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+      this.movie.title, this.movie.original_title, this.movie.release_date
+    );
+    this.titleService.setMovieOverviewTitle(formattedTitle);
   }
 
   private handleError(error: HttpErrorResponse): void {
