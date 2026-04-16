@@ -133,11 +133,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public setYearTo(year: number): void {
-    if (year) {
-      this.toYear = year;
-    } else {
-      this.toYear = null;
-    }
+    this.toYear = year ? year : null;
   }
 
   public clearSelectYearTo(event: boolean) {
@@ -168,16 +164,26 @@ export class PersonMovieCreditsCrew implements OnInit {
   public filterCredits(): void {
     this.filterCrewCredits = structuredClone(this.crewCredits);
     if (this.selectedRoles.length > 0) {
-      this.filterCrewCredits = this.personService.filterCrewCreditsByRole(this.filterCrewCredits, this.selectedRoles);
+      this.filterCrewCredits = this.personService.filterCrewCreditsByRole(
+        this.filterCrewCredits,
+        this.selectedRoles);
     }
     if (this.fromYear) {
       if (this.toYear) {
-        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFromTo(this.filterCrewCredits, this.fromYear, this.toYear);
+        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFromTo(
+          this.filterCrewCredits,
+          this.fromYear,
+          this.toYear);
       } else {
-        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFrom(this.filterCrewCredits, this.fromYear);
+        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFrom(
+          this.filterCrewCredits,
+          this.fromYear);
       }
     }
-    this.filterCrewCredits = this.personService.orderCrewCreditsByOrderCriteria(this.filterCrewCredits, this.selectedOrderCriteria);
+    this.filterCrewCredits = this.personService.orderCrewCreditsByOrderCriteria(
+      this.filterCrewCredits,
+      this.selectedOrderCriteria
+    );
   }
 
   public resetFiltersByDefault(): void {
