@@ -3,7 +3,6 @@ import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credi
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import { faCircleInfo, faArrowRotateLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import { Order } from '../../../../enums/order';
@@ -21,10 +20,8 @@ import { RoleSelect } from '../../../../components/shared/role-select/role-selec
 })
 export class PersonMovieCreditsCrew implements OnInit {
   public faCircleInfo: IconDefinition = faCircleInfo;
-  public faArrowRotateLeft: IconDefinition = faArrowRotateLeft;
-  public faFilter: IconDefinition = faFilter;
-
-  public placeholderRole: string = 'Select a role';
+  public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
+  public filterIcon: IconDefinition = faFilter;
 
   public roles: string[] = [];
 
@@ -88,20 +85,6 @@ export class PersonMovieCreditsCrew implements OnInit {
   private getPerson(): void {
     this.loadingPerson = true;
     this.currentPerson = this.localStorageService.getItem('person');
-  }
-
-  public changeFilterRoles(event: string[]): void {
-    this.page = 1;
-    if (this.selectedRoles.length > 0) {
-      this.filterCrewCredits = this.crewCredits.filter((crewCredit) =>
-        this.selectedRoles.includes(crewCredit.job),
-      );
-    } else {
-      this.filterCrewCredits = structuredClone(this.crewCredits);
-    }
-    if (this.selectedOrderCriteria.id != Order.DefaultOrder) {
-      this.orderCriteriaChange(this.selectedOrderCriteria);
-    }
   }
 
   public defineSelectedRoles(roles: string[]): void {
