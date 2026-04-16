@@ -162,6 +162,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public filterCredits(): void {
+    this.page = 1;
     this.filterCrewCredits = structuredClone(this.crewCredits);
     if (this.selectedRoles.length > 0) {
       this.filterCrewCredits = this.personService.filterCrewCreditsByRole(
@@ -184,6 +185,7 @@ export class PersonMovieCreditsCrew implements OnInit {
       this.filterCrewCredits,
       this.selectedOrderCriteria
     );
+
   }
 
   public resetFiltersByDefault(): void {
