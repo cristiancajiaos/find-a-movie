@@ -8,6 +8,7 @@ import { LocalStorageService } from '../../../services/local-storage-service';
 import { environment } from '../../../../environments/environment.development';
 import { faGlobe, faMars, faVenus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-person-overview',
@@ -48,7 +49,8 @@ export class PersonOverview implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private titleService: TitleService
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class PersonOverview implements OnInit, OnDestroy {
     if (localPerson) {
       this.person = localPerson;
       this.loadingPerson = false;
+      this.setTitle();
       this.setPersonBiography();
       this.setPersonInfotable();
     } else {
@@ -81,6 +84,7 @@ export class PersonOverview implements OnInit, OnDestroy {
         .then((person) => {
           this.person = person;
           this.personFound = true;
+          this.setTitle();
           this.setPersonBiography();
           this.setPersonInfotable();
         })
@@ -91,6 +95,10 @@ export class PersonOverview implements OnInit, OnDestroy {
           this.loadingPerson = false;
         });
     }
+  }
+
+  private setTitle(): void {
+    this.titleService.setPersonOverviewTitle(this.person.name);
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -78,10 +78,10 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
     this.personError = true;
     if (error.status && error.status === 404) {
       this.personNotFound = true;
-      this.titleService.setTitle("Person Not Found");
+      this.titleService.setPersonNotFoundTitle();
     } else {
       this.errorMessage = error.message;
-      this.titleService.setTitle("PersonService Error");
+      this.titleService.setPersonServiceErrorTitle();
     }
   }
 
@@ -90,7 +90,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private setPersonTitle(): void {
-    this.titleService.setTitle(this.person.name);
+    this.titleService.setPersonOverviewTitle(this.person.name);
   }
 
   ngOnDestroy(): void {

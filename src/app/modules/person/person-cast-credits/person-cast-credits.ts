@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PersonService } from '../../../services/person-service';
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Person } from '../../../classes/person';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-person-cast-credits',
@@ -15,6 +17,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class PersonCastCredits implements OnInit, OnDestroy {
 
   public id: number = 0;
+
+  private person: Person;
 
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
 
@@ -30,11 +34,18 @@ export class PersonCastCredits implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
     private localStorageService: LocalStorageService,
+    private titleService: TitleService,
     private router: Router
   ){}
 
   ngOnInit(): void {
+    this.getPerson();
     this.setId();
+  }
+
+  private getPerson(): void {
+    this.person = this.localStorageService.getItem('person');
+    this.setTitle();
   }
 
   private setId(): void {
@@ -42,6 +53,10 @@ export class PersonCastCredits implements OnInit, OnDestroy {
       this.id = parseInt(params['id']);
       this.getPersonMovieCredits();
     });
+  }
+
+  private setTitle(): void {
+    this.titleService.setPersonCastCreditsTitle(this.person.name); 
   }
 
   private getPersonMovieCredits(): void {
