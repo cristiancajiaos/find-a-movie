@@ -36,6 +36,11 @@ export class MovieCast implements OnInit, OnDestroy {
     { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name (descending)' },
   ];
 
+  public defaultOrder: OrderCriteria = {
+    id: Order.DefaultOrder,
+    orderCriteriaName: 'Default Order',
+  };
+
   @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
 
   constructor(

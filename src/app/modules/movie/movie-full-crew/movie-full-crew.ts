@@ -35,6 +35,11 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
   ];
 
+  public defaultOrder: OrderCriteria = {
+    id: Order.DefaultOrder,
+    orderCriteriaName: 'Default Order',
+  };
+
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
 
   constructor(
