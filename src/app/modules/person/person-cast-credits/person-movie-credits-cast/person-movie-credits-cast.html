@@ -1,48 +1,89 @@
 <section class="person-movie-credits-cast">
   <div class="row">
     <div class="col-12">
+      <app-display-selector (onDisplayChange)="changeDisplay($event)"> </app-display-selector>
       <div class="row">
-        <div class="col-12 col-lg-6">
-          <app-display-selector (onDisplayChange)="changeDisplay($event)">
-          </app-display-selector>
-        </div>
         <div class="col-12 col-lg-6">
           <app-order-select
             #orderSelectPersonCastCredits
             [orderCriterias]="orderCriterias"
-            (onOrderCriteriaChange)="orderCriteriaChange($event)">
+            [defaultOrderCriteria]="defaultOrder"
+            (onOrderCriteriaChange)="orderCriteriaChange($event)"
+            (onClearOrderCriteria)="clearOrderCriteria($event)"
+          >
           </app-order-select>
         </div>
+        <div class="col-6 col-lg-3">
+          <app-from-select
+            #fromSelect
+            [yearsFrom]="yearsFrom"
+            (onSelectFromYear)="setYearFrom($event)"
+            (onClearSelectFromYear)="clearSelectYearFrom($event)"
+          >
+          </app-from-select>
+        </div>
+        <div class="col-6 col-lg-3">
+          <app-to-select
+            #toSelect
+            [yearsTo]="yearsTo"
+            (onSelectToYear)="setYearTo($event)"
+            (onClearSelectToYear)="clearSelectYearTo($event)"
+          >
+          </app-to-select>
+        </div>
+      </div>
+      <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+        <button class="btn btn-primary mb-3" (click)="filterCredits()">
+          <fa-icon [icon]="filterIcon" [fixedWidth]="true"></fa-icon>
+          Filter
+        </button>
+        <button class="btn btn-danger mb-3" (click)="resetFiltersByDefault()">
+          <fa-icon [icon]="arrowRotateLeftIcon" [fixedWidth]="true"></fa-icon>
+          Reset filters to default
+        </button>
       </div>
       <section class="cast-credits">
-        <p #starringParagraph>
-          <strong>{{ currentPerson.name }}</strong> has starred in the following movies:
-        </p>
-        <ng-container *ngIf="displayMode == 'grid'">
-          <section class="cast-credits-display-grid">
-            <div class="row" #castCreditsList>
-              <ng-container *ngFor="let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }">
-                <div class="col-12 col-sm-4 col-lg-2">
-                  <app-person-cast-credit-grid [castRole]="castRole">
-                  </app-person-cast-credit-grid>
-                </div>
+        <hr #castParagraph />
+        <ng-container *ngIf="filterCastCredits.length > 0; else noFilterCastCreditsResults">
+          <p><strong>{{filterCastCredits.length}}</strong> results were obtained.</p>
+          <ng-container *ngIf="displayMode == 'grid'">
+            <section class="cast-credits-display-grid">
+              <div class="row" #castCreditsList>
+                <ng-container
+                  *ngFor="
+                    let castRole of filterCastCredits
+                      | paginate: { itemsPerPage: 20, currentPage: page }
+                  "
+                >
+                  <div class="col-12 col-sm-4 col-lg-2">
+                    <app-person-cast-credit-grid [castRole]="castRole">
+                    </app-person-cast-credit-grid>
+                  </div>
+                </ng-container>
+              </div>
+            </section>
+          </ng-container>
+          <ng-container *ngIf="displayMode == 'list'">
+            <section class="cast-credits-display-list">
+              <ng-container
+                *ngFor="
+                  let castRole of filterCastCredits
+                    | paginate: { itemsPerPage: 20, currentPage: page }
+                "
+              >
+                <app-person-cast-credit-list [castRole]="castRole"> </app-person-cast-credit-list>
               </ng-container>
+            </section>
+          </ng-container>
+          <section class="cast-credits-pagination">
+            <div class="d-flex justify-content-center">
+              <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
             </div>
           </section>
         </ng-container>
-        <ng-container *ngIf="displayMode == 'list'">
-          <section class="cast-credits-display-list">
-            <ng-container *ngFor="let castRole of filterCastCredits | paginate : { itemsPerPage: 20, currentPage: page }">
-              <app-person-cast-credit-list [castRole]="castRole"></app-person-cast-credit-list>
-            </ng-container>
-          </section>
-        </ng-container>
-        <section class="cast-credits-pagination">
-          <div class="d-flex justify-content-center">
-            <pagination-controls (pageChange)="changePage($event)">
-            </pagination-controls>
-          </div>
-        </section>
+        <ng-template #noFilterCastCreditsResults>
+          <p>No results were obtained.</p>
+        </ng-template>
       </section>
     </div>
   </div>
