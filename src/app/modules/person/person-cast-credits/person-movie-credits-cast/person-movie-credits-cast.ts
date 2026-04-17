@@ -101,7 +101,7 @@ export class PersonMovieCreditsCast implements OnInit {
       this.toSelect.yearsToSelectForm.reset();
       for (let i = year; i <= this.lastYear; i++) {
         yearsTo.push(i);
-        this.toSelect.yearsToSelectForm.controls['toYear'].enable();
+        this.toSelect.enableSelect();
       }
       if (year) {
         this.yearsTo = structuredClone(yearsTo);
@@ -151,7 +151,8 @@ export class PersonMovieCreditsCast implements OnInit {
         this.filterCastCredits = this.personService.filterCastCreditsByYearFromTo(
           this.filterCastCredits,
           this.fromYear,
-          this.toYear);
+          this.toYear
+        );
       } else {
         this.filterCastCredits = this.personService.filterCastCreditsByYearFrom(
           this.filterCastCredits,
