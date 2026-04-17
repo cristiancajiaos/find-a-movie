@@ -101,9 +101,11 @@
           @if (executiveProducing.length > 0) {
             <tr>
               <td>
-                Executive Producer@if (executiveProducing.length > 1) {
-                s
-                }:
+                @if (executiveProducing.length > 1) {
+                  Executive Producers:
+                } @else {
+                  Executive Producer:
+                }
               </td>
               <td class="text-end">
                 @for (executiveProducer of executiveProducing; track executiveProducer) {

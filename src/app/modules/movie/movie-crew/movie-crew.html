@@ -106,9 +106,11 @@
             @if (executiveProducing.length > 0) {
               <tr>
                 <td>
-                  Executive Producer@if (executiveProducing.length > 1) {
-                  s
-                  }:
+                  @if (executiveProducing.length > 1) {
+                    Executive Producers:
+                  } @else {
+                    Executive Producer:
+                  }
                 </td>
                 <td>
                   @for (executiveProducer of executiveProducing; track executiveProducer) {
@@ -122,9 +124,13 @@
             }
             @if (coProducing.length > 0) {
               <tr>
-                <td>Co-Producer@if (coProducing.length > 1) {
-                  s
-                }:</td>
+                <td>
+                  @if (coProducing.length > 1) {
+                    Co-Producers:
+                  } @else {
+                    Co-Producer:
+                  }
+                </td>
                 <td>
                   @for (coProducer of coProducing; track coProducer) {
                     <a [routerLink]="['/person', coProducer.id]">
@@ -138,10 +144,11 @@
             @if (directorsOfPhotography.length > 0) {
               <tr>
                 <td>
-                  Director@if (directorsOfPhotography.length > 1) {
-                  s
-                }
-                of Photography:
+                  @if (directorsOfPhotography.length > 1) {
+                    Directors of Photography:
+                  } @else {
+                    Director of Photography:
+                  }
               </td>
               <td>
                 @for (directorOfPhotography of directorsOfPhotography; track directorOfPhotography) {
@@ -156,9 +163,11 @@
           @if (productionDesigners.length > 0) {
             <tr>
               <td>
-                Production Designer@if (productionDesigners.length > 1) {
-                s
-                }:
+                @if (productionDesigners.length > 1) {
+                  Production Designers:
+                } @else {
+                  Production Designer:
+                }
               </td>
               <td>
                 @for (productionDesigner of productionDesigners; track productionDesigner) {
@@ -172,9 +181,13 @@
           }
           @if (editors.length > 0) {
             <tr>
-              <td>Editor@if (editors.length > 1) {
-                s
-              }:</td>
+              <td>
+                @if (editors.length > 1) {
+                  Editors:
+                } @else {
+                  Editor:
+                }
+              </td>
               <td>
                 @for (editor of editors; track editor) {
                   <a [routerLink]="['/person', editor.id]">
@@ -214,9 +227,11 @@
           @if (visualEffectsSupervisors.length > 0) {
             <tr>
               <td>
-                Visual Effects Supervisor@if (visualEffectsSupervisors.length > 1) {
-                s
-                }:
+                @if (visualEffectsSupervisors.length > 1) {
+                  Visual Effects Supervisors:
+                } @else {
+                  Visual Effects Supervisor:
+                }
               </td>
               <td>
                 @for (visualEffectsSupervisor of visualEffectsSupervisors; track visualEffectsSupervisor) {
@@ -231,9 +246,11 @@
           @if (costumeDesigners.length > 0) {
             <tr>
               <td>
-                Costume Designer@if (costumeDesigners.length > 1) {
-                s
-                }:
+                @if (costumeDesigners.length > 1) {
+                  Costume Designers:
+                } @else {
+                  Costume Designer:
+                }
               </td>
               <td>
                 @for (costumeDesigner of costumeDesigners; track costumeDesigner) {
