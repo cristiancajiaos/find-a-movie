@@ -1,26 +1,26 @@
 <section class="movie">
-  <ng-container *ngIf="loadingView">
+  @if (loadingView) {
     <app-loading-fullscreen message="Loading view..."></app-loading-fullscreen>
-  </ng-container>
-  <ng-container *ngIf="!loadingView">
-    <ng-container *ngIf="loadingMovie">
+  }
+  @if (!loadingView) {
+    @if (loadingMovie) {
       <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
-    </ng-container>
-    <ng-container *ngIf="!loadingMovie">
-      <ng-container *ngIf="movieError">
-        <ng-container *ngIf="movieNotFound">
+    }
+    @if (!loadingMovie) {
+      @if (movieError) {
+        @if (movieNotFound) {
           <app-movie-not-found></app-movie-not-found>
-        </ng-container>
-        <ng-container *ngIf="!movieNotFound">
+        }
+        @if (!movieNotFound) {
           <app-movie-error-fullscreen [errorMessage]="errorMessage" (reload)="reloadMovie($event)">
           </app-movie-error-fullscreen>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="!movieError">
-        <ng-container *ngIf="movie.id == 0">
+        }
+      }
+      @if (!movieError) {
+        @if (movie.id == 0) {
           <app-movie-error [errorMessage]="errorMessage"></app-movie-error>
-        </ng-container>
-        <ng-container *ngIf="movie.id != 0">
+        }
+        @if (movie.id != 0) {
           <app-movie-header [id]="id" [movie]="movie" #movieHeader> </app-movie-header>
           <main>
             <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
@@ -32,7 +32,7 @@
                       aria-current="page"
                       routerLink="overview"
                       routerLinkActive="active"
-                    >
+                      >
                       Overview
                     </a>
                   </li>
@@ -57,19 +57,18 @@
                 <div class="col-12 col-lg-2">
                   <aside class="aside-1">
                     <img [src]="posterSizeSmall" [alt]="altPosterText" class="w-100" />
-
-                    <ng-container *ngIf="movie.poster_path">
+                    @if (movie.poster_path) {
                       <div class="d-grid">
                         <a
                           [href]="posterSizeOriginal"
                           target="_blank"
                           class="btn btn-outline-primary btn-poster mb-2"
-                        >
+                          >
                           <fa-icon [icon]="imagePortrait"></fa-icon>
                           Open Poster in New Tab
                         </a>
                       </div>
-                    </ng-container>
+                    }
                   </aside>
                 </div>
                 <div class="col-12 col-lg-10">
@@ -78,8 +77,8 @@
               </div>
             </div>
           </main>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-  </ng-container>
+        }
+      }
+    }
+  }
 </section>

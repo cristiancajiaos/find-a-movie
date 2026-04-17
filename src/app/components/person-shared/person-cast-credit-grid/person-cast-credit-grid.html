@@ -7,7 +7,7 @@
     [container]="'body'"
     [popoverClass]="'person-popover'"
     triggers="hover"
-  >
+    >
     <section class="credit-poster">
       <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
     </section>
@@ -16,13 +16,16 @@
         {{ formattedTitle }}
       </div>
       <div class="credit-role">
-        <ng-container *ngIf="castRole.character">
-          <ng-container *ngIf="castRole.character == '(uncredited)'; else character">
+        @if (castRole.character) {
+          @if (castRole.character == '(uncredited)') {
             as an uncredited character
-          </ng-container>
-          <ng-template #character> as {{ castRole.character }} </ng-template>
-        </ng-container>
-        <ng-container *ngIf="!castRole.character">as a role not defined</ng-container>
+          } @else {
+            as {{ castRole.character }}
+          }
+        }
+        @if (!castRole.character) {
+          as a role not defined
+        }
       </div>
     </section>
   </a>
@@ -30,12 +33,15 @@
     {{ formattedTitle }}
   </ng-template>
   <ng-template #castPopContent>
-    <ng-container *ngIf="castRole.character">
-      <ng-container *ngIf="castRole.character == '(uncredited)'; else character">
+    @if (castRole.character) {
+      @if (castRole.character == '(uncredited)') {
         as an uncredited character
-      </ng-container>
-      <ng-template #character> as {{ castRole.character }} </ng-template>
-    </ng-container>
-    <ng-container *ngIf="!castRole.character">as a role not defined</ng-container>
+      } @else {
+        as {{ castRole.character }}
+      }
+    }
+    @if (!castRole.character) {
+      as a role not defined
+    }
   </ng-template>
 </section>

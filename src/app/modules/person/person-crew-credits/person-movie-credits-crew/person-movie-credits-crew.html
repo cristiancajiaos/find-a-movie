@@ -13,7 +13,7 @@
               [defaultOrderCriteria]="defaultOrder"
               (onOrderCriteriaChange)="orderCriteriaChange($event)"
               (onClearOrderCriteria)="clearOrderCriteria($event)"
-            >
+              >
             </app-order-select>
           </div>
           <div class="col-12 col-lg-6">
@@ -30,7 +30,7 @@
               [yearsFrom]="yearsFrom"
               (onSelectFromYear)="setYearFrom($event)"
               (onClearSelectFromYear)="clearSelectYearFrom($event)"
-            >
+              >
             </app-from-select>
           </div>
           <div class="col-6 col-lg-3">
@@ -39,7 +39,7 @@
               [yearsTo]="yearsTo"
               (onSelectToYear)="setYearTo($event)"
               (onClearSelectToYear)="clearSelectYearTo($event)"
-            >
+              >
             </app-to-select>
           </div>
         </div>
@@ -56,41 +56,38 @@
       </section>
       <hr #crewParagraph />
       <section class="crew-credits">
-        <ng-container *ngIf="filterCrewCredits.length > 0; else noResults">
-          <ng-container *ngIf="displayMode == 'grid'">
+        @if (filterCrewCredits.length > 0) {
+          @if (displayMode == 'grid') {
             <section class="crew-credits-display-grid">
               <div class="row" #crewCreditsGrid>
-                <ng-container
-                  *ngFor="
-                    let crewRole of filterCrewCredits
-                      | paginate: { itemsPerPage: 20, currentPage: page }
-                  "
-                >
+                @for (
+                  crewRole of filterCrewCredits
+                  | paginate: { itemsPerPage: 20, currentPage: page }
+                  ; track
+                  crewRole) {
                   <div class="col-12 col-sm-4 col-lg-2">
                     <app-person-crew-credit-grid
                       [crewRole]="crewRole"
                     ></app-person-crew-credit-grid>
                   </div>
-                </ng-container>
+                }
               </div>
             </section>
-          </ng-container>
-          <ng-container *ngIf="displayMode == 'list'">
+          }
+          @if (displayMode == 'list') {
             <section class="crew-credits-display-list">
-              <ng-container
-                *ngFor="
-                  let crewRole of filterCrewCredits
-                    | paginate: { itemsPerPage: 20, currentPage: page }
-                "
-              >
+              @for (
+                crewRole of filterCrewCredits
+                | paginate: { itemsPerPage: 20, currentPage: page }
+                ; track
+                crewRole) {
                 <app-person-crew-credit-list [crewRole]="crewRole"></app-person-crew-credit-list>
-              </ng-container>
+              }
             </section>
-          </ng-container>
-        </ng-container>
-        <ng-template #noResults>
+          }
+        } @else {
           <p>No results were obtained by the applied filters.</p>
-        </ng-template>
+        }
       </section>
       <section class="crew-credits-pagination">
         <div class="d-flex justify-content-center">

@@ -1,262 +1,269 @@
 <section class="movie-crew">
-  <ng-container *ngIf="loadingCrew">
+  @if (loadingCrew) {
     <app-loading-inline message="Loading crew..."></app-loading-inline>
-  </ng-container>
-  <ng-container *ngIf="!loadingCrew">
-    <ng-container *ngIf="movieCrewError">
+  }
+  @if (!loadingCrew) {
+    @if (movieCrewError) {
       <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCrew($event)">
       </app-movie-error>
-    </ng-container>
-    <ng-container *ngIf="!movieCrewError">
+    }
+    @if (!movieCrewError) {
       <h2>Featured Crew</h2>
       <div class="table-responsive">
         <table class="table">
           <tbody>
-            <ng-container *ngIf="direction.length > 0">
+            @if (direction.length > 0) {
               <tr>
                 <td>Directed By:</td>
                 <td>
-                  <ng-container *ngFor="let director of direction">
+                  @for (director of direction; track director) {
                     <a [routerLink]="['/person', director.id]">
                       {{ director.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="coDirection.length > 0">
-            <tr>
-              <td>Co-Directed By:</td>
-              <td>
-                <ng-container *ngFor="let coDirector of coDirection">
-                  <a [routerLink]="['/person', coDirector.id]">
-                    {{ coDirector.name }}
-                  </a>
-                  <br />
-                </ng-container>
-              </td>
-            </tr>
-          </ng-container>
-            <ng-container *ngIf="writing.length > 0">
+            }
+            @if (coDirection.length > 0) {
+              <tr>
+                <td>Co-Directed By:</td>
+                <td>
+                  @for (coDirector of coDirection; track coDirector) {
+                    <a [routerLink]="['/person', coDirector.id]">
+                      {{ coDirector.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (writing.length > 0) {
               <tr>
                 <td>Written By:</td>
                 <td>
-                  <ng-container *ngFor="let writer of writing">
+                  @for (writer of writing; track writer) {
                     <a [routerLink]="['/person', writer.id]">
                       {{ writer.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="story.length > 0">
+            }
+            @if (story.length > 0) {
               <tr>
                 <td>Story By:</td>
                 <td>
-                  <ng-container *ngFor="let storyArtist of story">
+                  @for (storyArtist of story; track storyArtist) {
                     <a [routerLink]="['/person', storyArtist.id]">
                       {{ storyArtist.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="basedOnWorkBy.length > 0">
+            }
+            @if (basedOnWorkBy.length > 0) {
               <tr>
                 <td>Based on Work By:</td>
                 <td>
-                  <ng-container *ngFor="let author of basedOnWorkBy">
+                  @for (author of basedOnWorkBy; track author) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="basedOnCharactersBy.length > 0">
+            }
+            @if (basedOnCharactersBy.length > 0) {
               <tr>
                 <td>Based on Characters Created By:</td>
                 <td>
-                  <ng-container *ngFor="let author of basedOnCharactersBy">
+                  @for (author of basedOnCharactersBy; track author) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="producing.length > 0">
+            }
+            @if (producing.length > 0) {
               <tr>
                 <td>Produced By:</td>
                 <td>
-                  <ng-container *ngFor="let producer of producing">
+                  @for (producer of producing; track producer) {
                     <a [routerLink]="['/person', producer.id]">
                       {{ producer.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="executiveProducing.length > 0">
+            }
+            @if (executiveProducing.length > 0) {
               <tr>
                 <td>
-                  Executive Producer<ng-container *ngIf="executiveProducing.length > 1"
-                    >s</ng-container
-                  >:
+                  Executive Producer@if (executiveProducing.length > 1) {
+                  s
+                  }:
                 </td>
                 <td>
-                  <ng-container *ngFor="let executiveProducer of executiveProducing">
+                  @for (executiveProducer of executiveProducing; track executiveProducer) {
                     <a [routerLink]="['/person', executiveProducer.id]">
                       {{ executiveProducer.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="coProducing.length > 0">
+            }
+            @if (coProducing.length > 0) {
               <tr>
-                <td>Co-Producer<ng-container *ngIf="coProducing.length > 1">s</ng-container>:</td>
+                <td>Co-Producer@if (coProducing.length > 1) {
+                  s
+                }:</td>
                 <td>
-                  <ng-container *ngFor="let coProducer of coProducing">
+                  @for (coProducer of coProducing; track coProducer) {
                     <a [routerLink]="['/person', coProducer.id]">
                       {{ coProducer.name }}
                     </a>
                     <br />
-                  </ng-container>
+                  }
                 </td>
               </tr>
-            </ng-container>
-            <ng-container *ngIf="directorsOfPhotography.length > 0">
+            }
+            @if (directorsOfPhotography.length > 0) {
               <tr>
                 <td>
-                  Director<ng-container *ngIf="directorsOfPhotography.length > 1">s</ng-container>
-                  of Photography:
-                </td>
-                <td>
-                  <ng-container *ngFor="let directorOfPhotography of directorsOfPhotography">
-                    <a [routerLink]="['/person', directorOfPhotography.id]">
-                      {{ directorOfPhotography.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="productionDesigners.length > 0">
-              <tr>
-                <td>
-                  Production Designer<ng-container *ngIf="productionDesigners.length > 1"
-                    >s</ng-container
-                  >:
-                </td>
-                <td>
-                  <ng-container *ngFor="let productionDesigner of productionDesigners">
-                    <a [routerLink]="['/person', productionDesigner.id]">
-                      {{ productionDesigner.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="editors.length > 0">
-              <tr>
-                <td>Editor<ng-container *ngIf="editors.length > 1">s</ng-container>:</td>
-                <td>
-                  <ng-container *ngFor="let editor of editors">
-                    <a [routerLink]="['/person', editor.id]">
-                      {{ editor.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="musicComposers.length > 0">
-              <tr>
-                <td>Music By:</td>
-                <td>
-                  <ng-container *ngFor="let musicComposer of musicComposers">
-                    <a [routerLink]="['/person', musicComposer.id]">
-                      {{ musicComposer.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="additionalMusicComposers.length > 0">
-              <tr>
-                <td>Additional Music By:</td>
-                <td>
-                  <ng-container *ngFor="let additionalMusicComposer of additionalMusicComposers">
-                    <a [routerLink]="['/person', additionalMusicComposer.id]">
-                      {{ additionalMusicComposer.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="visualEffectsSupervisors.length > 0">
-              <tr>
-                <td>
-                  Visual Effects Supervisor<ng-container *ngIf="visualEffectsSupervisors.length > 1"
-                    >s</ng-container
-                  >:
-                </td>
-                <td>
-                  <ng-container *ngFor="let visualEffectsSupervisor of visualEffectsSupervisors">
-                    <a [routerLink]="['/person', visualEffectsSupervisor.id]">
-                      {{ visualEffectsSupervisor.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="costumeDesigners.length > 0">
-              <tr>
-                <td>
-                  Costume Designer<ng-container *ngIf="costumeDesigners.length > 1">s</ng-container
-                  >:
-                </td>
-                <td>
-                  <ng-container *ngFor="let costumeDesigner of costumeDesigners">
-                    <a [routerLink]="['/person', costumeDesigner.id]">
-                      {{ costumeDesigner.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="castingCrew.length > 0">
-              <tr>
-                <td>Casting By:</td>
-                <td>
-                  <ng-container *ngFor="let casting of castingCrew">
-                    <a [routerLink]="['/person', casting.id]">
-                      {{ casting.name }}
-                    </a>
-                    <br />
-                  </ng-container>
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-      </div>
-      <div class="d-grid">
-        <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
-      </div>
-    </ng-container>
-  </ng-container>
+                  Director@if (directorsOfPhotography.length > 1) {
+                  s
+                }
+                of Photography:
+              </td>
+              <td>
+                @for (directorOfPhotography of directorsOfPhotography; track directorOfPhotography) {
+                  <a [routerLink]="['/person', directorOfPhotography.id]">
+                    {{ directorOfPhotography.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (productionDesigners.length > 0) {
+            <tr>
+              <td>
+                Production Designer@if (productionDesigners.length > 1) {
+                s
+                }:
+              </td>
+              <td>
+                @for (productionDesigner of productionDesigners; track productionDesigner) {
+                  <a [routerLink]="['/person', productionDesigner.id]">
+                    {{ productionDesigner.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (editors.length > 0) {
+            <tr>
+              <td>Editor@if (editors.length > 1) {
+                s
+              }:</td>
+              <td>
+                @for (editor of editors; track editor) {
+                  <a [routerLink]="['/person', editor.id]">
+                    {{ editor.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (musicComposers.length > 0) {
+            <tr>
+              <td>Music By:</td>
+              <td>
+                @for (musicComposer of musicComposers; track musicComposer) {
+                  <a [routerLink]="['/person', musicComposer.id]">
+                    {{ musicComposer.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (additionalMusicComposers.length > 0) {
+            <tr>
+              <td>Additional Music By:</td>
+              <td>
+                @for (additionalMusicComposer of additionalMusicComposers; track additionalMusicComposer) {
+                  <a [routerLink]="['/person', additionalMusicComposer.id]">
+                    {{ additionalMusicComposer.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (visualEffectsSupervisors.length > 0) {
+            <tr>
+              <td>
+                Visual Effects Supervisor@if (visualEffectsSupervisors.length > 1) {
+                s
+                }:
+              </td>
+              <td>
+                @for (visualEffectsSupervisor of visualEffectsSupervisors; track visualEffectsSupervisor) {
+                  <a [routerLink]="['/person', visualEffectsSupervisor.id]">
+                    {{ visualEffectsSupervisor.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (costumeDesigners.length > 0) {
+            <tr>
+              <td>
+                Costume Designer@if (costumeDesigners.length > 1) {
+                s
+                }:
+              </td>
+              <td>
+                @for (costumeDesigner of costumeDesigners; track costumeDesigner) {
+                  <a [routerLink]="['/person', costumeDesigner.id]">
+                    {{ costumeDesigner.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (castingCrew.length > 0) {
+            <tr>
+              <td>Casting By:</td>
+              <td>
+                @for (casting of castingCrew; track casting) {
+                  <a [routerLink]="['/person', casting.id]">
+                    {{ casting.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="d-grid">
+      <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
+    </div>
+  }
+}
 </section>

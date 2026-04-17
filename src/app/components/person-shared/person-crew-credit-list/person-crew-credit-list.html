@@ -8,8 +8,12 @@
         </span>
         <br />
         <span>
-          <ng-container *ngIf="crewRole.job">{{ crewRole.job }}</ng-container>
-          <ng-container *ngIf="!crewRole.job">No Job Defined</ng-container>
+          @if (crewRole.job) {
+            {{ crewRole.job }}
+          }
+          @if (!crewRole.job) {
+            No Job Defined
+          }
         </span>
       </div>
     </div>

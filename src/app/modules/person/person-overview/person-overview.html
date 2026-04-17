@@ -1,16 +1,16 @@
 <section class="person-overview">
-  <ng-container *ngIf="loadingPerson">
+  @if (loadingPerson) {
     <app-loading-inline message="Loading person..."></app-loading-inline>
-  </ng-container>
-  <ng-container *ngIf="!loadingPerson">
-    <ng-container *ngIf="personOverviewError">
+  }
+  @if (!loadingPerson) {
+    @if (personOverviewError) {
       <app-person-error [errorMessage]="errorMessage" (reload)="reloadOverview($event)">
       </app-person-error>
-    </ng-container>
-    <ng-container *ngIf="!personOverviewError">
+    }
+    @if (!personOverviewError) {
       <div class="row">
         <div class="col-12 col-lg-8">
-          <ng-container *ngIf="person.biography">
+          @if (person.biography) {
             <section class="person-biography">
               <h2>Biography</h2>
               <p>{{ personBiography }}</p>
@@ -33,12 +33,12 @@
                 </div>
               </div>
             </section>
-          </ng-container>
-          <ng-container *ngIf="person.biography.length === 0">
+          }
+          @if (person.biography.length === 0) {
             <section class="no-person-biography-available">
               <p>No Biography Available</p>
             </section>
-          </ng-container>
+          }
         </div>
         <div class="col-12 col-lg-4">
           <section class="person-infotable">
@@ -46,27 +46,27 @@
             <div class="table table-responsive">
               <table class="table">
                 <tbody>
-                  <ng-container *ngIf="person.birthday">
+                  @if (person.birthday) {
                     <tr>
                       <td>Born:</td>
                       <td>
                         {{ personBirthDay | date : 'longDate' }}
-                        <ng-container *ngIf="person.place_of_birth">
+                        @if (person.place_of_birth) {
                           <br />
                           in {{ personPlaceBirth }}
-                        </ng-container>
+                        }
                       </td>
                     </tr>
-                  </ng-container>
-                  <ng-container *ngIf="person.deathday">
+                  }
+                  @if (person.deathday) {
                     <tr>
                       <td>Died:</td>
                       <td>
                         {{ personDeathDay | date : 'longDate' }}
                       </td>
                     </tr>
-                  </ng-container>
-                  <ng-container *ngIf="person.gender">
+                  }
+                  @if (person.gender) {
                     <tr>
                       <td>Gender:</td>
                       <td>
@@ -74,45 +74,45 @@
                         {{ personGender }}
                       </td>
                     </tr>
-                  </ng-container>
-                  <ng-container *ngIf="person.known_for_department">
+                  }
+                  @if (person.known_for_department) {
                     <tr>
                       <td>Main occupation:</td>
                       <td>
                         {{ personMainOccupation }}
                       </td>
                     </tr>
-                  </ng-container>
-                  <ng-container *ngIf="person.also_known_as.length > 0">
+                  }
+                  @if (person.also_known_as.length > 0) {
                     <tr>
                       <td>Also known as:</td>
                       <td>
                         @for (personAlternateName of personAlsoKnownAs; track personAlternateName) {
-                           {{ personAlternateName }}<br />
+                          {{ personAlternateName }}<br />
                         }
                       </td>
                     </tr>
-                  </ng-container>
+                  }
                 </tbody>
               </table>
             </div>
-            <ng-container *ngIf="person.imdb_id">
+            @if (person.imdb_id) {
               <div class="d-grid mb-2">
                 <a [href]="personIMDBUrl" class="btn btn-primary" target="_blank">
                   <fa-icon [icon]="imdbIcon"></fa-icon> View IMDB
                 </a>
               </div>
-            </ng-container>
-            <ng-container *ngIf="person.homepage">
+            }
+            @if (person.homepage) {
               <div class="d-grid mb-2">
                 <a [href]="personHomepageUrl" class="btn btn-primary" target="_blank">
                   <fa-icon [icon]="globeIcon"></fa-icon> View Homepage
                 </a>
               </div>
-            </ng-container>
+            }
           </section>
         </div>
       </div>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </section>

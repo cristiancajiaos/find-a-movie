@@ -10,7 +10,7 @@
             [defaultOrderCriteria]="defaultOrder"
             (onOrderCriteriaChange)="orderCriteriaChange($event)"
             (onClearOrderCriteria)="clearOrderCriteria($event)"
-          >
+            >
           </app-order-select>
         </div>
         <div class="col-6 col-lg-3">
@@ -19,7 +19,7 @@
             [yearsFrom]="yearsFrom"
             (onSelectFromYear)="setYearFrom($event)"
             (onClearSelectFromYear)="clearSelectYearFrom($event)"
-          >
+            >
           </app-from-select>
         </div>
         <div class="col-6 col-lg-3">
@@ -28,7 +28,7 @@
             [yearsTo]="yearsTo"
             (onSelectToYear)="setYearTo($event)"
             (onClearSelectToYear)="clearSelectYearTo($event)"
-          >
+            >
           </app-to-select>
         </div>
       </div>
@@ -44,45 +44,42 @@
       </div>
       <section class="cast-credits">
         <hr #castParagraph />
-        <ng-container *ngIf="filterCastCredits.length > 0; else noFilterCastCreditsResults">
-          <ng-container *ngIf="displayMode == 'grid'">
+        @if (filterCastCredits.length > 0) {
+          @if (displayMode == 'grid') {
             <section class="cast-credits-display-grid">
               <div class="row" #castCreditsList>
-                <ng-container
-                  *ngFor="
-                    let castRole of filterCastCredits
-                      | paginate: { itemsPerPage: 20, currentPage: page }
-                  "
-                >
+                @for (
+                  castRole of filterCastCredits
+                  | paginate: { itemsPerPage: 20, currentPage: page }
+                  ; track
+                  castRole) {
                   <div class="col-12 col-sm-4 col-lg-2">
                     <app-person-cast-credit-grid [castRole]="castRole">
                     </app-person-cast-credit-grid>
                   </div>
-                </ng-container>
+                }
               </div>
             </section>
-          </ng-container>
-          <ng-container *ngIf="displayMode == 'list'">
+          }
+          @if (displayMode == 'list') {
             <section class="cast-credits-display-list">
-              <ng-container
-                *ngFor="
-                  let castRole of filterCastCredits
-                    | paginate: { itemsPerPage: 20, currentPage: page }
-                "
-              >
+              @for (
+                castRole of filterCastCredits
+                | paginate: { itemsPerPage: 20, currentPage: page }
+                ; track
+                castRole) {
                 <app-person-cast-credit-list [castRole]="castRole"> </app-person-cast-credit-list>
-              </ng-container>
+              }
             </section>
-          </ng-container>
+          }
           <section class="cast-credits-pagination">
             <div class="d-flex justify-content-center">
               <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
             </div>
           </section>
-        </ng-container>
-        <ng-template #noFilterCastCreditsResults>
+        } @else {
           <p>No results were obtained by the applied filters.</p>
-        </ng-template>
+        }
       </section>
     </div>
   </div>

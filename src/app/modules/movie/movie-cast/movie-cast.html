@@ -1,15 +1,15 @@
 <section class="movie-cast">
-  <ng-container *ngIf="loadingCast">
+  @if (loadingCast) {
     <app-loading-inline message="Loading cast..."></app-loading-inline>
-  </ng-container>
-  <ng-container *ngIf="!loadingCast">
-    <ng-container *ngIf="movieCastError">
+  }
+  @if (!loadingCast) {
+    @if (movieCastError) {
       <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCast($event)">
       </app-movie-error>
-    </ng-container>
-    <ng-container *ngIf="!movieCastError">
+    }
+    @if (!movieCastError) {
       <h2>Cast</h2>
-      <ng-container *ngIf="movieCast.length > 0">
+      @if (movieCast.length > 0) {
         <app-order-select
           #orderSelectMovieCast
           [orderCriterias]="orderCriterias"
@@ -26,36 +26,36 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let castMember of movieCast">
-                <td>
-                  <a [routerLink]="['/person', castMember.id]">
-                    {{ castMember.name }}
-                  </a>
-                </td>
-                <td>as</td>
-                <ng-container *ngIf="castMember.character; else unknownCharacter">
-                  <ng-container *ngIf="castMember.character == '(uncredited)'; else character">
-                    <td>
-                      <i>An uncredited character</i>
-                    </td>
-                  </ng-container>
-                  <ng-template #character>
-                    <td>{{ castMember.character }}</td>
-                  </ng-template>
-                </ng-container>
-                <ng-template #unknownCharacter>
+              @for (castMember of movieCast; track castMember) {
+                <tr>
                   <td>
-                    <i>A character not defined</i>
+                    <a [routerLink]="['/person', castMember.id]">
+                      {{ castMember.name }}
+                    </a>
                   </td>
-                </ng-template>
-              </tr>
+                  <td>as</td>
+                  @if (castMember.character) {
+                    @if (castMember.character == '(uncredited)') {
+                      <td>
+                        <i>An uncredited character</i>
+                      </td>
+                    } @else {
+                      <td>{{ castMember.character }}</td>
+                    }
+                  } @else {
+                    <td>
+                      <i>A character not defined</i>
+                    </td>
+                  }
+                </tr>
+              }
             </tbody>
           </table>
         </div>
-      </ng-container>
-      <ng-container *ngIf="movieCast.length == 0">
+      }
+      @if (movieCast.length == 0) {
         <p>This movie has no recognizable cast</p>
-      </ng-container>
-    </ng-container>
-  </ng-container>
+      }
+    }
+  }
 </section>

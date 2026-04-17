@@ -11,13 +11,13 @@
           class="btn border text-light me-2"
           id="selectSearchType"
           ngbDropdownToggle
-        >
-          <ng-container *ngIf="searchType == 'movie'">
+          >
+          @if (searchType == 'movie') {
             <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Movie
-          </ng-container>
-          <ng-container *ngIf="searchType == 'person'">
+          }
+          @if (searchType == 'person') {
             <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> Person
-          </ng-container>
+          }
         </button>
         <div ngbDropdownMenu aria-labelledby="selectSearchType">
           <button ngbDropdownItem (click)="selectSearchType('movie')">
@@ -31,32 +31,32 @@
 
         </div>
         <form class="d-flex"
-              role="search"
-              [formGroup]="searchNavbarForm"
-              (ngSubmit)="processSearch()">
-          <ng-container *ngIf="searchType == 'movie'">
+          role="search"
+          [formGroup]="searchNavbarForm"
+          (ngSubmit)="processSearch()">
+          @if (searchType == 'movie') {
             <input
               class="form-control me-2"
               type="search"
               placeholder="Search Movie"
               aria-label="Search Movie"
               formControlName="movieSearch"
-            />
-          </ng-container>
-          <ng-container *ngIf="searchType == 'person'">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search People"
-              aria-label="Search People"
-              formControlName="personSearch"
-            />
-          </ng-container>
-          <button class="btn border text-light" type="submit">
-            <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
-          </button>
-        </form>
+              />
+            }
+            @if (searchType == 'person') {
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search People"
+                aria-label="Search People"
+                formControlName="personSearch"
+                />
+              }
+              <button class="btn border text-light" type="submit">
+                <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</nav>
+    </nav>

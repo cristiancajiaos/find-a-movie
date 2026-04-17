@@ -1,13 +1,13 @@
 <section class="movie-full-crew">
-  <ng-container *ngIf="loadingFullCrew">
+  @if (loadingFullCrew) {
     <app-loading-inline message="Loading full crew..."></app-loading-inline>
-  </ng-container>
-  <ng-container *ngIf="!loadingFullCrew">
-    <ng-container *ngIf="movieFullCrewError">
+  }
+  @if (!loadingFullCrew) {
+    @if (movieFullCrewError) {
       <app-movie-error [errorMessage]="errorMessage" (reload)="reloadFullCrew($event)">
       </app-movie-error>
-    </ng-container>
-    <ng-container *ngIf="!movieFullCrewError">
+    }
+    @if (!movieFullCrewError) {
       <h2>Full Crew</h2>
       <app-order-select
         #orderSelectMovieFullCrew
@@ -25,17 +25,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let crewMember of movieFullCrew">
-              <td>
-                <a href="" [routerLink]="['/person', crewMember.id]">
-                  {{ crewMember.name }}
-                </a>
-              </td>
-              <td>{{ crewMember.job }}</td>
-            </tr>
+            @for (crewMember of movieFullCrew; track crewMember) {
+              <tr>
+                <td>
+                  <a href="" [routerLink]="['/person', crewMember.id]">
+                    {{ crewMember.name }}
+                  </a>
+                </td>
+                <td>{{ crewMember.job }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </section>

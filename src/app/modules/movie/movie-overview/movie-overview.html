@@ -1,31 +1,31 @@
 <section class="movie-overview">
-  <ng-container *ngIf="loadingMovie">
+  @if (loadingMovie) {
     <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
-  </ng-container>
-  <ng-container *ngIf="!loadingMovie">
-    <ng-container *ngIf="movieOverviewError">
+  }
+  @if (!loadingMovie) {
+    @if (movieOverviewError) {
       <app-movie-error
         [errorMessage]="errorMessage"
         (reload)="reloadMovieOverview($event)"
       ></app-movie-error>
-    </ng-container>
-    <ng-container *ngIf="!movieOverviewError">
-      <ng-container *ngIf="movie.tagline">
+    }
+    @if (!movieOverviewError) {
+      @if (movie.tagline) {
         <section class="movie-tagline">
           <p>{{ movie.tagline }}</p>
         </section>
-      </ng-container>
-      <ng-container *ngIf="movie.overview">
+      }
+      @if (movie.overview) {
         <section class="movie-overview">
           <p>{{ movie.overview }}</p>
         </section>
         <hr />
-      </ng-container>
-      <ng-container *ngIf="loadingCredits">
+      }
+      @if (loadingCredits) {
         <app-loading-inline message="Loading credits"></app-loading-inline>
-      </ng-container>
-      <ng-container *ngIf="!loadingCredits">
-        <ng-container *ngIf="movieCreditsFound">
+      }
+      @if (!loadingCredits) {
+        @if (movieCreditsFound) {
           <section class="movie-main-credits">
             <div class="row">
               <div class="col-12 col-lg-4">
@@ -63,14 +63,14 @@
               </div>
             </div>
           </section>
-        </ng-container>
-        <ng-container *ngIf="!movieCreditsFound">
+        }
+        @if (!movieCreditsFound) {
           <section class="error-credits">
             <p>Error showing credits: <strong>{{ movieCreditsErrorMessage }}</strong></p>
           </section>
-        </ng-container>
+        }
         <hr />
-      </ng-container>
+      }
       <div class="row">
         <div class="col-12 col-lg-6">
           <app-movie-overview-trailer [movieId]="id">
@@ -83,6 +83,6 @@
           </section>
         </div>
       </div>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </section>
