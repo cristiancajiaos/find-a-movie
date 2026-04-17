@@ -57,7 +57,6 @@
       <hr #crewParagraph />
       <section class="crew-credits">
         <ng-container *ngIf="filterCrewCredits.length > 0; else noResults">
-          <p><strong>{{filterCrewCredits.length}}</strong> results were obtained.</p>
           <ng-container *ngIf="displayMode == 'grid'">
             <section class="crew-credits-display-grid">
               <div class="row" #crewCreditsGrid>
@@ -90,7 +89,7 @@
           </ng-container>
         </ng-container>
         <ng-template #noResults>
-          <p>No results were obtained.</p>
+          <p>No results were obtained by the applied filters.</p>
         </ng-template>
       </section>
       <section class="crew-credits-pagination">

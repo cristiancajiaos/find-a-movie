@@ -45,7 +45,6 @@
       <section class="cast-credits">
         <hr #castParagraph />
         <ng-container *ngIf="filterCastCredits.length > 0; else noFilterCastCreditsResults">
-          <p><strong>{{filterCastCredits.length}}</strong> results were obtained.</p>
           <ng-container *ngIf="displayMode == 'grid'">
             <section class="cast-credits-display-grid">
               <div class="row" #castCreditsList>
@@ -82,7 +81,7 @@
           </section>
         </ng-container>
         <ng-template #noFilterCastCreditsResults>
-          <p>No results were obtained.</p>
+          <p>No results were obtained by the applied filters.</p>
         </ng-template>
       </section>
     </div>
