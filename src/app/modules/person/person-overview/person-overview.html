@@ -87,9 +87,9 @@
                     <tr>
                       <td>Also known as:</td>
                       <td>
-                        <ng-container *ngFor="let personAlternateName of personAlsoKnownAs">
-                          {{ personAlternateName }}<br />
-                        </ng-container>
+                        @for (personAlternateName of personAlsoKnownAs; track personAlternateName) {
+                           {{ personAlternateName }}<br />
+                        }
                       </td>
                     </tr>
                   </ng-container>
