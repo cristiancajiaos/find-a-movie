@@ -21,6 +21,7 @@
           <app-movie-error [errorMessage]="errorMessage"></app-movie-error>
         }
         @if (movie.id != 0) {
+          <div class="navbar-cover"></div>
           <app-movie-header [id]="id" [movie]="movie" #movieHeader> </app-movie-header>
           <main>
             <nav class="navbar navbar-dark bg-dark navbar-expand-sm">

@@ -1,4 +1,8 @@
 .movie {
+  .navbar-cover {
+    background-color: rgb(33, 37, 41);
+    height: 3rem;
+  }
   main {
     nav {
       &.navbar {
@@ -9,8 +13,8 @@
 
     .aside-1 {
       img {
-          margin-bottom: 1rem;
-        }
+        margin-bottom: 1rem;
+      }
 
       .btn-poster {
         font-family: 'Oswald', 'Arial', sans-serif;
