@@ -1,0 +1,22 @@
+<section class="search-movie">
+  <form
+    class="d-flex"
+    role="search"
+    [formGroup]="searchMovieForm"
+    (ngSubmit)="processMovieSearch()"
+  >
+    <div class="input-group">
+      <input
+        #searchMovieInput
+        class="form-control"
+        type="search"
+        [placeholder]="placeholder"
+        [aria-label]="ariaLabel"
+        formControlName="movieSearch"
+      />
+      <button class="btn border text-light btn-search" type="submit">
+        <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
+      </button>
+    </div>
+  </form>
+</section>

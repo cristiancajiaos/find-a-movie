@@ -7,12 +7,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchMovie } from './navbar/search-movie/search-movie';
+import { SearchPerson } from './navbar/search-person/search-person';
 
 @NgModule({
   declarations: [
     Layout,
     Navbar,
-    Footer
+    Footer,
+    SearchMovie,
+    SearchPerson
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     Layout,
     Navbar,
-    Footer
+    Footer,
+    SearchMovie,
+    SearchPerson
   ]
 })
 export class LayoutModule { }
