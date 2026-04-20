@@ -28,35 +28,14 @@
             <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
             Person
           </button>
-
         </div>
-        <form class="d-flex"
-          role="search"
-          [formGroup]="searchNavbarForm"
-          (ngSubmit)="processSearch()">
-          @if (searchType == 'movie') {
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search Movie"
-              aria-label="Search Movie"
-              formControlName="movieSearch"
-              />
-            }
-            @if (searchType == 'person') {
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search People"
-                aria-label="Search People"
-                formControlName="personSearch"
-                />
-              }
-              <button class="btn border text-light" type="submit">
-                <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
-              </button>
-            </form>
-          </div>
-        </div>
+        @if (searchType == 'movie') {
+          <app-search-movie></app-search-movie>
+        }
+        @if (searchType == 'person') {
+          <app-search-person></app-search-person>
+        }
       </div>
-    </nav>
+    </div>
+  </div>
+</nav>

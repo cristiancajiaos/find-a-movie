@@ -1,0 +1,22 @@
+<section class="search-person">
+  <form
+    class="d-flex"
+    role="search"
+    [formGroup]="searchPersonForm"
+    (ngSubmit)="processPersonSearch()"
+  >
+    <div class="input-group">
+      <input
+        #searchPersonInput
+        class="form-control"
+        type="search"
+        [placeholder]="placeholder"
+        [aria-label]="ariaLabel"
+        formControlName="personSearch"
+      />
+      <button class="btn border text-light btn-search" type="submit">
+        <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
+      </button>
+    </div>
+  </form>
+</section>
