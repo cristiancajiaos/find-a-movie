@@ -16,9 +16,11 @@
               @if (this.person.birthday || this.person.deathday) {
                 ({{ birthYear }} -
                 @if (this.person.deathday) {
-                  {{ deathYear }}
-                  })
+                  {{ deathYear }})
+                } @else {
+                  )
                 }
+              }
               </small>
             </h1>
             <h2><fa-icon [icon]="film"></fa-icon> Known for: {{ knownFor }}</h2>
