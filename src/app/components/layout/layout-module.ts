@@ -7,16 +7,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SearchMovie } from './navbar/search-movie/search-movie';
 import { SearchPerson } from './navbar/search-person/search-person';
+import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie';
 
 @NgModule({
   declarations: [
     Layout,
     Navbar,
     Footer,
-    SearchMovie,
-    SearchPerson
+    SearchPerson,
+    SearchInputMovie
   ],
   imports: [
     CommonModule,
@@ -30,7 +30,7 @@ import { SearchPerson } from './navbar/search-person/search-person';
     Layout,
     Navbar,
     Footer,
-    SearchMovie,
+    SearchInputMovie,
     SearchPerson
   ]
 })

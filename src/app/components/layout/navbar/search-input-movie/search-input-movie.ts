@@ -3,13 +3,14 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
-  selector: 'app-search-movie',
+  selector: 'app-search-input-movie',
   standalone: false,
-  templateUrl: './search-movie.html',
-  styleUrl: './search-movie.scss'
+  templateUrl: './search-input-movie.html',
+  styleUrl: './search-input-movie.scss'
 })
-export class SearchMovie implements OnInit {
+export class SearchInputMovie implements OnInit {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
 
@@ -62,5 +63,4 @@ export class SearchMovie implements OnInit {
   public goToMovieClose(movie: any): void {
     this.myDrop.close();
   }
-
 }
