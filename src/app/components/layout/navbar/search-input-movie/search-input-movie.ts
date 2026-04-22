@@ -26,6 +26,7 @@ export class SearchInputMovie implements OnInit {
   public loadingSearchMovie: boolean = false;
 
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
+  public originalMovieResults: ResponseMovieResult[] = [];
   public movieResults: ResponseMovieResult[] = [];
 
   public placeholder: string = 'Eg. Star Wars';
@@ -93,6 +94,7 @@ export class SearchInputMovie implements OnInit {
     this.searchError = false;
     this.loadingSearchMovie = true;
     this.searchService.searchMovieInput(inputMovie).then(responseMovieResults => {
+      this.originalMovieResults = responseMovieResults;
       this.movieResults = responseMovieResults.slice(0,5);
     }).catch((error: HttpErrorResponse) => {
 

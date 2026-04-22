@@ -32,7 +32,7 @@
             Loading...
           </a>
         }
-        @if (movieResults.length > 1) {
+        @if (movieResults.length > 0) {
           @for (movie of movieResults; track movie.id) {
             <app-search-input-movie-result
               [movieResult]="movie"
@@ -41,7 +41,8 @@
             </app-search-input-movie-result>
           }
         }
-        @if (movieResults.length == 5) {
+        @if (!loadingSearchMovie && originalMovieResults.length > 5) {
+          <div class="dropdown-divider"></div>
           <a ngbDropdownItem
             class="view-all-results"
             (click)="processMovieSearch()">
