@@ -11,12 +11,13 @@
           #searchMovieInput
           class="form-control"
           type="search"
-          (input)="toggleMovieSearchDropdown()"
+          (input)="toggleMovieSearchDropdownByInput()"
+          (click)="toggleMovieSearchDropdownByClick()"
+          (search)="toggleMovieSearchDropdownBySearch()"
           [placeholder]="placeholder"
           [aria-label]="ariaLabel"
           formControlName="movieSearch"
         />
-        <!--  -->
         <button class="btn border text-light btn-search" type="submit">
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>
@@ -24,15 +25,34 @@
       <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
         @if (loadingSearchMovie) {
           <a ngbDropdownItem aria-disabled="true">
-            Loading
+            <fa-icon
+              [icon]="loadingIcon"
+              [animation]="'spin'"
+              [fixedWidth]="true"></fa-icon>
+            Loading...
           </a>
         }
-        @for (movie of movieResults; track movie.id) {
-          <app-search-input-movie-result
-            [movieResult]="movie"
-            (clickResult)="goToMovieClose($event)">
-
-          </app-search-input-movie-result>
+        @if (movieResults.length > 1) {
+          @for (movie of movieResults; track movie.id) {
+            <app-search-input-movie-result
+              [movieResult]="movie"
+              (clickResult)="goToMovieClose($event)"
+            >
+            </app-search-input-movie-result>
+          }
+        }
+        @if (movieResults.length == 5) {
+          <a ngbDropdownItem
+            class="view-all-results"
+            (click)="processMovieSearch()">
+            <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
+            View all results
+          </a>
+        }
+        @if (!loadingSearchMovie && movieResults.length == 0) {
+          <a ngbDropdownItem class="no-results-obtained">
+            No results obtained
+          </a>
         }
       </div>
     </div>
