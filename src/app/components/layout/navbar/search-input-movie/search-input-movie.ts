@@ -62,7 +62,7 @@ export class SearchInputMovie implements OnInit {
 
   public toggleMovieSearchDropdownByInput(): void {
     const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
-    if (inputMovie.length >= 3) {
+    if (inputMovie.length >= 2) {
       this.searchMovie();
       this.openMovieSearchDropdown();
     } else {
