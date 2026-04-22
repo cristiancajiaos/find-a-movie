@@ -3,6 +3,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { ResponseSearchMovie } from '../../../../classes/response-search-movie';
+import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
+import { SearchService } from '../../../../services/search-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-search-input-movie',
@@ -16,13 +20,11 @@ export class SearchInputMovie implements OnInit {
 
   public searchMovieForm: FormGroup = new FormGroup({});
 
-  public movies: any = [
-    {id: 2501, title: 'The Bourne Identity', year: 2002, img: 'https://placehold.co/25'},
-    {id: 2502, title: 'The Bourne Supremacy', year: 2004, img: 'https://placehold.co/25'},
-    {id: 2503, title: 'The Bourne Ultimatum', year: 2007, img: 'https://placehold.co/25'},
-    {id: 49040, title: 'The Bourne Legacy', year: 2012, img: 'https://placehold.co/25'},
-    {id: 324668, title: 'Jason Bourne', year: 2016, img: 'https://placehold.co/25' }
-  ];
+  public searchError: boolean = false;
+  public loadingSearchMovie: boolean = false;
+
+  public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
+  public movieResults: ResponseMovieResult[] = [];
 
   public placeholder: string = 'Eg. Star Wars';
   public ariaLabel: string = 'Search Movie';
@@ -33,7 +35,8 @@ export class SearchInputMovie implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private searchService: SearchService
   ) {}
 
   ngOnInit(): void {
@@ -54,13 +57,33 @@ export class SearchInputMovie implements OnInit {
   public toggleMovieSearchDropdown(): void {
     const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
     if (inputMovie.length >= 3) {
+      this.searchMovie();
       this.myDrop.open();
     } else {
       this.myDrop.close();
     }
   }
 
-  public goToMovieClose(movie: any): void {
+  public searchMovie(): void {
+    const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
+    this.movieResults = [];
+    this.searchError = false;
+    this.loadingSearchMovie = true;
+    this.searchService.searchMovieInput(inputMovie).then(responseMovieResults => {
+      this.movieResults = responseMovieResults.slice(0,5);
+    }).catch((error: HttpErrorResponse) => {
+
+    }).finally(() => {
+      this.loadingSearchMovie = false;
+    });
+  }
+
+  public handleMovieResults(responseSearchMovie: ResponseSearchMovie): void {
+    this.movieResults = responseSearchMovie.results;
+    console.log(this.movieResults);
+  }
+
+  public goToMovieClose(value: boolean): void {
     this.myDrop.close();
   }
 }

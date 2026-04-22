@@ -1,0 +1,5 @@
+<a class="movie-result "[routerLink]="['movie', movieResult.id]" ngbDropdownItem aria-disabled="true"
+   (click)="onClickResult()">
+    <div class="movie-poster" [ngStyle]="{'background-image': 'url(' + posterSizeSmall + ')'}"></div>
+    <span>{{formattedTitle}}</span>
+</a>

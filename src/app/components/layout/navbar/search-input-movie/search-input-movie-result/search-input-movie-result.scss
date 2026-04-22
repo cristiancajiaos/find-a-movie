@@ -1,0 +1,11 @@
+.movie-result {
+  display: flex;
+  .movie-poster {
+    background-position: center;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    margin-right: 0.5rem;
+    border-radius: 5px;
+  }
+}

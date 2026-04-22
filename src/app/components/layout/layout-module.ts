@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPerson } from './navbar/search-person/search-person';
 import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie';
+import { SearchInputMovieResult } from './navbar/search-input-movie/search-input-movie-result/search-input-movie-result';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie
     Navbar,
     Footer,
     SearchPerson,
-    SearchInputMovie
+    SearchInputMovie,
+    SearchInputMovieResult
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie
     Navbar,
     Footer,
     SearchInputMovie,
-    SearchPerson
+    SearchPerson,
+    SearchInputMovieResult
   ]
 })
 export class LayoutModule { }

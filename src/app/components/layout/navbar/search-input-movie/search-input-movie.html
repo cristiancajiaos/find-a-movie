@@ -1,4 +1,4 @@
-<section class="search-movie">
+<section class="search-input-movie">
   <form
     class="d-flex"
     role="search"
@@ -22,11 +22,17 @@
         </button>
       </div>
       <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
-        @for (movie of movies; track movie.id) {
-        <a [routerLink]="['movie', movie.id]" ngbDropdownItem aria-disabled="true" (click)="goToMovieClose(movie)">
-          <img [src]="movie.img"/>
-          {{movie.title}} ({{movie.year}})
-        </a>
+        @if (loadingSearchMovie) {
+          <a ngbDropdownItem aria-disabled="true">
+            Loading
+          </a>
+        }
+        @for (movie of movieResults; track movie.id) {
+          <app-search-input-movie-result
+            [movieResult]="movie"
+            (clickResult)="goToMovieClose($event)">
+
+          </app-search-input-movie-result>
         }
       </div>
     </div>
