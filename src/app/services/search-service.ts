@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
-import { first, lastValueFrom, map, take, tap } from 'rxjs';
+import { lastValueFrom, map} from 'rxjs';
 import { ResponseSearchPerson } from '../classes/response-search-person';
 import { ResponseMovieResult } from '../classes/response-search-movie/response-movie-result';
 
@@ -39,7 +39,6 @@ export class SearchService {
   }
 
   public async searchMovieInput(query: string, page: number = 1): Promise<ResponseMovieResult[]> {
-    console.log('searchMovieInput()');
     return await lastValueFrom(this.http.get<ResponseSearchMovie>(
       '/search/movie', {
         params: {
