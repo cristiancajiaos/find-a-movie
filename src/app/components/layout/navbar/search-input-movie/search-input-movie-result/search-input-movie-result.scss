@@ -1,13 +1,23 @@
 .movie-result {
-  display: flex;
   cursor: pointer;
+  width: 400px;
+  display: flex;
+  align-items: center;
   .movie-poster {
-    background-position: center;
-    background-size: cover;
-    width: 25px;
-    height: 25px;
-    margin-right: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid rgba(204, 204, 204, 1);
+    width: 10%;
+    .movie-poster-img {
+      background-position: center;
+      background-size: cover;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      border: 1px solid rgba(204, 204, 204, 1);
+    }
+  }
+  .movie-formatted-title {
+    width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

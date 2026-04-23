@@ -1,7 +1,11 @@
 <a ngbDropdownItem
-  class="movie-result
-  "[routerLink]="['movie', movieResult.id]"
+  class="movie-result"
+  [routerLink]="['movie', movieResult.id]"
   (click)="onClickResult()">
-  <div class="movie-poster" [ngStyle]="{'background-image': 'url(' + posterSizeSmall + ')'}"></div>
-  <span>{{formattedTitle}}</span>
+  <span class="movie-poster">
+    <div class="movie-poster-img" [ngStyle]="{'background-image': 'url(' + posterSizeSmall + ')'}"></div>
+  </span>
+  <span class="movie-formatted-title">
+    {{formattedTitle}}
+  </span>
 </a>
