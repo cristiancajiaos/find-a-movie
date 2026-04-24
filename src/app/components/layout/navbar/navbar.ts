@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
