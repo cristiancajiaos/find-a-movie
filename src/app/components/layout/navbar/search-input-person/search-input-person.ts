@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-search-person',
+  selector: 'app-search-input-person',
   standalone: false,
-  templateUrl: './search-person.html',
-  styleUrl: './search-person.scss'
+  templateUrl: './search-input-person.html',
+  styleUrl: './search-input-person.scss'
 })
-export class SearchPerson implements OnInit {
+export class SearchInputPerson implements OnInit {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
 
@@ -39,5 +39,4 @@ export class SearchPerson implements OnInit {
     }
     this.router.navigate(['search', 'person', searchQuery]);
   }
-
 }
