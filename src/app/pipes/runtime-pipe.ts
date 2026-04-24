@@ -9,8 +9,8 @@ export class RuntimePipe implements PipeTransform {
     const hours: number = Math.floor(runtime / 60);
     const min: number = runtime % 60;
 
-    const hoursStr: string = hours > 0 ? `${hours}h` : '';
-    const minStr: string = min > 0 ? `${min}min` : '';
+    const hoursStr: string = hours > 0 ? `${hours} Hr.` : '';
+    const minStr: string = min > 0 ? `${min} Min.` : '';
 
     if (hours == 0 && min == 0) {
       return '';
