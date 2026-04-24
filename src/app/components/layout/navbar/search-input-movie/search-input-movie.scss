@@ -1,4 +1,10 @@
 .search-input-movie {
+  .input-group {
+    .input-movie {
+      border-radius: 0;
+    }
+  }
+  
   .dropdown-menu {
     .view-all-results {
       cursor: pointer;
