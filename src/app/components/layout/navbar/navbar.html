@@ -6,37 +6,35 @@
     </a>
     <div class="ml-auto">
       <div ngbDropdown class="search-dropdown d-flex">
-        <div class="input-group">
-          <button
-            type="button"
-            class="btn border text-light"
-            id="selectSearchType"
-            ngbDropdownToggle
-          >
-            @if (searchType == 'movie') {
-              <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Movie
-            }
-            @if (searchType == 'person') {
-              <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> Person
-            }
-          </button>
-          <div ngbDropdownMenu aria-labelledby="selectSearchType">
-            <button ngbDropdownItem (click)="selectSearchType('movie')">
-              <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
-              Movie
-            </button>
-            <button ngbDropdownItem (click)="selectSearchType('person')">
-              <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
-              Person
-            </button>
-          </div>
+        <button
+          type="button"
+          class="btn border text-light btn-select-search-type"
+          id="selectSearchType"
+          ngbDropdownToggle
+        >
           @if (searchType == 'movie') {
-            <app-search-input-movie></app-search-input-movie>
+            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Movie
           }
           @if (searchType == 'person') {
-            <app-search-person></app-search-person>
+            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> Person
           }
+        </button>
+        <div ngbDropdownMenu aria-labelledby="selectSearchType">
+          <button ngbDropdownItem (click)="selectSearchType('movie')">
+            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
+            Movie
+          </button>
+          <button ngbDropdownItem (click)="selectSearchType('person')">
+            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
+            Person
+          </button>
         </div>
+        @if (searchType == 'movie') {
+          <app-search-input-movie></app-search-input-movie>
+        }
+        @if (searchType == 'person') {
+          <app-search-person></app-search-person>
+        }
       </div>
     </div>
   </div>
