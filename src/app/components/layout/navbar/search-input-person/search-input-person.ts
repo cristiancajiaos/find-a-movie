@@ -57,7 +57,7 @@ export class SearchInputPerson implements OnInit {
   }
 
   public togglePersonSearchDropdownBySearch(): void {
-    this.personResults = [];
+    this.closePersonDropdown();
   }
 
   public togglePersonSearchDropdownByInput(): void {
