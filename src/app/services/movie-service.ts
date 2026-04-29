@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { filter, lastValueFrom, map } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { catchError, lastValueFrom, map, of } from 'rxjs';
 import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/credits/crew-member';
@@ -18,12 +17,18 @@ export class MovieService {
   ) {}
 
   public async getMovie(id: number): Promise<Movie> {
-    return await lastValueFrom(this.http.get<Movie>(`/movie/${id}`));
+    return await lastValueFrom(
+      this.http.get<Movie>(`/movie/${id}`).pipe(
+        catchError(err => of())
+      )
+    )
   }
 
   public async getMovieCredits(id: number): Promise<Credits> {
     return await lastValueFrom(
-      this.http.get<Credits>(`/movie/${id}/credits`)
+      this.http.get<Credits>(`/movie/${id}/credits`).pipe(
+        catchError(err => of())
+      )
     );
   }
 
@@ -31,7 +36,8 @@ export class MovieService {
     return await lastValueFrom(
       this.http.get<Credits>(`/movie/${id}/credits`)
       .pipe(
-        map(credits => credits.cast)
+        map(credits => credits.cast),
+        catchError(err => of([]))
       )
     )
   }
@@ -40,14 +46,17 @@ export class MovieService {
     return await lastValueFrom(
       this.http.get<Credits>(`/movie/${id}/credits`)
       .pipe(
-        map(credits => credits.crew)
+        map(credits => credits.crew),
+        catchError(err => of([]))
       )
     )
   }
 
   public async getMovieVideos(id: number): Promise<ResponseVideo> {
     return await lastValueFrom(
-      this.http.get<ResponseVideo>(`/movie/${id}/videos`)
+      this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
+        catchError(err => of())
+      )
     );
   }
 
