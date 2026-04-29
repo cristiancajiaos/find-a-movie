@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../classes/person';
-import { lastValueFrom } from 'rxjs';
+import { catchError, lastValueFrom, of } from 'rxjs';
 import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
 import { ResponsePersonCrewCredit } from '../classes/person-movie-credits/response-person-crew-credit';
 import { OrderCriteria } from '../interfaces/order-criteria';
@@ -15,12 +15,18 @@ export class PersonService {
   constructor(public http: HttpClient) {}
 
   public async getPerson(id: number): Promise<Person> {
-    return await lastValueFrom(this.http.get<Person>(`/person/${id}`));
+    return await lastValueFrom(
+      this.http.get<Person>(`/person/${id}`).pipe(
+        catchError(err => of())
+      )
+  );
   }
 
   public async getCredits(id: number): Promise<ResponsePersonMovieCredits> {
     return await lastValueFrom(
-      this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`),
+      this.http.get<ResponsePersonMovieCredits>(
+        `/person/${id}/movie_credits`
+      ).pipe(catchError(err => of()))
     );
   }
 
