@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie';
 import { SearchInputMovieResult } from './navbar/search-input-movie/search-input-movie-result/search-input-movie-result';
 import { SearchInputPerson } from './navbar/search-input-person/search-input-person';
+import { SearchInputPersonResult } from './navbar/search-input-person/search-input-person-result/search-input-person-result';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SearchInputPerson } from './navbar/search-input-person/search-input-per
     Footer,
     SearchInputMovie,
     SearchInputMovieResult,
-    SearchInputPerson
+    SearchInputPerson,
+    SearchInputPersonResult
   ],
   imports: [
     CommonModule,

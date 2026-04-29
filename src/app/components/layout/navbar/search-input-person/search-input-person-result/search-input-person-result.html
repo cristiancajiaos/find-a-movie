@@ -1,0 +1,11 @@
+<a ngbDropdownItem
+  class="person-result"
+  [routerLink]="['person', personResult.id]"
+  (click)="onClickResult()">
+  <span class="person-result-profile">
+    <div class="person-result-profile-img" [ngStyle]="{'background-image': 'url(' + profileImg + ')'}"></div>
+  </span>
+  <span class="person-result-name">
+    {{personResult.name}}
+  </span>
+</a>

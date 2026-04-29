@@ -5,18 +5,51 @@
     [formGroup]="searchPersonForm"
     (ngSubmit)="processPersonSearch()"
   >
-    <div class="input-group">
-      <input
-        #searchPersonInput
-        class="form-control"
-        type="search"
-        [placeholder]="placeholder"
-        [aria-label]="ariaLabel"
-        formControlName="personSearch"
-      />
-      <button class="btn border text-light btn-search" type="submit">
-        <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
-      </button>
+    <div ngbDropdown #personSearchDropdown="ngbDropdown" class="d-inline-block">
+      <div class="input-group">
+        <input
+          #searchPersonInput
+          class="input-person form-control"
+          type="search"
+          (input)="togglePersonSearchDropdownByInput()"
+          (click)="togglePersonSearchDropdownByClick()"
+          (search)="togglePersonSearchDropdownBySearch()"
+          [placeholder]="placeholder"
+          [aria-label]="ariaLabel"
+          formControlName="personSearch"
+        />
+        <button class="btn border text-light" type="submit">
+          <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
+        </button>
+      </div>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
+        @if (loadingSearchPerson) {
+          <a ngbDropdownItem aria-disabled="true">
+            <fa-icon [icon]="loadingIcon" [animation]="'spin'" [fixedWidth]="true"></fa-icon>
+            Loading...
+          </a>
+        } @else {
+          @if (personResults.length > 0) {
+            @for (person of personResults; track person.id) {
+              <app-search-input-person-result
+                [personResult]="person"
+                (clickResult)="goToPersonClose($event)"
+              >
+              </app-search-input-person-result>
+            }
+          }
+          @if (originalPersonResults.length > 5) {
+            <div class="dropdown-divider"></div>
+            <a ngbDropdownItem class="view-all-results" (click)="processPersonSearch()">
+              <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
+              View all results
+            </a>
+          }
+          @if (personResults.length == 0) {
+            <a ngbDropdownItem class="no-results-obtained"> No results obtained </a>
+          }
+        }
+      </div>
     </div>
   </form>
 </section>
