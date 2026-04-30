@@ -1,0 +1,19 @@
+.search-input {
+  .input-group {
+    input {
+      border-radius: 0;
+    }
+  }
+
+  .dropdown-menu {
+    .search-result {
+      cursor: pointer;
+      width: 300px;
+      display: flex;
+      align-items: center;
+    }
+    .view-all-results {
+      cursor: pointer;
+    }
+  }
+}
