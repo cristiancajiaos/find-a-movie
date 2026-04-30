@@ -56,23 +56,25 @@ export class SearchInputMovie implements OnInit {
     this.router.navigate(['search', 'movie', searchQuery]);
   }
 
-  public toggleMovieSearchDropdownBySearch(): void {
-    this.closeMovieSearchDropdown();
-  }
-
   public toggleMovieSearchDropdownByInput(): void {
+    console.log('toggleMovieSearchDropdownByInput');
     const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
     if (inputMovie.length >= 2) {
       this.searchMovie();
       this.openMovieSearchDropdown();
     } else {
       this.closeMovieSearchDropdown();
+      this.movieResults = [];
     }
   }
 
-  public toggleMovieSearchDropdownByClick(): void {
-    if (this.movieSearchDropdown.isOpen && this.movieResults.length > 0) {
-      this.toggleMovieSearchDropdown();
+  public toggleMovieSearchDropdownBySearch(): void {
+    this.closeMovieSearchDropdown();
+  }
+
+  public toggleMovieSearchDropdownByFocus(): void {
+    if (this.movieResults.length > 0) {
+      this.openMovieSearchDropdown();
     }
   }
 
@@ -104,6 +106,6 @@ export class SearchInputMovie implements OnInit {
   }
 
   public goToMovieClose(value: boolean): void {
-    this.movieSearchDropdown.close();
+    this.closeMovieSearchDropdown();
   }
 }
