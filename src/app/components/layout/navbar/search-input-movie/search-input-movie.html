@@ -5,7 +5,7 @@
     [formGroup]="searchMovieForm"
     (ngSubmit)="processMovieSearch()"
   >
-    <div ngbDropdown #myDrop="ngbDropdown" class="d-inline-block">
+    <div ngbDropdown #movieSearchDropdown="ngbDropdown" class="d-inline-block">
       <div class="input-group">
         <input
           #searchMovieInput

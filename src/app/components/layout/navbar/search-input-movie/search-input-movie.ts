@@ -33,7 +33,7 @@ export class SearchInputMovie implements OnInit {
   public ariaLabel: string = 'Search Movie';
 
   @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
-  @ViewChild('myDrop') myDrop: NgbDropdown;
+  @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;
 
   constructor(
     private fb: FormBuilder,
@@ -57,7 +57,7 @@ export class SearchInputMovie implements OnInit {
   }
 
   public toggleMovieSearchDropdownBySearch(): void {
-    this.movieResults = [];
+    this.closeMovieSearchDropdown();
   }
 
   public toggleMovieSearchDropdownByInput(): void {
@@ -71,21 +71,21 @@ export class SearchInputMovie implements OnInit {
   }
 
   public toggleMovieSearchDropdownByClick(): void {
-    if (this.myDrop.isOpen && this.movieResults.length > 0) {
-      this.myDrop.toggle();
+    if (this.movieSearchDropdown.isOpen && this.movieResults.length > 0) {
+      this.toggleMovieSearchDropdown();
     }
   }
 
   public openMovieSearchDropdown(): void {
-    this.myDrop.open();
+    this.movieSearchDropdown.open();
   }
 
   public closeMovieSearchDropdown(): void {
-    this.myDrop.close();
+    this.movieSearchDropdown.close();
   }
 
   public toggleMovieSearchDropdown(): void {
-    this.myDrop.toggle();
+    this.movieSearchDropdown.toggle();
   }
 
   public searchMovie(): void {
@@ -104,6 +104,6 @@ export class SearchInputMovie implements OnInit {
   }
 
   public goToMovieClose(value: boolean): void {
-    this.myDrop.close();
+    this.movieSearchDropdown.close();
   }
 }
