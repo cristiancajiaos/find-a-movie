@@ -56,35 +56,36 @@ export class SearchInputPerson implements OnInit {
     this.router.navigate(['search', 'person', searchQuery]);
   }
 
-  public togglePersonSearchDropdownBySearch(): void {
-    this.closePersonDropdown();
-  }
-
   public togglePersonSearchDropdownByInput(): void {
     const inputMovie: string = this.searchPersonForm.controls['personSearch'].value;
     if (inputMovie.length >= 2) {
       this.searchPerson();
-      this.openPersonDropdown();
+      this.openPersonSearchDropdown();
     } else {
-      this.closePersonDropdown();
+      this.closePersonSearchDropdown();
+      this.personResults = [];
     }
   }
 
-  public togglePersonSearchDropdownByClick(): void {
-    if (this.personSearchDropdown.isOpen && this.personResults.length > 0) {
-      this.togglePersonDropdown();
+  public togglePersonSearchDropdownBySearch(): void {
+    this.closePersonSearchDropdown();
+  }
+
+  public togglePersonSearchDropdownByFocus(): void {
+    if (this.personResults.length > 0) {
+      this.togglePersonSearchDropdown();
     }
   }
 
-  public openPersonDropdown(): void {
+  public openPersonSearchDropdown(): void {
     this.personSearchDropdown.open();
   }
 
-  public closePersonDropdown(): void {
+  public closePersonSearchDropdown(): void {
     this.personSearchDropdown.close();
   }
 
-  public togglePersonDropdown(): void {
+  public togglePersonSearchDropdown(): void {
     this.personSearchDropdown.toggle();
   }
 
@@ -96,11 +97,14 @@ export class SearchInputPerson implements OnInit {
     this.searchService.searchPersonInput(inputMovie).then(responsePersonResults => {
       this.originalPersonResults = responsePersonResults;
       this.personResults = responsePersonResults.slice(0,5);
+    }).catch((error: HttpErrorResponse) => {
+
+    }).finally(() => {
       this.loadingSearchPerson = false;
     });
   }
 
   public goToPersonClose(value: boolean): void {
-    this.personSearchDropdown.close();
+    this.closePersonSearchDropdown();
   }
 }
