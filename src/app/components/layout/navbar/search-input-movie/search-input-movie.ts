@@ -57,7 +57,6 @@ export class SearchInputMovie implements OnInit {
   }
 
   public toggleMovieSearchDropdownByInput(): void {
-    console.log('toggleMovieSearchDropdownByInput');
     const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
     if (inputMovie.length >= 2) {
       this.searchMovie();
@@ -76,6 +75,10 @@ export class SearchInputMovie implements OnInit {
     if (this.movieResults.length > 0) {
       this.openMovieSearchDropdown();
     }
+  }
+
+  public closeMovieSearchDropdownByBlur(): void {
+    this.closeMovieSearchDropdown();
   }
 
   public openMovieSearchDropdown(): void {
