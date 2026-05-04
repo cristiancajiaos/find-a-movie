@@ -54,6 +54,7 @@ export class SearchInputMovie implements OnInit {
       return;
     }
     this.router.navigate(['search', 'movie', searchQuery]);
+    this.closeMovieSearchDropdown();
   }
 
   public toggleMovieSearchDropdownByInput(): void {
