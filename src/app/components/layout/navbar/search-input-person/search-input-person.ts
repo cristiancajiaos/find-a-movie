@@ -54,6 +54,7 @@ export class SearchInputPerson implements OnInit {
       return;
     }
     this.router.navigate(['search', 'person', searchQuery]);
+    this.closePersonSearchDropdown();
   }
 
   public togglePersonSearchDropdownByInput(): void {
@@ -75,10 +76,6 @@ export class SearchInputPerson implements OnInit {
     if (this.personResults.length > 0) {
       this.togglePersonSearchDropdown();
     }
-  }
-
-  public closePersonSearchDropdownByBlur(): void {
-    this.closePersonSearchDropdown();
   }
 
   public openPersonSearchDropdown(): void {
