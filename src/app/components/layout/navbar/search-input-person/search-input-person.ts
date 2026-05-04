@@ -77,6 +77,10 @@ export class SearchInputPerson implements OnInit {
     }
   }
 
+  public closePersonSearchDropdownByBlur(): void {
+    this.closePersonSearchDropdown();
+  }
+
   public openPersonSearchDropdown(): void {
     this.personSearchDropdown.open();
   }
