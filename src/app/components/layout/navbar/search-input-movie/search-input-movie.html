@@ -2,7 +2,6 @@
   <form
     class="d-flex"
     role="search"
-    [formGroup]="searchMovieForm"
     (ngSubmit)="processMovieSearch()"
   >
     <div ngbDropdown #movieSearchDropdown="ngbDropdown" class="d-inline-block">
@@ -11,43 +10,33 @@
           #searchMovieInput
           class="input-movie form-control"
           type="search"
-          (input)="toggleMovieSearchDropdownByInput()"
           (search)="toggleMovieSearchDropdownBySearch()"
           (focus)="toggleMovieSearchDropdownByFocus()"
           [placeholder]="placeholder"
           [aria-label]="ariaLabel"
-          formControlName="movieSearch"
+          [formControl]="movieInput"
         />
         <button class="btn border text-light" type="submit">
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>
       </div>
       <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
-        @if (loadingSearchMovie) {
-          <a ngbDropdownItem aria-disabled="true">
-            <fa-icon [icon]="loadingIcon" [animation]="'spin'" [fixedWidth]="true"></fa-icon>
-            Loading...
+        @for (movie of movieResults; track movie.id) {
+          <app-search-input-movie-result
+            [movieResult]="movie"
+            (clickResult)="goToMovieClose($event)"
+          >
+          </app-search-input-movie-result>
+        }
+        @if (originalMovieResults.length > 5) {
+          <div class="dropdown-divider"></div>
+          <a ngbDropdownItem class="view-all-results" (click)="processMovieSearch()">
+            <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
+            View all results
           </a>
-        } @else {
-          @if (movieResults.length > 0) {
-            @for (movie of movieResults; track movie.id) {
-              <app-search-input-movie-result
-                [movieResult]="movie"
-                (clickResult)="goToMovieClose($event)"
-              >
-              </app-search-input-movie-result>
-            }
-          }
-          @if (originalMovieResults.length > 5) {
-            <div class="dropdown-divider"></div>
-            <a ngbDropdownItem class="view-all-results" (click)="processMovieSearch()">
-              <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
-              View all results
-            </a>
-          }
-          @if (movieResults.length == 0) {
-            <a ngbDropdownItem class="no-results-obtained"> No results obtained </a>
-          }
+        }
+        @if (movieResults.length == 0) {
+          <a ngbDropdownItem class="no-results-obtained"> No results obtained </a>
         }
       </div>
     </div>

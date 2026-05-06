@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseSearchMovie } from '../../../../classes/response-search-movie';
 import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
 import { SearchService } from '../../../../services/search-service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-search-input-movie',
@@ -14,16 +14,15 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './search-input-movie.html',
   styleUrl: './search-input-movie.scss'
 })
-export class SearchInputMovie implements OnInit {
+export class SearchInputMovie implements OnInit, OnDestroy {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
   public loadingIcon: IconDefinition = faSpinner;
   public resultsIcon: IconDefinition = faList;
 
-  public searchMovieForm: FormGroup = new FormGroup({});
+  public movieInput: FormControl = new FormControl('');
 
   public searchError: boolean = false;
-  public loadingSearchMovie: boolean = false;
 
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public originalMovieResults: ResponseMovieResult[] = [];
@@ -35,37 +34,54 @@ export class SearchInputMovie implements OnInit {
   @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
   @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;
 
+  private movieResultsSubscription: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private searchService: SearchService
   ) {}
 
+
   ngOnInit(): void {
-    this.searchMovieForm = this.fb.group({
-      movieSearch: new FormControl('')
-    });
+    this.listenMovieInputChanges();
+  }
+
+  public listenMovieInputChanges(): void {
+    this.movieResultsSubscription = this.movieInput.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(300),
+        switchMap((movieInput) => {
+          return this.searchService.searchMovieInput(movieInput);
+        }),
+        finalize (() => {
+        }),
+      )
+      .subscribe((results) => {
+        this.originalMovieResults = results;
+        this.movieResults = results.slice(0, 5);
+        this.showMovieDropdownBasedOnMovieInput();
+      });
+  }
+
+  public showMovieDropdownBasedOnMovieInput() {
+    const inputValue: string = this.movieInput.value;
+    if (inputValue.length >= 2) {
+      this.openMovieSearchDropdown();
+    } else {
+      this.closeMovieSearchDropdown();
+    }
   }
 
   public processMovieSearch(): void {
     this.searchMovieInput.nativeElement.blur();
-    const searchQuery: string = this.searchMovieForm.value['movieSearch'];
+    const searchQuery: string = this.movieInput.value;
     if (searchQuery.length == 0) {
       return;
     }
     this.router.navigate(['search', 'movie', searchQuery]);
     this.closeMovieSearchDropdown();
-  }
-
-  public toggleMovieSearchDropdownByInput(): void {
-    const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
-    if (inputMovie.length >= 2) {
-      this.searchMovie();
-      this.openMovieSearchDropdown();
-    } else {
-      this.closeMovieSearchDropdown();
-      this.movieResults = [];
-    }
   }
 
   public toggleMovieSearchDropdownBySearch(): void {
@@ -94,22 +110,13 @@ export class SearchInputMovie implements OnInit {
     this.movieSearchDropdown.toggle();
   }
 
-  public searchMovie(): void {
-    const inputMovie: string = this.searchMovieForm.controls['movieSearch'].value;
-    this.movieResults = [];
-    this.searchError = false;
-    this.loadingSearchMovie = true;
-    this.searchService.searchMovieInput(inputMovie).then(responseMovieResults => {
-      this.originalMovieResults = responseMovieResults;
-      this.movieResults = responseMovieResults.slice(0,5);
-    }).catch((error: HttpErrorResponse) => {
-
-    }).finally(() => {
-      this.loadingSearchMovie = false;
-    });
-  }
-
   public goToMovieClose(value: boolean): void {
     this.closeMovieSearchDropdown();
+  }
+
+  ngOnDestroy(): void {
+    if (this.movieResultsSubscription) {
+      this.movieResultsSubscription.unsubscribe();
+    }
   }
 }

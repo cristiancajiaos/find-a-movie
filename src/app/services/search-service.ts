@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
-import { catchError, lastValueFrom, map, of } from 'rxjs';
+import { catchError, lastValueFrom, map, Observable, of } from 'rxjs';
 import { ResponseSearchPerson } from '../classes/response-search-person';
 import { ResponseMovieResult } from '../classes/response-search-movie/response-movie-result';
 import { ResponsePersonResult } from '../classes/response-search-person/response-person-result';
@@ -40,21 +40,18 @@ export class SearchService {
     );
   }
 
-  public async searchMovieInput(query: string, page: number = 1): Promise<ResponseMovieResult[]> {
-    return await lastValueFrom(
-      this.http
-        .get<ResponseSearchMovie>('/search/movie', {
-          params: {
-            query: query,
-            language: 'en-US',
-            page: page,
-          },
-        })
-        .pipe(
-          map((responseSearchMovie) => responseSearchMovie.results),
-          catchError((err) => of([])),
-        ),
-    );
+  public searchMovieInput(query: string, page: number = 1): Observable<ResponseMovieResult[]> {
+    return this.http
+      .get<ResponseSearchMovie>('/search/movie', {
+        params: {
+          query: query,
+          language: 'en-US',
+          page: page,
+        },
+      })
+      .pipe(
+        map((responseSearchMovie) => responseSearchMovie.results),
+      );
   }
 
   public async searchPersonInput(query: string, page: number = 1): Promise<ResponsePersonResult[]> {
