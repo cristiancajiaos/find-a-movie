@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import { ResponseSearchPerson } from '../../../../classes/response-search-person
 import { ResponsePersonResult } from '../../../../classes/response-search-person/response-person-result';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { SearchService } from '../../../../services/search-service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-search-input-person',
@@ -14,13 +14,13 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './search-input-person.html',
   styleUrl: './search-input-person.scss'
 })
-export class SearchInputPerson implements OnInit {
+export class SearchInputPerson implements OnInit, OnDestroy {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
   public loadingIcon: IconDefinition = faSpinner;
   public resultsIcon: IconDefinition = faList;
 
-  public searchPersonForm: FormGroup = new FormGroup({});
+  public personInput: FormControl = new FormControl('');
 
   public searchError: boolean = false;
   public loadingSearchPerson: boolean = false;
@@ -35,6 +35,8 @@ export class SearchInputPerson implements OnInit {
   @ViewChild('searchPersonInput') searchPersonInput: ElementRef;
   @ViewChild('personSearchDropdown') personSearchDropdown: NgbDropdown;
 
+  private personResultsSubscription: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -42,30 +44,41 @@ export class SearchInputPerson implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.searchPersonForm = this.fb.group({
-      personSearch: new FormControl('')
+    this.listenPersonInputChanges();
+  }
+
+  public listenPersonInputChanges(): void {
+    this.personResultsSubscription = this.personInput.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap((personInput) => {
+        return this.searchService.searchPersonInput(personInput)
+      }),
+      finalize(() => {})
+    ).subscribe(results => {
+      this.originalPersonResults = results;
+      this.personResults = results.slice(0,5);
+      this.showPersonDropdownBasedOnPersonInput();
     });
+  }
+
+  public showPersonDropdownBasedOnPersonInput(): void {
+    const inputValue: string = this.personInput.value;
+    if (inputValue.length >= 2) {
+      this.openPersonSearchDropdown();
+    } else {
+      this.closePersonSearchDropdown();
+    }
   }
 
   public processPersonSearch(): void {
     this.searchPersonInput.nativeElement.blur();
-    const searchQuery: string = this.searchPersonForm.value['personSearch'];
+    const searchQuery: string = this.personInput.value;
     if (searchQuery.length == 0) {
       return;
     }
     this.router.navigate(['search', 'person', searchQuery]);
     this.closePersonSearchDropdown();
-  }
-
-  public togglePersonSearchDropdownByInput(): void {
-    const inputMovie: string = this.searchPersonForm.controls['personSearch'].value;
-    if (inputMovie.length >= 2) {
-      this.searchPerson();
-      this.openPersonSearchDropdown();
-    } else {
-      this.closePersonSearchDropdown();
-      this.personResults = [];
-    }
   }
 
   public togglePersonSearchDropdownBySearch(): void {
@@ -90,22 +103,13 @@ export class SearchInputPerson implements OnInit {
     this.personSearchDropdown.toggle();
   }
 
-  public searchPerson(): void {
-    const inputMovie: string = this.searchPersonForm.controls['personSearch'].value;
-    this.personResults = [];
-    this.searchError = false;
-    this.loadingSearchPerson = true;
-    this.searchService.searchPersonInput(inputMovie).then(responsePersonResults => {
-      this.originalPersonResults = responsePersonResults;
-      this.personResults = responsePersonResults.slice(0,5);
-    }).catch((error: HttpErrorResponse) => {
-
-    }).finally(() => {
-      this.loadingSearchPerson = false;
-    });
-  }
-
   public goToPersonClose(value: boolean): void {
     this.closePersonSearchDropdown();
+  }
+
+  ngOnDestroy(): void {
+    if (this.personResultsSubscription) {
+      this.personResultsSubscription.unsubscribe();
+    }
   }
 }

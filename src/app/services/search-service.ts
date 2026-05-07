@@ -49,25 +49,18 @@ export class SearchService {
           page: page,
         },
       })
-      .pipe(
-        map((responseSearchMovie) => responseSearchMovie.results),
-      );
+      .pipe(map((responseSearchMovie) => responseSearchMovie.results));
   }
 
-  public async searchPersonInput(query: string, page: number = 1): Promise<ResponsePersonResult[]> {
-    return await lastValueFrom(
-      this.http
-        .get<ResponseSearchPerson>('/search/person', {
-          params: {
-            query: query,
-            language: 'en-US',
-            page: page,
-          },
-        })
-        .pipe(
-          map((responseSearchPerson) => responseSearchPerson.results),
-          catchError((err) => of([])),
-        ),
-    );
+  public searchPersonInput(query: string, page: number = 1): Observable<ResponsePersonResult[]> {
+    return this.http.get<ResponseSearchPerson>('/search/person', {
+      params: {
+        query: query,
+        language: 'en-US',
+        page: page,
+      },
+    }).pipe(
+      map((responsePersonResult) => responsePersonResult.results)
+    )
   }
 }
