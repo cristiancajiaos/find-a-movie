@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { TitleService } from '../../services/title-service';
+import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-not-found',
@@ -6,6 +8,18 @@ import { Component } from '@angular/core';
   templateUrl: './not-found.html',
   styleUrl: './not-found.scss'
 })
-export class NotFound {
+export class NotFound implements OnInit{
 
+  private titleService = inject(TitleService);
+
+  public notFoundIcon: IconDefinition = faCircleXmark;
+
+  public notFoundTitleText: string = 'Not Found';
+  public paragraphText: string = 'Page not found';
+
+  public bgImage: string = 'img/bg/not-found-bg.jpg';
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Page not found');
+  }
 }

@@ -1,7 +1,11 @@
 
-<section class="not-found">
+<section class="not-found" [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
   <section class="not-found-description">
-    <h1>Not Found</h1>
-    Page not found
+    <h1>
+      <fa-icon [icon]="notFoundIcon" [fixedWidth]="true"></fa-icon>
+      {{notFoundTitleText}}
+    </h1>
+    <hr/>
+    {{paragraphText}}
   </section>
 </section>
