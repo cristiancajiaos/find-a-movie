@@ -1,7 +1,8 @@
-<section class="loading-fullscreen">
+<section class="loading-fullscreen"
+  [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
   <div class="loading-description">
-    <fa-icon [icon]="spinner" [animation]="'spin'"></fa-icon>
-    <br/>
+    <fa-icon [icon]="spinnerIcon" [animation]="'spin'" size="2x"></fa-icon>
+    <hr/>
     {{message}}
   </div>
 </section>

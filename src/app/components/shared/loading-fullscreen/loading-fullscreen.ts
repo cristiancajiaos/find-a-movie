@@ -8,8 +8,11 @@ import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   styleUrl: './loading-fullscreen.scss'
 })
 export class LoadingFullscreen implements OnInit {
-  
-  public spinner: IconDefinition = faSpinner;
+
+  public spinnerIcon: IconDefinition = faSpinner;
+
+  public bgImage: string = 'img/bg/loading-bg.jpg';
+
   @Input() message: string = 'Loading...';
 
   ngOnInit(): void {
