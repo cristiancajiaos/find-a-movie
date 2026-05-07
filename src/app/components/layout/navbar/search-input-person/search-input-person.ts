@@ -1,8 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faList, faMagnifyingGlass, faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { ResponseSearchPerson } from '../../../../classes/response-search-person';
+import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { ResponsePersonResult } from '../../../../classes/response-search-person/response-person-result';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { SearchService } from '../../../../services/search-service';
@@ -16,32 +15,23 @@ import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs
 })
 export class SearchInputPerson implements OnInit, OnDestroy {
 
+  private router = inject(Router);
+  private searchService = inject(SearchService);
+
   public searchIcon: IconDefinition = faMagnifyingGlass;
-  public loadingIcon: IconDefinition = faSpinner;
   public resultsIcon: IconDefinition = faList;
 
-  public personInput: FormControl = new FormControl('');
-
-  public searchError: boolean = false;
-  public loadingSearchPerson: boolean = false;
-
-  public responseSearchPerson: ResponseSearchPerson = new ResponseSearchPerson();
   public originalPersonResults: ResponsePersonResult[] = [];
   public personResults: ResponsePersonResult[] = [];
 
+  public personInput: FormControl = new FormControl('');
   public placeholder: string = 'Eg. Steven Spielberg';
   public ariaLabel: string = 'Search Person';
-
   @ViewChild('searchPersonInput') searchPersonInput: ElementRef;
+
   @ViewChild('personSearchDropdown') personSearchDropdown: NgbDropdown;
 
   private personResultsSubscription: Subscription;
-
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private searchService: SearchService
-  ) {}
 
   ngOnInit(): void {
     this.listenPersonInputChanges();
