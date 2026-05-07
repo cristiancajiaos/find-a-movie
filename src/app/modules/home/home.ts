@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TitleService } from '../../services/title-service';
 import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,6 +10,7 @@ import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 })
 export class Home implements OnInit {
 
+  private titleService = inject(TitleService);
 
   public filmIcon: IconDefinition = faFilm;
 
@@ -17,11 +18,7 @@ export class Home implements OnInit {
   public findAMovieTitle: string = 'Find a Movie';
   public paragraphText: string = 'Search the movies you love, and the people who work in them, all in one place';
 
-  public bgImage: string = 'img/bg/home-bg.png';
-
-  constructor(
-    private titleService: TitleService
-  ) {}
+  public bgImage: string = 'img/bg/home-bg.jpg';
 
   ngOnInit(): void {
     this.titleService.setDefaultTitle();
