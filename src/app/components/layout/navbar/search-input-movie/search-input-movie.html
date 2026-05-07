@@ -1,9 +1,5 @@
 <section class="search-input search-input-movie">
-  <form
-    class="d-flex"
-    role="search"
-    (ngSubmit)="processMovieSearch()"
-  >
+  <form class="d-flex" role="search" (ngSubmit)="processMovieSearch()">
     <div ngbDropdown #movieSearchDropdown="ngbDropdown" class="d-inline-block">
       <div class="input-group">
         <input
@@ -21,12 +17,14 @@
         </button>
       </div>
       <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
-        @for (movie of movieResults; track movie.id) {
-          <app-search-input-movie-result
-            [movieResult]="movie"
-            (clickResult)="goToMovieClose($event)"
-          >
-          </app-search-input-movie-result>
+        @if (movieResults.length > 0) {
+          @for (movie of movieResults; track movie.id) {
+            <app-search-input-movie-result
+              [movieResult]="movie"
+              (clickResult)="goToMovieClose($event)"
+            >
+            </app-search-input-movie-result>
+          }
         }
         @if (originalMovieResults.length > 5) {
           <div class="dropdown-divider"></div>
@@ -36,7 +34,7 @@
           </a>
         }
         @if (movieResults.length == 0) {
-          <a ngbDropdownItem class="no-results-obtained"> No results obtained </a>
+          <a ngbDropdownItem class="no-results-obtained">No results obtained</a>
         }
       </div>
     </div>

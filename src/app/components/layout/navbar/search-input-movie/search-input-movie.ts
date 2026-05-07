@@ -1,9 +1,8 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faList, faMagnifyingGlass, faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { ResponseSearchMovie } from '../../../../classes/response-search-movie';
 import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
 import { SearchService } from '../../../../services/search-service';
 import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
@@ -16,32 +15,23 @@ import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs
 })
 export class SearchInputMovie implements OnInit, OnDestroy {
 
+  private router = inject(Router);
+  private searchService = inject(SearchService);
+
   public searchIcon: IconDefinition = faMagnifyingGlass;
-  public loadingIcon: IconDefinition = faSpinner;
   public resultsIcon: IconDefinition = faList;
 
-  public movieInput: FormControl = new FormControl('');
-
-  public searchError: boolean = false;
-
-  public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public originalMovieResults: ResponseMovieResult[] = [];
   public movieResults: ResponseMovieResult[] = [];
 
+  public movieInput: FormControl = new FormControl('');
   public placeholder: string = 'Eg. Star Wars';
   public ariaLabel: string = 'Search Movie';
-
   @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
+
   @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;
 
   private movieResultsSubscription: Subscription;
-
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private searchService: SearchService
-  ) {}
-
 
   ngOnInit(): void {
     this.listenMovieInputChanges();
