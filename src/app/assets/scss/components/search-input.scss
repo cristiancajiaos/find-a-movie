@@ -1,11 +1,15 @@
 .search-input {
   .input-group {
     input {
-      border-radius: 0;
+      &.hide-border-radius {
+        border-radius: 0;
+      }
     }
   }
 
   .dropdown-menu {
+    font-family: 'Oswald', 'Arial', sans-serif;
+
     .search-result {
       cursor: pointer;
       width: 300px;

@@ -5,6 +5,7 @@
         <input
           #searchPersonInput
           class="input-person form-control"
+          [ngClass]="{'hide-border-radius':!enableBorderRadius}"
           type="search"
           (search)="togglePersonSearchDropdownBySearch()"
           (focus)="togglePersonSearchDropdownByFocus()"
@@ -16,7 +17,10 @@
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>
       </div>
-      <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
+      <div
+        ngbDropdownMenu
+        class="dropdown-menu dropdown-search-movie"
+        [ngClass]="{'dropdown-menu-end': dropdownMenuEnd}">
         @if (personResults.length > 0) {
           @for (person of personResults; track person.id) {
             <app-search-input-person-result

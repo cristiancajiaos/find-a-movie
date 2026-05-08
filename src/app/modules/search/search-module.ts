@@ -15,6 +15,7 @@ import { SearchSharedModule } from '../../components/search-shared/search-shared
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchMainMovie } from './search-main/search-main-movie/search-main-movie';
 import { SearchMainPerson } from './search-main/search-main-person/search-main-person';
+import { LayoutModule } from '../../components/layout/layout-module';
 
 @NgModule({
   declarations: [Search, SearchMovie, SearchPerson, SearchMain, SearchMainMovie, SearchMainPerson],
@@ -29,6 +30,7 @@ import { SearchMainPerson } from './search-main/search-main-person/search-main-p
     SharedModule,
     SearchSharedModule,
     NgxPaginationModule,
+    LayoutModule
   ],
 })
 export class SearchModule {}

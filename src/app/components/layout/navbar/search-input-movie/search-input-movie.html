@@ -5,6 +5,7 @@
         <input
           #searchMovieInput
           class="input-movie form-control"
+          [ngClass]="{'hide-border-radius':!enableBorderRadius}"
           type="search"
           (search)="toggleMovieSearchDropdownBySearch()"
           (focus)="toggleMovieSearchDropdownByFocus()"
@@ -12,11 +13,16 @@
           [aria-label]="ariaLabel"
           [formControl]="movieInput"
         />
-        <button class="btn border text-light" type="submit">
+        <button
+          class="btn border text-light"
+          type="submit">
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>
       </div>
-      <div ngbDropdownMenu class="dropdown-menu dropdown-search-movie dropdown-menu-end">
+      <div
+        ngbDropdownMenu
+        class="dropdown-menu dropdown-search-movie"
+        [ngClass]="{'dropdown-menu-end': dropdownMenuEnd}">
         @if (movieResults.length > 0) {
           @for (movie of movieResults; track movie.id) {
             <app-search-input-movie-result

@@ -7,31 +7,12 @@
       <div class="search-box search-movie-box bg-dark">
         <h2 class="text-center"><fa-icon [icon]="movieIcon"></fa-icon> Search a Movie</h2>
         <hr />
-        <form
-          class="search-movie"
-          role="search"
-          [formGroup]="movieSearchForm"
-          (ngSubmit)="sendMovieQuery()"
-        >
-          <div class="form-group mb-3">
-            <div class="input-group">
-              <label class="input-group-text bg-dark" for="searchMovie">
-                <fa-icon [icon]="movieIcon"></fa-icon>
-              </label>
-              <input
-                type="search"
-                class="form-control"
-                [placeholder]="placeholder"
-                id="searchMovie"
-                name="searchMovie"
-                formControlName="movieSearch"
-              />
-              <button type="submit" class="btn btn-dark border-light">
-                <fa-icon [icon]="searchIcon"></fa-icon>
-              </button>
-            </div>
-          </div>
-        </form>
+        <div class="d-flex justify-content-center">
+          <app-search-input-movie
+            [enableBorderRadius]="true"
+            [dropdownMenuEnd]="false">
+          </app-search-input-movie>
+        </div>
       </div>
     </div>
   </div>

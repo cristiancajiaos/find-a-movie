@@ -12,11 +12,8 @@
       .search-box {
         border: 1px solid black;
         padding: 1rem 2rem;
-        @media screen and (max-width: 991px) {
-          
-        }
         @media screen and (min-width: 992px) {
-          width: 40vw;
+          width: 30vw;
         }
         box-shadow: 3px 3px 10px black;
         color: white;
@@ -27,8 +24,6 @@
           }
           input {
             font-family: 'Oswald', 'Arial', sans-serif;
-          }
-          button {
           }
         }
       }
