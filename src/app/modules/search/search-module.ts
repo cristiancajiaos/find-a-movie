@@ -13,9 +13,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../components/shared/shared-module';
 import { SearchSharedModule } from '../../components/search-shared/search-shared-module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchMainMovie } from './search-main/search-main-movie/search-main-movie';
+import { SearchMainPerson } from './search-main/search-main-person/search-main-person';
 
 @NgModule({
-  declarations: [Search, SearchMovie, SearchPerson, SearchMain],
+  declarations: [Search, SearchMovie, SearchPerson, SearchMain, SearchMainMovie, SearchMainPerson],
   imports: [
     CommonModule,
     SearchRoutingModule,

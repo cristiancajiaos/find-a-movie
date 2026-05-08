@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faFilm, faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,11 @@ import { TitleService } from '../../../services/title-service';
   styleUrl: './search-main.scss',
 })
 export class SearchMain implements OnInit {
+
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private titleService = inject(TitleService);
+
   public searchIcon: IconDefinition = faSearch;
   public movieIcon: IconDefinition = faFilm;
   public userIcon: IconDefinition = faUser;
@@ -18,14 +23,8 @@ export class SearchMain implements OnInit {
   public movieSearchForm: FormGroup = new FormGroup({});
   public personSearchForm: FormGroup = new FormGroup({});
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private titleService: TitleService,
-  ) {}
-
   ngOnInit(): void {
-    this.titleService.setTitle('Choose what do you want to search');
+    this.titleService.setTitle('What do you want to search?');
     this.movieSearchForm = this.fb.group({
       movieSearch: new FormControl(''),
     });

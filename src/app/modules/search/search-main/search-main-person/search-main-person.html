@@ -1,0 +1,38 @@
+<section
+  class="search-main-section search-main-person"
+  [ngStyle]="{ 'background-image': 'url(' + bgImage + ')' }"
+>
+  <div class="container-fluid">
+    <div class="search-container">
+      <div class="search-box search-person-box bg-dark">
+        <h2 class="text-center"><fa-icon [icon]="userIcon"></fa-icon> Search a Person</h2>
+        <hr />
+        <form
+          class="search-person"
+          role="search"
+          [formGroup]="personSearchForm"
+          (ngSubmit)="sendPersonQuery()"
+        >
+          <div class="form-group mb-3">
+            <div class="input-group">
+              <label class="input-group-text bg-dark" for="searchPerson">
+                <fa-icon [icon]="userIcon"></fa-icon>
+              </label>
+              <input
+                type="search"
+                class="form-control"
+                [placeholder]="placeholder"
+                id="searchPerson"
+                name="searchPerson"
+                formControlName="personSearch"
+              />
+              <button type="submit" class="btn btn-dark border-light">
+                <fa-icon [icon]="searchIcon"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

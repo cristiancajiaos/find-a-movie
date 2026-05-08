@@ -1,0 +1,37 @@
+.search-main {
+  .search-main-section {
+    background-attachment: fixed;
+    height: 100vh;
+    padding: 1rem;
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      .search-box {
+        border: 1px solid black;
+        padding: 1rem 2rem;
+        @media screen and (max-width: 991px) {
+          
+        }
+        @media screen and (min-width: 992px) {
+          width: 40vw;
+        }
+        box-shadow: 3px 3px 10px black;
+        color: white;
+        form {
+          .input-group-text {
+            background-color: black;
+            color: white;
+          }
+          input {
+            font-family: 'Oswald', 'Arial', sans-serif;
+          }
+          button {
+          }
+        }
+      }
+    }
+  }
+}
