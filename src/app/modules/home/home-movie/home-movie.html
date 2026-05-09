@@ -1,0 +1,19 @@
+<section
+  class="home-section home-movie"
+  [ngStyle]="{ 'background-image': 'url(' + bgImage + ')' }"
+>
+  <div class="container-fluid">
+    <div class="home-section-container">
+      <div class="search-box search-movie-box bg-dark">
+        <h2 class="text-center"><fa-icon [icon]="movieIcon"></fa-icon> Search a Movie</h2>
+        <hr />
+        <div class="d-flex justify-content-center">
+          <app-search-input-movie
+            [enableBorderRadius]="true"
+            [dropdownMenuEnd]="false">
+          </app-search-input-movie>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

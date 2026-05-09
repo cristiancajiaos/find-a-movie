@@ -1,0 +1,20 @@
+<section
+  class="home-section home-person"
+  [ngStyle]="{ 'background-image': 'url(' + bgImage + ')' }"
+>
+  <div class="container-fluid">
+    <div class="home-section-container">
+      <div class="search-box search-person-box bg-dark">
+        <h2 class="text-center"><fa-icon [icon]="userIcon"></fa-icon> Search a Person</h2>
+        <hr />
+        <div class="d-flex justify-content-center">
+          <app-search-input-person
+            [enableBorderRadius]="true"
+            [dropdownMenuEnd]="false">
+          </app-search-input-person>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

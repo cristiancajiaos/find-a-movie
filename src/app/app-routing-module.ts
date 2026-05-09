@@ -4,6 +4,10 @@ import { NotFound } from './components/not-found/not-found';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () => import('./modules/home/home-module').then(m => m.HomeModule)
+  },
+  {
     path: 'movie',
     loadChildren: () => import('./modules/movie/movie-module').then((m) => m.MovieModule),
   },
@@ -15,7 +19,6 @@ const routes: Routes = [
     path: 'search',
     loadChildren: () => import('./modules/search/search-module').then((m) => m.SearchModule),
   },
-  { path: '', redirectTo: 'search', pathMatch: 'full'},
   { path: 'not-found', component: NotFound, pathMatch: 'full' },
   { path: '**', component: NotFound, pathMatch: 'full' },
 ];
