@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment.development';
 import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../services/local-storage-service';
-import { defaultIfEmpty, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movie',
