@@ -66,6 +66,12 @@ export class MovieService {
     )
   }
 
+  public getMovieCrewAlt(id: number): Observable<CrewMember[]> {
+    return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
+      map(credits => credits.crew)
+    )
+  }
+
   public async getMovieVideos(id: number): Promise<ResponseVideo> {
     return await lastValueFrom(
       this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(

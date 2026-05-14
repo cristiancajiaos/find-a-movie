@@ -41,11 +41,12 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public loadingCrew: boolean = false;
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-
   public crewFound: boolean = false;
   public movieCrewError: boolean = false;
   public errorMessage: string = '';
+
+  public activatedRouteParentSubscription: Subscription | undefined;
+  private getMovieCrewSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -83,18 +84,18 @@ export class MovieCrew implements OnInit, OnDestroy {
   private getCrew(): void {
     this.movieCrewError = false;
     this.loadingCrew = true;
-    this.movieService
-      .getMovieCrew(this.id)
-      .then((crew) => {
+    this.getMovieCrewSubscription = this.movieService.getMovieCrewAlt(this.id).subscribe({
+      next: (crew) => {
         this.movieCrew = crew;
         this.filterCrew();
-      })
-      .catch((error: HttpErrorResponse) => {
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
+      },
+      complete: () => {
         this.loadingCrew = false;
-      });
+      }
+    });
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -162,5 +163,8 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.activatedRouteParentSubscription!.unsubscribe();
+    if (this.getMovieCrewSubscription) {
+      this.getMovieCrewSubscription.unsubscribe();
+    }
   }
 }
