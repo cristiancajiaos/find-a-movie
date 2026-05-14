@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './movie-not-found.scss'
 })
 export class MovieNotFound {
-
+  public bgImage: string = 'img/bg/bg_generic_1.jpg';
 }
