@@ -84,7 +84,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   private getCrew(): void {
     this.movieCrewError = false;
     this.loadingCrew = true;
-    this.getMovieCrewSubscription = this.movieService.getMovieCrewAlt(this.id).subscribe({
+    this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
       next: (crew) => {
         this.movieCrew = crew;
         this.filterCrew();

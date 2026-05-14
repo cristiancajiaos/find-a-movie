@@ -84,7 +84,7 @@ export class MovieCast implements OnInit, OnDestroy {
   private getCast(): void {
     this.movieCastError = false;
     this.loadingCast = true;
-    this.getMovieCastSubscription = this.movieService.getMovieCastAlt(this.id).subscribe({
+    this.getMovieCastSubscription = this.movieService.getMovieCast(this.id).subscribe({
       next: (cast) => {
         this.movieCast = cast;
         this.castFound = true;

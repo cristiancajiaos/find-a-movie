@@ -68,10 +68,9 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private getMovie(): void {
-    console.log('getMovie()');
     this.movieError = false;
     this.loadingMovie = true;
-    this.getMovieSubscription = this.movieService.getMovieAlt(this.id).subscribe({
+    this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
       next: (movie) => {
         this.movie = movie;
         this.localStorageService.setItem('movie', movie);

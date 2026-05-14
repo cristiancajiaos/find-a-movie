@@ -35,7 +35,7 @@ export class MovieOverviewTrailer implements OnInit, OnDestroy {
 
   private getVideo(): void {
     this.loadingTrailer = true;
-    this.getMovieTrailerSubscription = this.movieService.getMovieVideosAlt(this.movieId).subscribe({
+    this.getMovieTrailerSubscription = this.movieService.getMovieVideos(this.movieId).subscribe({
       next: (responseVideo) => {
         this.responseVideo = responseVideo;
         this.setMovieTrailer();

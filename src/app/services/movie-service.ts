@@ -16,71 +16,27 @@ export class MovieService {
     private http: HttpClient
   ) {}
 
-  public async getMovie(id: number): Promise<Movie> {
-    return await lastValueFrom(
-      this.http.get<Movie>(`/movie/${id}?language=en-US`).pipe(
-        catchError(err => of())
-      )
-    )
-  }
-
-  public getMovieAlt(id: number): Observable<Movie> {
+  public getMovie(id: number): Observable<Movie> {
     return this.http.get<Movie>((`/movie/${id}`));
   }
 
-  public async getMovieCredits(id: number): Promise<Credits> {
-    return await lastValueFrom(
-      this.http.get<Credits>(`/movie/${id}/credits`).pipe(
-        catchError(err => of())
-      )
-    );
-  }
-
-  public getMovieCreditsAlt(id: number): Observable<Credits> {
+  public getMovieCredits(id: number): Observable<Credits> {
     return this.http.get<Credits>((`/movie/${id}/credits`));
   }
 
-  public async getMovieCast(id: number): Promise<CastMember[]> {
-    return await lastValueFrom(
-      this.http.get<Credits>(`/movie/${id}/credits`)
-      .pipe(
-        map(credits => credits.cast),
-        catchError(err => of([]))
-      )
-    )
-  }
-
-  public getMovieCastAlt(id: number): Observable<CastMember[]> {
+  public getMovieCast(id: number): Observable<CastMember[]> {
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
       map(credits => credits.cast)
     )
   }
 
-  public async getMovieCrew(id: number): Promise<CrewMember[]> {
-    return await lastValueFrom(
-      this.http.get<Credits>(`/movie/${id}/credits`)
-      .pipe(
-        map(credits => credits.crew),
-        catchError(err => of([]))
-      )
-    )
-  }
-
-  public getMovieCrewAlt(id: number): Observable<CrewMember[]> {
+  public getMovieCrew(id: number): Observable<CrewMember[]> {
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
       map(credits => credits.crew)
     )
   }
 
-  public async getMovieVideos(id: number): Promise<ResponseVideo> {
-    return await lastValueFrom(
-      this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
-        catchError(err => of())
-      )
-    );
-  }
-
-  public getMovieVideosAlt(id: number): Observable<ResponseVideo> {
+  public getMovieVideos(id: number): Observable<ResponseVideo> {
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`);
   }
 

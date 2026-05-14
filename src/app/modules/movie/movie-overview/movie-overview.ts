@@ -69,7 +69,7 @@ export class MovieOverview implements OnInit, OnDestroy {
       this.loadingMovie = false;
       this.setTitle();
     } else {
-      this.getMovieSubscription = this.movieService.getMovieAlt(this.id).subscribe({
+      this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
         next: (movie) => {
           this.movie = movie;
           this.movieFound = true;
@@ -87,7 +87,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   private getCredits() {
     this.loadingCredits = true;
-    this.getMovieCreditsSubscription = this.movieService.getMovieCreditsAlt(this.id).subscribe({
+    this.getMovieCreditsSubscription = this.movieService.getMovieCredits(this.id).subscribe({
       next: (credits) => {
         this.credits = credits;
         this.movieCreditsFound = true;
