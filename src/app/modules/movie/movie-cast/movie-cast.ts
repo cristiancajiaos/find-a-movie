@@ -25,8 +25,6 @@ export class MovieCast implements OnInit, OnDestroy {
 
   public loadingCast: boolean = false;
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-
   public castFound: boolean = false;
   public movieCastError: boolean = false;
   public errorMessage: string = '';
@@ -46,6 +44,9 @@ export class MovieCast implements OnInit, OnDestroy {
   };
 
   @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
+
+  public activatedRouteParentSubscription: Subscription | undefined;
+  private getMovieCastSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -83,18 +84,18 @@ export class MovieCast implements OnInit, OnDestroy {
   private getCast(): void {
     this.movieCastError = false;
     this.loadingCast = true;
-    this.movieService
-      .getMovieCast(this.id)
-      .then((cast) => {
+    this.getMovieCastSubscription = this.movieService.getMovieCastAlt(this.id).subscribe({
+      next: (cast) => {
         this.movieCast = cast;
         this.castFound = true;
-      })
-      .catch((error: HttpErrorResponse) => {
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
+      },
+      complete: () => {
         this.loadingCast = false;
-      });
+      }
+    });
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -136,5 +137,8 @@ export class MovieCast implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.activatedRouteParentSubscription?.unsubscribe();
+    if (this.getMovieCastSubscription) {
+      this.getMovieCastSubscription.unsubscribe();
+    }
   }
 }
