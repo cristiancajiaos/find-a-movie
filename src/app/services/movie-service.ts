@@ -68,6 +68,10 @@ export class MovieService {
     );
   }
 
+  public getMovieVideosAlt(id: number): Observable<ResponseVideo> {
+    return this.http.get<ResponseVideo>(`/movie/${id}/videos`);
+  }
+
   public getFormattedMovieTitle(title: string, originalTitle: string, releaseDate: string): string {
     const movieTitle: string = title;
     const movieYearDate: Date = new Date(releaseDate);

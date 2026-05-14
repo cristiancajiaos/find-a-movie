@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MovieService } from '../../../../services/movie-service';
 import { ResponseVideo } from '../../../../classes/response-video';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseVideoResult } from '../../../../classes/response-video/response-video-result';
 import { environment } from '../../../../../environments/environment.development';
-
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-movie-overview-trailer',
   standalone: false,
   templateUrl: './movie-overview-trailer.html',
   styleUrl: './movie-overview-trailer.scss',
 })
-export class MovieOverviewTrailer implements OnInit {
+export class MovieOverviewTrailer implements OnInit, OnDestroy {
   @Input() movieId: number = 0;
 
   public movieTrailerUrl: string = '';
@@ -24,7 +24,10 @@ export class MovieOverviewTrailer implements OnInit {
   public movieTrailerErrorMessage: string = '';
   public movieTrailerKey: string = '';
 
+  private getMovieTrailerSubscription: Subscription;
+
   constructor(private movieService: MovieService) {}
+
 
   ngOnInit(): void {
     this.getVideo();
@@ -32,18 +35,18 @@ export class MovieOverviewTrailer implements OnInit {
 
   private getVideo(): void {
     this.loadingTrailer = true;
-    this.movieService
-      .getMovieVideos(this.movieId)
-      .then((responseVideo) => {
+    this.getMovieTrailerSubscription = this.movieService.getMovieVideosAlt(this.movieId).subscribe({
+      next: (responseVideo) => {
         this.responseVideo = responseVideo;
         this.setMovieTrailer();
-      })
-      .catch((error: HttpErrorResponse) => {
+      },
+      error: (error) => {
         this.handleTrailerError(error);
-      })
-      .finally(() => {
+      },
+      complete: () => {
         this.loadingTrailer = false;
-      });
+      }
+    });
   }
 
   private setMovieTrailer(): void {
@@ -68,5 +71,11 @@ export class MovieOverviewTrailer implements OnInit {
   private handleTrailerError(error: HttpErrorResponse): void {
     this.movieTrailerError = true;
     this.movieTrailerErrorMessage = error.message;
+  }
+
+  ngOnDestroy(): void {
+    if (this.getMovieTrailerSubscription) {
+      this.getMovieTrailerSubscription.unsubscribe();
+    }
   }
 }
