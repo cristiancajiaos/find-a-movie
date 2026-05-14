@@ -27,8 +27,6 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   public loadingFullCrew: boolean = false;
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-
   public fullCrewFound: boolean = false;
   public movieFullCrewError: boolean = false;
   public errorMessage: string = '';
@@ -46,6 +44,9 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   };
 
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
+
+  public activatedRouteParentSubscription: Subscription | undefined;
+  public getMovieCrewSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -83,18 +84,18 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   private getFullCrew(): void {
     this.movieFullCrewError = false;
     this.loadingFullCrew = true;
-    this.movieService
-      .getMovieCrew(this.id)
-      .then((crew) => {
+    this.getMovieCrewSubscription = this.movieService.getMovieCrewAlt(this.id).subscribe({
+      next: (crew) => {
         this.originalMovieFullCrew = crew;
         this.movieFullCrew = crew;
-      })
-      .catch((error: HttpErrorResponse) => {
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
+      },
+      complete: () => {
         this.loadingFullCrew = false;
-      });
+      }
+    });
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -128,5 +129,8 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.activatedRouteParentSubscription!.unsubscribe();
+    if (this.getMovieCrewSubscription) {
+      this.getMovieCrewSubscription.unsubscribe();
+    }
   }
 }
