@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { catchError, lastValueFrom, map, of } from 'rxjs';
+import { catchError, lastValueFrom, map, Observable, of } from 'rxjs';
 import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/credits/crew-member';
@@ -18,10 +18,14 @@ export class MovieService {
 
   public async getMovie(id: number): Promise<Movie> {
     return await lastValueFrom(
-      this.http.get<Movie>(`/movie/${id}`).pipe(
+      this.http.get<Movie>(`/movie/${id}?language=en-US`).pipe(
         catchError(err => of())
       )
     )
+  }
+
+  public getMovieAlt(id: number): Observable<Movie> {
+    return this.http.get<Movie>((`/movie/${id}`));
   }
 
   public async getMovieCredits(id: number): Promise<Credits> {

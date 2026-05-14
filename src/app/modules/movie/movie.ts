@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment.development';
 import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../services/local-storage-service';
-import { Subscription } from 'rxjs';
+import { defaultIfEmpty, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movie',
@@ -67,25 +67,25 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private getMovie(): void {
+    console.log('getMovie()');
     this.movieError = false;
     this.loadingMovie = true;
-    this.movieService
-      .getMovie(this.id)
-      .then((movie) => {
+    this.movieService.getMovieAlt(this.id).subscribe({
+      next: (movie) => {
         this.movie = movie;
         this.localStorageService.setItem('movie', movie);
         this.setTitle();
         this.setMoviePoster();
-      })
-      .catch((error: HttpErrorResponse) => {
+      }, error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
+      }, complete: () => {
         this.loadingMovie = false;
-      });
+      }
+    });
   }
 
   private handleError(error: HttpErrorResponse): void {
+    this.loadingMovie = false;
     this.movieError = true;
     if (error.status && error.status === 404) {
       this.movieNotFound = true;
