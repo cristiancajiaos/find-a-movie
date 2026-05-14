@@ -1,4 +1,6 @@
 .movie-error-fullscreen {
+  background-position: center;
+  background-size: cover;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -8,6 +10,9 @@
     text-align: center;
     border: 1px solid black;
     padding: 1rem 2rem;
+    width: 80vw;
+    background-color: black;
+    color: white;
 
     button {
       font-family: 'Oswald', 'Arial', sans-serif;

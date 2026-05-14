@@ -10,9 +10,13 @@ import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export class MovieErrorFullscreen implements OnInit {
 
   public repeat: IconDefinition = faRepeat;
-  
+
+  public bgImage: string = 'img/bg/bg_generic_1.jpg';
+
   @Input() errorMessage: string = '';
   @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+
 
   ngOnInit(): void {
 
