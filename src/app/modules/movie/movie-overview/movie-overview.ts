@@ -35,12 +35,13 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public activatedRouteParentSubscription: Subscription | undefined;
   private getMovieSubscription: Subscription;
+  private getMovieCreditsSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
     private localStorageService: LocalStorageService,
-    private titleService: TitleService
+    private titleService: TitleService,
   ) {}
 
   ngOnInit(): void {
@@ -79,30 +80,32 @@ export class MovieOverview implements OnInit, OnDestroy {
         complete: () => {
           this.loadingMovie = false;
           this.setTitle();
-        }
+        },
       });
     }
   }
 
   private getCredits() {
     this.loadingCredits = true;
-    this.movieService
-      .getMovieCredits(this.id)
-      .then((credits) => {
+    this.getMovieCreditsSubscription = this.movieService.getMovieCreditsAlt(this.id).subscribe({
+      next: (credits) => {
         this.credits = credits;
         this.movieCreditsFound = true;
-      })
-      .catch((error: HttpErrorResponse) => {
+      },
+      error: (error) => {
         this.handleCreditsError(error);
-      })
-      .finally(() => {
+      },
+      complete: () => {
         this.loadingCredits = false;
-      });
+      },
+    });
   }
 
   private setTitle(): void {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title, this.movie.original_title, this.movie.release_date
+      this.movie.title,
+      this.movie.original_title,
+      this.movie.release_date,
     );
     this.titleService.setMovieOverviewTitle(formattedTitle);
   }
@@ -125,6 +128,9 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.activatedRouteParentSubscription?.unsubscribe();
     if (this.getMovieSubscription) {
       this.getMovieSubscription.unsubscribe();
+    }
+    if (this.getMovieCreditsSubscription) {
+      this.getMovieCreditsSubscription.unsubscribe();
     }
   }
 }

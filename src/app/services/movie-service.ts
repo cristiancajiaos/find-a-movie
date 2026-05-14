@@ -36,6 +36,10 @@ export class MovieService {
     );
   }
 
+  public getMovieCreditsAlt(id: number): Observable<Credits> {
+    return this.http.get<Credits>((`/movie/${id}/credits`));
+  }
+
   public async getMovieCast(id: number): Promise<CastMember[]> {
     return await lastValueFrom(
       this.http.get<Credits>(`/movie/${id}/credits`)
