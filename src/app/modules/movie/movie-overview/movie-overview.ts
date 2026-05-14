@@ -34,6 +34,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieCreditsErrorMessage: string = '';
 
   public activatedRouteParentSubscription: Subscription | undefined;
+  private getMovieSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -67,19 +68,19 @@ export class MovieOverview implements OnInit, OnDestroy {
       this.loadingMovie = false;
       this.setTitle();
     } else {
-      this.movieService
-        .getMovie(this.id)
-        .then((movie) => {
+      this.getMovieSubscription = this.movieService.getMovieAlt(this.id).subscribe({
+        next: (movie) => {
           this.movie = movie;
           this.movieFound = true;
-        })
-        .catch((error: HttpErrorResponse) => {
+        },
+        error: (error) => {
           this.handleError(error);
-        })
-        .finally(() => {
+        },
+        complete: () => {
           this.loadingMovie = false;
           this.setTitle();
-        });
+        }
+      });
     }
   }
 
@@ -122,5 +123,8 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.activatedRouteParentSubscription?.unsubscribe();
+    if (this.getMovieSubscription) {
+      this.getMovieSubscription.unsubscribe();
+    }
   }
 }
