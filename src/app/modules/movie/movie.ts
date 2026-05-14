@@ -42,6 +42,7 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   public errorMessage: string = '';
 
   public routeSubscription!: Subscription;
+  public getMovieSubscription!: Subscription;
 
   @ViewChild('movieHeader') movieHeader!: MovieHeader;
 
@@ -70,7 +71,7 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
     console.log('getMovie()');
     this.movieError = false;
     this.loadingMovie = true;
-    this.movieService.getMovieAlt(this.id).subscribe({
+    this.getMovieSubscription = this.movieService.getMovieAlt(this.id).subscribe({
       next: (movie) => {
         this.movie = movie;
         this.localStorageService.setItem('movie', movie);
@@ -124,6 +125,9 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
+    }
+    if (this.getMovieSubscription) {
+      this.getMovieSubscription.unsubscribe();
     }
   }
 }
