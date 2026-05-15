@@ -149,138 +149,147 @@
                   } @else {
                     Director of Photography:
                   }
-              </td>
-              <td>
-                @for (directorOfPhotography of directorsOfPhotography; track directorOfPhotography) {
-                  <a [routerLink]="['/person', directorOfPhotography.id]">
-                    {{ directorOfPhotography.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (productionDesigners.length > 0) {
-            <tr>
-              <td>
-                @if (productionDesigners.length > 1) {
-                  Production Designers:
-                } @else {
-                  Production Designer:
-                }
-              </td>
-              <td>
-                @for (productionDesigner of productionDesigners; track productionDesigner) {
-                  <a [routerLink]="['/person', productionDesigner.id]">
-                    {{ productionDesigner.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (editors.length > 0) {
-            <tr>
-              <td>
-                @if (editors.length > 1) {
-                  Editors:
-                } @else {
-                  Editor:
-                }
-              </td>
-              <td>
-                @for (editor of editors; track editor) {
-                  <a [routerLink]="['/person', editor.id]">
-                    {{ editor.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (musicComposers.length > 0) {
-            <tr>
-              <td>Music By:</td>
-              <td>
-                @for (musicComposer of musicComposers; track musicComposer) {
-                  <a [routerLink]="['/person', musicComposer.id]">
-                    {{ musicComposer.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (additionalMusicComposers.length > 0) {
-            <tr>
-              <td>Additional Music By:</td>
-              <td>
-                @for (additionalMusicComposer of additionalMusicComposers; track additionalMusicComposer) {
-                  <a [routerLink]="['/person', additionalMusicComposer.id]">
-                    {{ additionalMusicComposer.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (visualEffectsSupervisors.length > 0) {
-            <tr>
-              <td>
-                @if (visualEffectsSupervisors.length > 1) {
-                  Visual Effects Supervisors:
-                } @else {
-                  Visual Effects Supervisor:
-                }
-              </td>
-              <td>
-                @for (visualEffectsSupervisor of visualEffectsSupervisors; track visualEffectsSupervisor) {
-                  <a [routerLink]="['/person', visualEffectsSupervisor.id]">
-                    {{ visualEffectsSupervisor.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (costumeDesigners.length > 0) {
-            <tr>
-              <td>
-                @if (costumeDesigners.length > 1) {
-                  Costume Designers:
-                } @else {
-                  Costume Designer:
-                }
-              </td>
-              <td>
-                @for (costumeDesigner of costumeDesigners; track costumeDesigner) {
-                  <a [routerLink]="['/person', costumeDesigner.id]">
-                    {{ costumeDesigner.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-          @if (castingCrew.length > 0) {
-            <tr>
-              <td>Casting By:</td>
-              <td>
-                @for (casting of castingCrew; track casting) {
-                  <a [routerLink]="['/person', casting.id]">
-                    {{ casting.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-    <div class="d-grid">
-      <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
-    </div>
+                </td>
+                <td>
+                  @for (
+                    directorOfPhotography of directorsOfPhotography;
+                    track directorOfPhotography
+                  ) {
+                    <a [routerLink]="['/person', directorOfPhotography.id]">
+                      {{ directorOfPhotography.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (productionDesigners.length > 0) {
+              <tr>
+                <td>
+                  @if (productionDesigners.length > 1) {
+                    Production Designers:
+                  } @else {
+                    Production Designer:
+                  }
+                </td>
+                <td>
+                  @for (productionDesigner of productionDesigners; track productionDesigner) {
+                    <a [routerLink]="['/person', productionDesigner.id]">
+                      {{ productionDesigner.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (editors.length > 0) {
+              <tr>
+                <td>
+                  @if (editors.length > 1) {
+                    Editors:
+                  } @else {
+                    Editor:
+                  }
+                </td>
+                <td>
+                  @for (editor of editors; track editor) {
+                    <a [routerLink]="['/person', editor.id]">
+                      {{ editor.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (musicComposers.length > 0) {
+              <tr>
+                <td>Music By:</td>
+                <td>
+                  @for (musicComposer of musicComposers; track musicComposer) {
+                    <a [routerLink]="['/person', musicComposer.id]">
+                      {{ musicComposer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (additionalMusicComposers.length > 0) {
+              <tr>
+                <td>Additional Music By:</td>
+                <td>
+                  @for (
+                    additionalMusicComposer of additionalMusicComposers;
+                    track additionalMusicComposer
+                  ) {
+                    <a [routerLink]="['/person', additionalMusicComposer.id]">
+                      {{ additionalMusicComposer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (visualEffectsSupervisors.length > 0) {
+              <tr>
+                <td>
+                  @if (visualEffectsSupervisors.length > 1) {
+                    Visual Effects Supervisors:
+                  } @else {
+                    Visual Effects Supervisor:
+                  }
+                </td>
+                <td>
+                  @for (
+                    visualEffectsSupervisor of visualEffectsSupervisors;
+                    track visualEffectsSupervisor
+                  ) {
+                    <a [routerLink]="['/person', visualEffectsSupervisor.id]">
+                      {{ visualEffectsSupervisor.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (costumeDesigners.length > 0) {
+              <tr>
+                <td>
+                  @if (costumeDesigners.length > 1) {
+                    Costume Designers:
+                  } @else {
+                    Costume Designer:
+                  }
+                </td>
+                <td>
+                  @for (costumeDesigner of costumeDesigners; track costumeDesigner) {
+                    <a [routerLink]="['/person', costumeDesigner.id]">
+                      {{ costumeDesigner.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (castingCrew.length > 0) {
+              <tr>
+                <td>Casting By:</td>
+                <td>
+                  @for (casting of castingCrew; track casting) {
+                    <a [routerLink]="['/person', casting.id]">
+                      {{ casting.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="d-grid">
+        <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
+      </div>
+    }
   }
-}
 </section>

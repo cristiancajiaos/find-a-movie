@@ -91,6 +91,7 @@ export class MovieCast implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.handleError(error);
+        this.loadingCast = false;
       },
       complete: () => {
         this.loadingCast = false;

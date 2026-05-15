@@ -91,6 +91,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.handleError(error);
+        this.loadingFullCrew = false;
       },
       complete: () => {
         this.loadingFullCrew = false;
