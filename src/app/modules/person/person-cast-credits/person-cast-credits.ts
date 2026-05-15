@@ -71,6 +71,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.handleError(error);
+        this.loadingPersonMovieCredits = false;
       },
       complete: () => {
         this.loadingPersonMovieCredits = false;
