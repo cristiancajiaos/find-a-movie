@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../classes/person';
-import { catchError, lastValueFrom, of } from 'rxjs';
+import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
 import { ResponsePersonCrewCredit } from '../classes/person-movie-credits/response-person-crew-credit';
 import { OrderCriteria } from '../interfaces/order-criteria';
@@ -16,17 +16,19 @@ export class PersonService {
 
   public async getPerson(id: number): Promise<Person> {
     return await lastValueFrom(
-      this.http.get<Person>(`/person/${id}`).pipe(
-        catchError(err => of())
-      )
-  );
+      this.http.get<Person>(`/person/${id}`).pipe(catchError((err) => of())),
+    );
+  }
+
+  public getPersonAlt(id: number): Observable<Person> {
+    return this.http.get<Person>(`/person/${id}`);
   }
 
   public async getCredits(id: number): Promise<ResponsePersonMovieCredits> {
     return await lastValueFrom(
-      this.http.get<ResponsePersonMovieCredits>(
-        `/person/${id}/movie_credits`
-      ).pipe(catchError(err => of()))
+      this.http
+        .get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`)
+        .pipe(catchError((err) => of())),
     );
   }
 
@@ -34,7 +36,7 @@ export class PersonService {
     crewCredits: ResponsePersonCrewCredit[],
     selectedRoles: string[],
   ): ResponsePersonCrewCredit[] {
-    return crewCredits.filter(crewCredit => selectedRoles.includes(crewCredit.job))
+    return crewCredits.filter((crewCredit) => selectedRoles.includes(crewCredit.job));
   }
 
   public filterCastCreditsByYearFrom(
@@ -52,7 +54,7 @@ export class PersonService {
       });
   }
 
-   public filterCastCreditsByYearFromTo(
+  public filterCastCreditsByYearFromTo(
     castCredits: ResponsePersonCastCredit[],
     fromYear: number,
     toYear: number,

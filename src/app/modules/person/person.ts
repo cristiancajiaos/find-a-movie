@@ -32,6 +32,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   public routeSubscription!: Subscription;
 
   @ViewChild('personHeader') personHeader!: PersonHeader;
+  private getPersonSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -58,15 +59,20 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
     this.personError = false;
     this.loadingPerson = true;
     this.personService.getPerson(this.id)
-    .then(person => {
-      this.person = person;
-      this.localStorageService.setItem("person", person);
-      this.setPersonTitle();
-      this.setPersonBiography();
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
-      this.loadingPerson = false;
+    this.getPersonSubscription = this.personService.getPersonAlt(this.id).subscribe({
+      next: (person) => {
+        this.person = person;
+        this.localStorageService.setItem("person", person);
+        this.setPersonTitle();
+        this.setPersonBiography();
+      },
+      error: (error) => {
+        console.log(error);
+        this.handleError(error);
+      },
+      complete: () => {
+        this.loadingPerson = false;
+      }
     });
   }
 
@@ -75,6 +81,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
+    this.loadingPerson = false;
     this.personError = true;
     if (error.status && error.status === 404) {
       this.personNotFound = true;
@@ -96,6 +103,9 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
+    }
+    if (this.getPersonSubscription) {
+      this.getPersonSubscription.unsubscribe();
     }
   }
 
