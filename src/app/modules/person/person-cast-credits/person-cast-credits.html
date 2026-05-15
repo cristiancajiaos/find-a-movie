@@ -8,11 +8,11 @@
       </app-person-error>
     }
     @if (!personMovieCreditsError) {
-      @if (personMovieCredits.cast.length === 0) {
+      @if (personCastCredits.length === 0) {
         <p>This person has no acting roles in movies</p>
       }
-      @if (personMovieCredits.cast.length > 0) {
-        <app-person-movie-credits-cast [castCredits]="personMovieCredits.cast">
+      @if (personCastCredits.length > 0) {
+        <app-person-movie-credits-cast [castCredits]="personCastCredits">
         </app-person-movie-credits-cast>
       }
     }

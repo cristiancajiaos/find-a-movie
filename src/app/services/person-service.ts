@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Person } from '../classes/person';
-import { catchError, lastValueFrom, Observable, of } from 'rxjs';
+import { catchError, lastValueFrom, map, Observable, of } from 'rxjs';
 import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
 import { ResponsePersonCrewCredit } from '../classes/person-movie-credits/response-person-crew-credit';
 import { OrderCriteria } from '../interfaces/order-criteria';
@@ -30,6 +30,12 @@ export class PersonService {
         .get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`)
         .pipe(catchError((err) => of())),
     );
+  }
+
+  public getCastCredits(id: number): Observable<ResponsePersonCastCredit[]> {
+    return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
+      map(movieCredits => movieCredits.cast)
+    )
   }
 
   public filterCrewCreditsByRole(
