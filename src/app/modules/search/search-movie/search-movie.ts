@@ -43,6 +43,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   @ViewChild('header') header!: ElementRef;
 
   private routeSubscription?: Subscription;
+  private getMovieSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -61,17 +62,18 @@ export class SearchMovie implements OnInit, OnDestroy {
   public searchMovie(): void {
     this.searchError = false;
     this.loadingSearchMovie = true;
-    this.searchService
-      .searchMovie(this.searchQuery)
-      .then((responseSearchMovie) => {
-        this.handleMovieResults(responseSearchMovie);
-      })
-      .catch((error: HttpErrorResponse) => {
+    this.getMovieSubscription = this.searchService.searchMovieAlt(this.searchQuery).subscribe({
+      next: (response) => {
+        this.handleMovieResults(response);
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
         this.loadingSearchMovie = false;
-      });
+      },
+      complete: () => {
+        this.loadingSearchMovie = false;
+      }
+    });
   }
 
   public changePage(page: number) {
@@ -130,6 +132,9 @@ export class SearchMovie implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
+    }
+    if (this.getMovieSubscription) {
+      this.getMovieSubscription.unsubscribe();
     }
   }
 }

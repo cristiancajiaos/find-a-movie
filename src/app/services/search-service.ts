@@ -26,6 +26,16 @@ export class SearchService {
     );
   }
 
+  public searchMovieAlt(query: string, page: number = 1): Observable<ResponseSearchMovie> {
+    return this.http.get<ResponseSearchMovie>(`/search/movie`, {
+      params: {
+        query: query,
+        language: 'en-US',
+        page: page,
+      },
+    });
+  }
+
   public async searchPerson(query: string, page: number = 1): Promise<ResponseSearchPerson> {
     return await lastValueFrom(
       this.http
@@ -53,14 +63,14 @@ export class SearchService {
   }
 
   public searchPersonInput(query: string, page: number = 1): Observable<ResponsePersonResult[]> {
-    return this.http.get<ResponseSearchPerson>('/search/person', {
-      params: {
-        query: query,
-        language: 'en-US',
-        page: page,
-      },
-    }).pipe(
-      map((responsePersonResult) => responsePersonResult.results)
-    )
+    return this.http
+      .get<ResponseSearchPerson>('/search/person', {
+        params: {
+          query: query,
+          language: 'en-US',
+          page: page,
+        },
+      })
+      .pipe(map((responsePersonResult) => responsePersonResult.results));
   }
 }
