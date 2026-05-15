@@ -78,15 +78,6 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
         this.loadingPersonMovieCredits = false;
       }
     });
-    this.personService.getCredits(this.id)
-    .then((personMovieCredits) => {
-      this.personMovieCredits = personMovieCredits;
-      this.personMovieCreditsFound = true;
-    }).catch((error: HttpErrorResponse) => {
-      this.handleError(error);
-    }).finally(() => {
-
-    });
   }
 
   private handleError(error: HttpErrorResponse) {
