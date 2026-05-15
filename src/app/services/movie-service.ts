@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { catchError, lastValueFrom, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/credits/crew-member';
