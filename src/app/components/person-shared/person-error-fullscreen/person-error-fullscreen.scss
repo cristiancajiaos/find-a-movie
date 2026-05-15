@@ -3,11 +3,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-position: center;
+  background-size: cover;
 
   .person-error-description {
     text-align: center;
     border: 1px solid black;
     padding: 1rem 2rem;
+    background-color: black;
+    color: white;
+
 
     button {
       font-family: 'Oswald', 'Arial', sans-serif;

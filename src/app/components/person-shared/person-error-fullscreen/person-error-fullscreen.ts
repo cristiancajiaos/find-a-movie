@@ -9,6 +9,7 @@ import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 })
 export class PersonErrorFullscreen implements OnInit {
 
+  public bgImage: string = 'img/bg/bg_generic_2.jpg';
   public repeat: IconDefinition = faRepeat;
 
   @Input() errorMessage: string = '';
