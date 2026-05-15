@@ -44,6 +44,7 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   private routeSubscription?: Subscription;
   private getMovieSubscription: Subscription;
+  private getMovieChangePageSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -62,9 +63,10 @@ export class SearchMovie implements OnInit, OnDestroy {
   public searchMovie(): void {
     this.searchError = false;
     this.loadingSearchMovie = true;
-    this.getMovieSubscription = this.searchService.searchMovieAlt(this.searchQuery).subscribe({
+    this.getMovieSubscription = this.searchService.searchMovie(this.searchQuery).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
+        this.setSearchMovieTitle(this.searchQuery);
       },
       error: (error) => {
         this.handleError(error);
@@ -84,17 +86,19 @@ export class SearchMovie implements OnInit, OnDestroy {
   public searchMovieUpdatePage(page: number) {
     this.searchError = false;
     this.loadingSearchMovie = true;
-    this.searchService
-      .searchMovie(this.searchQuery, page)
-      .then((responseSearchMovie) => {
-        this.handleMovieResults(responseSearchMovie);
-      })
-      .catch((error: HttpErrorResponse) => {
+    this.getMovieChangePageSubscription = this.searchService.searchMovie(this.searchQuery, page).subscribe({
+      next: (response) => {
+        this.handleMovieResults(response);
+        this.setSearchMovieTitle(this.searchQuery);
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
         this.loadingSearchMovie = false;
-      });
+      },
+      complete: () => {
+        this.loadingSearchMovie = false;
+      }
+    });
   }
 
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
@@ -135,6 +139,9 @@ export class SearchMovie implements OnInit, OnDestroy {
     }
     if (this.getMovieSubscription) {
       this.getMovieSubscription.unsubscribe();
+    }
+    if (this.getMovieChangePageSubscription) {
+      this.getMovieChangePageSubscription.unsubscribe();
     }
   }
 }

@@ -12,21 +12,7 @@ import { ResponsePersonResult } from '../classes/response-search-person/response
 export class SearchService {
   constructor(private http: HttpClient) {}
 
-  public async searchMovie(query: string, page: number = 1): Promise<ResponseSearchMovie> {
-    return await lastValueFrom(
-      this.http
-        .get<ResponseSearchMovie>(`/search/movie`, {
-          params: {
-            query: query,
-            language: 'en-US',
-            page: page,
-          },
-        })
-        .pipe(catchError((err) => of())),
-    );
-  }
-
-  public searchMovieAlt(query: string, page: number = 1): Observable<ResponseSearchMovie> {
+  public searchMovie(query: string, page: number = 1): Observable<ResponseSearchMovie> {
     return this.http.get<ResponseSearchMovie>(`/search/movie`, {
       params: {
         query: query,
@@ -36,21 +22,7 @@ export class SearchService {
     });
   }
 
-  public async searchPerson(query: string, page: number = 1): Promise<ResponseSearchPerson> {
-    return await lastValueFrom(
-      this.http
-        .get<ResponseSearchPerson>('/search/person', {
-          params: {
-            query: query,
-            language: 'en-US',
-            page: page,
-          },
-        })
-        .pipe(catchError((err) => of())),
-    );
-  }
-
-  public searchPersonAlt(query: string, page: number = 1): Observable<ResponseSearchPerson> {
+  public searchPerson(query: string, page: number = 1): Observable<ResponseSearchPerson> {
     return this.http.get<ResponseSearchPerson>('/search/person', {
       params: {
         query: query,

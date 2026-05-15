@@ -63,9 +63,9 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchPerson(): void {
     this.searchError = false;
     this.loadingSearchPerson = true;
-    this.getPersonSubscription = this.searchService.searchPersonAlt(this.searchQuery).subscribe({
-      next: (results) => {
-        this.handlePersonResults(results);
+    this.getPersonSubscription = this.searchService.searchPerson(this.searchQuery).subscribe({
+      next: (response) => {
+        this.handlePersonResults(response);
         this.setSearchPersonTitle(this.searchQuery);
       },
       error: (error) => {
@@ -86,9 +86,9 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchPersonUpdatePage(page: number) {
     this.searchError = false;
     this.loadingSearchPerson = true;
-    this.getPersonChangePageSubscription = this.searchService.searchPersonAlt(this.searchQuery, page).subscribe({
-      next: (results) => {
-        this.handlePersonResults(results);
+    this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery, page).subscribe({
+      next: (response) => {
+        this.handlePersonResults(response);
         this.setSearchPersonTitle(this.searchQuery);
       },
       error: (error) => {
