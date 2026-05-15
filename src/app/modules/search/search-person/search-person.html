@@ -3,7 +3,7 @@
     <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
   }
   @if (!loadingSearchPerson) {
-    <header #header [ngStyle]="{backgroundImage: 'url(' + bgImage + ')'}">
+    <header #header [ngStyle]="{ backgroundImage: 'url(' + bgImage + ')' }">
       <h1>
         <fa-icon [icon]="searchIcon"></fa-icon>
         Search Person
@@ -32,7 +32,7 @@
               <app-display-selector
                 [displayMode]="displayMode"
                 (onDisplayChange)="changeDisplay($event)"
-                >
+              >
               </app-display-selector>
             </section>
             <section class="search-person-results">
@@ -45,48 +45,48 @@
                   <div class="row">
                     @for (
                       personResult of personResults
-                      | paginate
-                      : {
-                      itemsPerPage: 20,
-                      currentPage: currentPage,
-                      totalItems: totalResults
+                        | paginate
+                          : {
+                              itemsPerPage: 20,
+                              currentPage: currentPage,
+                              totalItems: totalResults,
+                            };
+                      track personResult
+                    ) {
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <app-search-person-result-grid [personResult]="personResult">
+                        </app-search-person-result-grid>
+                      </div>
                     }
-                    ; track
-                    personResult) {
-                    <div class="col-12 col-sm-6 col-lg-3">
-                      <app-search-person-result-grid [personResult]="personResult">
-                      </app-search-person-result-grid>
-                    </div>
-                  }
-                </div>
-              </section>
-            }
-            @if (displayMode == 'list') {
-              <section class="search-person-results-list">
-                <div class="row">
-                  @for (
-                    personResult of personResults
-                    | paginate
-                    : {
-                    itemsPerPage: 20,
-                    currentPage: currentPage,
-                    totalItems: totalResults
-                  }
-                  ; track
-                  personResult) {
-                  <app-search-person-result-list [personResult]="personResult">
-                  </app-search-person-result-list>
-                }
+                  </div>
+                </section>
+              }
+              @if (displayMode == 'list') {
+                <section class="search-person-results-list">
+                  <div class="row">
+                    @for (
+                      personResult of personResults
+                        | paginate
+                          : {
+                              itemsPerPage: 20,
+                              currentPage: currentPage,
+                              totalItems: totalResults,
+                            };
+                      track personResult
+                    ) {
+                      <app-search-person-result-list [personResult]="personResult">
+                      </app-search-person-result-list>
+                    }
+                  </div>
+                </section>
+              }
+              <div class="d-flex justify-content-center align-items-center">
+                <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
               </div>
             </section>
           }
-          <div class="d-flex justify-content-center align-items-center">
-            <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
-          </div>
-        </section>
-      }
-    }
-  </div>
-</main>
-}
+        }
+      </div>
+    </main>
+  }
 </section>
