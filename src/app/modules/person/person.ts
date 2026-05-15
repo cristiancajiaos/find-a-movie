@@ -59,7 +59,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
     this.personError = false;
     this.loadingPerson = true;
     this.personService.getPerson(this.id)
-    this.getPersonSubscription = this.personService.getPersonAlt(this.id).subscribe({
+    this.getPersonSubscription = this.personService.getPerson(this.id).subscribe({
       next: (person) => {
         this.person = person;
         this.localStorageService.setItem("person", person);

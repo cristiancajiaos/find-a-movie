@@ -80,7 +80,7 @@ export class PersonOverview implements OnInit, OnDestroy {
       this.setPersonBiography();
       this.setPersonInfotable();
     } else {
-      this.getPersonSubscription = this.personService.getPersonAlt(this.id).subscribe({
+      this.getPersonSubscription = this.personService.getPerson(this.id).subscribe({
         next: (person) => {
           this.person = person;
           this.personFound = true;
