@@ -38,6 +38,12 @@ export class PersonService {
     )
   }
 
+  public getCrewCredits(id: number): Observable<ResponsePersonCrewCredit[]> {
+    return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
+      map(movieCredits => movieCredits.crew)
+    )
+  }
+
   public filterCrewCreditsByRole(
     crewCredits: ResponsePersonCrewCredit[],
     selectedRoles: string[],

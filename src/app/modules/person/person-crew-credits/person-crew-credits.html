@@ -8,11 +8,11 @@
       </app-person-error>
     }
     @if (!personMovieCreditsError) {
-      @if (personMovieCredits.crew.length === 0) {
+      @if (personCrewCredits.length === 0) {
         <p>This person has no technical or production roles in movies</p>
       }
-      @if (personMovieCredits.crew.length > 0) {
-        <app-person-movie-credits-crew [crewCredits]="personMovieCredits.crew">
+      @if (personCrewCredits.length > 0) {
+        <app-person-movie-credits-crew [crewCredits]="personCrewCredits">
         </app-person-movie-credits-crew>
       }
     }

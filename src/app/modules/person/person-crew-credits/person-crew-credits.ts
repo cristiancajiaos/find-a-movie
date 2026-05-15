@@ -7,6 +7,7 @@ import { LocalStorageService } from '../../../services/local-storage-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TitleService } from '../../../services/title-service';
 import { Person } from '../../../classes/person';
+import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 
 @Component({
   selector: 'app-person-crew-credits',
@@ -21,14 +22,16 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   private person: Person;
 
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
+  public personCrewCredits: ResponsePersonCrewCredit[] = [];
 
   public loadingPersonMovieCredits: boolean = false;
-
-  public activatedRouteParentSubscription: Subscription | undefined;
 
   public personMovieCreditsFound: boolean = false;
   public personMovieCreditsError: boolean = false;
   public errorMessage: string = '';
+
+  public activatedRouteParentSubscription: Subscription | undefined;
+  private getCrewCreditsSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -62,6 +65,19 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   private getPersonMovieCredits() {
     this.personMovieCreditsError = false;
     this.loadingPersonMovieCredits = true;
+    this.personService.getCrewCredits(this.id).subscribe({
+      next: (crewCredits) => {
+        this.personCrewCredits = crewCredits;
+        this.personMovieCreditsFound = true;
+      },
+      error: (error) => {
+        this.handleError(error);
+        this.loadingPersonMovieCredits = false;
+      },
+      complete: () => {
+        this.loadingPersonMovieCredits = false;
+      }
+    });
     this.personService.getCredits(this.id)
     .then((personMovieCredits) => {
       this.personMovieCredits = personMovieCredits;
@@ -69,7 +85,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
     }).catch((error: HttpErrorResponse) => {
       this.handleError(error);
     }).finally(() => {
-      this.loadingPersonMovieCredits = false;
+
     });
   }
 
@@ -85,6 +101,9 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.activatedRouteParentSubscription) {
       this.activatedRouteParentSubscription.unsubscribe();
+    }
+    if (this.getCrewCreditsSubscription) {
+      this.getCrewCreditsSubscription.unsubscribe();
     }
   }
 
