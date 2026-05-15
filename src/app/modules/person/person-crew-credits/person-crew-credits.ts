@@ -37,8 +37,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
     private localStorageService: LocalStorageService,
-    private titleService: TitleService,
-    private router: Router
+    private titleService: TitleService
   ){}
 
   ngOnInit(): void {

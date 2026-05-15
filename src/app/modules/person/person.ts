@@ -67,7 +67,6 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
         this.setPersonBiography();
       },
       error: (error) => {
-        console.log(error);
         this.handleError(error);
       },
       complete: () => {
