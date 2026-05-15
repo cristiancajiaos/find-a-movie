@@ -50,6 +50,16 @@ export class SearchService {
     );
   }
 
+  public searchPersonAlt(query: string, page: number = 1): Observable<ResponseSearchPerson> {
+    return this.http.get<ResponseSearchPerson>('/search/person', {
+      params: {
+        query: query,
+        language: 'en-US',
+        page: page,
+      },
+    });
+  }
+
   public searchMovieInput(query: string, page: number = 1): Observable<ResponseMovieResult[]> {
     return this.http
       .get<ResponseSearchMovie>('/search/movie', {

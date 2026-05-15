@@ -7,7 +7,6 @@ import { ResponsePersonResult } from '../../../classes/response-search-person/re
 import { SearchService } from '../../../services/search-service';
 import { TitleService } from '../../../services/title-service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SearchMovie } from '../search-movie/search-movie';
 
 @Component({
   selector: 'app-search-person',
@@ -44,6 +43,8 @@ export class SearchPerson implements OnInit, OnDestroy {
   @ViewChild('header') header!: ElementRef;
 
   private routeSubscription?: Subscription;
+  private getPersonSubscription: Subscription;
+  private getPersonChangePageSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -62,17 +63,19 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchPerson(): void {
     this.searchError = false;
     this.loadingSearchPerson = true;
-    this.searchService
-      .searchPerson(this.searchQuery)
-      .then((responseSearchPerson) => {
-        this.handlePersonResults(responseSearchPerson);
-      })
-      .catch((error: HttpErrorResponse) => {
+    this.getPersonSubscription = this.searchService.searchPersonAlt(this.searchQuery).subscribe({
+      next: (results) => {
+        this.handlePersonResults(results);
+        this.setSearchPersonTitle(this.searchQuery);
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
         this.loadingSearchPerson = false;
-      });
+      },
+      complete: () => {
+        this.loadingSearchPerson = false;
+      },
+    });
   }
 
   public changePage(page: number) {
@@ -83,17 +86,19 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchPersonUpdatePage(page: number) {
     this.searchError = false;
     this.loadingSearchPerson = true;
-    this.searchService
-      .searchPerson(this.searchQuery, page)
-      .then((responseSearchPerson) => {
-        this.handlePersonResults(responseSearchPerson);
-      })
-      .catch((error: HttpErrorResponse) => {
+    this.getPersonChangePageSubscription = this.searchService.searchPersonAlt(this.searchQuery, page).subscribe({
+      next: (results) => {
+        this.handlePersonResults(results);
+        this.setSearchPersonTitle(this.searchQuery);
+      },
+      error: (error) => {
         this.handleError(error);
-      })
-      .finally(() => {
         this.loadingSearchPerson = false;
-      });
+      },
+      complete: () => {
+        this.loadingSearchPerson = false;
+      }
+    });
   }
 
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
@@ -129,6 +134,12 @@ export class SearchPerson implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
+    }
+    if (this.getPersonSubscription) {
+      this.getPersonSubscription.unsubscribe();
+    }
+    if (this.getPersonChangePageSubscription) {
+      this.getPersonChangePageSubscription.unsubscribe();
     }
   }
 }
