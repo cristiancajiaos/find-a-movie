@@ -26,8 +26,6 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public person: Person = new Person();
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-
   public loadingPerson: boolean = false;
 
   public personBiography: string = '';
@@ -45,6 +43,9 @@ export class PersonOverview implements OnInit, OnDestroy {
   public personFound: boolean = false;
   public personOverviewError: boolean = false;
   public errorMessage: string = '';
+
+  public activatedRouteParentSubscription: Subscription | undefined;
+  public getPersonSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -79,21 +80,22 @@ export class PersonOverview implements OnInit, OnDestroy {
       this.setPersonBiography();
       this.setPersonInfotable();
     } else {
-      this.personService
-        .getPerson(this.id)
-        .then((person) => {
+      this.getPersonSubscription = this.personService.getPersonAlt(this.id).subscribe({
+        next: (person) => {
           this.person = person;
           this.personFound = true;
           this.setTitle();
           this.setPersonBiography();
           this.setPersonInfotable();
-        })
-        .catch((error: HttpErrorResponse) => {
+        },
+        error: (error) => {
           this.handleError(error);
-        })
-        .finally(() => {
           this.loadingPerson = false;
-        });
+        },
+        complete: () => {
+          this.loadingPerson = false;
+        }
+      })
     }
   }
 
@@ -148,6 +150,9 @@ export class PersonOverview implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.activatedRouteParentSubscription) {
       this.activatedRouteParentSubscription.unsubscribe();
+    }
+    if (this.getPersonSubscription) {
+      this.getPersonSubscription.unsubscribe();
     }
   }
 }
