@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './person-not-found.scss'
 })
 export class PersonNotFound {
-
+  public bgImage: string = 'img/bg/bg_generic_2.jpg';
 }

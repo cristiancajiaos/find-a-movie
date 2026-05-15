@@ -1,6 +1,8 @@
-<section class="person-not-found">
+<section class="person-not-found"
+  [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
   <div class="person-not-found-description">
     <h1>Person Not Found</h1>
+    <hr/>
     <p>No person was found with this ID. Try another one :)</p>
   </div>
 </section>
