@@ -17,8 +17,9 @@
           }
         </h1>
         <h2>
+          <fa-icon [icon]="calendar" [fixedWidth]="true"></fa-icon>
           @if (year) {
-            <fa-icon [icon]="calendar" [fixedWidth]="true"></fa-icon> {{ year }}
+            {{ year }}
           }
           @if (!year) {
             No Release Date

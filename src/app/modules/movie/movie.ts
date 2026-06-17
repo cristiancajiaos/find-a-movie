@@ -1,5 +1,4 @@
 import {
-  AfterContentInit,
   ChangeDetectorRef,
   Component,
   OnDestroy,
@@ -23,7 +22,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './movie.html',
   styleUrl: './movie.scss',
 })
-export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
+export class MovieComponent implements OnInit, OnDestroy {
   public imagePortrait: IconDefinition = faImagePortrait;
   public id: number = 0;
   public movie: Movie = new Movie();
@@ -33,9 +32,6 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
   public altPosterText: string = '';
   public posterSizeSmall: string = '';
   public posterSizeOriginal: string = '';
-
-  public loadingView: boolean = true;
-  public loadingMovie: boolean = false;
 
   public movieNotFound: boolean = false;
   public movieError: boolean = false;
@@ -51,25 +47,17 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
     private movieService: MovieService,
     private titleService: TitleService,
     private localStorageService: LocalStorageService,
-    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.cd.detectChanges();
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.id = parseInt(this.activatedRoute.snapshot.params['id']);
       this.getMovie();
     });
   }
 
-  ngAfterContentInit(): void {
-    this.loadingView = false;
-    this.cd.detectChanges();
-  }
-
   private getMovie(): void {
     this.movieError = false;
-    this.loadingMovie = true;
     this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
       next: (movie) => {
         this.movie = movie;
@@ -79,13 +67,11 @@ export class MovieComponent implements OnInit, AfterContentInit, OnDestroy {
       }, error: (error) => {
         this.handleError(error);
       }, complete: () => {
-        this.loadingMovie = false;
       }
     });
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.loadingMovie = false;
     this.movieError = true;
     if (error.status && error.status === 404) {
       this.movieNotFound = true;

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
@@ -15,7 +15,7 @@ import { environment } from '../../../../environments/environment.development';
   templateUrl: './movie-header.html',
   styleUrl: './movie-header.scss',
 })
-export class MovieHeader implements OnInit {
+export class MovieHeader implements OnChanges {
   public film: IconDefinition = faFilm;
   public circleSeparator: IconDefinition = faCircle;
   public calendar: IconDefinition = faCalendar;
@@ -27,9 +27,7 @@ export class MovieHeader implements OnInit {
   public year: number = 0;
   public backdropImg: string = '';
 
-  constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnInit(): void {
+  ngOnChanges() {
     this.setYear();
     this.setBackdrop();
   }
