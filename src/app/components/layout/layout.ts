@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LoadingService } from '../../services/loading-service';
 
 @Component({
   selector: 'app-layout',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './layout.scss'
 })
 export class Layout {
+
+  private loadingService = inject(LoadingService);
+
+  public loading$ = this.loadingService.isLoading;
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
 import { map, Observable } from 'rxjs';
@@ -6,6 +6,7 @@ import { ResponseSearchPerson } from '../classes/response-search-person';
 import { ResponseMovieResult } from '../classes/response-search-movie/response-movie-result';
 import { ResponsePersonResult } from '../classes/response-search-person/response-person-result';
 
+export const SkipLoading = new HttpContextToken<boolean>(() => false);
 @Injectable({
   providedIn: 'root',
 })
@@ -40,6 +41,7 @@ export class SearchService {
           language: 'en-US',
           page: page,
         },
+        context: new HttpContext().set(SkipLoading, true)
       })
       .pipe(map((responseSearchMovie) => responseSearchMovie.results));
   }
@@ -52,6 +54,7 @@ export class SearchService {
           language: 'en-US',
           page: page,
         },
+        context: new HttpContext().set(SkipLoading, true)
       })
       .pipe(map((responsePersonResult) => responsePersonResult.results));
   }

@@ -11,6 +11,7 @@ import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie
 import { SearchInputMovieResult } from './navbar/search-input-movie/search-input-movie-result/search-input-movie-result';
 import { SearchInputPerson } from './navbar/search-input-person/search-input-person';
 import { SearchInputPersonResult } from './navbar/search-input-person/search-input-person-result/search-input-person-result';
+import { SharedModule } from '../shared/shared-module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SearchInputPersonResult } from './navbar/search-input-person/search-inp
     FontAwesomeModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
     Layout,

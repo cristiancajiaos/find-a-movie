@@ -6,6 +6,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from './components/layout/layout-module';
 import { authInterceptor } from './interceptors/auth-interceptor';
+import { loadingInterceptor } from './interceptors/loading-interceptor';
 
 @NgModule({
   declarations: [
@@ -15,11 +16,16 @@ import { authInterceptor } from './interceptors/auth-interceptor';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    LayoutModule,
+    LayoutModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([
+        authInterceptor,
+        loadingInterceptor
+      ])),
   ],
   bootstrap: [App]
 })
