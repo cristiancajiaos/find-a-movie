@@ -12,7 +12,7 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.context.get(SkipLoading)) {
     return next(req);
   }
-  
+
   loadingService.loadingOn();
 
   return next(req).pipe(

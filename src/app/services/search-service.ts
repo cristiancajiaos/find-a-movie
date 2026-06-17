@@ -5,8 +5,7 @@ import { map, Observable } from 'rxjs';
 import { ResponseSearchPerson } from '../classes/response-search-person';
 import { ResponseMovieResult } from '../classes/response-search-movie/response-movie-result';
 import { ResponsePersonResult } from '../classes/response-search-person/response-person-result';
-
-export const SkipLoading = new HttpContextToken<boolean>(() => false);
+import { SkipLoading } from '../interceptors/loading-interceptor';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +18,7 @@ export class SearchService {
         query: query,
         language: 'en-US',
         page: page,
-      },
+      }
     });
   }
 
