@@ -7,6 +7,7 @@ import { ResponsePersonResult } from '../../../classes/response-search-person/re
 import { SearchService } from '../../../services/search-service';
 import { TitleService } from '../../../services/title-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-search-person',
@@ -33,7 +34,6 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   public displayMode: string = 'grid';
 
-  public loadingSearchPerson: boolean = false;
   public loadingPage: boolean = false;
 
   public noResults: boolean = false;
@@ -42,14 +42,16 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   @ViewChild('header') header!: ElementRef;
 
-  private routeSubscription?: Subscription;
-  private getPersonSubscription: Subscription;
-  private getPersonChangePageSubscription: Subscription;
+  private routeSubscription: Subscription = new Subscription();
+  private getPersonSubscription: Subscription = new Subscription();
+  private getPersonChangePageSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService,
     private titleService: TitleService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -58,22 +60,21 @@ export class SearchPerson implements OnInit, OnDestroy {
       this.setSearchPersonTitle(this.searchQuery);
       this.searchPerson();
     });
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      this.setSearchPersonTitle(this.searchQuery);
+    });
   }
 
   public searchPerson(): void {
     this.searchError = false;
-    this.loadingSearchPerson = true;
     this.getPersonSubscription = this.searchService.searchPerson(this.searchQuery).subscribe({
       next: (response) => {
         this.handlePersonResults(response);
-        this.setSearchPersonTitle(this.searchQuery);
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingSearchPerson = false;
       },
       complete: () => {
-        this.loadingSearchPerson = false;
       },
     });
   }
@@ -85,18 +86,14 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   public searchPersonUpdatePage(page: number) {
     this.searchError = false;
-    this.loadingSearchPerson = true;
     this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery, page).subscribe({
       next: (response) => {
         this.handlePersonResults(response);
-        this.setSearchPersonTitle(this.searchQuery);
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingSearchPerson = false;
       },
       complete: () => {
-        this.loadingSearchPerson = false;
       }
     });
   }
@@ -140,6 +137,9 @@ export class SearchPerson implements OnInit, OnDestroy {
     }
     if (this.getPersonChangePageSubscription) {
       this.getPersonChangePageSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }
