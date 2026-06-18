@@ -1,19 +1,17 @@
 <section class="movie-full-crew">
-  @if (loadingFullCrew) {
-    <app-loading-inline message="Loading full crew..."></app-loading-inline>
+  @if (movieFullCrewError) {
+    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadFullCrew($event)">
+    </app-movie-error>
   }
-  @if (!loadingFullCrew) {
-    @if (movieFullCrewError) {
-      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadFullCrew($event)">
-      </app-movie-error>
-    }
-    @if (!movieFullCrewError) {
-      <h2>Full Crew</h2>
+  @if (!movieFullCrewError) {
+    <h2>Full Crew</h2>
+    @if (movieFullCrew.length > 0) {
       <app-order-select
         #orderSelectMovieFullCrew
         [orderCriterias]="orderCriterias"
         [defaultOrderCriteria]="defaultOrder"
-        (onOrderCriteriaChange)="orderCriteriaChange($event)">
+        (onOrderCriteriaChange)="orderCriteriaChange($event)"
+      >
       </app-order-select>
       <hr />
       <div class="table-responsive">
@@ -38,6 +36,8 @@
           </tbody>
         </table>
       </div>
+    } @else {
+      <p>This movie has no recognizable crew</p>
     }
   }
 </section>

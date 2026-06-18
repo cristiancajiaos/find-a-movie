@@ -10,6 +10,7 @@ import { OrderSelect } from '../../../components/shared/order-select/order-selec
 import { Movie } from '../../../classes/movie';
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { TitleService } from '../../../services/title-service';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -24,8 +25,6 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   public originalMovieFullCrew: CrewMember[] = [];
   public movieFullCrew: CrewMember[] = [];
-
-  public loadingFullCrew: boolean = false;
 
   public fullCrewFound: boolean = false;
   public movieFullCrewError: boolean = false;
@@ -45,24 +44,30 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-  public getMovieCrewSubscription: Subscription;
+  private activatedRouteParentSubscription: Subscription = new Subscription();
+  private getMovieCrewSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
     private localStorageService: LocalStorageService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     this.getMovie();
     this.setId();
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.movie) {
+        this.setTitle();
+      }
+    });
   }
 
   private getMovie(): void {
     this.movie = this.localStorageService.getItem('movie');
-    this.setTitle();
   }
 
   private setId(): void {
@@ -83,7 +88,6 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   private getFullCrew(): void {
     this.movieFullCrewError = false;
-    this.loadingFullCrew = true;
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
       next: (crew) => {
         this.originalMovieFullCrew = crew;
@@ -91,10 +95,8 @@ export class MovieFullCrew implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingFullCrew = false;
       },
       complete: () => {
-        this.loadingFullCrew = false;
       }
     });
   }
@@ -129,9 +131,14 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.activatedRouteParentSubscription!.unsubscribe();
+    if (this.activatedRouteParentSubscription) {
+      this.activatedRouteParentSubscription.unsubscribe();
+    }
     if (this.getMovieCrewSubscription) {
       this.getMovieCrewSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }
