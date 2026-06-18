@@ -1,92 +1,87 @@
 <section class="search search-movie">
-  @if (loadingSearchMovie) {
-    <app-loading-fullscreen message="Searching..."></app-loading-fullscreen>
-  }
-  @if (!loadingSearchMovie) {
-    <header #header [ngStyle]="{ backgroundImage: 'url(' + bgImage + ')' }">
-      <h1><fa-icon [icon]="searchIcon"></fa-icon> Search Movie</h1>
-      <h2><fa-icon [icon]="movieIcon"></fa-icon> {{ searchQuery }}</h2>
-    </header>
-    <main>
-      <div class="container-fluid">
-        @if (searchError) {
-          <app-search-error [errorMessage]="errorMessage" (reload)="searchMovie()">
-          </app-search-error>
+  <header #header [ngStyle]="{ backgroundImage: 'url(' + bgImage + ')' }">
+    <h1><fa-icon [icon]="searchIcon"></fa-icon> Search Movie</h1>
+    <h2><fa-icon [icon]="movieIcon"></fa-icon> {{ searchQuery }}</h2>
+  </header>
+  <main>
+    <div class="container-fluid">
+      @if (searchError) {
+        <app-search-error [errorMessage]="errorMessage" (reload)="searchMovie()">
+        </app-search-error>
+      }
+      @if (!searchError) {
+        @if (noResults) {
+          <section class="search-movie-no-results">
+            <p>
+              <strong>{{ searchQuery }}</strong> returned no results.
+            </p>
+          </section>
         }
-        @if (!searchError) {
-          @if (noResults) {
-            <section class="search-movie-no-results">
-              <p>
-                <strong>{{ searchQuery }}</strong> returned no results.
-              </p>
-            </section>
-          }
-          @if (!noResults) {
-            <section class="search-movie-controls">
-              <div class="row">
-                <div class="col-12 col-lg-6">
-                  <app-display-selector
-                    [displayMode]="displayMode"
-                    (onDisplayChange)="changeDisplay($event)"
-                  >
-                  </app-display-selector>
-                </div>
+        @if (!noResults) {
+          <section class="search-movie-controls">
+            <div class="row">
+              <div class="col-12 col-lg-6">
+                <app-display-selector
+                  [displayMode]="displayMode"
+                  (onDisplayChange)="changeDisplay($event)"
+                >
+                </app-display-selector>
               </div>
-            </section>
-            <section class="search-movie-results">
-              <p>
-                <strong>{{ searchQuery }}</strong> returned {{ totalResults }} results. Showing
-                results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
-              </p>
-              @if (displayMode == 'grid') {
-                <section class="search-movie-results-grid">
-                  <div class="row">
-                    @for (
-                      movieResult of movieResults
-                        | paginate
-                          : {
-                              itemsPerPage: 20,
-                              currentPage: currentPage,
-                              totalItems: totalResults,
-                            };
-                      track movieResult
-                    ) {
-                      <div class="col-12 col-sm-6 col-lg-3">
-                        <app-search-movie-result-grid [movieResult]="movieResult">
-                        </app-search-movie-result-grid>
-                      </div>
-                    }
-                  </div>
-                </section>
-              }
-              @if (displayMode == 'list') {
-                <section class="search-movie-results-list">
-                  <div class="row">
-                    @for (
-                      movieResult of movieResults
-                        | paginate
-                          : {
-                              itemsPerPage: 20,
-                              currentPage: currentPage,
-                              totalItems: totalResults,
-                            };
-                      track movieResult
-                    ) {
-                      <div class="col-12">
-                        <app-search-movie-result-list [movieResult]="movieResult">
-                        </app-search-movie-result-list>
-                      </div>
-                    }
-                  </div>
-                </section>
-              }
-            </section>
-            <div class="d-flex justify-content-center align-items-center">
-              <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
             </div>
-          }
+          </section>
+          <section class="search-movie-results">
+            <p>
+              <strong>{{ searchQuery }}</strong> returned {{ totalResults }} results. Showing
+              results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
+            </p>
+            @if (displayMode == 'grid') {
+              <section class="search-movie-results-grid">
+                <div class="row">
+                  @for (
+                    movieResult of movieResults
+                      | paginate
+                        : {
+                            itemsPerPage: 20,
+                            currentPage: currentPage,
+                            totalItems: totalResults,
+                          };
+                    track movieResult
+                  ) {
+                    <div class="col-12 col-sm-6 col-lg-3">
+                      <app-search-movie-result-grid [movieResult]="movieResult">
+                      </app-search-movie-result-grid>
+                    </div>
+                  }
+                </div>
+              </section>
+            }
+            @if (displayMode == 'list') {
+              <section class="search-movie-results-list">
+                <div class="row">
+                  @for (
+                    movieResult of movieResults
+                      | paginate
+                        : {
+                            itemsPerPage: 20,
+                            currentPage: currentPage,
+                            totalItems: totalResults,
+                          };
+                    track movieResult
+                  ) {
+                    <div class="col-12">
+                      <app-search-movie-result-list [movieResult]="movieResult">
+                      </app-search-movie-result-list>
+                    </div>
+                  }
+                </div>
+              </section>
+            }
+          </section>
+          <div class="d-flex justify-content-center align-items-center">
+            <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
+          </div>
         }
-      </div>
-    </main>
-  }
+      }
+    </div>
+  </main>
 </section>

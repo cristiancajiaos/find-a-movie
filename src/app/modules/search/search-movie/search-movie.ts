@@ -7,6 +7,7 @@ import { TitleService } from '../../../services/title-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseSearchMovie } from '../../../classes/response-search-movie';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-search-movie',
@@ -33,7 +34,6 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public displayMode: string = 'grid';
 
-  public loadingSearchMovie: boolean = false;
   public loadingPage: boolean = false;
 
   public noResults: boolean = false;
@@ -42,14 +42,16 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   @ViewChild('header') header!: ElementRef;
 
-  private routeSubscription?: Subscription;
-  private getMovieSubscription: Subscription;
-  private getMovieChangePageSubscription: Subscription;
+  private routeSubscription?: Subscription = new Subscription();
+  private getMovieSubscription: Subscription = new Subscription();
+  private getMovieChangePageSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService,
     private titleService: TitleService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -58,22 +60,21 @@ export class SearchMovie implements OnInit, OnDestroy {
       this.setSearchMovieTitle(this.searchQuery);
       this.searchMovie();
     });
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      this.setSearchMovieTitle(this.searchQuery);
+    });
   }
 
   public searchMovie(): void {
     this.searchError = false;
-    this.loadingSearchMovie = true;
     this.getMovieSubscription = this.searchService.searchMovie(this.searchQuery).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
-        this.setSearchMovieTitle(this.searchQuery);
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingSearchMovie = false;
       },
       complete: () => {
-        this.loadingSearchMovie = false;
       }
     });
   }
@@ -85,18 +86,14 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public searchMovieUpdatePage(page: number) {
     this.searchError = false;
-    this.loadingSearchMovie = true;
     this.getMovieChangePageSubscription = this.searchService.searchMovie(this.searchQuery, page).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
-        this.setSearchMovieTitle(this.searchQuery);
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingSearchMovie = false;
       },
       complete: () => {
-        this.loadingSearchMovie = false;
       }
     });
   }
@@ -142,6 +139,9 @@ export class SearchMovie implements OnInit, OnDestroy {
     }
     if (this.getMovieChangePageSubscription) {
       this.getMovieChangePageSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }
