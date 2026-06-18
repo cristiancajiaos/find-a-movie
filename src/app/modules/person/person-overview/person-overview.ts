@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment.development';
 import { faGlobe, faMars, faVenus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import { TitleService } from '../../../services/title-service';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-person-overview',
@@ -26,8 +27,6 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public person: Person = new Person();
 
-  public loadingPerson: boolean = false;
-
   public personBiography: string = '';
 
   public personAlsoKnownAs: string[] = [];
@@ -40,22 +39,34 @@ export class PersonOverview implements OnInit, OnDestroy {
   public personIMDBUrl: string = '';
   public personHomepageUrl: string = '';
 
+  private personError: HttpErrorResponse = null;
   public personFound: boolean = false;
-  public personOverviewError: boolean = false;
+  public personErrorFound: boolean = false;
   public errorMessage: string = '';
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-  public getPersonSubscription: Subscription;
+  private activatedRouteParentSubscription: Subscription = new Subscription();
+  private getPersonSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
     private localStorageService: LocalStorageService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     this.setId();
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.person) {
+        this.setTitle();
+      } else {
+        if (this.personError) {
+          this.titleService.setPersonServiceErrorTitle();
+        }
+      }
+    });
   }
 
   private setId(): void {
@@ -68,15 +79,13 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private getPerson(): void {
-    this.personOverviewError = false;
-    this.loadingPerson = true;
+    this.personErrorFound = false;
 
     const localPerson: Person = this.localStorageService.getItem('person');
 
     if (localPerson) {
       this.person = localPerson;
-      this.loadingPerson = false;
-      this.setTitle();
+
       this.setPersonBiography();
       this.setPersonInfotable();
     } else {
@@ -84,16 +93,13 @@ export class PersonOverview implements OnInit, OnDestroy {
         next: (person) => {
           this.person = person;
           this.personFound = true;
-          this.setTitle();
           this.setPersonBiography();
           this.setPersonInfotable();
         },
         error: (error) => {
           this.handleError(error);
-          this.loadingPerson = false;
         },
         complete: () => {
-          this.loadingPerson = false;
         }
       })
     }
@@ -104,8 +110,9 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse) {
-    this.personOverviewError = true;
+    this.personErrorFound = true;
     this.errorMessage = error.message;
+    this.personError = error;
   }
 
   public reloadOverview(event: boolean): void {
@@ -154,5 +161,9 @@ export class PersonOverview implements OnInit, OnDestroy {
     if (this.getPersonSubscription) {
       this.getPersonSubscription.unsubscribe();
     }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
+    }
+
   }
 }

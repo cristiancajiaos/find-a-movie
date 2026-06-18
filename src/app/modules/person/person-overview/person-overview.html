@@ -1,13 +1,10 @@
 <section class="person-overview">
-  @if (loadingPerson) {
-    <app-loading-inline message="Loading person..."></app-loading-inline>
+  @if (personErrorFound) {
+    <app-person-error [errorMessage]="errorMessage" (reload)="reloadOverview($event)">
+    </app-person-error>
   }
-  @if (!loadingPerson) {
-    @if (personOverviewError) {
-      <app-person-error [errorMessage]="errorMessage" (reload)="reloadOverview($event)">
-      </app-person-error>
-    }
-    @if (!personOverviewError) {
+  @if (!personErrorFound) {
+    @if (person) {
       <div class="row">
         <div class="col-12 col-lg-8">
           @if (person.biography) {
@@ -50,7 +47,7 @@
                     <tr>
                       <td>Born:</td>
                       <td>
-                        {{ personBirthDay | date : 'longDate' }}
+                        {{ personBirthDay | date: 'longDate' }}
                         @if (person.place_of_birth) {
                           <br />
                           in {{ personPlaceBirth }}
@@ -62,7 +59,7 @@
                     <tr>
                       <td>Died:</td>
                       <td>
-                        {{ personDeathDay | date : 'longDate' }}
+                        {{ personDeathDay | date: 'longDate' }}
                       </td>
                     </tr>
                   }
