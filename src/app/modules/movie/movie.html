@@ -1,5 +1,5 @@
 <section class="movie">
-  @if (movieError) {
+  @if (movieErrorFound) {
     @if (movieNotFound) {
       <app-movie-not-found></app-movie-not-found>
     }
@@ -8,7 +8,7 @@
       </app-movie-error-fullscreen>
     }
   }
-  @if (!movieError) {
+  @if (!movieErrorFound) {
     @if (movie) {
       <div class="navbar-cover"></div>
       <app-movie-header [id]="id" [movie]="movie" #movieHeader> </app-movie-header>

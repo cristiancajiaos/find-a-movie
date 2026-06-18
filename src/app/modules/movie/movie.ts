@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../services/movie-service';
 import { Movie } from '../../classes/movie';
@@ -15,6 +9,7 @@ import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-ico
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../services/local-storage-service';
 import { Subscription } from 'rxjs';
+import { LoadingService } from '../../services/loading-service';
 
 @Component({
   selector: 'app-movie',
@@ -33,12 +28,14 @@ export class MovieComponent implements OnInit, OnDestroy {
   public posterSizeSmall: string = '';
   public posterSizeOriginal: string = '';
 
+  private movieError: HttpErrorResponse = null;
   public movieNotFound: boolean = false;
-  public movieError: boolean = false;
+  public movieErrorFound: boolean = false;
   public errorMessage: string = '';
 
-  public routeSubscription!: Subscription;
-  public getMovieSubscription!: Subscription;
+  public routeSubscription: Subscription = new Subscription();
+  public getMovieSubscription: Subscription = new Subscription();
+  public endLoadingSubscription: Subscription = new Subscription();
 
   @ViewChild('movieHeader') movieHeader!: MovieHeader;
 
@@ -47,6 +44,7 @@ export class MovieComponent implements OnInit, OnDestroy {
     private movieService: MovieService,
     private titleService: TitleService,
     private localStorageService: LocalStorageService,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit(): void {
@@ -54,32 +52,42 @@ export class MovieComponent implements OnInit, OnDestroy {
       this.id = parseInt(this.activatedRoute.snapshot.params['id']);
       this.getMovie();
     });
-  }
 
-  private getMovie(): void {
-    this.movieError = false;
-    this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
-      next: (movie) => {
-        this.movie = movie;
-        this.localStorageService.setItem('movie', movie);
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.movie) {
         this.setTitle();
-        this.setMoviePoster();
-      }, error: (error) => {
-        this.handleError(error);
-      }, complete: () => {
+      } else {
+        if (this.movieError) {
+          if (this.movieError.status && this.movieError.status === 404) {
+            this.movieNotFound = true;
+            this.titleService.setMovieNotFoundTitle();
+          } else {
+            this.errorMessage = this.movieError.message;
+            this.titleService.setMovieServiceErrorTitle();
+          }
+        }
       }
     });
   }
 
+  private getMovie(): void {
+    this.movieErrorFound = false;
+    this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
+      next: (movie) => {
+        this.movie = movie;
+        this.localStorageService.setItem('movie', movie);
+        this.setMoviePoster();
+      },
+      error: (error) => {
+        this.handleError(error);
+      },
+      complete: () => {},
+    });
+  }
+
   private handleError(error: HttpErrorResponse): void {
-    this.movieError = true;
-    if (error.status && error.status === 404) {
-      this.movieNotFound = true;
-      this.titleService.setMovieNotFoundTitle();
-    } else {
-      this.errorMessage = error.message;
-      this.titleService.setMovieServiceErrorTitle();
-    }
+    this.movieErrorFound = true;
+    this.movieError = error;
   }
 
   public reloadMovie(event: boolean): void {
@@ -113,6 +121,9 @@ export class MovieComponent implements OnInit, OnDestroy {
     }
     if (this.getMovieSubscription) {
       this.getMovieSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
 import { Movie } from '../../../classes/movie';
 import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TitleService } from '../../../services/title-service';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-movie-overview',
@@ -22,25 +23,29 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieIMDB: string = '';
   public movieHomepage: string = '';
 
-  public movieFound: boolean = false;
-  public movieOverviewError: boolean = false;
-  public errorMessage: string = '';
-
   public movieTagline: string = null;
   public movieOverview: string = null;
 
-  public movieCreditsFound: boolean = false;
-  public movieCreditsError: boolean = false;
+  private error: HttpErrorResponse = null;
+  public errorFound: boolean = false;
+  public errorMessage: string = '';
+
+  public movieFound: boolean = false;
+  public movieErrorFound: boolean = false;
+
+  public movieCreditsFound: boolean = true;
+  public movieCreditsErrorFound: boolean = false;
   public movieCreditsErrorMessage: string = '';
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-  private getMovieSubscription: Subscription;
-  private getMovieCreditsSubscription: Subscription;
+  private activatedRouteParentSubscription: Subscription = new Subscription();
+  private getMovieAndCreditsSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
     private titleService: TitleService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -51,44 +56,39 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
         this.id = parseInt(params['id']);
-        this.getMovie();
-        this.getCredits();
+        this.getMovieAndCredits();
       },
     );
+
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.movie) {
+        this.setTitle();
+      }
+    });
   }
 
-  private getMovie() {
+  private getMovieAndCredits() {
     this.movie = null;
     this.movieTagline = null;
     this.movieOverview = null;
-    this.movieOverviewError = false;
+    this.movieErrorFound = false;
 
-    this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
-        next: (movie) => {
-          this.movie = movie;
-          this.movieFound = true;
-        },
-        error: (error) => {
-          this.handleError(error);
-        },
-        complete: () => {
-          this.setTitle();
-          this.setDescription();
-        },
-      });
-  }
+    const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
+    const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
 
-  private getCredits() {
-    this.getMovieCreditsSubscription = this.movieService.getMovieCredits(this.id).subscribe({
-      next: (credits) => {
+    this.getMovieAndCreditsSubscription = forkJoin([getMovie, getCredits]).subscribe({
+      next: ([movie, credits]) => {
+        this.movie = movie;
         this.credits = credits;
-        this.movieCreditsFound = true;
+        this.movieFound = true;
+        this.movieCreditsErrorFound = true;
       },
       error: (error) => {
-        this.handleCreditsError(error);
+        this.handleError(error);
       },
       complete: () => {
-      },
+        this.setDescription();
+      }
     });
   }
 
@@ -107,26 +107,24 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.movieOverviewError = true;
+    this.error = error;
+    this.errorFound = true;
     this.errorMessage = error.message;
   }
 
-  private handleCreditsError(error: HttpErrorResponse): void {
-    this.movieCreditsError = true;
-    this.movieCreditsErrorMessage = error.message;
-  }
-
   public reloadMovieOverview(event: boolean) {
-    this.getMovie();
+    this.getMovieAndCredits();
   }
 
   ngOnDestroy(): void {
-    this.activatedRouteParentSubscription?.unsubscribe();
-    if (this.getMovieSubscription) {
-      this.getMovieSubscription.unsubscribe();
+    if (this.activatedRouteParentSubscription) {
+      this.activatedRouteParentSubscription.unsubscribe();
     }
-    if (this.getMovieCreditsSubscription) {
-      this.getMovieCreditsSubscription.unsubscribe();
+    if (this.getMovieAndCreditsSubscription) {
+      this.getMovieAndCreditsSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }

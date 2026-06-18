@@ -1,11 +1,11 @@
 <section class="movie-overview">
-  @if (movieOverviewError) {
+  @if (errorFound) {
     <app-movie-error
       [errorMessage]="errorMessage"
       (reload)="reloadMovieOverview($event)"
     ></app-movie-error>
   }
-  @if (!movieOverviewError) {
+  @if (!errorFound) {
     @if (movie) {
       @if (movieTagline) {
         <section class="movie-tagline">
@@ -55,13 +55,6 @@
               </div>
             </div>
           </div>
-        </section>
-      }
-      @if (!movieCreditsFound) {
-        <section class="error-credits">
-          <p>
-            Error showing credits: <strong>{{ movieCreditsErrorMessage }}</strong>
-          </p>
         </section>
       }
       <hr />

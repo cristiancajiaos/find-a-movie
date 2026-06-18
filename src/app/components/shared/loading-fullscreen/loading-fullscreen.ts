@@ -19,6 +19,6 @@ export class LoadingFullscreen implements OnInit {
   @Input() message: string = 'Loading...';
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.message);
+    this.titleService.setTitle('Loading...')
   }
 }
