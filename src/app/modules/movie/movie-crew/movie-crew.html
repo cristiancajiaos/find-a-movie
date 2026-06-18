@@ -1,14 +1,28 @@
 <section class="movie-crew">
-  @if (loadingCrew) {
-    <app-loading-inline message="Loading crew..."></app-loading-inline>
+  @if (movieCrewError) {
+    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCrew($event)"> </app-movie-error>
   }
-  @if (!loadingCrew) {
-    @if (movieCrewError) {
-      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCrew($event)">
-      </app-movie-error>
-    }
-    @if (!movieCrewError) {
-      <h2>Featured Crew</h2>
+  @if (!movieCrewError) {
+    <h2>Featured Crew</h2>
+    @if (
+      direction.length > 0 ||
+      coDirection.length > 0 ||
+      writing.length > 0 ||
+      story.length > 0 ||
+      basedOnWorkBy.length > 0 ||
+      basedOnCharactersBy.length > 0 ||
+      producing.length > 0 ||
+      executiveProducing.length > 0 ||
+      coProducing.length > 0 ||
+      directorsOfPhotography.length > 0 ||
+      productionDesigners.length > 0 ||
+      editors.length > 0 ||
+      musicComposers.length > 0 ||
+      additionalMusicComposers.length > 0 ||
+      visualEffectsSupervisors.length > 0 ||
+      costumeDesigners.length > 0 ||
+      castingCrew.length > 0
+    ) {
       <div class="table-responsive">
         <table class="table">
           <tbody>
@@ -290,6 +304,8 @@
       <div class="d-grid">
         <a routerLink="../full-crew" class="btn btn-primary mb-2"> See Full Crew </a>
       </div>
+    } @else {
+      <p>This movie has no recognizable crew</p>
     }
   }
 </section>
