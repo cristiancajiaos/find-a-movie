@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Person } from '../../../classes/person';
 import { environment } from '../../../../environments/environment.development';
@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment.development';
   templateUrl: './person-header.html',
   styleUrl: './person-header.scss'
 })
-export class PersonHeader implements OnInit {
+export class PersonHeader implements OnChanges {
 
   public user: IconDefinition = faUser;
   public film: IconDefinition = faFilm;
@@ -29,7 +29,7 @@ export class PersonHeader implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
+  ngOnChanges() {
     this.setName();
     this.setBirthYear();
     this.setDeathDay();
