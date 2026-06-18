@@ -1,85 +1,77 @@
 <section class="movie-overview">
-  @if (loadingMovie) {
-    <app-loading-fullscreen message="Loading movie..."></app-loading-fullscreen>
+  @if (movieOverviewError) {
+    <app-movie-error
+      [errorMessage]="errorMessage"
+      (reload)="reloadMovieOverview($event)"
+    ></app-movie-error>
   }
-  @if (!loadingMovie) {
-    @if (movieOverviewError) {
-      <app-movie-error
-        [errorMessage]="errorMessage"
-        (reload)="reloadMovieOverview($event)"
-      ></app-movie-error>
-    }
-    @if (!movieOverviewError) {
-      @if (movie.tagline) {
+  @if (!movieOverviewError) {
+    @if (movie) {
+      @if (movieTagline) {
         <section class="movie-tagline">
-          <p>{{ movie.tagline }}</p>
+          <p>{{ movieTagline }}</p>
         </section>
       }
-      @if (movie.overview) {
+      @if (movieOverview) {
         <section class="movie-overview">
-          <p>{{ movie.overview }}</p>
+          <p>{{ movieOverview }}</p>
         </section>
         <hr />
       }
-      @if (loadingCredits) {
-        <app-loading-inline message="Loading credits"></app-loading-inline>
-      }
-      @if (!loadingCredits) {
-        @if (movieCreditsFound) {
-          <section class="movie-main-credits">
-            <div class="row">
-              <div class="col-12 col-lg-4">
-                <app-movie-overview-main-cast [movieCast]="credits.cast">
-                </app-movie-overview-main-cast>
-              </div>
-              <div class="col-12 col-lg-8">
-                <section class="movie-main-crew">
-                  <app-movie-overview-main-crew [movieCrew]="credits.crew">
-                  </app-movie-overview-main-crew>
-                </section>
+      @if (movieCreditsFound) {
+        <section class="movie-main-credits">
+          <div class="row">
+            <div class="col-12 col-lg-4">
+              <app-movie-overview-main-cast [movieCast]="credits.cast">
+              </app-movie-overview-main-cast>
+            </div>
+            <div class="col-12 col-lg-8">
+              <section class="movie-main-crew">
+                <app-movie-overview-main-crew [movieCrew]="credits.crew">
+                </app-movie-overview-main-crew>
+              </section>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-lg-4">
+              <div class="d-grid mb-2">
+                <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
+                  See Full Cast
+                </a>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 col-lg-4">
-                <div class="d-grid mb-2">
-                  <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
-                    See Full Cast
-                  </a>
-                </div>
-              </div>
-              <div class="col-12 col-lg-4">
-                <div class="d-grid mb-2">
-                  <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
-                    See Featured Crew
-                  </a>
-                </div>
-              </div>
-              <div class="col-12 col-lg-4">
-                <div class="d-grid mb-2">
-                  <a [routerLink]="['/movie', movie.id, 'full-crew']" class="btn btn-primary">
-                    See Full Crew
-                  </a>
-                </div>
+            <div class="col-12 col-lg-4">
+              <div class="d-grid mb-2">
+                <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
+                  See Featured Crew
+                </a>
               </div>
             </div>
-          </section>
-        }
-        @if (!movieCreditsFound) {
-          <section class="error-credits">
-            <p>Error showing credits: <strong>{{ movieCreditsErrorMessage }}</strong></p>
-          </section>
-        }
-        <hr />
+            <div class="col-12 col-lg-4">
+              <div class="d-grid mb-2">
+                <a [routerLink]="['/movie', movie.id, 'full-crew']" class="btn btn-primary">
+                  See Full Crew
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
       }
+      @if (!movieCreditsFound) {
+        <section class="error-credits">
+          <p>
+            Error showing credits: <strong>{{ movieCreditsErrorMessage }}</strong>
+          </p>
+        </section>
+      }
+      <hr />
       <div class="row">
         <div class="col-12 col-lg-6">
-          <app-movie-overview-trailer [movieId]="id">
-          </app-movie-overview-trailer>
+          <app-movie-overview-trailer [movieId]="id"> </app-movie-overview-trailer>
         </div>
         <div class="col-12 col-lg-6">
           <section class="movie-info">
-            <app-movie-overview-infotable [movie]="movie">
-            </app-movie-overview-infotable>
+            <app-movie-overview-infotable [movie]="movie"> </app-movie-overview-infotable>
           </section>
         </div>
       </div>

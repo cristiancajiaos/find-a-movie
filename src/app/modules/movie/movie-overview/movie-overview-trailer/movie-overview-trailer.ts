@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { MovieService } from '../../../../services/movie-service';
 import { ResponseVideo } from '../../../../classes/response-video';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,7 +11,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './movie-overview-trailer.html',
   styleUrl: './movie-overview-trailer.scss',
 })
-export class MovieOverviewTrailer implements OnInit, OnDestroy {
+export class MovieOverviewTrailer implements OnInit, OnChanges, OnDestroy {
+
+  private movieService = inject(MovieService);
+
   @Input() movieId: number = 0;
 
   public movieTrailerUrl: string = '';
@@ -26,10 +29,13 @@ export class MovieOverviewTrailer implements OnInit, OnDestroy {
 
   private getMovieTrailerSubscription: Subscription;
 
-  constructor(private movieService: MovieService) {}
-
+  constructor() {}
 
   ngOnInit(): void {
+
+  }
+
+   ngOnChanges(changes: SimpleChanges): void {
     this.getVideo();
   }
 

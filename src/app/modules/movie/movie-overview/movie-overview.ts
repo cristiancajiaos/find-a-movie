@@ -5,7 +5,6 @@ import { MovieService } from '../../../services/movie-service';
 import { Movie } from '../../../classes/movie';
 import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { TitleService } from '../../../services/title-service';
 
 @Component({
@@ -17,18 +16,19 @@ import { TitleService } from '../../../services/title-service';
 export class MovieOverview implements OnInit, OnDestroy {
   public id: number = 0;
 
-  public movie: Movie = new Movie();
+  public movie: Movie = null;
   public credits: Credits = new Credits();
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
 
-  public loadingMovie: boolean = false;
   public movieFound: boolean = false;
   public movieOverviewError: boolean = false;
   public errorMessage: string = '';
 
-  public loadingCredits: boolean = false;
+  public movieTagline: string = null;
+  public movieOverview: string = null;
+
   public movieCreditsFound: boolean = false;
   public movieCreditsError: boolean = false;
   public movieCreditsErrorMessage: string = '';
@@ -40,7 +40,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
-    private localStorageService: LocalStorageService,
     private titleService: TitleService,
   ) {}
 
@@ -59,35 +58,27 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private getMovie() {
+    this.movie = null;
+    this.movieTagline = null;
+    this.movieOverview = null;
     this.movieOverviewError = false;
-    this.loadingMovie = true;
 
-    const localMovie: Movie = this.localStorageService.getItem('movie');
-
-    if (localMovie) {
-      this.movie = localMovie;
-      this.loadingMovie = false;
-      this.setTitle();
-    } else {
-      this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
+    this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
         next: (movie) => {
           this.movie = movie;
           this.movieFound = true;
         },
         error: (error) => {
           this.handleError(error);
-          this.loadingMovie = false;
         },
         complete: () => {
-          this.loadingMovie = false;
           this.setTitle();
+          this.setDescription();
         },
       });
-    }
   }
 
   private getCredits() {
-    this.loadingCredits = true;
     this.getMovieCreditsSubscription = this.movieService.getMovieCredits(this.id).subscribe({
       next: (credits) => {
         this.credits = credits;
@@ -97,7 +88,6 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.handleCreditsError(error);
       },
       complete: () => {
-        this.loadingCredits = false;
       },
     });
   }
@@ -109,6 +99,11 @@ export class MovieOverview implements OnInit, OnDestroy {
       this.movie.release_date,
     );
     this.titleService.setMovieOverviewTitle(formattedTitle);
+  }
+
+  private setDescription() {
+    this.movieTagline = this.movie.tagline;
+    this.movieOverview = this.movie.overview;
   }
 
   private handleError(error: HttpErrorResponse): void {

@@ -22,7 +22,7 @@ export class MovieHeader implements OnChanges {
   public clock: IconDefinition = faClock;
 
   @Input() id: number = 0;
-  @Input() movie: Movie = new Movie();
+  @Input() movie: Movie = null;
 
   public year: number = 0;
   public backdropImg: string = '';

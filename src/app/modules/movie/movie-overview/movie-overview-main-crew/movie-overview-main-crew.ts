@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CrewMember } from '../../../../classes/credits/crew-member';
 
 @Component({
@@ -7,7 +7,8 @@ import { CrewMember } from '../../../../classes/credits/crew-member';
   templateUrl: './movie-overview-main-crew.html',
   styleUrl: './movie-overview-main-crew.scss',
 })
-export class MovieOverviewMainCrew implements OnInit {
+export class MovieOverviewMainCrew implements OnInit, OnChanges {
+
   @Input() movieCrew: CrewMember[] = [];
 
   public direction: CrewMember[] = [];
@@ -20,6 +21,10 @@ export class MovieOverviewMainCrew implements OnInit {
   public executiveProducing: CrewMember[] = [];
 
   ngOnInit(): void {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.filterMainCrew();
   }
 

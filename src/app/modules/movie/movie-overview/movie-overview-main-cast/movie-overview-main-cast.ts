@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CastMember } from '../../../../classes/credits/cast-member';
 
 @Component({
@@ -7,11 +7,16 @@ import { CastMember } from '../../../../classes/credits/cast-member';
   templateUrl: './movie-overview-main-cast.html',
   styleUrl: './movie-overview-main-cast.scss',
 })
-export class MovieOverviewMainCast implements OnInit {
+export class MovieOverviewMainCast implements OnInit, OnChanges {
+
   @Input() movieCast: CastMember[] = [];
   public movieMainCast: CastMember[] = [];
 
   ngOnInit(): void {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.setMainCast();
   }
 

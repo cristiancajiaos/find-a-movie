@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
 export class MovieComponent implements OnInit, OnDestroy {
   public imagePortrait: IconDefinition = faImagePortrait;
   public id: number = 0;
-  public movie: Movie = new Movie();
+  public movie: Movie = null;
 
   public formattedTitle: string = '';
 
