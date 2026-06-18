@@ -1,61 +1,59 @@
 <section class="movie-cast">
-  @if (loadingCast) {
-    <app-loading-inline message="Loading cast..."></app-loading-inline>
+  @if (movieCastError) {
+    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCast($event)"> </app-movie-error>
   }
-  @if (!loadingCast) {
-    @if (movieCastError) {
-      <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCast($event)">
-      </app-movie-error>
-    }
-    @if (!movieCastError) {
-      <h2>Cast</h2>
-      @if (movieCast.length > 0) {
-        <app-order-select
-          #orderSelectMovieCast
-          [orderCriterias]="orderCriterias"
-          [defaultOrderCriteria]="defaultOrder"
-          (onOrderCriteriaChange)="orderCriteriaChange($event)">
-        </app-order-select>
-        <hr/>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
+  @if (!movieCastError) {
+    <h2>Cast</h2>
+    @if (movieCast.length > 0) {
+      <app-order-select
+        #orderSelectMovieCast
+        [orderCriterias]="orderCriterias"
+        [defaultOrderCriteria]="defaultOrder"
+        (onOrderCriteriaChange)="orderCriteriaChange($event)"
+      >
+      </app-order-select>
+      <hr />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="2">Actor</th>
+              <th>Character</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (castMember of movieCast; track castMember) {
               <tr>
-                <th colspan="2">Actor</th>
-                <th>Character</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (castMember of movieCast; track castMember) {
-                <tr>
-                  <td>
-                    <a [routerLink]="['/person', castMember.id]">
-                      {{ castMember.name }}
-                    </a>
-                  </td>
-                  <td>as</td>
-                  @if (castMember.character) {
-                    @if (castMember.character == '(uncredited)') {
-                      <td>
-                        <i>An uncredited character</i>
-                      </td>
-                    } @else {
-                      <td>{{ castMember.character }}</td>
-                    }
-                  } @else {
+                <td>
+                  <a [routerLink]="['/person', castMember.id]">
+                    {{ castMember.name }}
+                  </a>
+                </td>
+                <td>as</td>
+                @if (castMember.character) {
+                  @if (castMember.character == '(uncredited)') {
                     <td>
-                      <i>A character not defined</i>
+                      <i>An uncredited character</i>
                     </td>
+                  } @else {
+                    <td>{{ castMember.character }}</td>
                   }
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      }
-      @if (movieCast.length == 0) {
-        <p>This movie has no recognizable cast</p>
-      }
+                } @else {
+                  <td>
+                    <i>A character not defined</i>
+                  </td>
+                }
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="3">
+                  This movie has no recognizable cast
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     }
   }
 </section>

@@ -23,8 +23,6 @@ export class MovieCast implements OnInit, OnDestroy {
   private movie: Movie;
   public movieCast: CastMember[] = [];
 
-  public loadingCast: boolean = false;
-
   public castFound: boolean = false;
   public movieCastError: boolean = false;
   public errorMessage: string = '';
@@ -83,7 +81,6 @@ export class MovieCast implements OnInit, OnDestroy {
 
   private getCast(): void {
     this.movieCastError = false;
-    this.loadingCast = true;
     this.getMovieCastSubscription = this.movieService.getMovieCast(this.id).subscribe({
       next: (cast) => {
         this.movieCast = cast;
@@ -91,10 +88,8 @@ export class MovieCast implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingCast = false;
       },
       complete: () => {
-        this.loadingCast = false;
       }
     });
   }
