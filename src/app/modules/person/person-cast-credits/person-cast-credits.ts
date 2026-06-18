@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Person } from '../../../classes/person';
 import { TitleService } from '../../../services/title-service';
 import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/response-person-cast-credit';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-person-cast-credits',
@@ -24,25 +25,34 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
   public personCastCredits: ResponsePersonCastCredit[] = [];
 
-  public loadingPersonMovieCredits: boolean = false;
-
   public personMovieCreditsFound: boolean = false;
   public personMovieCreditsError: boolean = false;
   public errorMessage: string = '';
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-  private getCreditsCastSubscription: Subscription;
+  private activatedRouteParentSubscription: Subscription = new Subscription();
+  private getCreditsCastSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
     private localStorageService: LocalStorageService,
     private titleService: TitleService,
+    private loadingService: LoadingService
   ){}
 
   ngOnInit(): void {
     this.getPerson();
     this.setId();
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.personMovieCreditsFound) {
+        this.setTitle();
+      } else {
+        if (this.personMovieCreditsError) {
+           this.titleService.setPersonServiceErrorTitle();
+        }
+      }
+    });
   }
 
   private getPerson(): void {
@@ -63,7 +73,6 @@ export class PersonCastCredits implements OnInit, OnDestroy {
 
   private getPersonMovieCredits(): void {
     this.personMovieCreditsError = false;
-    this.loadingPersonMovieCredits = true;
     this.personService.getCastCredits(this.id).subscribe({
       next: (castCredits) => {
         this.personCastCredits = castCredits;
@@ -71,10 +80,8 @@ export class PersonCastCredits implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingPersonMovieCredits = false;
       },
       complete: () => {
-        this.loadingPersonMovieCredits = false;
       }
     });
   }
@@ -94,6 +101,9 @@ export class PersonCastCredits implements OnInit, OnDestroy {
     }
     if (this.getCreditsCastSubscription) {
       this.getCreditsCastSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 

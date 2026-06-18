@@ -1,20 +1,15 @@
 <section class="person-cast-credits">
-  @if (loadingPersonMovieCredits) {
-    <app-loading-inline message="Loading movie credits for this person..."></app-loading-inline>
+  @if (personMovieCreditsError) {
+    <app-person-error [errorMessage]="errorMessage" (reload)="reloadMovieCredits($event)">
+    </app-person-error>
   }
-  @if (!loadingPersonMovieCredits) {
-    @if (personMovieCreditsError) {
-      <app-person-error [errorMessage]="errorMessage" (reload)="reloadMovieCredits($event)">
-      </app-person-error>
+  @if (!personMovieCreditsError) {
+    @if (personCastCredits.length === 0) {
+      <p>This person has no acting roles in movies</p>
     }
-    @if (!personMovieCreditsError) {
-      @if (personCastCredits.length === 0) {
-        <p>This person has no acting roles in movies</p>
-      }
-      @if (personCastCredits.length > 0) {
-        <app-person-movie-credits-cast [castCredits]="personCastCredits">
-        </app-person-movie-credits-cast>
-      }
+    @if (personCastCredits.length > 0) {
+      <app-person-movie-credits-cast [castCredits]="personCastCredits">
+      </app-person-movie-credits-cast>
     }
   }
 </section>
