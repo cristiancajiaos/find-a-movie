@@ -10,6 +10,7 @@ import { OrderSelect } from '../../../components/shared/order-select/order-selec
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { Movie } from '../../../classes/movie';
 import { TitleService } from '../../../services/title-service';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-movie-cast',
@@ -43,24 +44,28 @@ export class MovieCast implements OnInit, OnDestroy {
 
   @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-  private getMovieCastSubscription: Subscription;
+  private activatedRouteParentSubscription: Subscription = new Subscription();
+  private getMovieCastSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private movieService: MovieService,
     private localStorageService: LocalStorageService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
     this.getMovie();
     this.setId();
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      this.setTitle();
+    });
   }
 
   private getMovie(): void {
     this.movie = this.localStorageService.getItem('movie');
-    this.setTitle();
   }
 
   private setId(): void {
@@ -132,9 +137,14 @@ export class MovieCast implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.activatedRouteParentSubscription?.unsubscribe();
+    if (this.activatedRouteParentSubscription) {
+      this.activatedRouteParentSubscription.unsubscribe();
+    }
     if (this.getMovieCastSubscription) {
       this.getMovieCastSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }
