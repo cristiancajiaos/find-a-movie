@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TitleService } from '../../../services/title-service';
 import { Person } from '../../../classes/person';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
+import { LoadingService } from '../../../services/loading-service';
 
 @Component({
   selector: 'app-person-crew-credits',
@@ -30,24 +31,35 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   public personMovieCreditsError: boolean = false;
   public errorMessage: string = '';
 
-  public activatedRouteParentSubscription: Subscription | undefined;
-  private getCrewCreditsSubscription: Subscription;
+  private activatedRouteParentSubscription: Subscription = new Subscription()
+  private getCrewCreditsSubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private personService: PersonService,
     private localStorageService: LocalStorageService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    private loadingService: LoadingService
   ){}
 
   ngOnInit(): void {
     this.getPerson();
     this.setId();
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.personMovieCreditsFound) {
+        this.setTitle();
+      } else {
+        if (this.personMovieCreditsError) {
+          this.titleService.setPersonServiceErrorTitle();
+        }
+      }
+    });
   }
 
   private getPerson(): void {
     this.person = this.localStorageService.getItem('person');
-    this.setTitle();
+
   }
 
   private setId() {
@@ -94,6 +106,9 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
     }
     if (this.getCrewCreditsSubscription) {
       this.getCrewCreditsSubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 
