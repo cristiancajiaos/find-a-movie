@@ -21,7 +21,7 @@ import { LoadingService } from '../../../services/loading-service';
 export class MovieCast implements OnInit, OnDestroy {
   public id: number = 0;
 
-  private movie: Movie;
+  private movie: Movie = null;
   public movieCast: CastMember[] = [];
 
   public castFound: boolean = false;
@@ -60,7 +60,9 @@ export class MovieCast implements OnInit, OnDestroy {
     this.getMovie();
     this.setId();
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      this.setTitle();
+      if (this.movie) {
+         this.setTitle();
+      }
     });
   }
 
