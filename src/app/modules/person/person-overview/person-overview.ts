@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../services/person-service';
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { environment } from '../../../../environments/environment.development';
-import { faGlobe, faMars, faVenus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faGlobe, faMars, faVenus, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
@@ -22,6 +22,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   public femaleIcon: IconDefinition = faVenus;
   public imdbIcon: IconDefinition = faImdb;
   public globeIcon: IconDefinition = faGlobe;
+  public questionIcon: IconDefinition = faCircleQuestion;
 
   public id: number = 0;
 
@@ -139,8 +140,23 @@ export class PersonOverview implements OnInit, OnDestroy {
       this.personDeathDay = new Date(this.person.deathday);
     }
     if (this.person.gender) {
-      this.personGender = (this.person.gender == 1) ? 'Female' : 'Male';
-      this.personGenderIcon = (this.person.gender == 1) ? this.femaleIcon : this.maleIcon;
+      switch (this.person.gender) {
+        case 1: {
+          this.personGender = 'Female';
+          this.personGenderIcon = this.femaleIcon;
+          break;
+        }
+        case 2: {
+          this.personGender = 'Male';
+          this.personGenderIcon = this.maleIcon;
+          break;
+        }
+        default: {
+          this.personGender = '?';
+          this.personGenderIcon = this.questionIcon;
+          break;
+        }
+      }
     }
     if (this.person.known_for_department) {
       this.personMainOccupation = this.person.known_for_department;
