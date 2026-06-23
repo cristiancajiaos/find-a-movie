@@ -8,7 +8,7 @@ import { CrewMember } from '../../../../classes/credits/crew-member';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-main-crew.scss',
 })
-export class MovieOverviewMainCrew implements OnInit, OnChanges {
+export class MovieOverviewMainCrew implements OnChanges {
 
   @Input() movieCrew: CrewMember[] = [];
 
@@ -20,10 +20,6 @@ export class MovieOverviewMainCrew implements OnInit, OnChanges {
   public basedOnCharactersBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
-
-  ngOnInit(): void {
-
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.filterMainCrew();

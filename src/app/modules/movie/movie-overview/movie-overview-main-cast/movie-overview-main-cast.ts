@@ -8,14 +8,10 @@ import { CastMember } from '../../../../classes/credits/cast-member';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-main-cast.scss',
 })
-export class MovieOverviewMainCast implements OnInit, OnChanges {
+export class MovieOverviewMainCast implements OnChanges {
 
   @Input() movieCast: CastMember[] = [];
   public movieMainCast: CastMember[] = [];
-
-  ngOnInit(): void {
-
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setMainCast();

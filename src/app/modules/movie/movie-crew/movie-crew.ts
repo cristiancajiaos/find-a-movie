@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CrewMember } from '../../../classes/credits/crew-member';
@@ -17,6 +17,13 @@ import { LoadingService } from '../../../services/loading-service';
   styleUrl: './movie-crew.scss',
 })
 export class MovieCrew implements OnInit, OnDestroy {
+
+  private activatedRoute = inject(ActivatedRoute);
+  private movieService = inject(MovieService);
+  private localStorageService = inject(LocalStorageService);
+  private titleService = inject(TitleService);
+  private loadingService = inject(LoadingService);
+
   public id: number = 0;
 
   private movie: Movie = null;
@@ -48,14 +55,6 @@ export class MovieCrew implements OnInit, OnDestroy {
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCrewSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private movieService: MovieService,
-    private localStorageService: LocalStorageService,
-    private titleService: TitleService,
-    private loadingService: LoadingService
-  ) {}
 
   ngOnInit(): void {
     this.getMovie();

@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-trailer.scss',
 })
-export class MovieOverviewTrailer implements OnInit, OnChanges, OnDestroy {
+export class MovieOverviewTrailer implements OnChanges, OnDestroy {
 
   private movieService = inject(MovieService);
 
@@ -30,13 +30,7 @@ export class MovieOverviewTrailer implements OnInit, OnChanges, OnDestroy {
 
   private getMovieTrailerSubscription: Subscription;
 
-  constructor() {}
-
-  ngOnInit(): void {
-
-  }
-
-   ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.getVideo();
   }
 

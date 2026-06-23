@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../services/movie-service';
 import { Movie } from '../../classes/movie';
@@ -19,6 +19,13 @@ import { LoadingService } from '../../services/loading-service';
   styleUrl: './movie.scss',
 })
 export class MovieComponent implements OnInit, OnDestroy {
+
+  private activatedRoute = inject(ActivatedRoute);
+  private movieService = inject(MovieService);
+  private titleService = inject(TitleService);
+  private localStorageService = inject(LocalStorageService);
+  private loadingService = inject(LoadingService);
+
   public imagePortrait: IconDefinition = faImagePortrait;
   public id: number = 0;
   public movie: Movie = null;
@@ -39,14 +46,6 @@ export class MovieComponent implements OnInit, OnDestroy {
   public endLoadingSubscription: Subscription = new Subscription();
 
   @ViewChild('movieHeader') movieHeader!: MovieHeader;
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private movieService: MovieService,
-    private titleService: TitleService,
-    private localStorageService: LocalStorageService,
-    private loadingService: LoadingService,
-  ) {}
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
