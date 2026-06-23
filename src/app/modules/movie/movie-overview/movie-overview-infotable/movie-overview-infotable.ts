@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Movie } from '../../../../classes/movie';
 import { environment } from '../../../../../environments/environment.development';
 import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ import { faImdb } from '@fortawesome/free-brands-svg-icons';
   selector: 'app-movie-overview-infotable',
   standalone: false,
   templateUrl: './movie-overview-infotable.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-infotable.scss',
 })
 export class MovieOverviewInfotable implements OnInit, OnChanges {

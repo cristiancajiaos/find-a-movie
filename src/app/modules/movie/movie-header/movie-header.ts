@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
@@ -13,6 +13,7 @@ import { environment } from '../../../../environments/environment.development';
   selector: 'app-movie-header',
   standalone: false,
   templateUrl: './movie-header.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-header.scss',
 })
 export class MovieHeader implements OnChanges {

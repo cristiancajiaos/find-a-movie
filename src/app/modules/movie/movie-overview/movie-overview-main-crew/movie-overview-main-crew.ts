@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { CrewMember } from '../../../../classes/credits/crew-member';
 
 @Component({
   selector: 'app-movie-overview-main-crew',
   standalone: false,
   templateUrl: './movie-overview-main-crew.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-main-crew.scss',
 })
 export class MovieOverviewMainCrew implements OnInit, OnChanges {

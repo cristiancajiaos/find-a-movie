@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-error',
   standalone: false,
   templateUrl: './search-error.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-error.scss'
 })
 export class SearchError implements OnInit {

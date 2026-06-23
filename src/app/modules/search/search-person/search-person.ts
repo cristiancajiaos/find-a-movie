@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-search-person',
   standalone: false,
   templateUrl: './search-person.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-person.scss',
 })
 export class SearchPerson implements OnInit, OnDestroy {

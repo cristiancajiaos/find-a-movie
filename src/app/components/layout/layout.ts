@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingService } from '../../services/loading-service';
 import { delay, Observable } from 'rxjs';
 
@@ -6,6 +6,7 @@ import { delay, Observable } from 'rxjs';
   selector: 'app-layout',
   standalone: false,
   templateUrl: './layout.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layout.scss'
 })
 export class Layout implements OnInit {

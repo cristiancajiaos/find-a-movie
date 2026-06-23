@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -6,6 +6,7 @@ import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition } from '@fort
   selector: 'app-navbar',
   standalone: false,
   templateUrl: './navbar.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navbar.scss'
 })
 export class Navbar implements OnInit {

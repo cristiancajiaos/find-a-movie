@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MovieService } from '../../../../services/movie-service';
 import { ResponseVideo } from '../../../../classes/response-video';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-movie-overview-trailer',
   standalone: false,
   templateUrl: './movie-overview-trailer.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-trailer.scss',
 })
 export class MovieOverviewTrailer implements OnInit, OnChanges, OnDestroy {

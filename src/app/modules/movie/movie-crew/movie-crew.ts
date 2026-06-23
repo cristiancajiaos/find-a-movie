@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CrewMember } from '../../../classes/credits/crew-member';
@@ -13,6 +13,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-movie-crew',
   standalone: false,
   templateUrl: './movie-crew.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-crew.scss',
 })
 export class MovieCrew implements OnInit, OnDestroy {

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { TitleService } from '../../../services/title-service';
 
@@ -6,6 +6,7 @@ import { TitleService } from '../../../services/title-service';
   selector: 'app-loading-fullscreen',
   standalone: false,
   templateUrl: './loading-fullscreen.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './loading-fullscreen.scss'
 })
 export class LoadingFullscreen implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -7,6 +7,7 @@ import { MovieService } from '../../../services/movie-service';
   selector: 'app-search-movie-result-list',
   standalone: false,
   templateUrl: './search-movie-result-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-movie-result-list.scss',
 })
 export class SearchMovieResultList implements OnInit {

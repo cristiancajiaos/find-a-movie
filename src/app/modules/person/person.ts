@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '../../services/title-service';
 import { Person } from '../../classes/person';
@@ -13,6 +13,7 @@ import { LoadingService } from '../../services/loading-service';
   selector: 'app-person',
   standalone: false,
   templateUrl: './person.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person.scss'
 })
 export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
 import { environment } from '../../../../environments/environment.development';
 
@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment.development';
   selector: 'app-search-person-result-list',
   standalone: false,
   templateUrl: './search-person-result-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-person-result-list.scss',
 })
 export class SearchPersonResultList implements OnInit {

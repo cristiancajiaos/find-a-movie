@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faFilm, faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ import { TitleService } from '../../../services/title-service';
   selector: 'app-search-main',
   standalone: false,
   templateUrl: './search-main.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-main.scss',
 })
 export class SearchMain implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TitleService } from '../../services/title-service';
 import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -6,6 +6,7 @@ import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons
   selector: 'app-not-found',
   standalone: false,
   templateUrl: './not-found.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './not-found.scss'
 })
 export class NotFound implements OnInit{

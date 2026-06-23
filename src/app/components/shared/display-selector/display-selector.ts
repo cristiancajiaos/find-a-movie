@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-display-selector',
   standalone: false,
   templateUrl: './display-selector.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './display-selector.scss'
 })
 export class DisplaySelector implements OnInit {

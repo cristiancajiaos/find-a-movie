@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-main-movie',
   standalone: false,
   templateUrl: './search-main-movie.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-main-movie.scss',
 })
 export class SearchMainMovie implements OnInit {

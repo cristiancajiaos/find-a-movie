@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home-movie',
   standalone: false,
   templateUrl: './home-movie.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home-movie.scss',
 })
 export class HomeMovie {

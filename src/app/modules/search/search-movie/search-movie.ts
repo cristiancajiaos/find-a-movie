@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFilm, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-search-movie',
   standalone: false,
   templateUrl: './search-movie.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-movie.scss',
 })
 export class SearchMovie implements OnInit, OnDestroy {

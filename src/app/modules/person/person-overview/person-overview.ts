@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Person } from '../../../classes/person';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-person-overview',
   standalone: false,
   templateUrl: './person-overview.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-overview.scss',
 })
 export class PersonOverview implements OnInit, OnDestroy {

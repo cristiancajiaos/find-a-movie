@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -6,6 +6,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   selector: 'app-from-select',
   standalone: false,
   templateUrl: './from-select.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './from-select.scss'
 })
 export class FromSelect implements OnInit {

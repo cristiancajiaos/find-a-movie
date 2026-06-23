@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -16,6 +16,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-movie-cast',
   standalone: false,
   templateUrl: './movie-cast.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-cast.scss',
 })
 export class MovieCast implements OnInit, OnDestroy {

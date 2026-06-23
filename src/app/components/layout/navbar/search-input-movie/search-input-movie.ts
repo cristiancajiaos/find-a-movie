@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,7 @@ import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs
   selector: 'app-search-input-movie',
   standalone: false,
   templateUrl: './search-input-movie.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-input-movie.scss'
 })
 export class SearchInputMovie implements OnInit, OnDestroy {

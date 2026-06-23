@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
@@ -7,6 +7,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   selector: 'app-order-select',
   standalone: false,
   templateUrl: './order-select.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './order-select.scss'
 })
 export class OrderSelect implements OnInit {

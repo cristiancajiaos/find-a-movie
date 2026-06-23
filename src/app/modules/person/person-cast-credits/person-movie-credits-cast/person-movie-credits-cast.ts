@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -14,6 +14,7 @@ import { PersonService } from '../../../../services/person-service';
   selector: 'app-person-movie-credits-cast',
   standalone: false,
   templateUrl: './person-movie-credits-cast.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-movie-credits-cast.scss',
 })
 export class PersonMovieCreditsCast implements OnInit {

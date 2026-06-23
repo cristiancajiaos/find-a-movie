@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home-person',
   standalone: false,
   templateUrl: './home-person.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home-person.scss',
 })
 export class HomePerson {

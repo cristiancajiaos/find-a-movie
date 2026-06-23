@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-main-person',
   standalone: false,
   templateUrl: './search-main-person.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-main-person.scss',
 })
 export class SearchMainPerson implements OnInit {

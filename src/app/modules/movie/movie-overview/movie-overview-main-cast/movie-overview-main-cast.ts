@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { CastMember } from '../../../../classes/credits/cast-member';
 
 @Component({
   selector: 'app-movie-overview-main-cast',
   standalone: false,
   templateUrl: './movie-overview-main-cast.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-main-cast.scss',
 })
 export class MovieOverviewMainCast implements OnInit, OnChanges {

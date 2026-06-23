@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -6,6 +6,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   selector: 'app-role-select',
   standalone: false,
   templateUrl: './role-select.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './role-select.scss'
 })
 export class RoleSelect implements OnInit {

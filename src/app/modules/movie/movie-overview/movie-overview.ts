@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -12,6 +12,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-movie-overview',
   standalone: false,
   templateUrl: './movie-overview.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview.scss',
 })
 export class MovieOverview implements OnInit, OnDestroy {

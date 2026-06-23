@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -7,6 +7,7 @@ import { MovieService } from '../../../services/movie-service';
   selector: 'app-person-crew-credit-list',
   standalone: false,
   templateUrl: './person-crew-credit-list.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-crew-credit-list.scss'
 })
 export class PersonCrewCreditList implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
 import { environment } from '../../../../environments/environment.development';
 
@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment.development';
   selector: 'app-search-person-result-grid',
   standalone: false,
   templateUrl: './search-person-result-grid.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-person-result-grid.scss',
 })
 export class SearchPersonResultGrid implements OnInit {

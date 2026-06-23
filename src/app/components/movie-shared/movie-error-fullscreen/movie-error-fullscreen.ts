@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-movie-error-fullscreen',
   standalone: false,
   templateUrl: './movie-error-fullscreen.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-error-fullscreen.scss'
 })
 export class MovieErrorFullscreen implements OnInit {

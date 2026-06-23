@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ResponsePersonResult } from '../../../../../classes/response-search-person/response-person-result';
 import { environment } from '../../../../../../environments/environment.development';
 
@@ -6,6 +6,7 @@ import { environment } from '../../../../../../environments/environment.developm
   selector: 'app-search-input-person-result',
   standalone: false,
   templateUrl: './search-input-person-result.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-input-person-result.scss',
 })
 export class SearchInputPersonResult implements OnInit {

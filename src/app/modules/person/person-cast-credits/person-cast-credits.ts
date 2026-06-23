@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ResponsePersonMovieCredits } from '../../../classes/response-person-movie-credits';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { LoadingService } from '../../../services/loading-service';
   selector: 'app-person-cast-credits',
   standalone: false,
   templateUrl: './person-cast-credits.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-cast-credits.scss'
 })
 export class PersonCastCredits implements OnInit, OnDestroy {

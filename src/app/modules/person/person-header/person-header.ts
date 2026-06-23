@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Person } from '../../../classes/person';
 import { environment } from '../../../../environments/environment.development';
@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment.development';
   selector: 'app-person-header',
   standalone: false,
   templateUrl: './person-header.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-header.scss'
 })
 export class PersonHeader implements OnChanges {
