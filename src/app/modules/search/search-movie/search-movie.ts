@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFilm, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,12 @@ import { LoadingService } from '../../../services/loading-service';
   styleUrl: './search-movie.scss',
 })
 export class SearchMovie implements OnInit, OnDestroy {
+
+  private activatedRoute = inject(ActivatedRoute);
+  private searchService = inject(SearchService);
+  private titleService = inject(TitleService);
+  private loadingService = inject(LoadingService);
+
   public searchIcon: IconDefinition = faSearch;
   public movieIcon: IconDefinition = faFilm;
 
@@ -47,13 +53,6 @@ export class SearchMovie implements OnInit, OnDestroy {
   private getMovieSubscription: Subscription = new Subscription();
   private getMovieChangePageSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private searchService: SearchService,
-    private titleService: TitleService,
-    private loadingService: LoadingService
-  ) {}
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
