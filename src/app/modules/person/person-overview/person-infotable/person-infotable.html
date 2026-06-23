@@ -1,0 +1,84 @@
+<section class="person-infotable">
+  <h2>General Information</h2>
+  <div class="table table-responsive">
+    <table class="table">
+      <tbody>
+        @if (person.birthday) {
+          <tr>
+            <td>Born:</td>
+            <td>
+              {{ personBirthDay | date: 'longDate' }}
+              @if (person.place_of_birth) {
+                <br />
+                in {{ personPlaceBirth }}
+              }
+            </td>
+          </tr>
+        }
+        @if (person.deathday) {
+          <tr>
+            <td>Died:</td>
+            <td>
+              {{ personDeathDay | date: 'longDate' }}
+            </td>
+          </tr>
+        }
+        @if (person.gender) {
+          <tr>
+            <td>Gender:</td>
+            <td>
+              @switch (this.person.gender) {
+                @case (1) {
+                  <fa-icon [icon]="femaleIcon"></fa-icon>
+                  Female
+                }
+
+                @case (2) {
+                  <fa-icon [icon]="maleIcon"></fa-icon>
+                  Male
+                }
+
+                @default {
+                  <fa-icon [icon]="questionIcon"></fa-icon>
+                  ?
+                }
+              }
+            </td>
+          </tr>
+        }
+        @if (person.known_for_department) {
+          <tr>
+            <td>Main occupation:</td>
+            <td>
+              {{ personMainOccupation }}
+            </td>
+          </tr>
+        }
+        @if (person.also_known_as.length > 0) {
+          <tr>
+            <td>Also known as:</td>
+            <td>
+              @for (personAlternateName of personAlsoKnownAs; track personAlternateName) {
+                {{ personAlternateName }}<br />
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  @if (person.imdb_id) {
+    <div class="d-grid mb-2">
+      <a [href]="personIMDBUrl" class="btn btn-primary" target="_blank">
+        <fa-icon [icon]="imdbIcon"></fa-icon> View IMDB
+      </a>
+    </div>
+  }
+  @if (person.homepage) {
+    <div class="d-grid mb-2">
+      <a [href]="personHomepageUrl" class="btn btn-primary" target="_blank">
+        <fa-icon [icon]="globeIcon"></fa-icon> View Homepage
+      </a>
+    </div>
+  }
+</section>

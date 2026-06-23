@@ -16,6 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PersonCastCredits } from './person-cast-credits/person-cast-credits';
 import { PersonCrewCredits } from './person-crew-credits/person-crew-credits';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PersonBiography } from './person-overview/person-biography/person-biography';
+import { PersonInfotable } from './person-overview/person-infotable/person-infotable';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PersonMovieCreditsCast,
     PersonMovieCreditsCrew,
     PersonCastCredits,
-    PersonCrewCredits
+    PersonCrewCredits,
+    PersonBiography,
+    PersonInfotable
   ],
   imports: [
     CommonModule,

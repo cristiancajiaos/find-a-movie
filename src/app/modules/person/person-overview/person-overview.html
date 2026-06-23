@@ -7,106 +7,11 @@
     @if (person) {
       <div class="row">
         <div class="col-12 col-lg-8">
-          @if (person.biography) {
-            <section class="person-biography">
-              <h2>Biography</h2>
-              <p>{{ personBiography }}</p>
-            </section>
-            <section class="person-links">
-              <div class="row">
-                <div class="col-12 col-lg-6">
-                  <div class="d-grid">
-                    <a [routerLink]="['/person', id, 'cast-credits']" class="btn btn-primary mb-2">
-                      View Cast Credits
-                    </a>
-                  </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                  <div class="d-grid">
-                    <a [routerLink]="['/person', id, 'crew-credits']" class="btn btn-primary mb-2">
-                      View Crew Credits
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </section>
-          }
-          @if (person.biography.length === 0) {
-            <section class="no-person-biography-available">
-              <p>No Biography Available</p>
-            </section>
-          }
+          <app-person-biography [person]="person"></app-person-biography>
         </div>
         <div class="col-12 col-lg-4">
           <section class="person-infotable">
-            <h2>General Information</h2>
-            <div class="table table-responsive">
-              <table class="table">
-                <tbody>
-                  @if (person.birthday) {
-                    <tr>
-                      <td>Born:</td>
-                      <td>
-                        {{ personBirthDay | date: 'longDate' }}
-                        @if (person.place_of_birth) {
-                          <br />
-                          in {{ personPlaceBirth }}
-                        }
-                      </td>
-                    </tr>
-                  }
-                  @if (person.deathday) {
-                    <tr>
-                      <td>Died:</td>
-                      <td>
-                        {{ personDeathDay | date: 'longDate' }}
-                      </td>
-                    </tr>
-                  }
-                  @if (person.gender) {
-                    <tr>
-                      <td>Gender:</td>
-                      <td>
-                        <fa-icon [icon]="personGenderIcon"></fa-icon>
-                        {{ personGender }}
-                      </td>
-                    </tr>
-                  }
-                  @if (person.known_for_department) {
-                    <tr>
-                      <td>Main occupation:</td>
-                      <td>
-                        {{ personMainOccupation }}
-                      </td>
-                    </tr>
-                  }
-                  @if (person.also_known_as.length > 0) {
-                    <tr>
-                      <td>Also known as:</td>
-                      <td>
-                        @for (personAlternateName of personAlsoKnownAs; track personAlternateName) {
-                          {{ personAlternateName }}<br />
-                        }
-                      </td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
-            @if (person.imdb_id) {
-              <div class="d-grid mb-2">
-                <a [href]="personIMDBUrl" class="btn btn-primary" target="_blank">
-                  <fa-icon [icon]="imdbIcon"></fa-icon> View IMDB
-                </a>
-              </div>
-            }
-            @if (person.homepage) {
-              <div class="d-grid mb-2">
-                <a [href]="personHomepageUrl" class="btn btn-primary" target="_blank">
-                  <fa-icon [icon]="globeIcon"></fa-icon> View Homepage
-                </a>
-              </div>
-            }
+            <app-person-infotable [person]="person"></app-person-infotable>
           </section>
         </div>
       </div>

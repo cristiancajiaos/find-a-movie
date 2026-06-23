@@ -1,0 +1,29 @@
+@if (person.biography) {
+  <section class="person-biography">
+    <h2>Biography</h2>
+    <p>{{ personBiography }}</p>
+  </section>
+  <section class="person-links">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="d-grid">
+          <a [routerLink]="['/person', person.id, 'cast-credits']" class="btn btn-primary mb-2">
+            View Cast Credits
+          </a>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="d-grid">
+          <a [routerLink]="['/person', person.id, 'crew-credits']" class="btn btn-primary mb-2">
+            View Crew Credits
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+}
+@if (person.biography.length === 0) {
+  <section class="no-person-biography-available">
+    <p>No Biography Available</p>
+  </section>
+}
