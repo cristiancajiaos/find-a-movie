@@ -28,8 +28,6 @@ export class PersonHeader implements OnChanges {
   @Input() id: number = 0;
   @Input() person: Person = new Person();
 
-  constructor() {}
-
   ngOnChanges() {
     this.setName();
     this.setBirthYear();

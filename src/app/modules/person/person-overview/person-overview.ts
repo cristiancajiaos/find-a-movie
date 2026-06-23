@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Person } from '../../../classes/person';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -19,6 +19,13 @@ import { LoadingService } from '../../../services/loading-service';
   styleUrl: './person-overview.scss',
 })
 export class PersonOverview implements OnInit, OnDestroy {
+
+  private activatedRoute = inject(ActivatedRoute);
+  private personService = inject(PersonService);
+  private localStorageService = inject(LocalStorageService);
+  private titleService = inject(TitleService);
+  private loadingService = inject(LoadingService); 
+
   public maleIcon: IconDefinition = faMars;
   public femaleIcon: IconDefinition = faVenus;
   public imdbIcon: IconDefinition = faImdb;
@@ -49,14 +56,6 @@ export class PersonOverview implements OnInit, OnDestroy {
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getPersonSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private personService: PersonService,
-    private localStorageService: LocalStorageService,
-    private titleService: TitleService,
-    private loadingService: LoadingService
-  ) {}
 
   ngOnInit(): void {
     this.setId();

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ResponsePersonMovieCredits } from '../../../classes/response-person-movie-credits';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,6 +19,12 @@ import { LoadingService } from '../../../services/loading-service';
 })
 export class PersonCastCredits implements OnInit, OnDestroy {
 
+  private activatedRoute = inject(ActivatedRoute);
+  private personService = inject(PersonService);
+  private localStorageService = inject(LocalStorageService);
+  private titleService = inject(TitleService);
+  private loadingService = inject(LoadingService);
+
   public id: number = 0;
 
   private person: Person;
@@ -33,14 +39,6 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getCreditsCastSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private personService: PersonService,
-    private localStorageService: LocalStorageService,
-    private titleService: TitleService,
-    private loadingService: LoadingService
-  ){}
 
   ngOnInit(): void {
     this.getPerson();

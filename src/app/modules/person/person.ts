@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '../../services/title-service';
 import { Person } from '../../classes/person';
@@ -18,6 +18,13 @@ import { LoadingService } from '../../services/loading-service';
 })
 export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
 
+  private activatedRoute = inject(ActivatedRoute);
+  private titleService = inject(TitleService);
+  private personService = inject(PersonService);
+  private localStorageService = inject(LocalStorageService);
+  private cd = inject(ChangeDetectorRef);
+  private loadingService = inject(LoadingService);
+
   public id: number = 0;
 
   public person: Person = null;
@@ -33,15 +40,6 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   private routeSubscription: Subscription = new Subscription();
   private getPersonSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private titleService: TitleService,
-    private personService: PersonService,
-    private localStorageService: LocalStorageService,
-    private cd: ChangeDetectorRef,
-    private loadingService: LoadingService
-  ) {}
 
   ngOnInit(): void {
     this.cd.detectChanges();
