@@ -35,6 +35,10 @@ export class TitleService {
     this.title.setTitle(`Full Crew of ${title} | ${this.defaultTitle}`);
   }
 
+  public setMovieSimilarTitle(title: string): void {
+    this.title.setTitle(`Similar titles to ${title} | ${this.defaultTitle}`);
+  }
+
   public setMovieNotFoundTitle(): void {
     this.title.setTitle(`Movie Not Found | ${this.defaultTitle}`);
   }

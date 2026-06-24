@@ -6,6 +6,7 @@ import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/credits/crew-member';
 import { ResponseVideo } from '../classes/response-video';
+import { ResponseSearchMovie } from '../classes/response-search-movie';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,10 @@ export class MovieService {
 
   public getMovieVideos(id: number): Observable<ResponseVideo> {
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`);
+  }
+
+  public getMovieSimilarMovies(id: number): Observable<ResponseSearchMovie> {
+    return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`);
   }
 
   public getFormattedMovieTitle(title: string, originalTitle: string, releaseDate: string): string {

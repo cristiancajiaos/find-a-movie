@@ -19,6 +19,8 @@ import { MovieOverviewMainCrew } from './movie-overview/movie-overview-main-crew
 import { MovieOverviewTrailer } from './movie-overview/movie-overview-trailer/movie-overview-trailer';
 import { MovieOverviewInfotable } from './movie-overview/movie-overview-infotable/movie-overview-infotable';
 import { MovieSimilar } from './movie-similar/movie-similar';
+import { SearchModule } from '../search/search-module';
+import { SearchSharedModule } from '../../components/search-shared/search-shared-module';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { MovieSimilar } from './movie-similar/movie-similar';
     ReactiveFormsModule,
     PipesModule,
     FontAwesomeModule,
+    SearchSharedModule
   ],
 })
 export class MovieModule {}

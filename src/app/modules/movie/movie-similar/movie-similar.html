@@ -1,1 +1,26 @@
-<p>movie-similar works!</p>
+<section class="movie-similar">
+  @if (movieSimilarError) {
+    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadSimularMovies($event)">
+    </app-movie-error>
+  }
+  @if (!movieSimilarError) {
+    @if (movieResults.length > 0) {
+      <h2>Similar Movies</h2>
+      <p>
+        These movies are similar to <strong>{{ movie.title }}</strong
+        >:
+      </p>
+      <div class="row">
+        @for (movieResult of movieResults; track movieResult.id) {
+          <div class="col-12 col-lg-3">
+            <app-search-movie-result-grid
+              [movieResult]="movieResult"
+            ></app-search-movie-result-grid>
+          </div>
+        }
+      </div>
+    } @else {
+      <p>There are no similar movies to <strong>{{movie.title}}</strong>.</p>
+    }
+  }
+</section>
