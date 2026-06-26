@@ -45,6 +45,10 @@ export class MovieService {
     return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`);
   }
 
+  public getMovieRecommendedMovies(id: number): Observable<ResponseSearchMovie> {
+    return this.http.get<ResponseSearchMovie>(`/movie/${id}/recommendations`);
+  }
+
   public getFormattedMovieTitle(title: string, originalTitle: string, releaseDate: string): string {
     const movieTitle: string = title;
     const movieYearDate: Date = new Date(releaseDate);

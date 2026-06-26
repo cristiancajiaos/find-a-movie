@@ -1,1 +1,24 @@
-<p>movie-recommendations works!</p>
+<section class="movie-recommendations">
+  @if (movieRecommendedError) {
+    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadRecommendedMovies($event)">
+    </app-movie-error>
+  }
+  @if (!movieRecommendedError) {
+    @if (movieResults.length > 0) {
+      <h2>Movie Recommendations</h2>
+      <p>
+        If you liked <strong>{{movie.title}}</strong>, you would like also the following movies:
+      </p>
+      <div class="row">
+        @for (movieResult of movieResults; track movie.id) {
+          <div class="col-12 col-lg-3">
+            <app-search-movie-result-grid [movieResult]="movieResult">
+            </app-search-movie-result-grid>
+          </div>
+        }
+      </div>
+    } @else {
+      <p>There are no recommended movies to {{movie.title}}.   </p>
+    }
+  }
+</section>
