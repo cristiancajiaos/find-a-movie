@@ -21,6 +21,8 @@ import { MovieOverviewInfotable } from './movie-overview/movie-overview-infotabl
 import { MovieSimilar } from './movie-similar/movie-similar';
 import { SearchModule } from '../search/search-module';
 import { SearchSharedModule } from '../../components/search-shared/search-shared-module';
+import { MovieRecommendations } from './movie-recommendations/movie-recommendations';
+import { MovieNav } from './movie-nav/movie-nav';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { SearchSharedModule } from '../../components/search-shared/search-shared
     MovieOverviewTrailer,
     MovieOverviewInfotable,
     MovieSimilar,
+    MovieRecommendations,
+    MovieNav,
   ],
   imports: [
     CommonModule,
