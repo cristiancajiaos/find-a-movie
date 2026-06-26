@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { LoadingService } from '../../../services/loading-service';
@@ -14,6 +14,7 @@ import { LocalStorageService } from '../../../services/local-storage-service';
   standalone: false,
   templateUrl: './movie-similar.html',
   styleUrl: './movie-similar.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class MovieSimilar implements OnInit, OnDestroy {
 
@@ -26,7 +27,7 @@ export class MovieSimilar implements OnInit, OnDestroy {
   public id: number = 0;
 
   public movie: Movie = null;
-  public movieResults: ResponseMovieResult[] = null;
+  public movieResults: ResponseMovieResult[] = [];
 
   public movieSimilarError: boolean = false;
   public errorMessage: string = '';

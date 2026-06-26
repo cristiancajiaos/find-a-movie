@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { LocalStorageService } from '../../../services/local-storage-service';
@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   standalone: false,
   templateUrl: './movie-recommendations.html',
   styleUrl: './movie-recommendations.scss',
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class MovieRecommendations implements OnInit, OnDestroy {
 
@@ -26,7 +27,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   public id: number = 0;
 
   public movie: Movie = null;
-  public movieResults: ResponseMovieResult[] = null;
+  public movieResults: ResponseMovieResult[] = [];
 
   public movieRecommendedError: boolean = false;
   public errorMessage: string = '';
