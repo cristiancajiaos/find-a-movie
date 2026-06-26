@@ -1,0 +1,15 @@
+
+@if (movieImages.length > 0) {
+  <section class="movie-overview-images">
+    <h2>Images</h2>
+    <ngb-carousel [interval]="0">
+      @for (image of movieImages; track $index) {
+        <ng-template ngbSlide>
+          <img [src]="image.file_path" alt="Image {{$index}}">
+        </ng-template>
+      }
+    </ngb-carousel>
+  </section>
+}
+
+

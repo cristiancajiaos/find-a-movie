@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/credits/crew-member';
 import { ResponseVideo } from '../classes/response-video';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
+import { ResponseImage } from '../classes/response-image';
+import { BackdropImage } from '../classes/response-image/backdrop-image';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +41,16 @@ export class MovieService {
 
   public getMovieVideos(id: number): Observable<ResponseVideo> {
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`);
+  }
+
+  public getMovieImages(id: number): Observable<BackdropImage[]> {
+    return this.http.get<ResponseImage>(`/movie/${id}/images`).pipe(
+      take(10),
+      map(
+        (responseImage) => responseImage.backdrops
+      ),
+
+    )
   }
 
   public getMovieSimilarMovies(id: number): Observable<ResponseSearchMovie> {

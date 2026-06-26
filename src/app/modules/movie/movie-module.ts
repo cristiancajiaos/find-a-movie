@@ -23,6 +23,7 @@ import { SearchModule } from '../search/search-module';
 import { SearchSharedModule } from '../../components/search-shared/search-shared-module';
 import { MovieRecommendations } from './movie-recommendations/movie-recommendations';
 import { MovieNav } from './movie-nav/movie-nav';
+import { MovieOverviewImages } from './movie-overview/movie-overview-images/movie-overview-images';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MovieNav } from './movie-nav/movie-nav';
     MovieSimilar,
     MovieRecommendations,
     MovieNav,
+    MovieOverviewImages,
   ],
   imports: [
     CommonModule,
