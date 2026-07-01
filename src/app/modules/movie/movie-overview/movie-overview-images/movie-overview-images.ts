@@ -1,7 +1,5 @@
-import { Component, inject, Input, OnChanges, OnDestroy, SimpleChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { MovieService } from '../../../../services/movie-service';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { BackdropImage } from '../../../../classes/response-image/backdrop-image';
-import { Subscription } from 'rxjs';
 import { environment } from '../../../../../environments/environment.development';
 
 @Component({
