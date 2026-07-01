@@ -1,15 +1,13 @@
-<section
-  class="home-section home-now-playing"
-  [ngStyle]="{ 'background-image': 'url(' + bgImage + ')' }"
->
-  <section class="now-playing">
-    <header class="now-playing-header">
+<section class="home-section home-upcoming"
+  [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
+  <section class="upcoming">
+    <header class="upcoming-header">
       <h2>
-        <fa-icon [icon]="starIcon"></fa-icon>
-        Now Playing
+        <fa-icon [icon]="calendarIcon"></fa-icon>
+        Upcoming
       </h2>
     </header>
-    <main class="now-playing-main">
+    <main class="upcoming-main">
       <ngb-carousel>
         @for (movie of movieResults; track $index) {
           <ng-template ngbSlide>
@@ -30,3 +28,4 @@
     </main>
   </section>
 </section>
+

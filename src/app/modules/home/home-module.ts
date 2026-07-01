@@ -10,13 +10,15 @@ import { LayoutModule } from '../../components/layout/layout-module';
 import { HomeNowPlaying } from './home-now-playing/home-now-playing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+import { HomeUpcoming } from './home-upcoming/home-upcoming';
 
 @NgModule({
   declarations: [
     Home,
     HomeMovie,
     HomePerson,
-    HomeNowPlaying
+    HomeNowPlaying,
+    HomeUpcoming
   ],
   imports: [
     CommonModule,

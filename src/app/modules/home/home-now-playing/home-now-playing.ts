@@ -17,7 +17,7 @@ export class HomeNowPlaying implements OnInit, OnDestroy {
 
   private movieService = inject(MovieService);
 
-  public bgImage: string = 'img/bg/bg_generic_2.jpg';
+  public bgImage: string = 'img/bg/bg_generic_1.jpg';
 
   public starIcon: IconDefinition = faStar;
 
@@ -35,7 +35,7 @@ export class HomeNowPlaying implements OnInit, OnDestroy {
         this.setNowPlayingMovies(responseNowPlayingMovie);
       },
       error: (error) => {
-
+        console.error('Error fetching upcoming movies:', error);
       },
       complete: () => {}
     });
