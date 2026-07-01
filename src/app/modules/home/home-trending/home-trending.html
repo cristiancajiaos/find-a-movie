@@ -1,0 +1,30 @@
+
+<section class="home-section home-trending" [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
+  <section class="trending">
+    <header class="trending-header">
+      <h2>
+        <fa-icon [icon]="starIcon"></fa-icon>
+        Trending Movies
+      </h2>
+    </header>
+    <main class="trending-main">
+      <ngb-carousel>
+        @for (movie of movieResults; track $index) {
+          <ng-template ngbSlide>
+            <div class="slide-image">
+              <a [routerLink]="['movie', movie.id]">
+                <div
+                  class="carousel-slide"
+                  [ngStyle]="{ 'background-image': 'url(' + movie.backdrop_path + ')' }"
+                ></div>
+              </a>
+            </div>
+            <div class="carousel-caption">
+              <h3>{{ movie.title }}</h3>
+            </div>
+          </ng-template>
+        }
+      </ngb-carousel>
+    </main>
+  </section>
+</section>
