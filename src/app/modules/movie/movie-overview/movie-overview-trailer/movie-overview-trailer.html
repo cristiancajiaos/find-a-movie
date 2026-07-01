@@ -1,34 +1,24 @@
 <section class="movie-overview-trailer">
-  @if (loadingTrailer) {
-    <app-loading-inline message="Loading trailer..."></app-loading-inline>
-  }
-  @if (!loadingTrailer) {
-    @if (movieTrailerFound && movieTrailerKey) {
-      <section class="movie-trailer">
-        <h3>Trailer</h3>
-        @if (movieTrailerFound) {
-          <div class="row">
-            <div class="col-12">
-              <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
-            </div>
+  @if (movieTrailerFound && movieTrailerKey) {
+    <section class="movie-trailer">
+      <h3>Trailer</h3>
+      @if (movieTrailerFound) {
+        <div class="row">
+          <div class="col-12">
+            <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
           </div>
-        }
-      </section>
-    }
-    @if (!movieTrailerFound) {
-      @if (movieTrailerError) {
-        <section class="error-trailer">
-          <p>
-            Error showing trailer: <strong>{{ movieTrailerErrorMessage }}</strong>
-          </p>
-        </section>
+        </div>
       }
-      @if (!movieTrailerError || movieTrailerKey) {
-        <section class="no-trailer-available">
-          <h3>Trailer</h3>
-          <img src="img/default-images/movie_trailer_not_available.jpg" alt="No trailer available" class="img-fluid"/>
-        </section>
-      }
-    }
+    </section>
+  }
+  @if (!movieTrailerFound) {
+    <section class="no-trailer-available">
+      <h3>Trailer</h3>
+      <img
+        src="img/default-images/movie_trailer_not_available.jpg"
+        alt="No trailer available"
+        class="img-fluid"
+      />
+    </section>
   }
 </section>

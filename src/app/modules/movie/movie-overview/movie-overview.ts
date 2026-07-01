@@ -7,6 +7,7 @@ import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
+import { ResponseVideo } from '../../../classes/response-video';
 
 @Component({
   selector: 'app-movie-overview',
@@ -26,6 +27,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public movie: Movie = null;
   public credits: Credits = new Credits();
+  public movieResponseVideo: ResponseVideo = new ResponseVideo();
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
@@ -45,7 +47,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieCreditsErrorMessage: string = '';
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
-  private getMovieAndCreditsSubscription: Subscription = new Subscription();
+  private getMovieDetailsSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
@@ -75,11 +77,13 @@ export class MovieOverview implements OnInit, OnDestroy {
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
+    const getTrailer: Observable<ResponseVideo> = this.movieService.getMovieVideos(this.id);
 
-    this.getMovieAndCreditsSubscription = forkJoin([getMovie, getCredits]).subscribe({
-      next: ([movie, credits]) => {
+    this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer]).subscribe({
+      next: ([movie, credits, responseVideo]) => {
         this.movie = movie;
         this.credits = credits;
+        this.movieResponseVideo = responseVideo;
         this.movieFound = true;
         this.movieCreditsErrorFound = true;
       },
@@ -120,8 +124,8 @@ export class MovieOverview implements OnInit, OnDestroy {
     if (this.activatedRouteParentSubscription) {
       this.activatedRouteParentSubscription.unsubscribe();
     }
-    if (this.getMovieAndCreditsSubscription) {
-      this.getMovieAndCreditsSubscription.unsubscribe();
+    if (this.getMovieDetailsSubscription) {
+      this.getMovieDetailsSubscription.unsubscribe();
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
