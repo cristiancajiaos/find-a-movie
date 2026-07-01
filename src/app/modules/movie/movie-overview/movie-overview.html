@@ -65,12 +65,14 @@
         </div>
         <div class="col-12 col-lg-6">
           <section class="movie-info">
-            <app-movie-overview-infotable [movie]="movie"> </app-movie-overview-infotable>
+            <app-movie-overview-infotable [movie]="movie">
+            </app-movie-overview-infotable>
           </section>
         </div>
       </div>
       <hr/>
-      <app-movie-overview-images [movieId]="id"></app-movie-overview-images>
+      <app-movie-overview-images [movieImages]="movieImages">
+      </app-movie-overview-images>
     }
   }
 </section>

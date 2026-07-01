@@ -11,50 +11,23 @@ import { environment } from '../../../../../environments/environment.development
   styleUrl: './movie-overview-images.scss',
   changeDetection: ChangeDetectionStrategy.Eager
 })
-export class MovieOverviewImages implements OnInit, OnChanges, OnDestroy {
+export class MovieOverviewImages implements OnChanges {
 
-
-  @Input() movieId: number = 0;
-
-  private movieService = inject(MovieService);
-
-  public movieImages: BackdropImage[] = [];
-
-  private getBackdropImagesSubscription: Subscription = new Subscription();
-
-  ngOnInit(): void {
-    this.getImages();
-  }
+  @Input() movieImages: BackdropImage[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.getImages();
+    this.setImages();
   }
 
-  private getImages(): void {
-    this.getBackdropImagesSubscription = this.movieService.getMovieImages(this.movieId).subscribe({
-      next: (images) => {
-        this.setImages(images);
-      },
-      error: (error) => {},
-      complete: () => {}
-    });
-  }
-
-  private setImages(images: BackdropImage[]): void {
-    if (images.length == 0) {
+  private setImages(): void {
+    if (this.movieImages.length == 0) {
       return;
     }
 
-    this.movieImages = [...images.slice(0,5).map((movieImage) => {
+    this.movieImages = [...this.movieImages.slice(0,10).map((movieImage) => {
       movieImage.file_path = `${environment.imgUrl}${environment.backdropSize}${movieImage.file_path}`;
       return movieImage;
     })];
-  }
-
-  ngOnDestroy(): void {
-    if (this.getBackdropImagesSubscription) {
-      this.getBackdropImagesSubscription.unsubscribe();
-    }
   }
 
 }

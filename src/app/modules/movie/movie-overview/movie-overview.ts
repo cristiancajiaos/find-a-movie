@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 import { ResponseVideo } from '../../../classes/response-video';
+import { BackdropImage } from '../../../classes/response-image/backdrop-image';
 
 @Component({
   selector: 'app-movie-overview',
@@ -28,6 +29,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movie: Movie = null;
   public credits: Credits = new Credits();
   public movieResponseVideo: ResponseVideo = new ResponseVideo();
+  public movieImages: BackdropImage[] = [];
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
@@ -78,12 +80,14 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
     const getTrailer: Observable<ResponseVideo> = this.movieService.getMovieVideos(this.id);
+    const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
 
-    this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer]).subscribe({
-      next: ([movie, credits, responseVideo]) => {
+    this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer, getImages]).subscribe({
+      next: ([movie, credits, responseVideo, images]) => {
         this.movie = movie;
         this.credits = credits;
         this.movieResponseVideo = responseVideo;
+        this.movieImages = images;
         this.movieFound = true;
         this.movieCreditsErrorFound = true;
       },
