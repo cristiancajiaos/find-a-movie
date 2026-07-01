@@ -9,6 +9,7 @@ import { ResponseVideo } from '../classes/response-video';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
 import { ResponseImage } from '../classes/response-image';
 import { BackdropImage } from '../classes/response-image/backdrop-image';
+import { ResponseNowplayingMovie } from '../classes/response-nowplaying-movie';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class MovieService {
 
   public getMovieRecommendedMovies(id: number): Observable<ResponseSearchMovie> {
     return this.http.get<ResponseSearchMovie>(`/movie/${id}/recommendations`);
+  }
+
+  public getNowPlayingMovies(): Observable<ResponseNowplayingMovie> {
+    return this.http.get<ResponseNowplayingMovie>(`/movie/now_playing`)
   }
 
   public getFormattedMovieTitle(title: string, originalTitle: string, releaseDate: string): string {

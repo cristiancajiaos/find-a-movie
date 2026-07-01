@@ -7,19 +7,24 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeMovie } from './home-movie/home-movie';
 import { HomePerson } from './home-person/home-person';
 import { LayoutModule } from '../../components/layout/layout-module';
-
+import { HomeNowPlaying } from './home-now-playing/home-now-playing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     Home,
     HomeMovie,
-    HomePerson
+    HomePerson,
+    HomeNowPlaying
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     FontAwesomeModule,
     LayoutModule,
+    NgbModule,
+    RouterModule
   ]
 })
 export class HomeModule { }
