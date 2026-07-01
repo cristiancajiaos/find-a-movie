@@ -5,7 +5,7 @@
     <ngb-carousel [interval]="0">
       @for (image of movieImages; track $index) {
         <ng-template ngbSlide>
-          <img [src]="image.file_path" alt="Image {{$index}}">
+          <img [src]="image.file_path" class="d-block w-100" alt="Image {{$index}}">
         </ng-template>
       }
     </ngb-carousel>
