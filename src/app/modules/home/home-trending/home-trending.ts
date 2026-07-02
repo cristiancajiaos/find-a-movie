@@ -21,8 +21,6 @@ export class HomeTrending implements OnInit, OnDestroy {
   private loadingService = inject(LoadingService);
   private titleService = inject(TitleService);
 
-  public bgImage: string = 'img/bg/bg_generic_2.jpg';
-
   public movieResults: ResponseMovieResult[] = [];
 
   public starIcon: IconDefinition = faStar;

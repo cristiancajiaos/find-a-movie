@@ -44,6 +44,12 @@
     }
   }
 
+  .search-movie, .search-person {
+    header {
+      box-shadow: 0px 5px 15px white;
+    }
+  }
+
   .search-result-grid, .search-result-list  {
     border-color: white;
   }
@@ -51,7 +57,7 @@
   .search-result-list {
     a {
       @extend .text-light;
-      
+
       .search-result-content {
         .person-profile-img, .movie-poster {
           img {

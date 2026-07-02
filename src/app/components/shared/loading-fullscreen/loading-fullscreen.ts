@@ -15,8 +15,6 @@ export class LoadingFullscreen implements OnInit {
 
   public spinnerIcon: IconDefinition = faSpinner;
 
-  public bgImage: string = 'img/bg/loading-bg.jpg';
-
   @Input() message: string = 'Loading...';
 
   ngOnInit(): void {
