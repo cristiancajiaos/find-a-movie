@@ -32,6 +32,8 @@ export class MovieSimilar implements OnInit, OnDestroy {
   public movieSimilarError: boolean = false;
   public errorMessage: string = '';
 
+  public displayMode: string = 'grid';
+
   private endLoadingSubscription: Subscription = new Subscription();
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieSimilarSubscription: Subscription = new Subscription();
@@ -86,6 +88,11 @@ export class MovieSimilar implements OnInit, OnDestroy {
 
   public reloadSimularMovies(event: boolean): void {
     this.getSimilarMovies();
+  }
+
+
+  public changeDisplay(mode: string): void {
+    this.displayMode = mode; 
   }
 
   ngOnDestroy(): void {
