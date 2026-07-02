@@ -1,6 +1,6 @@
 <section class="layout">
   <app-navbar></app-navbar>
-  <main>
+  <main [ngClass]="{'dark-mode':!isLight}">
     @if (loading$ | async) {
       <app-loading-fullscreen></app-loading-fullscreen>
     }

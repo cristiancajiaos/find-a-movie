@@ -17,8 +17,6 @@ export class SearchMovieResultList implements OnInit {
   public formattedTitle: string = '';
   public altPosterText: string = '';
 
-  public bgImage: string = 'img/bg/bg_generic_3.jpg';
-
   @Input() movieResult: ResponseMovieResult = new ResponseMovieResult();
 
   constructor(private movieService: MovieService) {}

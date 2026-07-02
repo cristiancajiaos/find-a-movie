@@ -18,8 +18,6 @@ export class PersonCastCreditList implements OnInit {
   public formattedTitle: string = '';
   public altPosterText: string = '';
 
-  public bgImage: string = 'img/bg/bg_generic_1.jpg';
-
   constructor(
     private movieService: MovieService
   ) {}

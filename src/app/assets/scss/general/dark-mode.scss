@@ -1,0 +1,69 @@
+.dark-mode {
+  @extend .bg-dark;
+  @extend .text-light;
+
+  table {
+    &.table {
+      border-color: white;
+      & > :not(caption) > * > * {
+        @extend .bg-dark;
+        @extend .text-light;
+      }
+    }
+  }
+
+  .display-selector {
+    .btn {
+      @extend .text-light;
+    }
+  }
+
+  .person-cast-credit-grid,
+  .person-crew-credit-grid,
+  .person-cast-credit-list,
+  .person-crew-credit-list {
+    @extend .text-light;
+    border-color: white;
+  }
+
+  .person-cast-credit-list,
+  .person-crew-credit-list {
+    a {
+      @extend .text-light;
+      .list-content {
+        img {
+          border-right-color: white;
+        }
+      }
+
+      &:hover {
+        .list-content {
+          box-shadow: 3px 3px 10px white;
+        }
+      }
+    }
+  }
+
+  .search-result-grid, .search-result-list  {
+    border-color: white;
+  }
+
+  .search-result-list {
+    a {
+      @extend .text-light;
+      
+      .search-result-content {
+        .person-profile-img, .movie-poster {
+          img {
+            border-color: white;
+          }
+        }
+      }
+      &:hover {
+        .search-result-content {
+          box-shadow: 4px 4px 5px white;
+        }
+      }
+    }
+  }
+}

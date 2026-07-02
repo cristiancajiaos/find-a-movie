@@ -1,7 +1,7 @@
 <section class="movie-overview-infotable">
   @if (movie) {
     <h3>Movie Info</h3>
-    <div class="table table-responsive">
+    <div class="table-responsive">
       <table class="table">
         <tbody>
           @if (movie.original_language != 'en') {
@@ -61,7 +61,8 @@
               </td>
             </tr>
           }
-          @if (movie.spoken_languages.length > 0) {
+          <tr>
+            @if (movie.spoken_languages.length > 0) {
             <td>
               @if (movie.spoken_languages.length > 1) {
                 Languages:
@@ -75,13 +76,14 @@
                 <br />
               }
             </td>
-          }
-          <ng-container>
+            }
+          </tr>
+          @if (movieReleaseDate) {
             <tr>
               <td>Release Date:</td>
               <td>{{ movieReleaseDate | date: 'longDate' }}</td>
             </tr>
-          </ng-container>
+          }
           @if (movie.runtime && movie.runtime > 0) {
             <tr>
               <td>Runtime:</td>

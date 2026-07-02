@@ -12,8 +12,6 @@ import { environment } from '../../../../environments/environment.development';
 export class SearchPersonResultList implements OnInit {
   public profileImg: string = '';
 
-  public bgImage: string = 'img/bg/bg_generic_3.jpg';
-
   @Input() personResult: ResponsePersonResult = new ResponsePersonResult();
 
   ngOnInit(): void {
