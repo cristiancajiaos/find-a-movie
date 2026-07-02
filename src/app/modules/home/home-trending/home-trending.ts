@@ -4,7 +4,7 @@ import { ResponseMovieResult } from '../../../classes/response-search-movie/resp
 import { MovieService } from '../../../services/movie-service';
 import { ResponseSearchMovie } from '../../../classes/response-search-movie';
 import { environment } from '../../../../environments/environment';
-import { faStar, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faFilm, IconDefinition, faArrowTrendUp } from '@fortawesome/free-solid-svg-icons';
 import { LoadingService } from '../../../services/loading-service';
 import { TitleService } from '../../../services/title-service';
 
@@ -26,6 +26,8 @@ export class HomeTrending implements OnInit, OnDestroy {
   public movieResults: ResponseMovieResult[] = [];
 
   public starIcon: IconDefinition = faStar;
+  public filmIcon: IconDefinition = faFilm;
+  public trendUpIcon: IconDefinition = faArrowTrendUp;
 
   private isLoadingSubscription = new Subscription();
   private getTrendingMoviesSubscription = new Subscription();

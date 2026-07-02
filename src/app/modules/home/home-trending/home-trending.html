@@ -3,7 +3,10 @@
   <section class="trending">
     <header class="trending-header">
       <h2>
-        <fa-icon [icon]="starIcon"></fa-icon>
+        <fa-layers>
+          <fa-icon [icon]="filmIcon" class="film-icon"></fa-icon>
+          <fa-icon [icon]="trendUpIcon" class="trend-up-icon" transform="shrink-7 down-7 right-7"></fa-icon>
+        </fa-layers>
         Trending Movies
       </h2>
     </header>
