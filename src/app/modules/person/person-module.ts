@@ -18,6 +18,7 @@ import { PersonCrewCredits } from './person-crew-credits/person-crew-credits';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PersonBiography } from './person-overview/person-biography/person-biography';
 import { PersonInfotable } from './person-overview/person-infotable/person-infotable';
+import { PersonNav } from './person-nav/person-nav';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PersonInfotable } from './person-overview/person-infotable/person-infot
     PersonCastCredits,
     PersonCrewCredits,
     PersonBiography,
-    PersonInfotable
+    PersonInfotable,
+    PersonNav
   ],
   imports: [
     CommonModule,
