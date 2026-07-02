@@ -20,7 +20,13 @@
               </a>
             </div>
             <div class="carousel-caption">
-              <h3>{{ movie.title }}</h3>
+              <h3>
+                @if (movie.title == movie.original_title) {
+                  {{ movie.title }}
+                } @else {
+                  {{ movie.title }} <small>({{movie.original_title}})</small>
+                }
+              </h3>
             </div>
           </ng-template>
         }
