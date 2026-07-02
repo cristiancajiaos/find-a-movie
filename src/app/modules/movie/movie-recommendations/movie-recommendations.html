@@ -7,18 +7,27 @@
     @if (movieResults.length > 0) {
       <h2>Movie Recommendations</h2>
       <p>
-        If you liked <strong>{{movie.title}}</strong>, you would like also the following movies:
+        If you liked <strong>{{ movie.title }}</strong
+        >, you would like also the following movies:
       </p>
-      <div class="row">
+      <app-display-selector (onDisplayChange)="changeDisplay($event)"></app-display-selector>
+      @if (displayMode == 'grid') {
+        <div class="row">
+          @for (movieResult of movieResults; track movie.id) {
+            <div class="col-12 col-sm-6 col-lg-3">
+              <app-search-movie-result-grid [movieResult]="movieResult">
+              </app-search-movie-result-grid>
+            </div>
+          }
+        </div>
+      }
+      @if (displayMode == 'list') {
         @for (movieResult of movieResults; track movie.id) {
-          <div class="col-12 col-lg-3">
-            <app-search-movie-result-grid [movieResult]="movieResult">
-            </app-search-movie-result-grid>
-          </div>
+          <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
         }
-      </div>
+      }
     } @else {
-      <p>There are no recommended movies to {{movie.title}}.   </p>
+      <p>There are no recommended movies to {{ movie.title }}.</p>
     }
   }
 </section>

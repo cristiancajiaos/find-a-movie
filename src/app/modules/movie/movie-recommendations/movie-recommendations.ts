@@ -32,6 +32,8 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   public movieRecommendedError: boolean = false;
   public errorMessage: string = '';
 
+  public displayMode: string = 'grid';
+
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieRecommendedSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
@@ -84,6 +86,10 @@ export class MovieRecommendations implements OnInit, OnDestroy {
 
   public reloadRecommendedMovies(event: boolean): void {
     this.getRecommendedMovies();
+  }
+
+  public changeDisplay(mode: string): void {
+    this.displayMode = mode;
   }
 
   ngOnDestroy(): void {
