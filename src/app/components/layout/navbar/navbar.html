@@ -8,6 +8,16 @@
       class="collapse navbar-collapse d-flex justify-content-end"
       [ngbCollapse]="isMenuCollapsed">
       <div ngbDropdown class="search-dropdown d-flex">
+        <button class="btn border me-2"
+          (click)="toggleLightDark()"
+          ngbTooltip="Toggle Dark Mode"
+          tooltipClass="btn-tooltip">
+          @if (isLight$ | async) {
+            <fa-icon class="text-light" [icon]="darkIcon"></fa-icon>
+          } @else {
+            <fa-icon class="text-light" [icon]="lightIcon"></fa-icon>
+          }
+        </button>
         <button
           type="button"
           class="btn border text-light btn-select-search-type"
@@ -37,17 +47,6 @@
         @if (searchType == 'person') {
           <app-search-input-person></app-search-input-person>
         }
-        <button class="btn border"
-          (click)="toggleLightDark()"
-          ngbTooltip="Toggle Dark Mode"
-          tooltipClass="btn-tooltip"
-          placement="bottom">
-          @if (isLight$ | async) {
-            <fa-icon class="text-light" [icon]="darkIcon"></fa-icon>
-          } @else {
-            <fa-icon class="text-light" [icon]="lightIcon"></fa-icon>
-          }
-        </button>
       </div>
     </div>
   </div>
