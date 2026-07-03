@@ -44,13 +44,15 @@
     }
   }
 
-  .search-movie, .search-person {
+  .search-movie,
+  .search-person {
     header {
       box-shadow: 0px 5px 15px white;
     }
   }
 
-  .search-result-grid, .search-result-list  {
+  .search-result-grid,
+  .search-result-list {
     border-color: white;
   }
 
@@ -59,7 +61,8 @@
       @extend .text-light;
 
       .search-result-content {
-        .person-profile-img, .movie-poster {
+        .person-profile-img,
+        .movie-poster {
           img {
             border-color: white;
           }
@@ -69,6 +72,30 @@
         .search-result-content {
           box-shadow: 4px 4px 5px white;
         }
+      }
+    }
+  }
+
+  .ngx-pagination {
+    li {
+      a {
+        &:hover {
+          @extend .text-dark;
+        }
+      }
+    }
+  }
+
+  .ng-select {
+    .ng-select-container {
+      @extend .bg-dark;
+      @extend .text-light;
+    }
+
+    .ng-dropdown-panel {
+      .ng-option {
+        @extend .bg-dark;
+        @extend .text-light;
       }
     }
   }
