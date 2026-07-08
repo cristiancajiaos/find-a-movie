@@ -9,7 +9,7 @@
         (click)="toggleDisplay('grid')"
         ngbTooltip="as Grid"
         tooltipClass="display-selector-tooltip"
-        [ngClass]="{ 'btn-primary': displayMode == 'grid' }">
+        [ngClass]="{ 'btn-primary': displayMode() == 'grid' }">
         <fa-icon [icon]="gridIcon"></fa-icon>
       </button>
       <button
@@ -18,7 +18,7 @@
         (click)="toggleDisplay('list')"
         ngbTooltip="as List"
         tooltipClass="display-selector-tooltip"
-        [ngClass]="{ 'btn-primary': displayMode == 'list' }">
+        [ngClass]="{ 'btn-primary': displayMode() == 'list' }">
         <fa-icon [icon]="listIcon"></fa-icon>
       </button>
     </div>

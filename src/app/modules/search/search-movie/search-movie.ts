@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, input, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFilm, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -37,7 +37,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public movieResults: ResponseMovieResult[] = [];
 
-  public displayMode: string = 'grid';
+  public displayMode = signal('grid');
 
   public loadingPage: boolean = false;
 
@@ -121,7 +121,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   public changeDisplay(display: string) {
-    this.displayMode = display;
+    this.displayMode.set(display);
   }
 
   private setSearchMovieTitle(query: string) {

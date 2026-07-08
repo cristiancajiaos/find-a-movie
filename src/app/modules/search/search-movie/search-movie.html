@@ -22,7 +22,7 @@
             <div class="row">
               <div class="col-12 col-lg-6">
                 <app-display-selector
-                  [displayMode]="displayMode"
+                  [displayMode]="displayMode()"
                   (onDisplayChange)="changeDisplay($event)"
                 >
                 </app-display-selector>
@@ -34,7 +34,7 @@
               <strong>{{ searchQuery }}</strong> returned {{ totalResults }} results. Showing
               results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
             </p>
-            @if (displayMode == 'grid') {
+            @if (displayMode() == 'grid') {
               <section class="search-movie-results-grid">
                 <div class="row">
                   @for (
@@ -55,7 +55,7 @@
                 </div>
               </section>
             }
-            @if (displayMode == 'list') {
+            @if (displayMode() == 'list') {
               <section class="search-movie-results-list">
                 <div class="row">
                   @for (
