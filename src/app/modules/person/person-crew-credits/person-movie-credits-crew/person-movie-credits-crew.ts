@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -58,7 +58,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public page: number = 1;
 
-  @Input() crewCredits: ResponsePersonCrewCredit[] = [];
+  crewCredits = input.required<ResponsePersonCrewCredit[]>();
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
@@ -72,14 +72,14 @@ export class PersonMovieCreditsCrew implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.filterCrewCredits = structuredClone(this.crewCredits);
+    this.filterCrewCredits = structuredClone(this.crewCredits());
     this.getPerson();
     this.setRoles();
     this.setYearsLimit();
   }
 
   private setRoles(): void {
-    const roles: string[] = this.crewCredits.map((crewCredit) => crewCredit.job);
+    const roles: string[] = this.crewCredits().map((crewCredit) => crewCredit.job);
     this.roles = [...new Set(roles)];
   }
 
@@ -93,7 +93,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   private setYearsLimit(): void {
-    let years: number[] = this.crewCredits.map((crewCredit) => {
+    let years: number[] = this.crewCredits().map((crewCredit) => {
       const date = new Date(crewCredit.release_date);
       return date.getFullYear();
     });
@@ -164,7 +164,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public filterCredits(): void {
     this.page = 1;
-    this.filterCrewCredits = structuredClone(this.crewCredits);
+    this.filterCrewCredits = structuredClone(this.crewCredits());
     if (this.selectedRoles.length > 0) {
       this.filterCrewCredits = this.personService.filterCrewCreditsByRole(
         this.filterCrewCredits,
@@ -196,6 +196,6 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.roleSelect.clearRoleSelect();
     this.selectedRoles = [];
     this.clearSelectYearFrom(true);
-    this.filterCrewCredits = structuredClone(this.crewCredits);
+    this.filterCrewCredits = structuredClone(this.crewCredits());
   }
 }
