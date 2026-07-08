@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Person } from '../../../../classes/person';
 
 @Component({
@@ -7,18 +7,8 @@ import { Person } from '../../../../classes/person';
   templateUrl: './person-biography.html',
   styleUrl: './person-biography.scss',
 })
-export class PersonBiography implements OnChanges {
+export class PersonBiography {
 
-  @Input() person: Person = null;
-
-  public personBiography: string = '';
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.setPersonBiography();
-  }
-
-  private setPersonBiography(): void {
-    this.personBiography = this.person.biography;
-  }
+  public person = input.required<Person>();
 
 }

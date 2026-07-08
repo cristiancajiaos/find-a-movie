@@ -4,6 +4,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   inject,
+  signal,
 } from '@angular/core';
 import { Person } from '../../../classes/person';
 import { ActivatedRoute } from '@angular/router';
@@ -42,7 +43,9 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public id: number = 0;
 
-  public person: Person = new Person();
+  public person = signal(new Person());
+
+  // public person: Person = new Person();
 
   private personError: HttpErrorResponse = null;
   public personFound: boolean = false;
@@ -84,7 +87,7 @@ export class PersonOverview implements OnInit, OnDestroy {
 
     this.getPersonSubscription = this.personService.getPerson(this.id).subscribe({
       next: (person) => {
-        this.person = person;
+        this.person.set(person);
         this.personFound = true;
       },
       error: (error) => {

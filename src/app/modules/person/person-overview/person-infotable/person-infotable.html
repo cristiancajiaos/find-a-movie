@@ -3,19 +3,19 @@
   <div class="table-responsive">
     <table class="table">
       <tbody>
-        @if (person.birthday) {
+        @if (person().birthday) {
           <tr>
             <td>Born:</td>
             <td>
               {{ personBirthDay | date: 'longDate' }}
-              @if (person.place_of_birth) {
+              @if (person().place_of_birth) {
                 <br />
-                in {{ personPlaceBirth }}
+                in {{ person().place_of_birth }}
               }
             </td>
           </tr>
         }
-        @if (person.deathday) {
+        @if (person().deathday) {
           <tr>
             <td>Died:</td>
             <td>
@@ -23,11 +23,11 @@
             </td>
           </tr>
         }
-        @if (person.gender) {
+        @if (person().gender) {
           <tr>
             <td>Gender:</td>
             <td>
-              @switch (this.person.gender) {
+              @switch (this.person().gender) {
                 @case (1) {
                   <fa-icon [icon]="femaleIcon"></fa-icon>
                   Female
@@ -46,19 +46,19 @@
             </td>
           </tr>
         }
-        @if (person.known_for_department) {
+        @if (person().known_for_department) {
           <tr>
             <td>Main occupation:</td>
             <td>
-              {{ personMainOccupation }}
+              {{ person().known_for_department }}
             </td>
           </tr>
         }
-        @if (person.also_known_as.length > 0) {
+        @if (person().also_known_as.length > 0) {
           <tr>
             <td>Also known as:</td>
             <td>
-              @for (personAlternateName of personAlsoKnownAs; track personAlternateName) {
+              @for (personAlternateName of this.person().also_known_as; track personAlternateName) {
                 {{ personAlternateName }}<br />
               }
             </td>
@@ -67,14 +67,14 @@
       </tbody>
     </table>
   </div>
-  @if (person.imdb_id) {
+  @if (person().imdb_id) {
     <div class="d-grid mb-2">
       <a [href]="personIMDBUrl" class="btn btn-primary" target="_blank">
         <fa-icon [icon]="imdbIcon"></fa-icon> View IMDB
       </a>
     </div>
   }
-  @if (person.homepage) {
+  @if (person().homepage) {
     <div class="d-grid mb-2">
       <a [href]="personHomepageUrl" class="btn btn-primary" target="_blank">
         <fa-icon [icon]="globeIcon"></fa-icon> View Homepage
