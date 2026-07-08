@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -26,7 +26,7 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public loadingPerson: boolean = false;
 
-  public displayMode: string = 'grid';
+  public displayMode = signal('grid');
 
   public yearsFrom: number[] = [];
   public yearsTo: number[] = [];
@@ -134,7 +134,7 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   public changeDisplay(display: string) {
-    this.displayMode = display;
+    this.displayMode.set('display');
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
@@ -169,7 +169,7 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public resetFiltersByDefault(): void {
     this.page = 1;
-    this.displayMode = 'grid';
+    this.displayMode.set('grid');
     this.orderSelectPersonCastCredits.clearOrderCriteria();
     this.clearSelectYearFrom(true);
     this.filterCastCredits = structuredClone(this.castCredits);

@@ -1,7 +1,10 @@
 <section class="person-movie-credits-cast">
   <div class="row">
     <div class="col-12">
-      <app-display-selector (onDisplayChange)="changeDisplay($event)"> </app-display-selector>
+      <app-display-selector
+        [displayMode]="displayMode()"
+        (onDisplayChange)="changeDisplay($event)">
+      </app-display-selector>
       <div class="row">
         <div class="col-12 col-lg-6">
           <app-order-select
@@ -45,7 +48,7 @@
       <section class="cast-credits">
         <hr #castParagraph />
         @if (filterCastCredits.length > 0) {
-          @if (displayMode == 'grid') {
+          @if (displayMode() == 'grid') {
             <section class="cast-credits-display-grid">
               <div class="row" #castCreditsList>
                 @for (
@@ -61,7 +64,7 @@
               </div>
             </section>
           }
-          @if (displayMode == 'list') {
+          @if (displayMode() == 'list') {
             <section class="cast-credits-display-list">
               @for (
                 castRole of filterCastCredits
