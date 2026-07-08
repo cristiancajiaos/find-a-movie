@@ -26,7 +26,7 @@
         @if (!noResults) {
           <section class="search-person-controls">
             <app-display-selector
-              [displayMode]="displayMode"
+              [displayMode]="displayMode()"
               (onDisplayChange)="changeDisplay($event)"
             >
             </app-display-selector>
@@ -36,7 +36,7 @@
               <strong>{{ searchQuery }}</strong> returned {{ totalResults }} results. Showing
               results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
             </p>
-            @if (displayMode == 'grid') {
+            @if (displayMode() == 'grid') {
               <section class="search-person-results-grid">
                 <div class="row">
                   @for (
@@ -57,7 +57,7 @@
                 </div>
               </section>
             }
-            @if (displayMode == 'list') {
+            @if (displayMode() == 'list') {
               <section class="search-person-results-list">
                 <div class="row">
                   @for (

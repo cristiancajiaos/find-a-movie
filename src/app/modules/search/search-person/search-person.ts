@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -25,7 +25,7 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   public searchIcon: IconDefinition = faSearch;
   public userIcon: IconDefinition = faUser;
-  
+
   public searchQuery: string = '';
   public currentPage: number = 1;
   public itemsPerPage: number = 20;
@@ -37,7 +37,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   public responseSearchPerson: ResponseSearchPerson = new ResponseSearchPerson();
   public personResults: ResponsePersonResult[] = [];
 
-  public displayMode: string = 'grid';
+  public displayMode = signal('grid');
 
   public loadingPage: boolean = false;
 
@@ -119,7 +119,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   public changeDisplay(display: string) {
-    this.displayMode = display;
+    this.displayMode.set(display);
   }
 
   private setSearchPersonTitle(query: string) {
