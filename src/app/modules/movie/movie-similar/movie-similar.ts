@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { LoadingService } from '../../../services/loading-service';
@@ -32,7 +32,7 @@ export class MovieSimilar implements OnInit, OnDestroy {
   public movieSimilarError: boolean = false;
   public errorMessage: string = '';
 
-  public displayMode: string = 'grid';
+  public displayMode = signal('grid');
 
   private endLoadingSubscription: Subscription = new Subscription();
   private activatedRouteParentSubscription: Subscription = new Subscription();
@@ -92,7 +92,7 @@ export class MovieSimilar implements OnInit, OnDestroy {
 
 
   public changeDisplay(mode: string): void {
-    this.displayMode = mode; 
+    this.displayMode.set(mode);
   }
 
   ngOnDestroy(): void {

@@ -10,8 +10,10 @@
         These movies are similar to <strong>{{ movie.title }}</strong
         >:
       </p>
-      <app-display-selector (onDisplayChange)="changeDisplay($event)"></app-display-selector>
-      @if (displayMode == 'grid') {
+      <app-display-selector
+        [displayMode]="displayMode()"
+        (onDisplayChange)="changeDisplay($event)"></app-display-selector>
+      @if (displayMode() == 'grid') {
         <div class="row">
         @for (movieResult of movieResults; track movieResult.id) {
           <div class="col-12 col-md-6 col-lg-3">
@@ -22,7 +24,7 @@
         }
       </div>
       }
-      @if (displayMode == 'list') {
+      @if (displayMode() == 'list') {
         @for (movieResult of movieResults; track movieResult.id) {
           <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
         }
