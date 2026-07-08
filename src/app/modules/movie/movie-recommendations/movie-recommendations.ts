@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { LocalStorageService } from '../../../services/local-storage-service';
@@ -32,7 +32,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   public movieRecommendedError: boolean = false;
   public errorMessage: string = '';
 
-  public displayMode: string = 'grid';
+  public displayMode = signal('grid');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieRecommendedSubscription: Subscription = new Subscription();
@@ -89,7 +89,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   }
 
   public changeDisplay(mode: string): void {
-    this.displayMode = mode;
+    this.displayMode.set(mode);
   }
 
   ngOnDestroy(): void {
