@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -28,7 +28,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public loadingPerson: boolean = false;
 
-  public displayMode: string = 'grid';
+  public displayMode = signal('grid');
 
   public selectedRoles: string[] = [];
   public yearsFrom: number[] = [];
@@ -147,7 +147,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public changeDisplay(display: string) {
-    this.displayMode = display;
+    this.displayMode.set(display);
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
@@ -191,7 +191,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public resetFiltersByDefault(): void {
     this.page = 1;
-    this.displayMode = 'grid';
+    this.displayMode.set('grid');
     this.orderSelectPersonCrewCredits.clearOrderCriteria();
     this.roleSelect.clearRoleSelect();
     this.selectedRoles = [];

@@ -4,7 +4,10 @@
       <section class="person-crew-credits-controls">
         <div class="row">
           <div class="col-12 col-lg-6">
-            <app-display-selector (onDisplayChange)="changeDisplay($event)"></app-display-selector>
+            <app-display-selector
+              [displayMode]="displayMode()"
+              (onDisplayChange)="changeDisplay($event)">
+            </app-display-selector>
           </div>
           <div class="col-12 col-lg-6">
             <app-order-select
@@ -57,7 +60,7 @@
       <hr #crewParagraph />
       <section class="crew-credits">
         @if (filterCrewCredits.length > 0) {
-          @if (displayMode == 'grid') {
+          @if (displayMode() == 'grid') {
             <section class="crew-credits-display-grid">
               <div class="row" #crewCreditsGrid>
                 @for (
@@ -74,7 +77,7 @@
               </div>
             </section>
           }
-          @if (displayMode == 'list') {
+          @if (displayMode() == 'list') {
             <section class="crew-credits-display-list">
               @for (
                 crewRole of filterCrewCredits
