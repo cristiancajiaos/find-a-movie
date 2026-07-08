@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -55,7 +55,7 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public page: number = 1;
 
-  @Input() castCredits: ResponsePersonCastCredit[] = [];
+  castCredits = input.required<ResponsePersonCastCredit[]>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCastCredits') orderSelectPersonCastCredits: OrderSelect;
@@ -69,7 +69,9 @@ export class PersonMovieCreditsCast implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.filterCastCredits = structuredClone(this.castCredits);
+    console.log('ngOnInit()');
+    this.filterCastCredits = structuredClone(this.castCredits());
+    console.log(this.filterCastCredits);
     this.getPerson();
     this.setYearsLimit();
   }
@@ -80,7 +82,7 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   private setYearsLimit(): void {
-    let years: number[] = this.castCredits.map((castCredit) => {
+    let years: number[] = this.castCredits().map((castCredit) => {
       const date = new Date(castCredit.release_date);
       return date.getFullYear();
     });
@@ -146,7 +148,7 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   public filterCredits(): void {
-    this.filterCastCredits = structuredClone(this.castCredits);
+    this.filterCastCredits = structuredClone(this.castCredits());
     if (this.fromYear) {
       if (this.toYear) {
         this.filterCastCredits = this.personService.filterCastCreditsByYearFromTo(
@@ -172,6 +174,6 @@ export class PersonMovieCreditsCast implements OnInit {
     this.displayMode.set('grid');
     this.orderSelectPersonCastCredits.clearOrderCriteria();
     this.clearSelectYearFrom(true);
-    this.filterCastCredits = structuredClone(this.castCredits);
+    this.filterCastCredits = structuredClone(this.castCredits());
   }
 }

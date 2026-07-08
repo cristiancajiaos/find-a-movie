@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
 import { ResponsePersonMovieCredits } from '../../../classes/response-person-movie-credits';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,7 +30,8 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   private person: Person;
 
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
-  public personCastCredits: ResponsePersonCastCredit[] = [];
+
+  public personCastCredits: WritableSignal<ResponsePersonCastCredit[]> = signal([]);
 
   public personMovieCreditsFound: boolean = false;
   public personMovieCreditsError: boolean = false;
@@ -74,7 +75,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
     this.personMovieCreditsError = false;
     this.personService.getCastCredits(this.id).subscribe({
       next: (castCredits) => {
-        this.personCastCredits = castCredits;
+        this.personCastCredits.set(castCredits);
         this.personMovieCreditsFound = true;
       },
       error: (error) => {
