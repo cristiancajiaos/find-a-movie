@@ -38,7 +38,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieTagline: string = null;
   public movieOverview: string = null;
 
-  private error: HttpErrorResponse = null;
   public errorFound: boolean = false;
   public errorMessage: string = '';
 
@@ -115,7 +114,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.error = error;
     this.errorFound = true;
     this.errorMessage = error.message;
   }
