@@ -25,9 +25,7 @@ export class PersonHeader implements OnChanges {
 
   public profileImgAltText: string = '';
 
-  // @Input() id: number = 0;
   id = input.required<number>();
-  // @Input() person: Person = new Person();
   person = input.required<Person>();
 
   ngOnChanges() {
