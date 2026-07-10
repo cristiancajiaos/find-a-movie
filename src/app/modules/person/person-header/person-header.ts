@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy, input } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Person } from '../../../classes/person';
 import { environment } from '../../../../environments/environment.development';
@@ -25,8 +25,10 @@ export class PersonHeader implements OnChanges {
 
   public profileImgAltText: string = '';
 
-  @Input() id: number = 0;
-  @Input() person: Person = new Person();
+  // @Input() id: number = 0;
+  id = input.required<number>();
+  // @Input() person: Person = new Person();
+  person = input.required<Person>();
 
   ngOnChanges() {
     this.setName();
@@ -38,33 +40,33 @@ export class PersonHeader implements OnChanges {
 
   public setName(): void {
     if (this.person.name) {
-      this.name = this.person.name;
+      this.name = this.person().name;
     }
   }
 
   public setBirthYear(): void {
-    if (this.person.birthday) {
-      const birthDate: Date = new Date(this.person.birthday);
+    if (this.person().birthday) {
+      const birthDate: Date = new Date(this.person().birthday);
       this.birthYear = birthDate.getFullYear();
     }
   }
 
   public setDeathDay(): void {
-    if (this.person.deathday) {
-      const deathDate: Date = new Date(this.person.deathday);
+    if (this.person().deathday) {
+      const deathDate: Date = new Date(this.person().deathday);
       this.deathYear = deathDate.getFullYear();
     }
   }
 
   public setKnownFor(): void {
-    if (this.person.known_for_department) {
-      this.knownFor = this.person.known_for_department;
+    if (this.person().known_for_department) {
+      this.knownFor = this.person().known_for_department;
     }
   }
 
   public setProfileImg(): void {
-    this.profileImg = this.person.profile_path ? `${environment.imgUrl}${environment.profileSizeSmall}${this.person.profile_path}` : 'img/default-images/profile_image_notavailable_w185.jpg'
-    this.profileImgAltText = this.person.profile_path ? `Profile path for ${this.person.name}` : `Profile path for ${this.person.name} is not available`;
+    this.profileImg = this.person().profile_path ? `${environment.imgUrl}${environment.profileSizeSmall}${this.person().profile_path}` : 'img/default-images/profile_image_notavailable_w185.jpg'
+    this.profileImgAltText = this.person().profile_path ? `Profile path for ${this.person.name}` : `Profile path for ${this.person().name} is not available`;
   }
 
 }

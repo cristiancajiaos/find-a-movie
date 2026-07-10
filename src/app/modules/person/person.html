@@ -9,8 +9,9 @@
     }
   }
   @if (!personErrorFound) {
-    @if (person) {
-      <app-person-header [id]="id" [person]="person" #personHeader> </app-person-header>
+    @if (personFound) {
+      <app-person-header [id]="id()" [person]="person()" #personHeader>
+      </app-person-header>
       <app-person-nav></app-person-nav>
       <main>
         <div class="container-fluid">

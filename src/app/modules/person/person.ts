@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '../../services/title-service';
 import { Person } from '../../classes/person';
@@ -25,12 +25,12 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   private cd = inject(ChangeDetectorRef);
   private loadingService = inject(LoadingService);
 
-  public id: number = 0;
-
-  public person: Person = null;
+  public id: WritableSignal<number> = signal(0);
+  public person: WritableSignal<Person> = signal(new Person());
 
   private personError: HttpErrorResponse = null;
 
+  public personFound: boolean = false;
   public personNotFound: boolean = false;
   public personErrorFound: boolean = false;
   public errorMessage: string = '';
@@ -44,7 +44,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnInit(): void {
     this.cd.detectChanges();
     this.routeSubscription = this.activatedRoute.params.subscribe(params => {
-      this.id = parseInt(params['id']);
+      this.id.set(parseInt(params['id']));
       this.getPerson();
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
@@ -66,11 +66,12 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private getPerson(): void {
+    this.personFound = false;
     this.personErrorFound = false;
-    this.personService.getPerson(this.id)
-    this.getPersonSubscription = this.personService.getPerson(this.id).subscribe({
+    this.getPersonSubscription = this.personService.getPerson(this.id()).subscribe({
       next: (person) => {
-        this.person = person;
+        this.person.set(person);
+        this.personFound = true;
         this.localStorageService.setItem("person", person);
       },
       error: (error) => {

@@ -13,9 +13,9 @@
             <fa-icon [icon]="user"></fa-icon>
             {{ name }}
             <small>
-              @if (this.person.birthday || this.person.deathday) {
+              @if (this.person().birthday || this.person().deathday) {
                 ({{ birthYear }} -
-                @if (this.person.deathday) {
+                @if (this.person().deathday) {
                   {{ deathYear }})
                 } @else {
                   )
