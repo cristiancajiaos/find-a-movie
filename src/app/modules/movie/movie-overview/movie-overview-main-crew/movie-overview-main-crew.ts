@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
 import { CrewMember } from '../../../../classes/credits/crew-member';
 
 @Component({
@@ -10,7 +10,7 @@ import { CrewMember } from '../../../../classes/credits/crew-member';
 })
 export class MovieOverviewMainCrew implements OnChanges {
 
-  @Input() movieCrew: CrewMember[] = [];
+  movieCrew = input.required<CrewMember[]>();
 
   public direction: CrewMember[] = [];
   public coDirection: CrewMember[] = [];
@@ -26,26 +26,26 @@ export class MovieOverviewMainCrew implements OnChanges {
   }
 
   private filterMainCrew(): void {
-    if (this.movieCrew.length > 0) {
-      this.direction = this.movieCrew.filter((crewMember) => crewMember.job == 'Director');
+    if (this.movieCrew().length > 0) {
+      this.direction = this.movieCrew().filter((crewMember) => crewMember.job == 'Director');
 
-      this.coDirection = this.movieCrew.filter((crewMember) => crewMember.job == 'Co-Director');
+      this.coDirection = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director');
 
-      this.writing = this.movieCrew.filter(
+      this.writing = this.movieCrew().filter(
         (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer',
       );
 
-      this.story = this.movieCrew.filter((crewMember) => crewMember.job == 'Story');
+      this.story = this.movieCrew().filter((crewMember) => crewMember.job == 'Story');
 
-      this.basedOnWorkBy = this.movieCrew.filter((crewMember) => crewMember.job == 'Novel');
+      this.basedOnWorkBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
 
-      this.basedOnCharactersBy = this.movieCrew.filter(
+      this.basedOnCharactersBy = this.movieCrew().filter(
         (crewMember) => crewMember.job == 'Characters',
       );
 
-      this.producing = this.movieCrew.filter((crewMember) => crewMember.job == 'Producer');
+      this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');
 
-      this.executiveProducing = this.movieCrew.filter(
+      this.executiveProducing = this.movieCrew().filter(
         (crewMember) => crewMember.job == 'Executive Producer',
       );
     }

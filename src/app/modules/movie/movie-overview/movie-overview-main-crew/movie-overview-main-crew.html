@@ -1,9 +1,9 @@
 <section class="movie-overview-main-crew">
   <h3>Main Crew</h3>
-  @if (movieCrew.length == 0) {
+  @if (movieCrew().length == 0) {
     <p>This movie has no recognizable crew</p>
   }
-  @if (movieCrew.length > 0) {
+  @if (movieCrew().length > 0) {
     <div class="table-responsive">
       <table class="table">
         <tbody>

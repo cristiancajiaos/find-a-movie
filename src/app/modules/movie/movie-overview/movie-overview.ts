@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -27,7 +27,8 @@ export class MovieOverview implements OnInit, OnDestroy {
   public id: number = 0;
 
   public movie: Movie = null;
-  public credits: Credits = new Credits();
+
+  public credits: WritableSignal<Credits> = signal(new Credits())
   public movieResponseVideo: ResponseVideo = new ResponseVideo();
   public movieImages: BackdropImage[] = [];
   public movieReleaseDate: Date = new Date();
@@ -85,7 +86,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer, getImages]).subscribe({
       next: ([movie, credits, responseVideo, images]) => {
         this.movie = movie;
-        this.credits = credits;
+        this.credits.set(credits);
         this.movieResponseVideo = responseVideo;
         this.movieImages = images;
         this.movieFound = true;

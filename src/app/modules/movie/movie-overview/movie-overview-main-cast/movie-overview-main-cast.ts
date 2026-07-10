@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
 import { CastMember } from '../../../../classes/credits/cast-member';
 
 @Component({
@@ -10,7 +10,8 @@ import { CastMember } from '../../../../classes/credits/cast-member';
 })
 export class MovieOverviewMainCast implements OnChanges {
 
-  @Input() movieCast: CastMember[] = [];
+  movieCast = input.required<CastMember[]>();
+
   public movieMainCast: CastMember[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -18,6 +19,6 @@ export class MovieOverviewMainCast implements OnChanges {
   }
 
   private setMainCast(): void {
-    this.movieMainCast = this.movieCast.slice(0, 7);
+    this.movieMainCast = this.movieCast().slice(0, 7);
   }
 }

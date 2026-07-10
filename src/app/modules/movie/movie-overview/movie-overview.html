@@ -22,12 +22,12 @@
         <section class="movie-main-credits">
           <div class="row">
             <div class="col-12 col-lg-4">
-              <app-movie-overview-main-cast [movieCast]="credits.cast">
+              <app-movie-overview-main-cast [movieCast]="credits().cast">
               </app-movie-overview-main-cast>
             </div>
             <div class="col-12 col-lg-8">
               <section class="movie-main-crew">
-                <app-movie-overview-main-crew [movieCrew]="credits.crew">
+                <app-movie-overview-main-crew [movieCrew]="credits().crew">
                 </app-movie-overview-main-crew>
               </section>
             </div>
