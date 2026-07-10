@@ -89,7 +89,6 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.movieResponseVideo = responseVideo;
         this.movieImages = images;
         this.movieFound = true;
-        this.movieCreditsErrorFound = true;
       },
       error: (error) => {
         this.handleError(error);
