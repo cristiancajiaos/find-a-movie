@@ -25,8 +25,8 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public originalMovieResults: ResponseMovieResult[] = [];
   public movieResults: ResponseMovieResult[] = [];
 
-  enableBorderRadius = input<boolean>();
-  dropdownMenuEnd = input<boolean>();
+  enableBorderRadius = input<boolean>(false);
+  dropdownMenuEnd = input<boolean>(true);
 
   public movieInput: FormControl = new FormControl('');
   public placeholder: string = 'Eg. Star Wars';
