@@ -28,8 +28,8 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public movie: Movie = null;
 
-  public credits: WritableSignal<Credits> = signal(new Credits())
-  public movieResponseVideo: ResponseVideo = new ResponseVideo();
+  public credits: WritableSignal<Credits> = signal(new Credits());
+  public movieResponseVideo: WritableSignal<ResponseVideo> = signal(new ResponseVideo());
   public movieImages: BackdropImage[] = [];
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
@@ -86,7 +86,7 @@ export class MovieOverview implements OnInit, OnDestroy {
       next: ([movie, credits, responseVideo, images]) => {
         this.movie = movie;
         this.credits.set(credits);
-        this.movieResponseVideo = responseVideo;
+        this.movieResponseVideo.set(responseVideo);
         this.movieImages = images;
         this.movieFound = true;
       },

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
 import { MovieService } from '../../../../services/movie-service';
 import { ResponseVideo } from '../../../../classes/response-video';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,11 +16,11 @@ export class MovieOverviewTrailer implements OnChanges {
 
   public movieTrailerUrl: string = '';
 
-  @Input() responseVideo: ResponseVideo = new ResponseVideo();
+  responseVideo = input.required<ResponseVideo>();
 
   public loadingTrailer: boolean = false;
   public movieTrailerFound: boolean = false;
-  
+
   public movieTrailerKey: string = '';
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -28,10 +28,10 @@ export class MovieOverviewTrailer implements OnChanges {
   }
 
   private setMovieTrailer(): void {
-    if (this.responseVideo.results.length == 0) {
+    if (this.responseVideo().results.length == 0) {
       return;
     }
-    const responseVideoResult: ResponseVideoResult = this.responseVideo.results
+    const responseVideoResult: ResponseVideoResult = this.responseVideo().results
       .filter((responseVideoResult) => responseVideoResult.type == 'Trailer')
       .slice(0, 1)[0];
 
