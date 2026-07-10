@@ -26,8 +26,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public id: number = 0;
 
-  public movie: Movie = null;
-
+  public movie: WritableSignal<Movie> = signal(new Movie());
   public credits: WritableSignal<Credits> = signal(new Credits());
   public movieResponseVideo: WritableSignal<ResponseVideo> = signal(new ResponseVideo());
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
@@ -72,9 +71,10 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private getMovieAndCredits() {
-    this.movie = null;
-    this.movieTagline = null;
-    this.movieOverview = null;
+    this.movie.set(new Movie());
+    this.credits.set(new Credits());
+    this.movieResponseVideo.set(new ResponseVideo());
+    this.movieImages.set([]);
     this.movieErrorFound = false;
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
@@ -84,7 +84,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
     this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer, getImages]).subscribe({
       next: ([movie, credits, responseVideo, movieImages]) => {
-        this.movie = movie;
+        this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideo);
         this.movieImages.set(movieImages);
@@ -94,23 +94,18 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.handleError(error);
       },
       complete: () => {
-        this.setDescription();
+
       }
     });
   }
 
   private setTitle(): void {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title,
-      this.movie.original_title,
-      this.movie.release_date,
+      this.movie().title,
+      this.movie().original_title,
+      this.movie().release_date,
     );
     this.titleService.setMovieOverviewTitle(formattedTitle);
-  }
-
-  private setDescription() {
-    this.movieTagline = this.movie.tagline;
-    this.movieOverview = this.movie.overview;
   }
 
   private handleError(error: HttpErrorResponse): void {

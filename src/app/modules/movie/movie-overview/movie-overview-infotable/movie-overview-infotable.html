@@ -1,60 +1,60 @@
 <section class="movie-overview-infotable">
-  @if (movie) {
+  @if (movie()) {
     <h3>Movie Info</h3>
     <div class="table-responsive">
       <table class="table">
         <tbody>
-          @if (movie.original_language != 'en') {
+          @if (movie().original_language != 'en') {
             <tr>
               <td>Original Title:</td>
-              <td>{{ movie.original_title }}</td>
+              <td>{{ movie().original_title }}</td>
             </tr>
           }
-          @if (movie.genres.length > 0) {
+          @if (movie().genres.length > 0) {
             <tr>
               <td>
-                @if (movie.genres.length > 1) {
+                @if (movie().genres.length > 1) {
                   Genres:
                 } @else {
                   Genre:
                 }
               </td>
               <td>
-                @for (genres of movie.genres; track genres) {
+                @for (genres of movie().genres; track genres) {
                   {{ genres.name }}
                   <br />
                 }
               </td>
             </tr>
           }
-          @if (movie.production_companies.length > 0) {
+          @if (movie().production_companies.length > 0) {
             <tr>
               <td>
-                @if (movie.production_companies.length > 1) {
+                @if (movie().production_companies.length > 1) {
                   Production Companies:
                 } @else {
                   Production Company:
                 }
               </td>
               <td>
-                @for (productionCompany of movie.production_companies; track productionCompany) {
+                @for (productionCompany of movie().production_companies; track productionCompany) {
                   {{ productionCompany.name }}
                   <br />
                 }
               </td>
             </tr>
           }
-          @if (movie.production_countries.length > 0) {
+          @if (movie().production_countries.length > 0) {
             <tr>
               <td>
-                @if (movie.production_countries.length > 1) {
+                @if (movie().production_countries.length > 1) {
                   Production Countries:
                 } @else {
                   Production Country:
                 }
               </td>
               <td>
-                @for (productionCountry of movie.production_countries; track productionCountry) {
+                @for (productionCountry of movie().production_countries; track productionCountry) {
                   {{ productionCountry.name }}
                   <br />
                 }
@@ -62,16 +62,16 @@
             </tr>
           }
           <tr>
-            @if (movie.spoken_languages.length > 0) {
+            @if (movie().spoken_languages.length > 0) {
             <td>
-              @if (movie.spoken_languages.length > 1) {
+              @if (movie().spoken_languages.length > 1) {
                 Languages:
               } @else {
                 Language:
               }
             </td>
             <td>
-              @for (spokenLanguage of movie.spoken_languages; track spokenLanguage) {
+              @for (spokenLanguage of movie().spoken_languages; track spokenLanguage) {
                 {{ spokenLanguage.english_name }}
                 <br />
               }
@@ -84,30 +84,30 @@
               <td>{{ movieReleaseDate | date: 'longDate' }}</td>
             </tr>
           }
-          @if (movie.runtime && movie.runtime > 0) {
+          @if (movie().runtime && movie().runtime > 0) {
             <tr>
               <td>Runtime:</td>
-              <td>{{ movie.runtime }} min</td>
+              <td>{{ movie().runtime }} min</td>
             </tr>
           }
-          @if (movie.budget && movie.budget > 0) {
+          @if (movie().budget && movie().budget > 0) {
             <tr>
               <td>Budget:</td>
-              <td>USD {{ movie.budget | currency: 'USD' : 'symbol' : '1.0' }}</td>
+              <td>USD {{ movie().budget | currency: 'USD' : 'symbol' : '1.0' }}</td>
             </tr>
           }
-          @if (movie.revenue && movie.revenue > 0) {
+          @if (movie().revenue && movie().revenue > 0) {
             <tr>
               <td>Box Office:</td>
-              <td>USD {{ movie.revenue | currency: 'USD' : 'symbol' : '1.0' }}</td>
+              <td>USD {{ movie().revenue | currency: 'USD' : 'symbol' : '1.0' }}</td>
             </tr>
           }
         </tbody>
       </table>
     </div>
-    @if (movie.imdb_id || movie.homepage) {
+    @if (movie().imdb_id || movie().homepage) {
       <section class="movie-external-links">
-        @if (movie.imdb_id) {
+        @if (movie().imdb_id) {
           <div class="d-grid mb-2">
             <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
               <fa-icon [icon]="imdbIcon"></fa-icon>
@@ -115,7 +115,7 @@
             </a>
           </div>
         }
-        @if (movie.homepage) {
+        @if (movie().homepage) {
           <div class="d-grid mb-2">
             <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
               <fa-icon [icon]="globeIcon"></fa-icon>

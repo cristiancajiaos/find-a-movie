@@ -7,14 +7,14 @@
   }
   @if (!errorFound) {
     @if (movieFound) {
-      @if (movieTagline) {
+      @if (movie().tagline) {
         <section class="movie-tagline">
-          <p>{{ movieTagline }}</p>
+          <p>{{ movie().tagline }}</p>
         </section>
       }
-      @if (movieOverview) {
+      @if (movie().overview) {
         <section class="movie-overview">
-          <p>{{ movieOverview }}</p>
+          <p>{{ movie().overview }}</p>
         </section>
         <hr />
       }
@@ -35,21 +35,21 @@
           <div class="row">
             <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie.id, 'cast']" class="btn btn-primary">
+                <a [routerLink]="['/movie', movie().id, 'cast']" class="btn btn-primary">
                   See Full Cast
                 </a>
               </div>
             </div>
             <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie.id, 'crew']" class="btn btn-primary">
+                <a [routerLink]="['/movie', movie().id, 'crew']" class="btn btn-primary">
                   See Featured Crew
                 </a>
               </div>
             </div>
             <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie.id, 'full-crew']" class="btn btn-primary">
+                <a [routerLink]="['/movie', movie().id, 'full-crew']" class="btn btn-primary">
                   See Full Crew
                 </a>
               </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="col-12 col-lg-6">
           <section class="movie-info">
-            <app-movie-overview-infotable [movie]="movie">
+            <app-movie-overview-infotable [movie]="movie()">
             </app-movie-overview-infotable>
           </section>
         </div>
