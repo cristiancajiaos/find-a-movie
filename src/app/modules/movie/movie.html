@@ -11,7 +11,8 @@
   @if (!movieErrorFound) {
     @if (movie) {
       <div class="navbar-cover"></div>
-      <app-movie-header [id]="id" [movie]="movie" #movieHeader> </app-movie-header>
+      <app-movie-header [id]="id()" [movie]="movie()" #movieHeader>
+      </app-movie-header>
       <main>
         <app-movie-nav></app-movie-nav>
         <div class="container-fluid">
@@ -19,7 +20,7 @@
             <div class="col-12 col-lg-2">
               <aside class="aside-1">
                 <img [src]="posterSizeSmall" [alt]="altPosterText" class="w-100" />
-                @if (movie.poster_path) {
+                @if (movie().poster_path) {
                   <div class="d-grid">
                     <a
                       [href]="posterSizeOriginal"

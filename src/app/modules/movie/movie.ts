@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../services/movie-service';
 import { Movie } from '../../classes/movie';
@@ -27,8 +27,10 @@ export class MovieComponent implements OnInit, OnDestroy {
   private loadingService = inject(LoadingService);
 
   public imagePortrait: IconDefinition = faImagePortrait;
-  public id: number = 0;
-  public movie: Movie = null;
+  // public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
+  // public movie: Movie = null;
+  public movie: WritableSignal<Movie> = signal(new Movie());
 
   public formattedTitle: string = '';
 
@@ -36,6 +38,7 @@ export class MovieComponent implements OnInit, OnDestroy {
   public posterSizeSmall: string = '';
   public posterSizeOriginal: string = '';
 
+  private movieFound: boolean = false;
   private movieError: HttpErrorResponse = null;
   public movieNotFound: boolean = false;
   public movieErrorFound: boolean = false;
@@ -49,12 +52,12 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
-      this.id = parseInt(this.activatedRoute.snapshot.params['id']);
+      this.id.set(parseInt(this.activatedRoute.snapshot.params['id']));
       this.getMovie();
     });
 
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      if (this.movie) {
+      if (this.movieFound) {
         this.setTitle();
       } else {
         if (this.movieError) {
@@ -71,11 +74,13 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
+    this.movieFound = false;
     this.movieErrorFound = false;
-    this.getMovieSubscription = this.movieService.getMovie(this.id).subscribe({
+    this.getMovieSubscription = this.movieService.getMovie(this.id()).subscribe({
       next: (movie) => {
-        this.movie = movie;
+        this.movie.set(movie);
         this.localStorageService.setItem('movie', movie);
+        this.movieFound = true;
         this.setMoviePoster();
       },
       error: (error) => {
@@ -96,21 +101,21 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   private setTitle(): void {
     this.formattedTitle = this.movieService.getFormattedMovieTitle(
-      this.movie.title,
-      this.movie.original_title,
-      this.movie.release_date,
+      this.movie().title,
+      this.movie().original_title,
+      this.movie().release_date,
     );
     this.titleService.setTitle(this.formattedTitle);
   }
 
   private setMoviePoster(): void {
-    this.posterSizeSmall = this.movie.poster_path
-      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie.poster_path}`
+    this.posterSizeSmall = this.movie().poster_path
+      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie().poster_path}`
       : 'img/default-images/movie_poster_notavailable_w500.jpg';
-    this.posterSizeOriginal = this.movie.poster_path
-      ? `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie.poster_path}`
+    this.posterSizeOriginal = this.movie().poster_path
+      ? `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie().poster_path}`
       : '';
-    this.altPosterText = this.movie.poster_path
+    this.altPosterText = this.movie().poster_path
       ? `Poster from the movie ${this.formattedTitle}`
       : `Poster from the movie ${this.formattedTitle} is not available`;
   }

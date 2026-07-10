@@ -5,8 +5,6 @@ import { MovieService } from '../../../services/movie-service';
 import { Movie } from '../../../classes/movie';
 import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TitleService } from '../../../services/title-service';
-import { LoadingService } from '../../../services/loading-service';
 import { ResponseVideo } from '../../../classes/response-video';
 import { BackdropImage } from '../../../classes/response-image/backdrop-image';
 
@@ -21,8 +19,6 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
-  private titleService = inject(TitleService);
-  private loadingService = inject(LoadingService);
 
   public id: number = 0;
 
@@ -49,7 +45,6 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieDetailsSubscription: Subscription = new Subscription();
-  private endLoadingSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.setId();
@@ -62,12 +57,6 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.getMovieAndCredits();
       },
     );
-
-    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      if (this.movie) {
-        this.setTitle();
-      }
-    });
   }
 
   private getMovieAndCredits() {
@@ -99,15 +88,6 @@ export class MovieOverview implements OnInit, OnDestroy {
     });
   }
 
-  private setTitle(): void {
-    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie().title,
-      this.movie().original_title,
-      this.movie().release_date,
-    );
-    this.titleService.setMovieOverviewTitle(formattedTitle);
-  }
-
   private handleError(error: HttpErrorResponse): void {
     this.errorFound = true;
     this.errorMessage = error.message;
@@ -123,9 +103,6 @@ export class MovieOverview implements OnInit, OnDestroy {
     }
     if (this.getMovieDetailsSubscription) {
       this.getMovieDetailsSubscription.unsubscribe();
-    }
-    if (this.endLoadingSubscription) {
-      this.endLoadingSubscription.unsubscribe();
     }
   }
 }

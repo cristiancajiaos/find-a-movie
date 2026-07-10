@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy, input } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
@@ -22,8 +22,8 @@ export class MovieHeader implements OnChanges {
   public calendar: IconDefinition = faCalendar;
   public clock: IconDefinition = faClock;
 
-  @Input() id: number = 0;
-  @Input() movie: Movie = null;
+  id = input.required<number>();
+  movie = input.required<Movie>();
 
   public year: number = 0;
   public backdropImg: string = '';
@@ -34,13 +34,13 @@ export class MovieHeader implements OnChanges {
   }
 
   public setYear(): void {
-    const releaseYear: Date = new Date(this.movie.release_date);
+    const releaseYear: Date = new Date(this.movie().release_date);
     this.year = releaseYear.getFullYear();
   }
 
   public setBackdrop(): void {
-    this.backdropImg = this.movie.backdrop_path
-      ? `${environment.imgUrl}${environment.backdropSize}${this.movie.backdrop_path}`
+    this.backdropImg = this.movie().backdrop_path
+      ? `${environment.imgUrl}${environment.backdropSize}${this.movie().backdrop_path}`
       : 'img/default-images/movie_backdrop_notavailable_w1280.jpg';
   }
 }
