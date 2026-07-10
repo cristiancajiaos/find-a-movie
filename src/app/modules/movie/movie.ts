@@ -27,9 +27,8 @@ export class MovieComponent implements OnInit, OnDestroy {
   private loadingService = inject(LoadingService);
 
   public imagePortrait: IconDefinition = faImagePortrait;
-  // public id: number = 0;
+  
   public id: WritableSignal<number> = signal(0);
-  // public movie: Movie = null;
   public movie: WritableSignal<Movie> = signal(new Movie());
 
   public formattedTitle: string = '';
