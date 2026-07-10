@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -25,13 +25,14 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public originalMovieResults: ResponseMovieResult[] = [];
   public movieResults: ResponseMovieResult[] = [];
 
-  @Input() enableBorderRadius: boolean = false;
-  @Input() dropdownMenuEnd: boolean = true;
+  enableBorderRadius = input<boolean>();
+  dropdownMenuEnd = input<boolean>();
+
   public movieInput: FormControl = new FormControl('');
   public placeholder: string = 'Eg. Star Wars';
   public ariaLabel: string = 'Search Movie';
-  @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
 
+  @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
   @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;
 
   private movieResultsSubscription: Subscription;

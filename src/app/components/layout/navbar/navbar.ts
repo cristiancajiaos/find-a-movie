@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, inject, OnDestroy } from '@
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { LightDarkService } from '../../../services/light-dark-service';
-import { Observable, Subscribable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',

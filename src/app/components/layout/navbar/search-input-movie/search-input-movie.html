@@ -5,7 +5,7 @@
         <input
           #searchMovieInput
           class="input-movie form-control"
-          [ngClass]="{'hide-border-radius':!enableBorderRadius}"
+          [ngClass]="{'hide-border-radius':!enableBorderRadius()}"
           type="search"
           (search)="toggleMovieSearchDropdownBySearch()"
           (focus)="toggleMovieSearchDropdownByFocus()"
@@ -22,7 +22,7 @@
       <div
         ngbDropdownMenu
         class="dropdown-menu dropdown-search-movie"
-        [ngClass]="{'dropdown-menu-end': dropdownMenuEnd}">
+        [ngClass]="{'dropdown-menu-end': dropdownMenuEnd()}">
         @if (movieResults.length > 0) {
           @for (movie of movieResults; track movie.id) {
             <app-search-input-movie-result
