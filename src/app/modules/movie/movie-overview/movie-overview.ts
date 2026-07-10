@@ -30,7 +30,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public credits: WritableSignal<Credits> = signal(new Credits());
   public movieResponseVideo: WritableSignal<ResponseVideo> = signal(new ResponseVideo());
-  public movieImages: BackdropImage[] = [];
+  public movieImages: WritableSignal<BackdropImage[]> = signal([]);
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
@@ -83,11 +83,11 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
 
     this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer, getImages]).subscribe({
-      next: ([movie, credits, responseVideo, images]) => {
+      next: ([movie, credits, responseVideo, movieImages]) => {
         this.movie = movie;
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideo);
-        this.movieImages = images;
+        this.movieImages.set(movieImages);
         this.movieFound = true;
       },
       error: (error) => {
