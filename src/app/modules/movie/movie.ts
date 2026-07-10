@@ -38,7 +38,7 @@ export class MovieComponent implements OnInit, OnDestroy {
   public posterSizeSmall: string = '';
   public posterSizeOriginal: string = '';
 
-  private movieFound: boolean = false;
+  public movieFound: boolean = false;
   private movieError: HttpErrorResponse = null;
   public movieNotFound: boolean = false;
   public movieErrorFound: boolean = false;

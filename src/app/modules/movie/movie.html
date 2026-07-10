@@ -9,7 +9,7 @@
     }
   }
   @if (!movieErrorFound) {
-    @if (movie) {
+    @if (movieFound) {
       <div class="navbar-cover"></div>
       <app-movie-header [id]="id()" [movie]="movie()" #movieHeader>
       </app-movie-header>
