@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
 import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,6 +11,9 @@ import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export class SearchMainPerson implements OnInit {
 
   public bgImage: string = 'img/bg/search-main-bg-1.jpg';
+
+  public enableBorderRadius: WritableSignal<boolean> = signal(true);
+  public dropdownMenuEnd: WritableSignal<boolean> = signal(false);
 
   public userIcon: IconDefinition = faUser;
 
