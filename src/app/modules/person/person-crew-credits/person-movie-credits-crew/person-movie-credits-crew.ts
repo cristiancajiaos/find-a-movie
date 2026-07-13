@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -36,7 +36,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public selectedRoles: string[] = [];
   public yearsFrom: WritableSignal<number[]> = signal([]);
-  public yearsTo: number[] = [];
+  public yearsTo: WritableSignal<number[]> = signal([]);
 
   public fromYear: number = null;
   public toYear: number = null;
@@ -117,7 +117,7 @@ export class PersonMovieCreditsCrew implements OnInit {
         this.toSelect.enableSelect();
       }
       if (year) {
-        this.yearsTo = structuredClone(yearsTo);
+        this.yearsTo.set(structuredClone(yearsTo));
       }
     } else {
       this.fromYear = null;
@@ -127,7 +127,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   public clearSelectYearFrom(event: boolean) {
     this.fromYear = null;
     this.toYear = null;
-    this.yearsTo = [];
+    this.yearsTo.set([]);
     this.fromSelect.yearsFromSelectForm.reset();
     this.toSelect.disableSelect();
   }

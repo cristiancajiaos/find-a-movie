@@ -32,7 +32,7 @@ export class PersonMovieCreditsCast implements OnInit {
   public displayMode: WritableSignal<string> = signal('grid');
 
   public yearsFrom: WritableSignal<number[]> = signal([]);
-  public yearsTo: number[] = [];
+  public yearsTo: WritableSignal<number[]> = signal([]);
 
   public fromYear: number = null;
   public toYear: number = null;
@@ -103,7 +103,7 @@ export class PersonMovieCreditsCast implements OnInit {
         this.toSelect.enableSelect();
       }
       if (year) {
-        this.yearsTo = structuredClone(yearsTo);
+        this.yearsTo.set(structuredClone(yearsTo));
       }
     } else {
       this.fromYear = null;
@@ -113,7 +113,7 @@ export class PersonMovieCreditsCast implements OnInit {
   public clearSelectYearFrom(event: boolean) {
     this.fromYear = null;
     this.toYear = null;
-    this.yearsTo = [];
+    this.yearsTo.set([]);
     this.fromSelect.yearsFromSelectForm.reset();
     this.toSelect.disableSelect();
   }
