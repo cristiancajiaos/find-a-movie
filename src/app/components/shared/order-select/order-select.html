@@ -8,7 +8,7 @@
         #orderSelect
         formControlName="order"
         [placeholder]="orderSelectPlaceholder"
-        [items]="orderCriterias"
+        [items]="orderCriterias()"
         bindLabel="orderCriteriaName"
         bindValue="id"
         (change)="orderCriteriaChange($event)"

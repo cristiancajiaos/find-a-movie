@@ -9,8 +9,8 @@
         <div class="col-12 col-lg-6">
           <app-order-select
             #orderSelectPersonCastCredits
-            [orderCriterias]="orderCriterias"
-            [defaultOrderCriteria]="defaultOrder"
+            [orderCriterias]="orderCriterias()"
+            [defaultOrderCriteria]="defaultOrder()"
             (onOrderCriteriaChange)="orderCriteriaChange($event)"
             (onClearOrderCriteria)="clearOrderCriteria($event)"
             >

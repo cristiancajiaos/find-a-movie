@@ -8,8 +8,8 @@
     @if (movieFullCrew.length > 0) {
       <app-order-select
         #orderSelectMovieFullCrew
-        [orderCriterias]="orderCriterias"
-        [defaultOrderCriteria]="defaultOrder"
+        [orderCriterias]="orderCriterias()"
+        [defaultOrderCriteria]="defaultOrder()"
         (onOrderCriteriaChange)="orderCriteriaChange($event)"
       >
       </app-order-select>

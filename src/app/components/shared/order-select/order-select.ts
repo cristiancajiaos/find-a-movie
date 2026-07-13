@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy, input, InputSignal, output, OutputEmitterRef, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { Order } from '../../../enums/order';
 
 @Component({
   selector: 'app-order-select',
@@ -12,24 +13,20 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 })
 export class OrderSelect implements OnInit {
 
-  public orderForm: FormGroup = new FormGroup({});
+  private fb = inject(FormBuilder);
 
-  @Input() orderCriterias: OrderCriteria[] = [];
-  @Input() defaultOrderCriteria: OrderCriteria;
+  public orderForm: FormGroup = new FormGroup({})
 
   public orderSelectLabel: string = 'Order by:'
   public orderSelectPlaceholder: string = 'Select an order criteria';
 
-  @Output() onOrderCriteriaChange: EventEmitter<OrderCriteria> = new EventEmitter<OrderCriteria>();
-  @Output() onClearOrderCriteria: EventEmitter<boolean> = new EventEmitter<boolean>();
+  orderCriterias: InputSignal<OrderCriteria[]> = input.required<OrderCriteria[]>();
+  defaultOrderCriteria: InputSignal<OrderCriteria> = input.required<OrderCriteria>();
+
+  onOrderCriteriaChange: OutputEmitterRef<OrderCriteria> = output<OrderCriteria>();
+  onClearOrderCriteria: OutputEmitterRef<boolean> = output<boolean>();
 
   @ViewChild("orderSelect") orderSelect: NgSelectComponent;
-
-  constructor(
-    private fb: FormBuilder
-  ){
-
-  }
 
   ngOnInit(): void {
     this.orderForm = this.fb.group({

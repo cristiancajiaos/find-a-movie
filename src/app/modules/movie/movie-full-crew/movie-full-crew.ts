@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -38,17 +38,17 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   public movieFullCrewError: boolean = false;
   public errorMessage: string = '';
 
-  public orderCriterias: OrderCriteria[] = [
+  public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
     { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
     { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' },
     { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
-  ];
+  ]);
 
-  public defaultOrder: OrderCriteria = {
+  public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
-  };
+  });
 
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
 

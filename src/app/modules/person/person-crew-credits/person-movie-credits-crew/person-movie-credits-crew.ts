@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -38,20 +38,20 @@ export class PersonMovieCreditsCrew implements OnInit {
   public toYear: number = null;
   public lastYear: number = null;
 
-  public orderCriterias: OrderCriteria[] = [
+  public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
     { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' },
     { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' },
     { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
     { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)' },
     { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)' },
-  ];
+  ]);
 
-  public defaultOrder: OrderCriteria = {
+  public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
-  };
-  public selectedOrderCriteria: OrderCriteria = this.defaultOrder;
+  });
+  public selectedOrderCriteria: OrderCriteria = this.defaultOrder();
 
   public currentPerson!: Person;
   public filterCrewCredits: ResponsePersonCrewCredit[] = [];
@@ -155,7 +155,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria = this.defaultOrder;
+    this.selectedOrderCriteria = this.defaultOrder();
   }
 
   public clearRoleSelect(event: boolean): void {
