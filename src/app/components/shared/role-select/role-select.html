@@ -11,7 +11,7 @@
     (change)="onChangeRoles($event)"
     (clear)="clearRoleSelect()"
   >
-    @for (role of roles; track role) {
+    @for (role of roles(); track role) {
       <ng-option [value]="role">
         {{ role }}
       </ng-option>

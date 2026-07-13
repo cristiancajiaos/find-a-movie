@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, OutputEmitterRef, InputSignal, input, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -11,8 +11,6 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 })
 export class RoleSelect implements OnInit {
 
-  @Input() roles: string[] = [];
-
   public roleForm: FormGroup = new FormGroup({});
 
   public selectedRoles: string[] = [];
@@ -20,8 +18,10 @@ export class RoleSelect implements OnInit {
   public roleSelectLabel: string = 'Filter by role:';
   public roleSelectPlaceholder: string = 'Select one or various roles';
 
-  @Output() onRoleSelectChange: EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output() onClearRoleSelect: EventEmitter<boolean> = new EventEmitter<boolean>();
+  roles: InputSignal<string[]> = input.required<string[]>();
+
+  onRoleSelectChange: OutputEmitterRef<string[]> = output<string[]>();
+  onClearRoleSelect: OutputEmitterRef<boolean> = output<boolean>()
 
   @ViewChild('roleSelect') roleSelect: NgSelectComponent;
 

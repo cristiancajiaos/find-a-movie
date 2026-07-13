@@ -22,7 +22,7 @@
           <div class="col-12 col-lg-6">
             <app-role-select
               #roleSelect
-              [roles]="roles"
+              [roles]="roles()"
               (onRoleSelectChange)="defineSelectedRoles($event)"
               (onClearRoleSelect)="clearRoleSelect($event)">
             </app-role-select>

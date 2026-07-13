@@ -24,7 +24,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
   public filterIcon: IconDefinition = faFilter;
 
-  public roles: string[] = [];
+  public roles: WritableSignal<string[]> = signal([]);
 
   public loadingPerson: boolean = false;
 
@@ -80,7 +80,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   private setRoles(): void {
     const roles: string[] = this.crewCredits().map((crewCredit) => crewCredit.job);
-    this.roles = [...new Set(roles)];
+    this.roles.set([...new Set(roles)]);
   }
 
   private getPerson(): void {
