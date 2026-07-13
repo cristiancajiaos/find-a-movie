@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -20,6 +20,10 @@ import { RoleSelect } from '../../../../components/shared/role-select/role-selec
   styleUrl: './person-movie-credits-crew.scss',
 })
 export class PersonMovieCreditsCrew implements OnInit {
+
+  private localStorageService = inject(LocalStorageService);
+  private personService = inject(PersonService);
+
   public faCircleInfo: IconDefinition = faCircleInfo;
   public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
   public filterIcon: IconDefinition = faFilter;
@@ -28,10 +32,10 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public loadingPerson: boolean = false;
 
-  public displayMode = signal('grid');
+  public displayMode: WritableSignal<string> = signal('grid');
 
   public selectedRoles: string[] = [];
-  public yearsFrom: number[] = [];
+  public yearsFrom: WritableSignal<number[]> = signal([]);
   public yearsTo: number[] = [];
 
   public fromYear: number = null;
@@ -58,18 +62,13 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public page: number = 1;
 
-  crewCredits = input.required<ResponsePersonCrewCredit[]>();
+  crewCredits: InputSignal<ResponsePersonCrewCredit[]> = input.required<ResponsePersonCrewCredit[]>();
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
   @ViewChild('roleSelect') roleSelect: RoleSelect;
   @ViewChild('fromSelect') fromSelect: FromSelect;
   @ViewChild('toSelect') toSelect: ToSelect;
-
-  constructor(
-    private localStorageService: LocalStorageService,
-    private personService: PersonService
-  ) {}
 
   ngOnInit(): void {
     this.filterCrewCredits = structuredClone(this.crewCredits());
@@ -104,7 +103,7 @@ export class PersonMovieCreditsCrew implements OnInit {
       .filter((year) => !isNaN(year))
       .reduce((max, year) => (year > max ? year : max));
     for (let i = firstYear; i <= this.lastYear; i++) {
-      this.yearsFrom.push(i);
+      this.yearsFrom.update(numbers => [...numbers, i]);
     }
   }
 

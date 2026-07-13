@@ -10,7 +10,7 @@
         [placeholder]="fromSelectPlaceholder"
         (change)="onFromYearChange($event)"
         (clear)="onClearSelect()">
-        @for (year of yearsFrom; track year) {
+        @for (year of yearsFrom(); track year) {
           <ng-option [value]="year">{{ year }}</ng-option>
         }
       </ng-select>

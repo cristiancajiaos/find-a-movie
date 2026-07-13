@@ -30,7 +30,7 @@
           <div class="col-6 col-lg-3">
             <app-from-select
               #fromSelect
-              [yearsFrom]="yearsFrom"
+              [yearsFrom]="yearsFrom()"
               (onSelectFromYear)="setYearFrom($event)"
               (onClearSelectFromYear)="clearSelectYearFrom($event)"
               >

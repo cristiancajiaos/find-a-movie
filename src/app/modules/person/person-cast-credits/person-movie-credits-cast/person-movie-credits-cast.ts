@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
@@ -19,6 +19,9 @@ import { PersonService } from '../../../../services/person-service';
 })
 export class PersonMovieCreditsCast implements OnInit {
 
+  private localStorageService = inject(LocalStorageService);
+  private personService = inject(PersonService);
+
   public gridIcon: IconDefinition = faGrip;
   public listIcon: IconDefinition = faList;
   public filterIcon: IconDefinition = faFilter;
@@ -26,9 +29,9 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public loadingPerson: boolean = false;
 
-  public displayMode = signal('grid');
+  public displayMode: WritableSignal<string> = signal('grid');
 
-  public yearsFrom: number[] = [];
+  public yearsFrom: WritableSignal<number[]> = signal([]);
   public yearsTo: number[] = [];
 
   public fromYear: number = null;
@@ -55,7 +58,7 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public page: number = 1;
 
-  castCredits = input.required<ResponsePersonCastCredit[]>();
+  castCredits: InputSignal<ResponsePersonCastCredit[]> = input.required<ResponsePersonCastCredit[]>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCastCredits') orderSelectPersonCastCredits: OrderSelect;
@@ -63,15 +66,8 @@ export class PersonMovieCreditsCast implements OnInit {
   @ViewChild('fromSelect') fromSelect: FromSelect;
   @ViewChild('toSelect') toSelect: ToSelect;
 
-  constructor(
-    private localStorageService: LocalStorageService,
-    private personService: PersonService
-  ) {}
-
   ngOnInit(): void {
-    console.log('ngOnInit()');
     this.filterCastCredits = structuredClone(this.castCredits());
-    console.log(this.filterCastCredits);
     this.getPerson();
     this.setYearsLimit();
   }
@@ -93,7 +89,7 @@ export class PersonMovieCreditsCast implements OnInit {
       .filter((year) => !isNaN(year))
       .reduce((max, year) => (year > max ? year : max));
     for (let i = firstYear; i <= this.lastYear; i++) {
-      this.yearsFrom.push(i);
+      this.yearsFrom.update(numbers => [...numbers, i]);
     }
   }
 
@@ -136,7 +132,7 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   public changeDisplay(display: string) {
-    this.displayMode.set('display');
+    this.displayMode.set(display);
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {

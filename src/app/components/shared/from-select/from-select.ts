@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, InputSignal, input, OutputEmitterRef, output, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -11,6 +11,8 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 })
 export class FromSelect implements OnInit {
 
+  private fb = inject(FormBuilder);
+
   public yearsFromSelectForm: FormGroup;
 
   public fromSelectLabel: string = 'From:'
@@ -18,16 +20,10 @@ export class FromSelect implements OnInit {
 
   @ViewChild('fromSelect') fromSelect: NgSelectComponent;
 
-  @Input() yearsFrom: number[] = [];
+  yearsFrom: InputSignal<number[]> = input.required<number[]>();
 
-  @Output() onSelectFromYear: EventEmitter<number> = new EventEmitter<number>();
-  @Output() onClearSelectFromYear: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  constructor(
-    private fb: FormBuilder
-  ) {
-
-  }
+  onSelectFromYear: OutputEmitterRef<number> = output<number>();
+  onClearSelectFromYear: OutputEmitterRef<boolean> = output<boolean>();
 
   ngOnInit(): void {
     this.yearsFromSelectForm = this.fb.group({
