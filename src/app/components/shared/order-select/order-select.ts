@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy, input, InputSignal, output, OutputEmitterRef, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, input, InputSignal, output, OutputEmitterRef, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { Order } from '../../../enums/order';
 
 @Component({
   selector: 'app-order-select',
