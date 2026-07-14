@@ -7,6 +7,4 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-not-found.scss'
 })
-export class PersonNotFound {
-  public bgImage: string = 'img/bg/bg_generic_2.jpg';
-}
+export class PersonNotFound {}
