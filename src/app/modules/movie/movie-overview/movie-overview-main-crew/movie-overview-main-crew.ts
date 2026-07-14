@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { CrewMember } from '../../../../classes/credits/crew-member';
 
 @Component({
@@ -10,8 +10,6 @@ import { CrewMember } from '../../../../classes/credits/crew-member';
 })
 export class MovieOverviewMainCrew implements OnChanges {
 
-  movieCrew = input.required<CrewMember[]>();
-
   public direction: CrewMember[] = [];
   public coDirection: CrewMember[] = [];
   public writing: CrewMember[] = [];
@@ -20,6 +18,8 @@ export class MovieOverviewMainCrew implements OnChanges {
   public basedOnCharactersBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
+
+  movieCrew: InputSignal<CrewMember[]> = input.required<CrewMember[]>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.filterMainCrew();

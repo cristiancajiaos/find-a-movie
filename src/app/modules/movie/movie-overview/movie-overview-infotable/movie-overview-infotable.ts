@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { Movie } from '../../../../classes/movie';
 import { environment } from '../../../../../environments/environment.development';
 import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -16,11 +16,11 @@ export class MovieOverviewInfotable implements OnInit, OnChanges {
   public imdbIcon: IconDefinition = faImdb;
   public globeIcon: IconDefinition = faGlobe;
 
-  movie = input.required<Movie>();
-
   public movieReleaseDate: Date = new Date();
   public movieIMDB: string = '';
   public movieHomepage: string = '';
+
+  movie: InputSignal<Movie> = input.required<Movie>();
 
   ngOnInit(): void {
 

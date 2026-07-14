@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { BackdropImage } from '../../../../classes/response-image/backdrop-image';
 import { environment } from '../../../../../environments/environment.development';
 
@@ -11,9 +11,9 @@ import { environment } from '../../../../../environments/environment.development
 })
 export class MovieOverviewImages implements OnChanges {
 
-  movieImages = input.required<BackdropImage[]>();
-
   public images: BackdropImage[] = [];
+  
+  movieImages: InputSignal<BackdropImage[]> = input.required<BackdropImage[]>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setImages();

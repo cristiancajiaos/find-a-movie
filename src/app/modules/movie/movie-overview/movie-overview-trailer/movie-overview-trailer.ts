@@ -1,10 +1,7 @@
-import { Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ChangeDetectionStrategy, input } from '@angular/core';
-import { MovieService } from '../../../../services/movie-service';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { ResponseVideo } from '../../../../classes/response-video';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseVideoResult } from '../../../../classes/response-video/response-video-result';
 import { environment } from '../../../../../environments/environment.development';
-import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-movie-overview-trailer',
   standalone: false,
@@ -16,12 +13,12 @@ export class MovieOverviewTrailer implements OnChanges {
 
   public movieTrailerUrl: string = '';
 
-  responseVideo = input.required<ResponseVideo>();
-
   public loadingTrailer: boolean = false;
   public movieTrailerFound: boolean = false;
 
   public movieTrailerKey: string = '';
+
+  responseVideo: InputSignal<ResponseVideo> = input.required<ResponseVideo>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setMovieTrailer();
