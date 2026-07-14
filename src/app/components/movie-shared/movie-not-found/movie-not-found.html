@@ -1,8 +1,13 @@
-<section class="movie-not-found"
-  [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
-  <div class="movie-not-found-description">
-    <h1>Movie Not Found</h1>
+<section class="movie-not-found">
+  <div class="dark-panel">
+    <h1>
+      <fa-layers>
+        <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
+        <fa-icon [icon]="timesIcon" [fixedWidth]="true" class="times-icon" transform="shrink-7 down-7 right-7"></fa-icon>
+      </fa-layers>
+      {{notFoundTitleText}}
+    </h1>
     <hr/>
-    No movie was found with this ID. Try another one :)
+    {{paragraphText}}
   </div>
 </section>
