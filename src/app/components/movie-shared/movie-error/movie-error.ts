@@ -8,19 +8,14 @@ import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-error.scss'
 })
-export class MovieError implements OnInit {
+export class MovieError {
 
   public repeat: IconDefinition = faRepeat;
 
   @Input() errorMessage: string = '';
   @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  ngOnInit(): void {
-
-  }
-
   public pressReload(): void {
     this.reload.emit(true);
   }
-
 }
