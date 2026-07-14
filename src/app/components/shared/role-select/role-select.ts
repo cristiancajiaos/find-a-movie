@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy, OutputEmitterRef, InputSignal, input, output } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, OutputEmitterRef, InputSignal, input, output, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -10,6 +10,8 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   styleUrl: './role-select.scss'
 })
 export class RoleSelect implements OnInit {
+
+  private fb = inject(FormBuilder);
 
   public roleForm: FormGroup = new FormGroup({});
 
@@ -24,10 +26,6 @@ export class RoleSelect implements OnInit {
   onClearRoleSelect: OutputEmitterRef<boolean> = output<boolean>()
 
   @ViewChild('roleSelect') roleSelect: NgSelectComponent;
-
-  constructor(
-    private fb: FormBuilder
-  ) {}
 
   ngOnInit(): void {
     this.roleForm = this.fb.group({
