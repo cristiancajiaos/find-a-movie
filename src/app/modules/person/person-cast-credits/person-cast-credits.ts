@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
 import { ResponsePersonMovieCredits } from '../../../classes/response-person-movie-credits';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PersonService } from '../../../services/person-service';
 import { LocalStorageService } from '../../../services/local-storage-service';
 import { HttpErrorResponse } from '@angular/common/http';
