@@ -8,7 +8,7 @@ import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-error-fullscreen.scss'
 })
-export class MovieErrorFullscreen implements OnInit {
+export class MovieErrorFullscreen {
 
   public repeat: IconDefinition = faRepeat;
 
@@ -17,14 +17,7 @@ export class MovieErrorFullscreen implements OnInit {
   @Input() errorMessage: string = '';
   @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-
-
-  ngOnInit(): void {
-
-  }
-
   public pressReload(): void {
     this.reload.emit(true);
   }
-
 }
