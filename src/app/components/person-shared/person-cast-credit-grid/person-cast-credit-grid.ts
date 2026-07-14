@@ -17,14 +17,12 @@ export class PersonCastCreditGrid implements OnInit {
   @Input() castRole: ResponsePersonCastCredit = new ResponsePersonCastCredit();
 
   public posterSizeSmall: string = '';
-  public releaseYear: number = 0;
   public formattedTitle: string = '';
   public altPosterText: string = '';
 
   ngOnInit(): void {
     this.setTitle();
     this.setPoster();
-    this.setYear();
   }
 
   public setTitle(): void {
@@ -42,10 +40,5 @@ export class PersonCastCreditGrid implements OnInit {
     this.altPosterText = this.castRole.poster_path
       ? `Poster from the movie ${this.formattedTitle}`
       : `Poster from the movie ${this.formattedTitle} is not available`;
-  }
-
-  public setYear(): void {
-    const releaseDate: Date = new Date(this.castRole.release_date);
-    this.releaseYear = releaseDate.getFullYear();
   }
 }
