@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ResponseMovieResult } from '../../../../../classes/response-search-movie/response-movie-result';
 import { MovieService } from '../../../../../services/movie-service';
 import { environment } from '../../../../../../environments/environment.development';
@@ -12,16 +12,14 @@ import { environment } from '../../../../../../environments/environment.developm
 })
 export class SearchInputMovieResult implements OnInit {
 
+  private movieService = inject(MovieService);
+
   public posterSizeSmall: string = '';
   public releaseYear: number = 0;
   public formattedTitle: string = '';
 
   @Input() movieResult: ResponseMovieResult;
   @Output() clickResult: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  constructor(
-    private movieService: MovieService
-  ) {}
 
   ngOnInit(): void {
     this.setTitle();
