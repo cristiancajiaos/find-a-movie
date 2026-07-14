@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/response-person-cast-credit';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -11,16 +11,15 @@ import { MovieService } from '../../../services/movie-service';
   styleUrl: './person-cast-credit-grid.scss',
 })
 export class PersonCastCreditGrid implements OnInit {
+
+  private movieService = inject(MovieService);
+
   @Input() castRole: ResponsePersonCastCredit = new ResponsePersonCastCredit();
 
   public posterSizeSmall: string = '';
   public releaseYear: number = 0;
   public formattedTitle: string = '';
   public altPosterText: string = '';
-
-  constructor(
-    private movieService: MovieService
-  ) {}
 
   ngOnInit(): void {
     this.setTitle();
