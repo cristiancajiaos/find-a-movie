@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -12,14 +12,13 @@ import { MovieService } from '../../../services/movie-service';
 })
 export class SearchMovieResultList implements OnInit {
 
+  private movieService = inject(MovieService);
+
   public posterSizeSmall: string = '';
-  public releaseYear: number = 0;
   public formattedTitle: string = '';
   public altPosterText: string = '';
 
   @Input() movieResult: ResponseMovieResult = new ResponseMovieResult();
-
-  constructor(private movieService: MovieService) {}
 
   ngOnInit(): void {
     this.setTitle();
