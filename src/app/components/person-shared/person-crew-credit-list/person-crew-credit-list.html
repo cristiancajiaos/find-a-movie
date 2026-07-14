@@ -1,4 +1,4 @@
-<section class="person-cast-credit-list">
+<section class="person-crew-credit-list">
   <a [routerLink]="['/movie', crewRole.id]">
     <div class="list-content">
       <img [src]="posterSizeSmall" [alt]="altPosterText" />
@@ -7,7 +7,7 @@
           {{formattedTitle}}
         </span>
         <br />
-        <span>
+        <span class="person-crew-job">
           @if (crewRole.job) {
             {{ crewRole.job }}
           }

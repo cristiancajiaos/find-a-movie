@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -11,16 +11,14 @@ import { MovieService } from '../../../services/movie-service';
   styleUrl: './person-crew-credit-list.scss'
 })
 export class PersonCrewCreditList implements OnInit {
+
+  private movieService = inject(MovieService);
+
   @Input() crewRole: ResponsePersonCrewCredit = new ResponsePersonCrewCredit();
 
   public posterSizeSmall: string = '';
-  public releaseYear: number = 0;
   public formattedTitle: string = '';
   public altPosterText: string = '';
-
-  constructor(
-    private movieService: MovieService
-  ) {}
 
   ngOnInit(): void {
     this.setTitle();
