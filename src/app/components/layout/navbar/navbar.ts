@@ -13,6 +13,8 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class Navbar implements OnInit, OnDestroy {
 
+  private fb = inject(FormBuilder);
+
   private lightDarkService = inject(LightDarkService);
 
   public filmIcon: IconDefinition = faFilm;
@@ -32,12 +34,6 @@ export class Navbar implements OnInit, OnDestroy {
   public isLight$: Observable<boolean> = this.lightDarkService.isLight;
 
   public changeLightDarkSubscription: Subscription = new Subscription();
-
-  constructor(
-    private fb: FormBuilder
-  ) {
-
-  }
 
   ngOnInit(): void {
     this.searchNavbarForm = this.fb.group({
