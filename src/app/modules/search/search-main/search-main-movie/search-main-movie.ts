@@ -8,7 +8,7 @@ import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-main-movie.scss',
 })
-export class SearchMainMovie implements OnInit {
+export class SearchMainMovie {
 
   public bgImage: string = 'img/bg/search-main-bg-2.jpg';
 
@@ -16,7 +16,5 @@ export class SearchMainMovie implements OnInit {
   public dropdownMenuEnd: WritableSignal<boolean> = signal(false);
 
   public movieIcon: IconDefinition = faFilm;
-
-  ngOnInit(): void {
-  }
+  
 }

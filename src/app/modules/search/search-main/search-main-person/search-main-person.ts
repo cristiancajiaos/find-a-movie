@@ -8,7 +8,7 @@ import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-main-person.scss',
 })
-export class SearchMainPerson implements OnInit {
+export class SearchMainPerson {
 
   public bgImage: string = 'img/bg/search-main-bg-1.jpg';
 
@@ -17,6 +17,4 @@ export class SearchMainPerson implements OnInit {
 
   public userIcon: IconDefinition = faUser;
 
-  ngOnInit(): void {
-  }
 }
