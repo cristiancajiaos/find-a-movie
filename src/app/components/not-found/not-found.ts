@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { TitleService } from '../../services/title-service';
-import { faCircleXmark, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faSitemap, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-not-found',
@@ -14,13 +14,13 @@ export class NotFound implements OnInit{
   private titleService = inject(TitleService);
 
   public notFoundIcon: IconDefinition = faCircleXmark;
+  public sitemapIcon: IconDefinition = faSitemap;
+  public timesIcon: IconDefinition = faTimes;
 
-  public notFoundTitleText: string = 'Not Found';
-  public paragraphText: string = 'Page not found';
-
-  public bgImage: string = 'img/bg/not-found-bg.jpg';
+  public notFoundTitleText: string = 'Page Not Available';
+  public paragraphText: string = 'The page you are trying to access is not available in this app.';
 
   ngOnInit(): void {
-    this.titleService.setTitle('Page not found');
+    this.titleService.setTitle('Page Not Available');
   }
 }

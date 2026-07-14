@@ -1,8 +1,11 @@
 
-<section class="not-found" [ngStyle]="{'background-image':'url(' + bgImage + ')'}">
-  <section class="not-found-description">
+<section class="not-found">
+  <section class="dark-panel">
     <h1>
-      <fa-icon [icon]="notFoundIcon" [fixedWidth]="true"></fa-icon>
+      <fa-layers>
+        <fa-icon [icon]="sitemapIcon" [fixedWidth]="true"></fa-icon>
+        <fa-icon [icon]="timesIcon" [fixedWidth]="true" class="times-icon" transform="shrink-7 down-7 right-7"></fa-icon>
+      </fa-layers>
       {{notFoundTitleText}}
     </h1>
     <hr/>
