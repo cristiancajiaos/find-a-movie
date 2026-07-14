@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal, OnChanges, SimpleChanges } from '@angular/core';
 import { Person } from '../../../../classes/person';
 import {
   faCircleQuestion,
@@ -14,11 +14,10 @@ import { environment } from '../../../../../environments/environment.development
   selector: 'app-person-infotable',
   standalone: false,
   templateUrl: './person-infotable.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-infotable.scss',
 })
 export class PersonInfotable implements OnChanges {
-
-  person = input.required<Person>();
 
   public maleIcon: IconDefinition = faMars;
   public femaleIcon: IconDefinition = faVenus;
@@ -30,6 +29,8 @@ export class PersonInfotable implements OnChanges {
   public personDeathDay?: Date;
   public personIMDBUrl: string = '';
   public personHomepageUrl: string = '';
+
+  public person: InputSignal<Person> = input.required<Person>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setPersonInfotable();

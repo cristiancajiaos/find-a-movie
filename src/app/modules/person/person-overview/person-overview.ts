@@ -5,6 +5,7 @@ import {
   ChangeDetectionStrategy,
   inject,
   signal,
+  WritableSignal,
 } from '@angular/core';
 import { Person } from '../../../classes/person';
 import { ActivatedRoute } from '@angular/router';
@@ -43,9 +44,7 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public id: number = 0;
 
-  public person = signal(new Person());
-
-  // public person: Person = new Person();
+  public person: WritableSignal<Person> = signal(new Person());
 
   private personError: HttpErrorResponse = null;
   public personFound: boolean = false;
