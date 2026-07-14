@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
-import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-movie-error-fullscreen',
@@ -11,8 +11,7 @@ import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 export class MovieErrorFullscreen {
 
   public repeat: IconDefinition = faRepeat;
-
-  public bgImage: string = 'img/bg/bg_generic_1.jpg';
+  public circleXIcon: IconDefinition = faCircleXmark;
 
   @Input() errorMessage: string = '';
   @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();

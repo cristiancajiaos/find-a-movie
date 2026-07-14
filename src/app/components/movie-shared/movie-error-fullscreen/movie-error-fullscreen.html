@@ -1,7 +1,9 @@
-<section class="movie-error-fullscreen"
-[ngStyle]="{'background-image':'url(' + bgImage + ')'}">
-  <div class="movie-error-description">
-    <h1>Movie Service Error</h1>
+<section class="movie-error-fullscreen">
+  <div class="dark-panel movie-error-description">
+    <h1>
+      <fa-icon [icon]="circleXIcon" [fixedWidth]="true"></fa-icon>
+      Movie Service Error
+    </h1>
     <hr/>
     <p>There was an error getting info for the movie: <strong>{{ errorMessage }}</strong></p>
     <button type="button" class="btn btn-primary" (click)="pressReload()">
