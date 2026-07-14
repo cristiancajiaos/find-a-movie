@@ -2,7 +2,7 @@
   <app-navbar></app-navbar>
   <main [ngClass]="{'dark-mode':!isLight}">
     @if (loading$ | async) {
-      <app-loading-fullscreen></app-loading-fullscreen>
+      <app-loading></app-loading>
     }
     <router-outlet></router-outlet>
   </main>

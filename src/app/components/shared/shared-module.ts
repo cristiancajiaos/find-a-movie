@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoadingFullscreen } from './loading-fullscreen/loading-fullscreen';
 import { DisplaySelector } from './display-selector/display-selector';
 import { OrderSelect } from './order-select/order-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,15 +9,16 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FromSelect } from './from-select/from-select';
 import { ToSelect } from './to-select/to-select';
 import { RoleSelect } from './role-select/role-select';
+import { Loading } from './loading/loading';
 
 @NgModule({
   declarations: [
-    LoadingFullscreen,
+    Loading,
     DisplaySelector,
     OrderSelect,
     FromSelect,
     ToSelect,
-    RoleSelect
+    RoleSelect,
   ],
   imports: [
     CommonModule,
@@ -29,7 +29,7 @@ import { RoleSelect } from './role-select/role-select';
     NgSelectModule
   ],
   exports: [
-    LoadingFullscreen,
+    Loading,
     DisplaySelector,
     OrderSelect,
     FromSelect,
