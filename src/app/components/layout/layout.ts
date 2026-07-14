@@ -21,11 +21,6 @@ export class Layout implements OnInit, OnDestroy {
 
   private changeLightDarkSubscription: Subscription = new Subscription();
 
-  constructor(
-    private cd: ChangeDetectorRef
-  ) {}
-
-
   ngOnInit(): void {
     this.loading$ = this.loading$.pipe(
       delay(0)
@@ -37,7 +32,6 @@ export class Layout implements OnInit, OnDestroy {
       error: (error) => {},
       complete: () => {}
     });
-
   }
 
   ngOnDestroy(): void {
