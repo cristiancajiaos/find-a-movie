@@ -8,16 +8,12 @@ import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-error.scss'
 })
-export class PersonError implements OnInit {
+export class PersonError {
 
   public repeat: IconDefinition = faRepeat;
 
   @Input() errorMessage: string = '';
   @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  ngOnInit(): void {
-
-  }
 
   public pressReload(): void {
     this.reload.emit(true);
