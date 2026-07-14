@@ -1,8 +1,14 @@
 <section class="person-not-found">
-  <div class="person-not-found-description">
-    <h1>Person Not Found</h1>
+  <section class="dark-panel">
+    <h1>
+      <fa-layers>
+        <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
+        <fa-icon [icon]="timesIcon" [fixedWidth]="true" class="times-icon" transform="shrink-7 down-7 right-7"></fa-icon>
+      </fa-layers>
+      {{notFoundTitleText}}
+    </h1>
     <hr/>
-    <p>No person was found with this ID. Try another one :)</p>
-  </div>
+    {{paragraphText}}
+  </section>
 </section>
 
