@@ -10,8 +10,8 @@
         </div>
         <div class="col-12 col-lg-10">
           <h1>
-            <fa-icon [icon]="user"></fa-icon>
-            {{ name }}
+            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
+            {{ person().name }}
             <small>
               @if (this.person().birthday || this.person().deathday) {
                 ({{ birthYear }} -
@@ -23,7 +23,9 @@
               }
               </small>
             </h1>
-            <h2><fa-icon [icon]="film"></fa-icon> Known for: {{ knownFor }}</h2>
+            @if (person().known_for_department) {
+              <h2><fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Known for: {{ person().known_for_department }}</h2>
+            }
           </div>
         </div>
       </header>

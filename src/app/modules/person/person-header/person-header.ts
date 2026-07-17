@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Person } from '../../../classes/person';
 import { environment } from '../../../../environments/environment.development';
@@ -12,8 +12,8 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class PersonHeader implements OnChanges {
 
-  public user: IconDefinition = faUser;
-  public film: IconDefinition = faFilm;
+  public userIcon: IconDefinition = faUser;
+  public filmIcon: IconDefinition = faFilm;
 
   public bgImage: string = 'img/default-images/bg_person_header.jpg';
 
@@ -25,21 +25,13 @@ export class PersonHeader implements OnChanges {
 
   public profileImgAltText: string = '';
 
-  id = input.required<number>();
-  person = input.required<Person>();
+  id: InputSignal<number> = input.required<number>();
+  person: InputSignal<Person> = input.required<Person>();
 
   ngOnChanges() {
-    this.setName();
     this.setBirthYear();
     this.setDeathDay();
-    this.setKnownFor();
     this.setProfileImg();
-  }
-
-  public setName(): void {
-    if (this.person.name) {
-      this.name = this.person().name;
-    }
   }
 
   public setBirthYear(): void {
@@ -53,12 +45,6 @@ export class PersonHeader implements OnChanges {
     if (this.person().deathday) {
       const deathDate: Date = new Date(this.person().deathday);
       this.deathYear = deathDate.getFullYear();
-    }
-  }
-
-  public setKnownFor(): void {
-    if (this.person().known_for_department) {
-      this.knownFor = this.person().known_for_department;
     }
   }
 
