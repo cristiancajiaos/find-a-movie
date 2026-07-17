@@ -62,7 +62,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   private initPersonOverview(): void {
     this.setId();
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      if (this.person) {
+      if (this.person().name != '') {
         this.setTitle();
       } else {
         if (this.personError) {
@@ -97,7 +97,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
-    this.titleService.setPersonOverviewTitle(this.person.name);
+    this.titleService.setPersonOverviewTitle(this.person().name);
   }
 
   private handleError(error: HttpErrorResponse) {
