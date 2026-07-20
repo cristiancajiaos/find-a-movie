@@ -1,6 +1,6 @@
 <section class="layout">
   <app-navbar></app-navbar>
-  <main [ngClass]="{'dark-mode':!isLight}">
+  <main [ngClass]="{'dark-mode':!isLight()}">
     @if (loading$ | async) {
       <app-loading></app-loading>
     }

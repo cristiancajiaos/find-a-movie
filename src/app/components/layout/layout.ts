@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy, OnDestroy, WritableSignal, signal } from '@angular/core';
 import { LoadingService } from '../../services/loading-service';
 import { delay, Observable, Subscription } from 'rxjs';
 import { LightDarkService } from '../../services/light-dark-service';
@@ -17,7 +17,7 @@ export class Layout implements OnInit, OnDestroy {
 
   public loading$: Observable<boolean> = this.loadingService.isLoading;
 
-  public isLight: boolean = true;
+  public isLight: WritableSignal<boolean> = signal(true);
 
   private changeLightDarkSubscription: Subscription = new Subscription();
 
@@ -27,7 +27,7 @@ export class Layout implements OnInit, OnDestroy {
     );
     this.changeLightDarkSubscription = this.lightDarkService.isLight.subscribe({
       next: (status) => {
-        this.isLight = status;
+        this.isLight.set(status);
       },
       error: (error) => {},
       complete: () => {}
