@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
 import { map, Observable, take } from 'rxjs';
 import { CastMember } from '../classes/credits/cast-member';
@@ -15,9 +15,7 @@ import { BackdropImage } from '../classes/response-image/backdrop-image';
 })
 export class MovieService {
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  private http = inject(HttpClient);
 
   public getMovie(id: number): Observable<Movie> {
     return this.http.get<Movie>((`/movie/${id}`));
