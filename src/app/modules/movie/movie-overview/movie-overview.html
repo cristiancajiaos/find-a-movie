@@ -16,6 +16,8 @@
         <section class="movie-overview">
           <p>{{ movie().overview }}</p>
         </section>
+      }
+      @if (movie().tagline || movie().overview ) {
         <hr />
       }
       @if (movieCreditsFound) {
