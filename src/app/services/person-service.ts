@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Person } from '../classes/person';
 import { map, Observable } from 'rxjs';
 import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
@@ -12,7 +12,8 @@ import { ResponsePersonCastCredit } from '../classes/person-movie-credits/respon
   providedIn: 'root',
 })
 export class PersonService {
-  constructor(public http: HttpClient) {}
+
+  public http = inject(HttpClient);
 
   public getPerson(id: number): Observable<Person> {
     return this.http.get<Person>(`/person/${id}`);
