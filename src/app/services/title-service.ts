@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Injectable({
@@ -6,10 +6,9 @@ import { Title } from '@angular/platform-browser';
 })
 export class TitleService {
 
+  private title = inject(Title);
+
   private defaultTitle: string = 'Find a Movie';
-  constructor(
-    private title: Title
-  ) {}
 
   public setDefaultTitle(): void {
     this.title.setTitle(this.defaultTitle);
@@ -51,15 +50,15 @@ export class TitleService {
     this.title.setTitle(`MovieService Error | ${this.defaultTitle}`);
   }
 
-  public setPersonOverviewTitle(name: string) {
+  public setPersonOverviewTitle(name: string): void {
     this.title.setTitle(`${name} | ${this.defaultTitle}`);
   }
 
-  public setPersonCastCreditsTitle(name: string) {
+  public setPersonCastCreditsTitle(name: string): void  {
     this.title.setTitle(`Cast Credits of ${name} | ${this.defaultTitle}`);
   }
 
-  public setPersonCrewCreditsTitle(name: string) {
+  public setPersonCrewCreditsTitle(name: string): void  {
     this.title.setTitle(`Crew Credits of ${name} | ${this.defaultTitle}`);
   }
 
