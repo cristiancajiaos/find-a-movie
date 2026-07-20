@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { Movie } from '../../../../classes/movie';
 import { environment } from '../../../../../environments/environment.development';
 import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import { faImdb } from '@fortawesome/free-brands-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-infotable.scss',
 })
-export class MovieOverviewInfotable implements OnInit, OnChanges {
+export class MovieOverviewInfotable implements OnChanges {
 
   public imdbIcon: IconDefinition = faImdb;
   public globeIcon: IconDefinition = faGlobe;
@@ -21,10 +21,6 @@ export class MovieOverviewInfotable implements OnInit, OnChanges {
   public movieHomepage: string = '';
 
   movie: InputSignal<Movie> = input.required<Movie>();
-
-  ngOnInit(): void {
-
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setReleaseDate();
