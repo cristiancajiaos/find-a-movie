@@ -36,7 +36,7 @@ export class SearchMain implements OnInit {
   }
 
   public sendMovieQuery(): void {
-    const movieQuery = this.movieSearchForm.value['movieSearch'];
+    const movieQuery: string = this.movieSearchForm.value['movieSearch'];
 
     if (!movieQuery || movieQuery.length == 0) {
       return;
@@ -46,7 +46,7 @@ export class SearchMain implements OnInit {
   }
 
   public sendPersonQuery(): void {
-    const personQuery = this.personSearchForm.value['personSearch'];
+    const personQuery: string = this.personSearchForm.value['personSearch'];
 
     if (!personQuery || personQuery.length == 0) {
       return;
