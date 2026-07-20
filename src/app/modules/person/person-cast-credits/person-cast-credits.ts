@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import { ResponsePersonMovieCredits } from '../../../classes/response-person-movie-credits';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -15,10 +23,10 @@ import { LoadingService } from '../../../services/loading-service';
   standalone: false,
   templateUrl: './person-cast-credits.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './person-cast-credits.scss'
+  styleUrl: './person-cast-credits.scss',
 })
 export class PersonCastCredits implements OnInit, OnDestroy {
-
+  
   private activatedRoute = inject(ActivatedRoute);
   private personService = inject(PersonService);
   private localStorageService = inject(LocalStorageService);
@@ -49,7 +57,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
         this.setTitle();
       } else {
         if (this.personMovieCreditsError) {
-           this.titleService.setPersonServiceErrorTitle();
+          this.titleService.setPersonServiceErrorTitle();
         }
       }
     });
@@ -61,10 +69,12 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   }
 
   private setId(): void {
-    this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(params => {
-      this.id = parseInt(params['id']);
-      this.getPersonMovieCredits();
-    });
+    this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
+      (params) => {
+        this.id = parseInt(params['id']);
+        this.getPersonMovieCredits();
+      },
+    );
   }
 
   private setTitle(): void {
@@ -81,8 +91,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
       error: (error) => {
         this.handleError(error);
       },
-      complete: () => {
-      }
+      complete: () => {},
     });
   }
 
@@ -106,5 +115,4 @@ export class PersonCastCredits implements OnInit, OnDestroy {
       this.endLoadingSubscription.unsubscribe();
     }
   }
-
 }
