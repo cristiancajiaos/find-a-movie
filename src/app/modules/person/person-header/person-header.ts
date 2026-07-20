@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
+import { Component, OnChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Person } from '../../../classes/person';
 import { environment } from '../../../../environments/environment.development';
