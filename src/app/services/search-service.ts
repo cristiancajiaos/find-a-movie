@@ -1,5 +1,5 @@
 import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
 import { map, Observable } from 'rxjs';
 import { ResponseSearchPerson } from '../classes/response-search-person';
@@ -10,7 +10,8 @@ import { SkipLoading } from '../interceptors/loading-interceptor';
   providedIn: 'root',
 })
 export class SearchService {
-  constructor(private http: HttpClient) {}
+
+  private http = inject(HttpClient);
 
   public searchMovie(query: string, page: number = 1): Observable<ResponseSearchMovie> {
     return this.http.get<ResponseSearchMovie>(`/search/movie`, {
