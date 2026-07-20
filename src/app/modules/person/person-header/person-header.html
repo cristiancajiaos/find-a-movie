@@ -6,27 +6,20 @@
           class="person-header-profile-img img-thumbnail"
           [src]="profileImg"
           [alt]="profileImgAltText"
-          />
-        </div>
-        <div class="col-12 col-lg-10">
-          <h1>
-            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
-            {{ person().name }}
-            <small>
-              @if (this.person().birthday || this.person().deathday) {
-                ({{ birthYear }} -
-                @if (this.person().deathday) {
-                  {{ deathYear }})
-                } @else {
-                  )
-                }
-              }
-              </small>
-            </h1>
-            @if (person().known_for_department) {
-              <h2><fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Known for: {{ person().known_for_department }}</h2>
-            }
-          </div>
-        </div>
-      </header>
-    </section>
+        />
+      </div>
+      <div class="col-12 col-lg-10">
+        <h1>
+          <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
+          {{ person().name }}
+        </h1>
+        @if (person().known_for_department) {
+          <h2>
+            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Known for:
+            {{ person().known_for_department }}
+          </h2>
+        }
+      </div>
+    </div>
+  </header>
+</section>

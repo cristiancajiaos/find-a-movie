@@ -29,23 +29,7 @@ export class PersonHeader implements OnChanges {
   person: InputSignal<Person> = input.required<Person>();
 
   ngOnChanges() {
-    this.setBirthYear();
-    this.setDeathDay();
     this.setProfileImg();
-  }
-
-  public setBirthYear(): void {
-    if (this.person().birthday) {
-      const birthDate: Date = new Date(this.person().birthday);
-      this.birthYear = birthDate.getFullYear();
-    }
-  }
-
-  public setDeathDay(): void {
-    if (this.person().deathday) {
-      const deathDate: Date = new Date(this.person().deathday);
-      this.deathYear = deathDate.getFullYear();
-    }
   }
 
   public setProfileImg(): void {
