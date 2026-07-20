@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
 import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
