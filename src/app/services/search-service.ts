@@ -1,4 +1,4 @@
-import { HttpClient, HttpContext, HttpContextToken } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ResponseSearchMovie } from '../classes/response-search-movie';
 import { map, Observable } from 'rxjs';
