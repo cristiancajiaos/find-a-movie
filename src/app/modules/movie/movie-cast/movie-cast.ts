@@ -1,4 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+  inject,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -20,7 +29,6 @@ import { LoadingService } from '../../../services/loading-service';
   styleUrl: './movie-cast.scss',
 })
 export class MovieCast implements OnInit, OnDestroy {
-
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
   private localStorageService = inject(LocalStorageService);
@@ -61,7 +69,7 @@ export class MovieCast implements OnInit, OnDestroy {
     this.setId();
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       if (this.movie) {
-         this.setTitle();
+        this.setTitle();
       }
     });
   }
@@ -81,7 +89,9 @@ export class MovieCast implements OnInit, OnDestroy {
 
   private setTitle() {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title, this.movie.original_title, this.movie.release_date
+      this.movie.title,
+      this.movie.original_title,
+      this.movie.release_date,
     );
     this.titleService.setMovieCastTitle(formattedTitle);
   }
@@ -96,8 +106,7 @@ export class MovieCast implements OnInit, OnDestroy {
       error: (error) => {
         this.handleError(error);
       },
-      complete: () => {
-      }
+      complete: () => {},
     });
   }
 
