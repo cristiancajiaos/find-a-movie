@@ -1,7 +1,4 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { faFilm, faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { TitleService } from '../../../services/title-service';
 
 @Component({
@@ -13,45 +10,9 @@ import { TitleService } from '../../../services/title-service';
 })
 export class SearchMain implements OnInit {
 
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
   private titleService = inject(TitleService);
-
-  public searchIcon: IconDefinition = faSearch;
-  public movieIcon: IconDefinition = faFilm;
-  public userIcon: IconDefinition = faUser;
-
-  public movieSearchForm: FormGroup = new FormGroup({});
-  public personSearchForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.titleService.setTitle('What do you want to search?');
-    this.movieSearchForm = this.fb.group({
-      movieSearch: new FormControl(''),
-    });
-
-    this.personSearchForm = this.fb.group({
-      personSearch: new FormControl(''),
-    });
-  }
-
-  public sendMovieQuery(): void {
-    const movieQuery: string = this.movieSearchForm.value['movieSearch'];
-
-    if (!movieQuery || movieQuery.length == 0) {
-      return;
-    }
-
-    this.router.navigate(['search', 'movie', movieQuery]);
-  }
-
-  public sendPersonQuery(): void {
-    const personQuery: string = this.personSearchForm.value['personSearch'];
-
-    if (!personQuery || personQuery.length == 0) {
-      return;
-    }
-
-    this.router.navigate(['search', 'person', personQuery]);
   }
 }
