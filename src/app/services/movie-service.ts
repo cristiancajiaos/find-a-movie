@@ -18,6 +18,7 @@ import { environment } from '../../environments/environment.development';
 export class MovieService {
 
   private movie = new Map<string, Movie>();
+  private credits = new Map<string, Credits>();
   private creditsCast = new Map<string, CastMember[]>();
   private creditsCrew = new Map<string, CrewMember[]>();
   private movieImages = new Map<string, BackdropImage[]>();
@@ -29,7 +30,7 @@ export class MovieService {
     if (this.movie.has(`movie-${id}`)) {
       return of(this.movie.get(`movie-${id}`));
     }
-    
+
     return this.http.get<Movie>((`/movie/${id}`)).pipe(
       tap(
         movie => this.movie.set(`movie-${id}`, movie)
@@ -38,8 +39,13 @@ export class MovieService {
   }
 
   public getMovieCredits(id: number): Observable<Credits> {
+    if (this.credits.has(`credits-${id}`)) {
+      return of(this.credits.get(`credits-${id}`));
+    }
+
     return this.http.get<Credits>((`/movie/${id}/credits`)).pipe(
       tap(credits => {
+        this.credits.set(`credits-${id}`, credits);
         this.creditsCast.set(`creditsCast-${id}`, credits.cast);
         this.creditsCrew.set(`creditsCrew-${id}`, credits.crew);
       })
@@ -50,6 +56,7 @@ export class MovieService {
     if (this.creditsCast.has(`creditsCast-${id}`)) {
       return of(this.creditsCast.get(`creditsCast-${id}`));
     }
+
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
       map(credits => credits.cast),
       tap(castCredits => {
@@ -62,7 +69,7 @@ export class MovieService {
     if (this.creditsCrew.has(`creditsCrew-${id}`)) {
       return of(this.creditsCrew.get(`creditsCrew-${id}`));
     }
-
+    
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
       map(credits => credits.crew),
       tap(crewCredits => {
