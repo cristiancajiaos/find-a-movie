@@ -38,7 +38,7 @@ export class MovieCast implements OnInit, OnDestroy {
   public id: number = 0;
 
   private movie: Movie = null;
-  // public movieCast: CastMember[] = [];
+
   public movieCast: WritableSignal<CastMember[]> = signal([]);
 
   public castFound: boolean = false;

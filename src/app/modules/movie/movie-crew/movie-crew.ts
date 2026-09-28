@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CrewMember } from '../../../classes/credits/crew-member';
@@ -28,7 +28,7 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   private movie: Movie = null;
 
-  public movieCrew: CrewMember[] = [];
+  public movieCrew: WritableSignal<CrewMember[]> = signal([]);
 
   public direction: CrewMember[] = [];
   public coDirection: CrewMember[] = [];
@@ -90,7 +90,7 @@ export class MovieCrew implements OnInit, OnDestroy {
     this.movieCrewError = false;
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
       next: (crew) => {
-        this.movieCrew = crew;
+        this.movieCrew.set(crew);
         this.filterCrew();
       },
       error: (error) => {
@@ -111,57 +111,57 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private filterCrew(): void {
-    this.direction = this.movieCrew.filter((crewMember) => crewMember.job == 'Director');
+    this.direction = this.movieCrew().filter((crewMember) => crewMember.job == 'Director');
 
-    this.coDirection = this.movieCrew.filter((crewMember) => crewMember.job == 'Co-Director');
+    this.coDirection = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director');
 
-    this.writing = this.movieCrew.filter(
+    this.writing = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer',
     );
 
-    this.story = this.movieCrew.filter((crewMember) => crewMember.job == 'Story');
+    this.story = this.movieCrew().filter((crewMember) => crewMember.job == 'Story');
 
-    this.basedOnWorkBy = this.movieCrew.filter((crewMember) => crewMember.job == 'Novel');
+    this.basedOnWorkBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
 
-    this.basedOnCharactersBy = this.movieCrew.filter(
+    this.basedOnCharactersBy = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Characters',
     );
 
-    this.producing = this.movieCrew.filter((crewMember) => crewMember.job == 'Producer');
+    this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');
 
-    this.executiveProducing = this.movieCrew.filter(
+    this.executiveProducing = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Executive Producer',
     );
 
-    this.coProducing = this.movieCrew.filter((crewMember) => crewMember.job == 'Co-Producer');
+    this.coProducing = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Producer');
 
-    this.directorsOfPhotography = this.movieCrew.filter(
+    this.directorsOfPhotography = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Director of Photography',
     );
 
-    this.productionDesigners = this.movieCrew.filter(
+    this.productionDesigners = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Production Design',
     );
 
-    this.editors = this.movieCrew.filter((crewMember) => crewMember.job == 'Editor');
+    this.editors = this.movieCrew().filter((crewMember) => crewMember.job == 'Editor');
 
-    this.musicComposers = this.movieCrew.filter(
+    this.musicComposers = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Original Music Composer',
     );
 
-    this.additionalMusicComposers = this.movieCrew.filter(
+    this.additionalMusicComposers = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Additional Music',
     );
 
-    this.visualEffectsSupervisors = this.movieCrew.filter(
+    this.visualEffectsSupervisors = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Visual Effects Supervisor',
     );
 
-    this.costumeDesigners = this.movieCrew.filter(
+    this.costumeDesigners = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Costume Design',
     );
 
-    this.castingCrew = this.movieCrew.filter((crewMember) => crewMember.job == 'Casting');
+    this.castingCrew = this.movieCrew().filter((crewMember) => crewMember.job == 'Casting');
   }
 
   ngOnDestroy(): void {

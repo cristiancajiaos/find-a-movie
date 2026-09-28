@@ -30,7 +30,7 @@
               <tr>
                 <td>Directed By:</td>
                 <td>
-                  @for (director of direction; track director) {
+                  @for (director of direction; track director.id) {
                     <a [routerLink]="['/person', director.id]">
                       {{ director.name }}
                     </a>
@@ -43,7 +43,7 @@
               <tr>
                 <td>Co-Directed By:</td>
                 <td>
-                  @for (coDirector of coDirection; track coDirector) {
+                  @for (coDirector of coDirection; track coDirector.id) {
                     <a [routerLink]="['/person', coDirector.id]">
                       {{ coDirector.name }}
                     </a>
@@ -56,7 +56,7 @@
               <tr>
                 <td>Written By:</td>
                 <td>
-                  @for (writer of writing; track writer) {
+                  @for (writer of writing; track writer.id) {
                     <a [routerLink]="['/person', writer.id]">
                       {{ writer.name }}
                     </a>
@@ -69,7 +69,7 @@
               <tr>
                 <td>Story By:</td>
                 <td>
-                  @for (storyArtist of story; track storyArtist) {
+                  @for (storyArtist of story; track storyArtist.id) {
                     <a [routerLink]="['/person', storyArtist.id]">
                       {{ storyArtist.name }}
                     </a>
@@ -82,7 +82,7 @@
               <tr>
                 <td>Based on Work By:</td>
                 <td>
-                  @for (author of basedOnWorkBy; track author) {
+                  @for (author of basedOnWorkBy; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -95,7 +95,7 @@
               <tr>
                 <td>Based on Characters Created By:</td>
                 <td>
-                  @for (author of basedOnCharactersBy; track author) {
+                  @for (author of basedOnCharactersBy; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -108,7 +108,7 @@
               <tr>
                 <td>Produced By:</td>
                 <td>
-                  @for (producer of producing; track producer) {
+                  @for (producer of producing; track producer.id) {
                     <a [routerLink]="['/person', producer.id]">
                       {{ producer.name }}
                     </a>
@@ -127,7 +127,7 @@
                   }
                 </td>
                 <td>
-                  @for (executiveProducer of executiveProducing; track executiveProducer) {
+                  @for (executiveProducer of executiveProducing; track executiveProducer.id) {
                     <a [routerLink]="['/person', executiveProducer.id]">
                       {{ executiveProducer.name }}
                     </a>
@@ -146,7 +146,7 @@
                   }
                 </td>
                 <td>
-                  @for (coProducer of coProducing; track coProducer) {
+                  @for (coProducer of coProducing; track coProducer.id) {
                     <a [routerLink]="['/person', coProducer.id]">
                       {{ coProducer.name }}
                     </a>
@@ -167,7 +167,7 @@
                 <td>
                   @for (
                     directorOfPhotography of directorsOfPhotography;
-                    track directorOfPhotography
+                    track directorOfPhotography.id
                   ) {
                     <a [routerLink]="['/person', directorOfPhotography.id]">
                       {{ directorOfPhotography.name }}
@@ -187,7 +187,7 @@
                   }
                 </td>
                 <td>
-                  @for (productionDesigner of productionDesigners; track productionDesigner) {
+                  @for (productionDesigner of productionDesigners; track productionDesigner.id) {
                     <a [routerLink]="['/person', productionDesigner.id]">
                       {{ productionDesigner.name }}
                     </a>
@@ -206,7 +206,7 @@
                   }
                 </td>
                 <td>
-                  @for (editor of editors; track editor) {
+                  @for (editor of editors; track editor.id) {
                     <a [routerLink]="['/person', editor.id]">
                       {{ editor.name }}
                     </a>
@@ -219,7 +219,7 @@
               <tr>
                 <td>Music By:</td>
                 <td>
-                  @for (musicComposer of musicComposers; track musicComposer) {
+                  @for (musicComposer of musicComposers; track musicComposer.id) {
                     <a [routerLink]="['/person', musicComposer.id]">
                       {{ musicComposer.name }}
                     </a>
@@ -234,7 +234,7 @@
                 <td>
                   @for (
                     additionalMusicComposer of additionalMusicComposers;
-                    track additionalMusicComposer
+                    track additionalMusicComposer.id
                   ) {
                     <a [routerLink]="['/person', additionalMusicComposer.id]">
                       {{ additionalMusicComposer.name }}
@@ -256,7 +256,7 @@
                 <td>
                   @for (
                     visualEffectsSupervisor of visualEffectsSupervisors;
-                    track visualEffectsSupervisor
+                    track visualEffectsSupervisor.id
                   ) {
                     <a [routerLink]="['/person', visualEffectsSupervisor.id]">
                       {{ visualEffectsSupervisor.name }}
@@ -276,7 +276,7 @@
                   }
                 </td>
                 <td>
-                  @for (costumeDesigner of costumeDesigners; track costumeDesigner) {
+                  @for (costumeDesigner of costumeDesigners; track costumeDesigner.id) {
                     <a [routerLink]="['/person', costumeDesigner.id]">
                       {{ costumeDesigner.name }}
                     </a>
@@ -289,7 +289,7 @@
               <tr>
                 <td>Casting By:</td>
                 <td>
-                  @for (casting of castingCrew; track casting) {
+                  @for (casting of castingCrew; track casting.id) {
                     <a [routerLink]="['/person', casting.id]">
                       {{ casting.name }}
                     </a>
