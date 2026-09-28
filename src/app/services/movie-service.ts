@@ -26,6 +26,7 @@ export class MovieService {
   private movieVideos = new Map<string, ResponseVideo>();
   private movieImages = new Map<string, BackdropImage[]>();
   private movieRecommendations = new Map<string, ResponseMovieResult[]>();
+  private movieSimilar = new Map<string, ResponseMovieResult[]>();
 
   private http = inject(HttpClient);
 
@@ -122,8 +123,14 @@ export class MovieService {
     )
   }
 
-  public getMovieSimilarMovies(id: number): Observable<ResponseSearchMovie> {
-    return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`);
+  public getMovieSimilarMovies(id: number): Observable<ResponseMovieResult[]> {
+    if (this.movieSimilar.has(`movieSimilar-${id}`)) {
+      return of(this.movieSimilar.get(`movieSimilar-${id}`));
+    }
+    return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`).pipe(
+      map(responseMovieResult => responseMovieResult.results),
+      tap(movieResults => this.movieSimilar.set(`movieSimilar-${id}`, movieResults))
+    )
   }
 
   public getTrendingMovies(): Observable<ResponseMovieResult[]> {

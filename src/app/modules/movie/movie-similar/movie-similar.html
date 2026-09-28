@@ -4,7 +4,7 @@
     </app-movie-error>
   }
   @if (!movieSimilarError) {
-    @if (movieResults.length > 0) {
+    @if (movieResults().length > 0) {
       <h2>Similar Movies</h2>
       <p>
         These movies are similar to <strong>{{ movie.title }}</strong
@@ -15,7 +15,7 @@
         (onDisplayChange)="changeDisplay($event)"></app-display-selector>
       @if (displayMode() == 'grid') {
         <div class="row">
-        @for (movieResult of movieResults; track movieResult.id) {
+        @for (movieResult of movieResults(); track movieResult.id) {
           <div class="col-12 col-md-6 col-lg-3">
             <app-search-movie-result-grid
               [movieResult]="movieResult"
@@ -25,7 +25,7 @@
       </div>
       }
       @if (displayMode() == 'list') {
-        @for (movieResult of movieResults; track movieResult.id) {
+        @for (movieResult of movieResults(); track movieResult.id) {
           <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
         }
       }
