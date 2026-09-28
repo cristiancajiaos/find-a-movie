@@ -4,7 +4,7 @@
     </app-movie-error>
   }
   @if (!movieRecommendedError) {
-    @if (movieResults.length > 0) {
+    @if (movieResults().length > 0) {
       <h2>Movie Recommendations</h2>
       <p>
         If you liked <strong>{{ movie.title }}</strong
@@ -16,7 +16,7 @@
       </app-display-selector>
       @if (displayMode() == 'grid') {
         <div class="row">
-          @for (movieResult of movieResults; track movie.id) {
+          @for (movieResult of movieResults(); track movie.id) {
             <div class="col-12 col-sm-6 col-lg-3">
               <app-search-movie-result-grid [movieResult]="movieResult">
               </app-search-movie-result-grid>
@@ -25,7 +25,7 @@
         </div>
       }
       @if (displayMode() == 'list') {
-        @for (movieResult of movieResults; track movie.id) {
+        @for (movieResult of movieResults(); track movie.id) {
           <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
         }
       }

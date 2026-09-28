@@ -17,13 +17,15 @@ import { environment } from '../../environments/environment.development';
 })
 export class MovieService {
 
+  private trendingMovies = new Map<string, ResponseMovieResult[]>();
+
   private movie = new Map<string, Movie>();
   private credits = new Map<string, Credits>();
   private creditsCast = new Map<string, CastMember[]>();
   private creditsCrew = new Map<string, CrewMember[]>();
   private movieVideos = new Map<string, ResponseVideo>();
   private movieImages = new Map<string, BackdropImage[]>();
-  private trendingMovies = new Map<string, ResponseMovieResult[]>();
+  private movieRecommendations = new Map<string, ResponseMovieResult[]>();
 
   private http = inject(HttpClient);
 
@@ -110,12 +112,18 @@ export class MovieService {
     )
   }
 
-  public getMovieSimilarMovies(id: number): Observable<ResponseSearchMovie> {
-    return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`);
+  public getMovieRecommendedMovies(id: number): Observable<ResponseMovieResult[]> {
+    if (this.movieRecommendations.has(`movieRecommendations-${id}`)) {
+      return of(this.movieRecommendations.get(`movieRecommendations-${id}`));
+    }
+    return this.http.get<ResponseSearchMovie>(`/movie/${id}/recommendations`).pipe(
+      map(responseMovieResult => responseMovieResult.results),
+      tap(movieResults => this.movieRecommendations.set(`movieRecommendations-${id}`, movieResults))
+    )
   }
 
-  public getMovieRecommendedMovies(id: number): Observable<ResponseSearchMovie> {
-    return this.http.get<ResponseSearchMovie>(`/movie/${id}/recommendations`);
+  public getMovieSimilarMovies(id: number): Observable<ResponseSearchMovie> {
+    return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`);
   }
 
   public getTrendingMovies(): Observable<ResponseMovieResult[]> {

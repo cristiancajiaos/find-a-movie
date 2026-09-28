@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { LocalStorageService } from '../../../services/local-storage-service';
@@ -8,6 +8,7 @@ import { Movie } from '../../../classes/movie';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionStorageService } from '../../../services/session-storage-service';
 
 @Component({
   selector: 'app-movie-recommendations',
@@ -21,13 +22,14 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
   private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
   public id: number = 0;
 
   public movie: Movie = null;
-  public movieResults: ResponseMovieResult[] = [];
+  public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public movieRecommendedError: boolean = false;
   public errorMessage: string = '';
@@ -49,7 +51,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.localStorageService.getItem('movie');
+    this.movie = this.sessionStorageService.getItem('movie');
   }
 
   private setId(): void {
@@ -69,8 +71,8 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   private getRecommendedMovies(): void {
     this.movieRecommendedError = false;
     this.getMovieRecommendedSubscription = this.movieService.getMovieRecommendedMovies(this.id).subscribe({
-      next: (response) => {
-        this.movieResults = response.results;
+      next: (movieResults) => {
+        this.movieResults.set(movieResults);
       },
       error: (error) => {
         this.handleError(error);
