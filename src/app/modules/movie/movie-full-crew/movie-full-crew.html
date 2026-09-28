@@ -5,7 +5,7 @@
   }
   @if (!movieFullCrewError) {
     <h2>Full Crew</h2>
-    @if (movieFullCrew.length > 0) {
+    @if (movieFullCrew().length > 0) {
       <app-order-select
         #orderSelectMovieFullCrew
         [orderCriterias]="orderCriterias()"
@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (crewMember of movieFullCrew; track crewMember) {
+            @for (crewMember of movieFullCrew(); track crewMember.id) {
               <tr>
                 <td>
                   <a href="" [routerLink]="['/person', crewMember.id]">

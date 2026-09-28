@@ -31,8 +31,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   private movie: Movie;
 
-  public originalMovieFullCrew: CrewMember[] = [];
-  public movieFullCrew: CrewMember[] = [];
+  public movieFullCrew: WritableSignal<CrewMember[]> = signal([]);
 
   public fullCrewFound: boolean = false;
   public movieFullCrewError: boolean = false;
@@ -90,8 +89,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     this.movieFullCrewError = false;
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
       next: (crew) => {
-        this.originalMovieFullCrew = crew;
-        this.movieFullCrew = crew;
+        this.movieFullCrew.set(crew);
       },
       error: (error) => {
         this.handleError(error);
@@ -112,19 +110,19 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
     if (orderCriteria.id == Order.NameAsc) {
-      this.movieFullCrew.sort((a, b) => {
+      this.movieFullCrew().sort((a, b) => {
         return a.name.localeCompare(b.name);
       });
     } else if (orderCriteria.id == Order.NameDesc) {
-      this.movieFullCrew.sort((a, b) => {
+      this.movieFullCrew().sort((a, b) => {
         return b.name.localeCompare(a.name);
       });
     } else if (orderCriteria.id == Order.JobAsc) {
-      this.movieFullCrew.sort((a, b) => {
+      this.movieFullCrew().sort((a, b) => {
         return a.job.localeCompare(b.job);
       });
     } else if (orderCriteria.id == Order.JobDesc) {
-      this.movieFullCrew.sort((a, b) => {
+      this.movieFullCrew().sort((a, b) => {
         return b.job.localeCompare(a.job);
       });
     }
