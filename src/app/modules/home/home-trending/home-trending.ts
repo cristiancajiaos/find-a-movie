@@ -1,9 +1,7 @@
-import { Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, ChangeDetectionStrategy, signal, WritableSignal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { MovieService } from '../../../services/movie-service';
-import { ResponseSearchMovie } from '../../../classes/response-search-movie';
-import { environment } from '../../../../environments/environment';
 import { faStar, faFilm, IconDefinition, faArrowTrendUp } from '@fortawesome/free-solid-svg-icons';
 import { LoadingService } from '../../../services/loading-service';
 import { TitleService } from '../../../services/title-service';
@@ -21,7 +19,7 @@ export class HomeTrending implements OnInit, OnDestroy {
   private loadingService = inject(LoadingService);
   private titleService = inject(TitleService);
 
-  public movieResults: ResponseMovieResult[] = [];
+  public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public starIcon: IconDefinition = faStar;
   public filmIcon: IconDefinition = faFilm;
@@ -40,21 +38,13 @@ export class HomeTrending implements OnInit, OnDestroy {
   private getTrendingMovies(): void {
     this.getTrendingMoviesSubscription = this.movieService.getTrendingMovies().subscribe({
       next: (response) => {
-        this.setTrendingMovies(response);
+        this.movieResults.set(response);
       },
       error: (error) => {
         console.error('Error fetching trending movies:', error);
       },
       complete: () => {}
     });
-  }
-
-  private setTrendingMovies(response: ResponseSearchMovie): void {
-    this.movieResults = response.results.slice(0,10).map((movie) => {
-      movie.backdrop_path = `${environment.imgUrl}${environment.backdropSize}${movie.backdrop_path}`;
-      return movie;
-    });
-
   }
 
   ngOnDestroy(): void {

@@ -12,7 +12,7 @@
     </header>
     <main class="trending-main">
       <ngb-carousel>
-        @for (movie of movieResults; track $index) {
+        @for (movie of movieResults(); track movie.id) {
           <ng-template ngbSlide>
             <div class="slide-image">
               <a [routerLink]="['movie', movie.id]">
