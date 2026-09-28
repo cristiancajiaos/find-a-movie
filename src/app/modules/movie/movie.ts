@@ -7,7 +7,6 @@ import { TitleService } from '../../services/title-service';
 import { environment } from '../../../environments/environment.development';
 import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStorageService } from '../../services/local-storage-service';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../../services/loading-service';
 import { SessionStorageService } from '../../services/session-storage-service';

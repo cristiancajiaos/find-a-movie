@@ -8,9 +8,9 @@ import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { Order } from '../../../enums/order';
 import { OrderSelect } from '../../../components/shared/order-select/order-select';
 import { Movie } from '../../../classes/movie';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
+import { SessionStorageService } from '../../../services/session-storage-service';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -23,7 +23,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
@@ -67,7 +67,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.localStorageService.getItem('movie');
+    this.movie = this.sessionStorageService.getItem('movie');
   }
 
   private setId(): void {

@@ -16,10 +16,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../../enums/order';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { OrderSelect } from '../../../components/shared/order-select/order-select';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { Movie } from '../../../classes/movie';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
+import { SessionStorageService } from '../../../services/session-storage-service';
 
 @Component({
   selector: 'app-movie-cast',
@@ -31,7 +31,7 @@ import { LoadingService } from '../../../services/loading-service';
 export class MovieCast implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
@@ -75,7 +75,7 @@ export class MovieCast implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.localStorageService.getItem('movie');
+    this.movie = this.sessionStorageService.getItem('movie');
   }
 
   private setId(): void {

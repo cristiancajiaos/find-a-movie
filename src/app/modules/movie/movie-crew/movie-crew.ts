@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs';
 import { CrewMember } from '../../../classes/credits/crew-member';
 import { MovieService } from '../../../services/movie-service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { TitleService } from '../../../services/title-service';
 import { Movie } from '../../../classes/movie';
 import { LoadingService } from '../../../services/loading-service';
+import { SessionStorageService } from '../../../services/session-storage-service';
 
 @Component({
   selector: 'app-movie-crew',
@@ -20,7 +20,7 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
@@ -67,7 +67,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.localStorageService.getItem('movie');
+    this.movie = this.sessionStorageService.getItem('movie');
   }
 
   private setId(): void {

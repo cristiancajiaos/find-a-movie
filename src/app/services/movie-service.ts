@@ -17,28 +17,57 @@ import { environment } from '../../environments/environment.development';
 })
 export class MovieService {
 
+  private movie = new Map<string, Movie>();
+  private creditsCast = new Map<string, CastMember[]>();
+  private creditsCrew = new Map<string, CrewMember[]>();
   private movieImages = new Map<string, BackdropImage[]>();
   private trendingMovies = new Map<string, ResponseMovieResult[]>();
 
   private http = inject(HttpClient);
 
   public getMovie(id: number): Observable<Movie> {
-    return this.http.get<Movie>((`/movie/${id}`));
+    if (this.movie.has(`movie-${id}`)) {
+      return of(this.movie.get(`movie-${id}`));
+    }
+    
+    return this.http.get<Movie>((`/movie/${id}`)).pipe(
+      tap(
+        movie => this.movie.set(`movie-${id}`, movie)
+      )
+    )
   }
 
   public getMovieCredits(id: number): Observable<Credits> {
-    return this.http.get<Credits>((`/movie/${id}/credits`));
+    return this.http.get<Credits>((`/movie/${id}/credits`)).pipe(
+      tap(credits => {
+        this.creditsCast.set(`creditsCast-${id}`, credits.cast);
+        this.creditsCrew.set(`creditsCrew-${id}`, credits.crew);
+      })
+    )
   }
 
   public getMovieCast(id: number): Observable<CastMember[]> {
+    if (this.creditsCast.has(`creditsCast-${id}`)) {
+      return of(this.creditsCast.get(`creditsCast-${id}`));
+    }
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
-      map(credits => credits.cast)
+      map(credits => credits.cast),
+      tap(castCredits => {
+        this.creditsCast.set(`creditsCast-${id}`, castCredits);
+      })
     )
   }
 
   public getMovieCrew(id: number): Observable<CrewMember[]> {
+    if (this.creditsCrew.has(`creditsCrew-${id}`)) {
+      return of(this.creditsCrew.get(`creditsCrew-${id}`));
+    }
+
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
-      map(credits => credits.crew)
+      map(credits => credits.crew),
+      tap(crewCredits => {
+        this.creditsCrew.set(`creditsCrew-${id}`, crewCredits);
+      })
     )
   }
 
