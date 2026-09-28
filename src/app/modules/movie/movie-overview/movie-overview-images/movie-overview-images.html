@@ -1,9 +1,9 @@
 
-@if (images.length > 0) {
+@if (movieImages().length > 0) {
   <section class="movie-overview-images">
     <h2>Images</h2>
     <ngb-carousel [interval]="0">
-      @for (image of images; track $index) {
+      @for (image of movieImages(); track $index) {
         <ng-template ngbSlide>
           <img [src]="image.file_path" class="img-fluid" alt="Image {{$index}}">
         </ng-template>
@@ -11,5 +11,3 @@
     </ngb-carousel>
   </section>
 }
-
-

@@ -17,6 +17,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class MovieService {
 
+  private movieImages = new Map<string, BackdropImage[]>();
   private trendingMovies = new Map<string, ResponseMovieResult[]>();
 
   private http = inject(HttpClient);
@@ -46,12 +47,24 @@ export class MovieService {
   }
 
   public getMovieImages(id: number): Observable<BackdropImage[]> {
+    if (this.movieImages.has(`movieImages-${id}`)) {
+      return of(this.movieImages.get(`movieImages-${id}`))
+    }
+
     return this.http.get<ResponseImage>(`/movie/${id}/images`).pipe(
-      take(10),
       map(
         (responseImage) => responseImage.backdrops
       ),
-
+      map(
+        movieImages => movieImages.slice(0,10)
+      ),
+      map(
+        movieImages => movieImages.map(movieImage => {
+          movieImage.file_path = `${environment.imgUrl}${environment.backdropSize}${movieImage.file_path}`;
+          return movieImage;
+        })
+      ),
+      tap(movieImages => this.movieImages.set(`movieImages-${id}`, movieImages))
     )
   }
 
