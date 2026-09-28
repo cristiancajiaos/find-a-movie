@@ -4,7 +4,7 @@
   }
   @if (!movieCastError) {
     <h2>Cast</h2>
-    @if (movieCast.length > 0) {
+    @if (movieCast().length > 0) {
       <app-order-select
         #orderSelectMovieCast
         [orderCriterias]="orderCriterias()"
@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (castMember of movieCast; track castMember) {
+            @for (castMember of movieCast(); track castMember.id) {
               <tr>
                 <td>
                   <a [routerLink]="['/person', castMember.id]">

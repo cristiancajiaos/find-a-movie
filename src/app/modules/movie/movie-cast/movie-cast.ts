@@ -38,7 +38,8 @@ export class MovieCast implements OnInit, OnDestroy {
   public id: number = 0;
 
   private movie: Movie = null;
-  public movieCast: CastMember[] = [];
+  // public movieCast: CastMember[] = [];
+  public movieCast: WritableSignal<CastMember[]> = signal([]);
 
   public castFound: boolean = false;
   public movieCastError: boolean = false;
@@ -100,7 +101,7 @@ export class MovieCast implements OnInit, OnDestroy {
     this.movieCastError = false;
     this.getMovieCastSubscription = this.movieService.getMovieCast(this.id).subscribe({
       next: (cast) => {
-        this.movieCast = cast;
+        this.movieCast.set(cast);
         this.castFound = true;
       },
       error: (error) => {
@@ -121,27 +122,27 @@ export class MovieCast implements OnInit, OnDestroy {
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
     if (orderCriteria.id == Order.CastOrderAsc) {
-      this.movieCast.sort((a, b) => {
+      this.movieCast().sort((a, b) => {
         return a.order - b.order;
       });
     } else if (orderCriteria.id == Order.CastOrderDesc) {
-      this.movieCast.sort((a, b) => {
+      this.movieCast().sort((a, b) => {
         return b.order - a.order;
       });
     } else if (orderCriteria.id == Order.NameAsc) {
-      this.movieCast.sort((a, b) => {
+      this.movieCast().sort((a, b) => {
         return a.name.localeCompare(b.name);
       });
     } else if (orderCriteria.id == Order.NameDesc) {
-      this.movieCast.sort((a, b) => {
+      this.movieCast().sort((a, b) => {
         return b.name.localeCompare(a.name);
       });
     } else if (orderCriteria.id == Order.CharacterNameAsc) {
-      this.movieCast.sort((a, b) => {
+      this.movieCast().sort((a, b) => {
         return a.character.localeCompare(b.character);
       });
     } else if (orderCriteria.id == Order.CharacterNameDesc) {
-      this.movieCast.sort((a, b) => {
+      this.movieCast().sort((a, b) => {
         return b.character.localeCompare(a.character);
       });
     }
