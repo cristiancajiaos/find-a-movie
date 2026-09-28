@@ -10,7 +10,7 @@
           <tr>
             <td>Starring:</td>
             <td class="text-end">
-              @for (cast of movieMainCast; track cast) {
+              @for (cast of movieMainCast; track cast.id) {
                 <a [routerLink]="['/person', cast.id]">
                   {{ cast.name }}
                 </a>

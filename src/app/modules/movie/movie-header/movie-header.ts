@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, OnChanges, ChangeDetectionStrategy, input } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
@@ -18,7 +18,6 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class MovieHeader implements OnChanges {
   public film: IconDefinition = faFilm;
-  public circleSeparator: IconDefinition = faCircle;
   public calendar: IconDefinition = faCalendar;
   public clock: IconDefinition = faClock;
 

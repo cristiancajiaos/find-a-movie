@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from '../../services/local-storage-service';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../../services/loading-service';
+import { SessionStorageService } from '../../services/session-storage-service';
 
 @Component({
   selector: 'app-movie',
@@ -23,11 +24,11 @@ export class MovieComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
   private titleService = inject(TitleService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private loadingService = inject(LoadingService);
 
   public imagePortrait: IconDefinition = faImagePortrait;
-  
+
   public id: WritableSignal<number> = signal(0);
   public movie: WritableSignal<Movie> = signal(new Movie());
 
@@ -78,7 +79,7 @@ export class MovieComponent implements OnInit, OnDestroy {
     this.getMovieSubscription = this.movieService.getMovie(this.id()).subscribe({
       next: (movie) => {
         this.movie.set(movie);
-        this.localStorageService.setItem('movie', movie);
+        this.sessionStorageService.setItem('movie', movie);
         this.movieFound = true;
         this.setMoviePoster();
       },

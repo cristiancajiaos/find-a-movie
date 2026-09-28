@@ -26,9 +26,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   public credits: WritableSignal<Credits> = signal(new Credits());
   public movieResponseVideo: WritableSignal<ResponseVideo> = signal(new ResponseVideo());
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
-  public movieReleaseDate: Date = new Date();
-  public movieIMDB: string = '';
-  public movieHomepage: string = '';
 
   public movieTagline: string = null;
   public movieOverview: string = null;
