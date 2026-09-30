@@ -5,9 +5,9 @@ import { Person } from '../../classes/person';
 import { PersonService } from '../../services/person-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonHeader } from './person-header/person-header';
-import { LocalStorageService } from '../../services/local-storage-service';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../../services/loading-service';
+import { SessionStorageService } from '../../services/session-storage-service';
 
 @Component({
   selector: 'app-person',
@@ -21,7 +21,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private titleService = inject(TitleService);
   private personService = inject(PersonService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private cd = inject(ChangeDetectorRef);
   private loadingService = inject(LoadingService);
 
@@ -72,7 +72,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
       next: (person) => {
         this.person.set(person);
         this.personFound = true;
-        this.localStorageService.setItem("person", person);
+        this.sessionStorageService.setItem("person", person);
       },
       error: (error) => {
         this.handleError(error);

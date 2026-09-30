@@ -3,12 +3,12 @@ import { ResponsePersonMovieCredits } from '../../../classes/response-person-mov
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { PersonService } from '../../../services/person-service';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TitleService } from '../../../services/title-service';
 import { Person } from '../../../classes/person';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 import { LoadingService } from '../../../services/loading-service';
+import { SessionStorageService } from '../../../services/session-storage-service';
 
 @Component({
   selector: 'app-person-crew-credits',
@@ -21,7 +21,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
 
   private activatedRoute = inject(ActivatedRoute);
   private personService = inject(PersonService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
@@ -31,7 +31,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
 
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
 
-  personCrewCredits: WritableSignal<ResponsePersonCrewCredit[]> = signal([]);
+  public personCrewCredits: WritableSignal<ResponsePersonCrewCredit[]> = signal([]);
 
   public loadingPersonMovieCredits: boolean = false;
 
@@ -58,7 +58,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   }
 
   private getPerson(): void {
-    this.person = this.localStorageService.getItem('person');
+    this.person = this.sessionStorageService.getItem('person');
 
   }
 

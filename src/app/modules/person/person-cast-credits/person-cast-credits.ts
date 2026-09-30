@@ -11,12 +11,12 @@ import { ResponsePersonMovieCredits } from '../../../classes/response-person-mov
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { PersonService } from '../../../services/person-service';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Person } from '../../../classes/person';
 import { TitleService } from '../../../services/title-service';
 import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/response-person-cast-credit';
 import { LoadingService } from '../../../services/loading-service';
+import { SessionStorageService } from '../../../services/session-storage-service';
 
 @Component({
   selector: 'app-person-cast-credits',
@@ -26,10 +26,10 @@ import { LoadingService } from '../../../services/loading-service';
   styleUrl: './person-cast-credits.scss',
 })
 export class PersonCastCredits implements OnInit, OnDestroy {
-  
+
   private activatedRoute = inject(ActivatedRoute);
   private personService = inject(PersonService);
-  private localStorageService = inject(LocalStorageService);
+  private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
@@ -64,7 +64,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   }
 
   private getPerson(): void {
-    this.person = this.localStorageService.getItem('person');
+    this.person = this.sessionStorageService.getItem('person');
     this.setTitle();
   }
 
