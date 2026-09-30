@@ -7,6 +7,7 @@ import {
   inject,
   WritableSignal,
   signal,
+  computed,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -55,6 +56,11 @@ export class MovieCast implements OnInit, OnDestroy {
   ]);
 
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
+    id: Order.DefaultOrder,
+    orderCriteriaName: 'Default Order',
+  });
+
+  public currentOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
   });
@@ -121,31 +127,7 @@ export class MovieCast implements OnInit, OnDestroy {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
-    if (orderCriteria.id == Order.CastOrderAsc) {
-      this.movieCast().sort((a, b) => {
-        return a.order - b.order;
-      });
-    } else if (orderCriteria.id == Order.CastOrderDesc) {
-      this.movieCast().sort((a, b) => {
-        return b.order - a.order;
-      });
-    } else if (orderCriteria.id == Order.NameAsc) {
-      this.movieCast().sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
-    } else if (orderCriteria.id == Order.NameDesc) {
-      this.movieCast().sort((a, b) => {
-        return b.name.localeCompare(a.name);
-      });
-    } else if (orderCriteria.id == Order.CharacterNameAsc) {
-      this.movieCast().sort((a, b) => {
-        return a.character.localeCompare(b.character);
-      });
-    } else if (orderCriteria.id == Order.CharacterNameDesc) {
-      this.movieCast().sort((a, b) => {
-        return b.character.localeCompare(a.character);
-      });
-    }
+    this.currentOrder.set(orderCriteria);
   }
 
   ngOnDestroy(): void {

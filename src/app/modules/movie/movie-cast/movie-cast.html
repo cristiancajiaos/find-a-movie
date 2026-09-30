@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (castMember of movieCast(); track castMember.id) {
+            @for (castMember of movieCast() | orderCastMemberBy:currentOrder(); track castMember.id) {
               <tr>
                 <td>
                   <a [routerLink]="['/person', castMember.id]">
