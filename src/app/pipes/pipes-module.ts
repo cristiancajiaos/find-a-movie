@@ -4,13 +4,15 @@ import { RuntimePipe } from './runtime-pipe';
 import { SafeUrlPipe } from './safe-url-pipe';
 import { OrderCastMemberByPipe } from './order-cast-member-by-pipe';
 import { OrderCrewMemberByPipe } from './order-crew-member-by-pipe';
+import { OrderPersonCastCreditsByPipe } from './order-person-cast-credits-by.pipe';
 
 @NgModule({
   declarations: [
     RuntimePipe,
     SafeUrlPipe,
     OrderCastMemberByPipe,
-    OrderCrewMemberByPipe
+    OrderCrewMemberByPipe,
+    OrderPersonCastCreditsByPipe
   ],
   imports: [
     CommonModule
@@ -19,7 +21,8 @@ import { OrderCrewMemberByPipe } from './order-crew-member-by-pipe';
     RuntimePipe,
     SafeUrlPipe,
     OrderCastMemberByPipe,
-    OrderCrewMemberByPipe
+    OrderCrewMemberByPipe,
+    OrderPersonCastCreditsByPipe
   ]
 })
 export class PipesModule { }

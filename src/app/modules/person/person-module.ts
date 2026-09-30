@@ -19,6 +19,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PersonBiography } from './person-overview/person-biography/person-biography';
 import { PersonInfotable } from './person-overview/person-infotable/person-infotable';
 import { PersonNav } from './person-nav/person-nav';
+import { PipesModule } from '../../pipes/pipes-module';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PersonNav } from './person-nav/person-nav';
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    PipesModule
   ]
 })
 export class PersonModule { }

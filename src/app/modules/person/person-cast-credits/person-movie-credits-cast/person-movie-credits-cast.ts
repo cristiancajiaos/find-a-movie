@@ -9,6 +9,7 @@ import { OrderSelect } from '../../../../components/shared/order-select/order-se
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { PersonService } from '../../../../services/person-service';
+import { SessionStorageService } from '../../../../services/session-storage-service';
 
 @Component({
   selector: 'app-person-movie-credits-cast',
@@ -19,8 +20,7 @@ import { PersonService } from '../../../../services/person-service';
 })
 export class PersonMovieCreditsCast implements OnInit {
 
-  private localStorageService = inject(LocalStorageService);
-  private personService = inject(PersonService);
+  private sessionStorageService = inject(SessionStorageService);
 
   public gridIcon: IconDefinition = faGrip;
   public listIcon: IconDefinition = faList;
@@ -51,10 +51,10 @@ export class PersonMovieCreditsCast implements OnInit {
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
   });
-  public selectedOrderCriteria: OrderCriteria = this.defaultOrder();
+
+  public selectedOrderCriteria: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
 
   public currentPerson!: Person;
-  public filterCastCredits: ResponsePersonCastCredit[] = [];
 
   public page: number = 1;
 
@@ -67,14 +67,13 @@ export class PersonMovieCreditsCast implements OnInit {
   @ViewChild('toSelect') toSelect: ToSelect;
 
   ngOnInit(): void {
-    this.filterCastCredits = structuredClone(this.castCredits());
     this.getPerson();
     this.setYearsLimit();
   }
 
   private getPerson(): void {
     this.loadingPerson = true;
-    this.currentPerson = this.localStorageService.getItem('person');
+    this.currentPerson = this.sessionStorageService.getItem('person');
   }
 
   private setYearsLimit(): void {
@@ -136,33 +135,11 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
-    this.selectedOrderCriteria = orderCriteria ? orderCriteria : null;
+    this.selectedOrderCriteria.set(orderCriteria);
   }
 
   public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria = this.defaultOrder();
-  }
-
-  public filterCredits(): void {
-    this.filterCastCredits = structuredClone(this.castCredits());
-    if (this.fromYear) {
-      if (this.toYear) {
-        this.filterCastCredits = this.personService.filterCastCreditsByYearFromTo(
-          this.filterCastCredits,
-          this.fromYear,
-          this.toYear
-        );
-      } else {
-        this.filterCastCredits = this.personService.filterCastCreditsByYearFrom(
-          this.filterCastCredits,
-          this.fromYear
-        );
-      }
-    }
-    this.filterCastCredits = this.personService.orderCastCreditsByOrderCriteria(
-      this.filterCastCredits,
-      this.selectedOrderCriteria
-    );
+    this.selectedOrderCriteria.set(this.defaultOrder());
   }
 
   public resetFiltersByDefault(): void {
@@ -170,6 +147,5 @@ export class PersonMovieCreditsCast implements OnInit {
     this.displayMode.set('grid');
     this.orderSelectPersonCastCredits.clearOrderCriteria();
     this.clearSelectYearFrom(true);
-    this.filterCastCredits = structuredClone(this.castCredits());
   }
 }
