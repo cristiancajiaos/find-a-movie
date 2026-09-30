@@ -49,6 +49,8 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     orderCriteriaName: 'Default Order',
   });
 
+  public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
+
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
@@ -109,23 +111,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
-    if (orderCriteria.id == Order.NameAsc) {
-      this.movieFullCrew().sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
-    } else if (orderCriteria.id == Order.NameDesc) {
-      this.movieFullCrew().sort((a, b) => {
-        return b.name.localeCompare(a.name);
-      });
-    } else if (orderCriteria.id == Order.JobAsc) {
-      this.movieFullCrew().sort((a, b) => {
-        return a.job.localeCompare(b.job);
-      });
-    } else if (orderCriteria.id == Order.JobDesc) {
-      this.movieFullCrew().sort((a, b) => {
-        return b.job.localeCompare(a.job);
-      });
-    }
+    this.currentOrder.set(orderCriteria);
   }
 
   ngOnDestroy(): void {

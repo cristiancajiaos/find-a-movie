@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (crewMember of movieFullCrew(); track crewMember.id) {
+            @for (crewMember of movieFullCrew() | orderCrewMemberBy:currentOrder(); track crewMember.id) {
               <tr>
                 <td>
                   <a href="" [routerLink]="['/person', crewMember.id]">

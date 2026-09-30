@@ -60,10 +60,7 @@ export class MovieCast implements OnInit, OnDestroy {
     orderCriteriaName: 'Default Order',
   });
 
-  public currentOrder: WritableSignal<OrderCriteria> = signal({
-    id: Order.DefaultOrder,
-    orderCriteriaName: 'Default Order',
-  });
+  public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
 
   @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
 
