@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
-import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
 import { faArrowRotateLeft, faFilter, faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
@@ -8,7 +7,6 @@ import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
-import { PersonService } from '../../../../services/person-service';
 import { SessionStorageService } from '../../../../services/session-storage-service';
 
 @Component({

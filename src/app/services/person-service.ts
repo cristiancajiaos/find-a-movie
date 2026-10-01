@@ -4,8 +4,6 @@ import { inject, Injectable } from '@angular/core';
 import { Person } from '../classes/person';
 import { map, Observable, of, tap } from 'rxjs';
 import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
-import { OrderCriteria } from '../interfaces/order-criteria';
-import { Order } from '../enums/order';
 import { ResponsePersonCastCredit } from '../classes/person-movie-credits/response-person-cast-credit';
 
 @Injectable({
@@ -46,83 +44,5 @@ export class PersonService {
       map(movieCredits => movieCredits.crew),
       tap(crewCredits => this.crewCredits.set(`crewCredits-${id}`, crewCredits))
     )
-  }
-
-  public filterCrewCreditsByRole(
-    crewCredits: ResponsePersonCrewCredit[],
-    selectedRoles: string[],
-  ): ResponsePersonCrewCredit[] {
-    return crewCredits.filter((crewCredit) => selectedRoles.includes(crewCredit.job));
-  }
-
-  public filterCrewCreditsByYearFrom(
-    crewCredits: ResponsePersonCrewCredit[],
-    fromYear: number,
-  ): ResponsePersonCrewCredit[] {
-    return crewCredits
-      .filter((crewCredit) => {
-        const date = new Date(crewCredit.release_date);
-        return !isNaN(date.getFullYear());
-      })
-      .filter((crewCredit) => {
-        const date = new Date(crewCredit.release_date);
-        return date.getFullYear() >= fromYear;
-      });
-  }
-
-  public filterCrewCreditsByYearFromTo(
-    crewCredits: ResponsePersonCrewCredit[],
-    fromYear: number,
-    toYear: number,
-  ): ResponsePersonCrewCredit[] {
-    return crewCredits
-      .filter((crewCredit) => {
-        const date = new Date(crewCredit.release_date);
-        return !isNaN(date.getFullYear());
-      })
-      .filter((crewCredit) => {
-        const date = new Date(crewCredit.release_date);
-        return date.getFullYear() >= fromYear;
-      })
-      .filter((crewCredit) => {
-        const date = new Date(crewCredit.release_date);
-        return date.getFullYear() <= toYear;
-      });
-  }
-
-  public orderCrewCreditsByOrderCriteria(
-    crewCredits: ResponsePersonCrewCredit[],
-    orderCriteria: OrderCriteria,
-  ): ResponsePersonCrewCredit[] {
-    if (orderCriteria.id == Order.TitleAsc) {
-      crewCredits.sort((a, b) => {
-        return a.title.localeCompare(b.title);
-      });
-    } else if (orderCriteria.id == Order.TitleDesc) {
-      crewCredits.sort((a, b) => {
-        return b.title.localeCompare(a.title);
-      });
-    } else if (orderCriteria.id == Order.JobAsc) {
-      crewCredits.sort((a, b) => {
-        return a.job.localeCompare(b.job);
-      });
-    } else if (orderCriteria.id == Order.JobDesc) {
-      crewCredits.sort((a, b) => {
-        return b.job.localeCompare(a.job);
-      });
-    } else if (orderCriteria.id == Order.ReleaseDateAsc) {
-      crewCredits.sort((a, b) => {
-        const aDate: Date = new Date(a.release_date);
-        const bDate: Date = new Date(b.release_date);
-        return aDate.getTime() - bDate.getTime();
-      });
-    } else if (orderCriteria.id == Order.ReleaseDateDesc) {
-      crewCredits.sort((a, b) => {
-        const aDate: Date = new Date(a.release_date);
-        const bDate: Date = new Date(b.release_date);
-        return bDate.getTime() - aDate.getTime();
-      });
-    }
-    return crewCredits;
   }
 }

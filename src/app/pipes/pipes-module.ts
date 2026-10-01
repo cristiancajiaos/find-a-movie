@@ -5,6 +5,7 @@ import { SafeUrlPipe } from './safe-url-pipe';
 import { OrderCastMemberByPipe } from './order-cast-member-by-pipe';
 import { OrderCrewMemberByPipe } from './order-crew-member-by-pipe';
 import { OrderPersonCastCreditsByPipe } from './order-person-cast-credits-by.pipe';
+import { OrderPersonCrewCreditsByPipe } from './order-person-crew-credits-by-pipe';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { OrderPersonCastCreditsByPipe } from './order-person-cast-credits-by.pip
     SafeUrlPipe,
     OrderCastMemberByPipe,
     OrderCrewMemberByPipe,
-    OrderPersonCastCreditsByPipe
+    OrderPersonCastCreditsByPipe,
+    OrderPersonCrewCreditsByPipe
   ],
   imports: [
     CommonModule
@@ -22,7 +24,8 @@ import { OrderPersonCastCreditsByPipe } from './order-person-cast-credits-by.pip
     SafeUrlPipe,
     OrderCastMemberByPipe,
     OrderCrewMemberByPipe,
-    OrderPersonCastCreditsByPipe
+    OrderPersonCastCreditsByPipe,
+    OrderPersonCrewCreditsByPipe
   ]
 })
 export class PipesModule { }

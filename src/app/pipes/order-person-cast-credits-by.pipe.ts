@@ -11,9 +11,9 @@ export class OrderPersonCastCreditsByPipe implements PipeTransform {
   transform(
     castCredits: ResponsePersonCastCredit[],
     orderCriteria?: OrderCriteria | null,
-    fromYear?: number,
-    toYear?: number,
-  ): any {
+    fromYear?: number | null,
+    toYear?: number | null,
+  ): ResponsePersonCastCredit[] {
     let filteredCastCredits: ResponsePersonCastCredit[] = castCredits.filter((castCredit) => {
       const date = new Date(castCredit.release_date);
       return !isNaN(date.getFullYear());

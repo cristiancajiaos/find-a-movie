@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
-import { LocalStorageService } from '../../../../services/local-storage-service';
 import { Person } from '../../../../classes/person';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
 import { faCircleInfo, faArrowRotateLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +8,8 @@ import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
-import { PersonService } from '../../../../services/person-service';
 import { RoleSelect } from '../../../../components/shared/role-select/role-select';
+import { SessionStorageService } from '../../../../services/session-storage-service';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -21,8 +20,7 @@ import { RoleSelect } from '../../../../components/shared/role-select/role-selec
 })
 export class PersonMovieCreditsCrew implements OnInit {
 
-  private localStorageService = inject(LocalStorageService);
-  private personService = inject(PersonService);
+  private sessionStorageService = inject(SessionStorageService);
 
   public faCircleInfo: IconDefinition = faCircleInfo;
   public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
@@ -55,10 +53,10 @@ export class PersonMovieCreditsCrew implements OnInit {
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
   });
-  public selectedOrderCriteria: OrderCriteria = this.defaultOrder();
+
+  public selectedOrderCriteria: WritableSignal<OrderCriteria> = signal(null);
 
   public currentPerson!: Person;
-  public filterCrewCredits: ResponsePersonCrewCredit[] = [];
 
   public page: number = 1;
 
@@ -71,7 +69,6 @@ export class PersonMovieCreditsCrew implements OnInit {
   @ViewChild('toSelect') toSelect: ToSelect;
 
   ngOnInit(): void {
-    this.filterCrewCredits = structuredClone(this.crewCredits());
     this.getPerson();
     this.setRoles();
     this.setYearsLimit();
@@ -84,7 +81,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   private getPerson(): void {
     this.loadingPerson = true;
-    this.currentPerson = this.localStorageService.getItem('person');
+    this.currentPerson = this.sessionStorageService.getItem('person');
   }
 
   public defineSelectedRoles(roles: string[]): void {
@@ -150,42 +147,15 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
-    this.selectedOrderCriteria = orderCriteria ? orderCriteria : null;
+    this.selectedOrderCriteria.set(orderCriteria);
   }
 
   public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria = this.defaultOrder();
+    this.selectedOrderCriteria.set(null);
   }
 
   public clearRoleSelect(event: boolean): void {
     this.selectedRoles = [];
-  }
-
-  public filterCredits(): void {
-    this.page = 1;
-    this.filterCrewCredits = structuredClone(this.crewCredits());
-    if (this.selectedRoles.length > 0) {
-      this.filterCrewCredits = this.personService.filterCrewCreditsByRole(
-        this.filterCrewCredits,
-        this.selectedRoles);
-    }
-    if (this.fromYear) {
-      if (this.toYear) {
-        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFromTo(
-          this.filterCrewCredits,
-          this.fromYear,
-          this.toYear);
-      } else {
-        this.filterCrewCredits = this.personService.filterCrewCreditsByYearFrom(
-          this.filterCrewCredits,
-          this.fromYear);
-      }
-    }
-    this.filterCrewCredits = this.personService.orderCrewCreditsByOrderCriteria(
-      this.filterCrewCredits,
-      this.selectedOrderCriteria
-    );
-
   }
 
   public resetFiltersByDefault(): void {
@@ -195,6 +165,5 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.roleSelect.clearRoleSelect();
     this.selectedRoles = [];
     this.clearSelectYearFrom(true);
-    this.filterCrewCredits = structuredClone(this.crewCredits());
   }
 }

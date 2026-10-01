@@ -46,11 +46,13 @@
             </app-to-select>
           </div>
         </div>
-        <div class="d-flex flex-column flex-lg-row justify-content-lg-between">
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-end">
+          <!--
           <button class="btn btn-primary mb-3" (click)="filterCredits()">
             <fa-icon [icon]="filterIcon" [fixedWidth]="true"></fa-icon>
             Filter
           </button>
+          -->
           <button class="btn btn-danger mb-3" (click)="resetFiltersByDefault()">
             <fa-icon [icon]="arrowRotateLeftIcon" [fixedWidth]="true"></fa-icon>
             Reset filters to default
@@ -59,12 +61,13 @@
       </section>
       <hr #crewParagraph />
       <section class="crew-credits">
-        @if (filterCrewCredits.length > 0) {
+        @if (crewCredits().length > 0) {
           @if (displayMode() == 'grid') {
             <section class="crew-credits-display-grid">
               <div class="row" #crewCreditsGrid>
                 @for (
-                  crewRole of filterCrewCredits
+                  crewRole of crewCredits()
+                  | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles:fromYear:toYear
                   | paginate: { itemsPerPage: 20, currentPage: page }
                   ; track
                   crewRole) {
@@ -80,7 +83,8 @@
           @if (displayMode() == 'list') {
             <section class="crew-credits-display-list">
               @for (
-                crewRole of filterCrewCredits
+                crewRole of crewCredits()
+                | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles:fromYear:toYear
                 | paginate: { itemsPerPage: 20, currentPage: page }
                 ; track
                 crewRole) {
