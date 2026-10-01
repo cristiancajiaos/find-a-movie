@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
-import { LocalStorageService } from '../../../services/local-storage-service';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 import { Movie } from '../../../classes/movie';
@@ -21,7 +20,6 @@ export class MovieRecommendations implements OnInit, OnDestroy {
 
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
-  private localStorageService = inject(LocalStorageService);
   private sessionStorageService = inject(SessionStorageService);
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
