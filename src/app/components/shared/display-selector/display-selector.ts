@@ -13,6 +13,8 @@ export class DisplaySelector {
   public gridIcon: IconDefinition = faGrip;
   public listIcon: IconDefinition = faList;
 
+  public displaySelectLabel: string = 'Display:';
+
   public displayMode = input.required();
   public onDisplayChange = output<string>();
 

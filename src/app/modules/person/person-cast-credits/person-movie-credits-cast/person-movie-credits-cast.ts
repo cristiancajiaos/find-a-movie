@@ -52,7 +52,7 @@ export class PersonMovieCreditsCast implements OnInit {
     orderCriteriaName: 'Default Order',
   });
 
-  public selectedOrderCriteria: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
+  public selectedOrderCriteria: WritableSignal<OrderCriteria | null> = signal(null);
 
   public currentPerson!: Person;
 
@@ -136,10 +136,12 @@ export class PersonMovieCreditsCast implements OnInit {
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
     this.selectedOrderCriteria.set(orderCriteria);
+    this.page = 1;
   }
 
   public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria.set(this.defaultOrder());
+    this.selectedOrderCriteria.set(null);
+    this.page = 1;
   }
 
   public resetFiltersByDefault(): void {
@@ -147,5 +149,6 @@ export class PersonMovieCreditsCast implements OnInit {
     this.displayMode.set('grid');
     this.orderSelectPersonCastCredits.clearOrderCriteria();
     this.clearSelectYearFrom(true);
+    this.selectedOrderCriteria.set(null);
   }
 }

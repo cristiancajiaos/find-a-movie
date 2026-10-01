@@ -1,7 +1,7 @@
 <section class="order-select">
   <form [formGroup]="orderForm">
     <div class="form-group mb-3">
-      <label for="orderSelect" (click)="focusSelect()">
+      <label (click)="focusSelect()">
         {{orderSelectLabel}}
       </label>
       <ng-select
@@ -11,6 +11,7 @@
         [items]="orderCriterias()"
         bindLabel="orderCriteriaName"
         bindValue="id"
+        id="orderSelect"
         (change)="orderCriteriaChange($event)"
         (clear)="clearOrderCriteria()">
       </ng-select>

@@ -15,7 +15,7 @@ export class FromSelect implements OnInit {
 
   public yearsFromSelectForm: FormGroup;
 
-  public fromSelectLabel: string = 'From:'
+  public fromSelectLabel: string = 'From:';
   public fromSelectPlaceholder: string = 'Select a year';
 
   @ViewChild('fromSelect') fromSelect: NgSelectComponent;
