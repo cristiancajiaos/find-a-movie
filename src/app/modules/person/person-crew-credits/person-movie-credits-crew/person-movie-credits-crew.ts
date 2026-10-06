@@ -32,7 +32,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public displayMode: WritableSignal<string> = signal('grid');
 
-  public selectedRoles: string[] = [];
+  public selectedRoles: WritableSignal<string[]> = signal([]);
   public yearsFrom: WritableSignal<number[]> = signal([]);
   public yearsTo: WritableSignal<number[]> = signal([]);
 
@@ -85,7 +85,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public defineSelectedRoles(roles: string[]): void {
-    this.selectedRoles = roles;
+    this.selectedRoles.set(roles);
   }
 
   private setYearsLimit(): void {
@@ -155,7 +155,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   }
 
   public clearRoleSelect(event: boolean): void {
-    this.selectedRoles = [];
+    this.selectedRoles.set([]);
   }
 
   public resetFiltersByDefault(): void {
@@ -163,7 +163,7 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.displayMode.set('grid');
     this.orderSelectPersonCrewCredits.clearOrderCriteria();
     this.roleSelect.clearRoleSelect();
-    this.selectedRoles = [];
+    this.selectedRoles.set([]);
     this.clearSelectYearFrom(true);
   }
 }
