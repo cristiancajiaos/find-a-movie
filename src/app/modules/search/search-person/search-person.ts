@@ -51,12 +51,18 @@ export class SearchPerson implements OnInit, OnDestroy {
   private getPersonSubscription: Subscription = new Subscription();
   private getPersonChangePageSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
+  private queryParamSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery = params['searchQuery'];
       this.setSearchPersonTitle(this.searchQuery);
       this.searchPerson();
+    });
+    this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['displayMode']) {
+        this.displayMode.set(queryParams['displayMode']);
+      }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       this.setSearchPersonTitle(this.searchQuery);
@@ -138,6 +144,9 @@ export class SearchPerson implements OnInit, OnDestroy {
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
+    }
+    if (this.queryParamSubscription) {
+      this.queryParamSubscription.unsubscribe();
     }
   }
 }
