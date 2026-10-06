@@ -61,7 +61,7 @@
               <div class="row" #crewCreditsGrid>
                 @for (
                   crewRole of crewCredits()
-                  | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles:fromYear:toYear
+                  | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles:fromYear():toYear()
                   | paginate: { itemsPerPage: 20, currentPage: page }
                   ; track
                   crewRole) {
@@ -78,7 +78,7 @@
             <section class="crew-credits-display-list">
               @for (
                 crewRole of crewCredits()
-                | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles:fromYear:toYear
+                | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles:fromYear():toYear()
                 | paginate: { itemsPerPage: 20, currentPage: page }
                 ; track
                 crewRole) {

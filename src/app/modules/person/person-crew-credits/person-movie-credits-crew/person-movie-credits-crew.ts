@@ -36,9 +36,9 @@ export class PersonMovieCreditsCrew implements OnInit {
   public yearsFrom: WritableSignal<number[]> = signal([]);
   public yearsTo: WritableSignal<number[]> = signal([]);
 
-  public fromYear: number = null;
-  public toYear: number = null;
-  public lastYear: number = null;
+  public fromYear: WritableSignal<number> = signal(null);
+  public toYear: WritableSignal<number> = signal(null);
+  public lastYear: WritableSignal<number> = signal(null);
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
@@ -96,20 +96,20 @@ export class PersonMovieCreditsCrew implements OnInit {
     const firstYear: number = years
       .filter((year) => !isNaN(year))
       .reduce((min, year) => (year < min ? year : min));
-    this.lastYear = years
+    this.lastYear.set(years
       .filter((year) => !isNaN(year))
-      .reduce((max, year) => (year > max ? year : max));
-    for (let i = firstYear; i <= this.lastYear; i++) {
+      .reduce((max, year) => (year > max ? year : max)));
+    for (let i = firstYear; i <= this.lastYear(); i++) {
       this.yearsFrom.update(numbers => [...numbers, i]);
     }
   }
 
   public setYearFrom(year: number): void {
     if (year) {
-      this.fromYear = year;
+      this.fromYear.set(year);
       let yearsTo: number[] = [];
       this.toSelect.yearsToSelectForm.reset();
-      for (let i = year; i <= this.lastYear; i++) {
+      for (let i = year; i <= this.lastYear(); i++) {
         yearsTo.push(i);
         this.toSelect.enableSelect();
       }
@@ -117,24 +117,24 @@ export class PersonMovieCreditsCrew implements OnInit {
         this.yearsTo.set(structuredClone(yearsTo));
       }
     } else {
-      this.fromYear = null;
+      this.fromYear.set(null);
     }
   }
 
   public clearSelectYearFrom(event: boolean) {
-    this.fromYear = null;
-    this.toYear = null;
+    this.fromYear.set(null);
+    this.toYear.set(null);
     this.yearsTo.set([]);
     this.fromSelect.yearsFromSelectForm.reset();
     this.toSelect.disableSelect();
   }
 
   public setYearTo(year: number): void {
-    this.toYear = year ? year : null;
+    this.toYear.set(year ? year : null);
   }
 
   public clearSelectYearTo(event: boolean) {
-    this.setYearFrom(this.fromYear);
+    this.setYearFrom(this.fromYear());
   }
 
   public changePage(pageNumber: number) {
