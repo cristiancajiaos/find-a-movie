@@ -51,12 +51,18 @@ export class SearchMovie implements OnInit, OnDestroy {
   private getMovieSubscription: Subscription = new Subscription();
   private getMovieChangePageSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
+  private queryParamSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery = params['searchQuery'];
       this.setSearchMovieTitle(this.searchQuery);
       this.searchMovie();
+    });
+    this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['displayMode']) {
+        this.displayMode.set(queryParams['displayMode']);
+      };
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       this.setSearchMovieTitle(this.searchQuery);
@@ -140,6 +146,9 @@ export class SearchMovie implements OnInit, OnDestroy {
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
+    }
+    if (this.queryParamSubscription) {
+      this.queryParamSubscription.unsubscribe();
     }
   }
 }
