@@ -19,11 +19,11 @@ import { MovieOverviewMainCrew } from './movie-overview/movie-overview-main-crew
 import { MovieOverviewTrailer } from './movie-overview/movie-overview-trailer/movie-overview-trailer';
 import { MovieOverviewInfotable } from './movie-overview/movie-overview-infotable/movie-overview-infotable';
 import { MovieSimilar } from './movie-similar/movie-similar';
-import { SearchModule } from '../search/search-module';
 import { SearchSharedModule } from '../../components/search-shared/search-shared-module';
 import { MovieRecommendations } from './movie-recommendations/movie-recommendations';
 import { MovieNav } from './movie-nav/movie-nav';
 import { MovieOverviewImages } from './movie-overview/movie-overview-images/movie-overview-images';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,8 @@ import { MovieOverviewImages } from './movie-overview/movie-overview-images/movi
     ReactiveFormsModule,
     PipesModule,
     FontAwesomeModule,
-    SearchSharedModule
+    SearchSharedModule,
+    NgxPaginationModule
   ],
 })
 export class MovieModule {}

@@ -3,7 +3,7 @@
     <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCast($event)"> </app-movie-error>
   }
   @if (!movieCastError) {
-    <h2>Cast</h2>
+    <h2 #title>Cast</h2>
     @if (movieCast().length > 0) {
       <app-order-select
         #orderSelectMovieCast
@@ -22,7 +22,17 @@
             </tr>
           </thead>
           <tbody>
-            @for (castMember of movieCast() | orderCastMemberBy:currentOrder(); track castMember.id) {
+            @for (
+              castMember of movieCast()
+                | orderCastMemberBy: currentOrder()
+                | paginate
+                  : {
+                      itemsPerPage: actorsPerPage,
+                      currentPage: currentPage,
+                      totalItems: totalActors,
+                    };
+              track castMember.id
+            ) {
               <tr>
                 <td>
                   <a [routerLink]="['/person', castMember.id]">
@@ -46,13 +56,14 @@
               </tr>
             } @empty {
               <tr>
-                <td colspan="3">
-                  This movie has no recognizable cast
-                </td>
+                <td colspan="3">This movie has no recognizable cast</td>
               </tr>
             }
           </tbody>
         </table>
+        <div class="d-flex justify-content-center align-items-center">
+          <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
+        </div>
       </div>
     }
   }

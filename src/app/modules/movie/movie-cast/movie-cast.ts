@@ -7,7 +7,7 @@ import {
   inject,
   WritableSignal,
   signal,
-  computed,
+  ElementRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -38,6 +38,10 @@ export class MovieCast implements OnInit, OnDestroy {
 
   public id: number = 0;
 
+  public currentPage: number = 1;
+  public actorsPerPage: number = 50;
+  public totalActors: number = 0;
+
   private movie: Movie = null;
 
   public movieCast: WritableSignal<CastMember[]> = signal([]);
@@ -63,6 +67,8 @@ export class MovieCast implements OnInit, OnDestroy {
   public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
 
   @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
+
+  @ViewChild('title') title!: ElementRef;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCastSubscription: Subscription = new Subscription();
@@ -105,6 +111,7 @@ export class MovieCast implements OnInit, OnDestroy {
     this.getMovieCastSubscription = this.movieService.getMovieCast(this.id).subscribe({
       next: (cast) => {
         this.movieCast.set(cast);
+        this.totalActors = this.movieCast().length;
         this.castFound = true;
       },
       error: (error) => {
@@ -125,6 +132,11 @@ export class MovieCast implements OnInit, OnDestroy {
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
     this.currentOrder.set(orderCriteria);
+  }
+
+  public changePage(page: number): void {
+    this.currentPage = page;
+    this.title.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   ngOnDestroy(): void {
