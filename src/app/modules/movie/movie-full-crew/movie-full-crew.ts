@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -29,7 +29,11 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   public id: number = 0;
 
-  private movie: Movie;
+  private movie: Movie = null;
+
+  public currentPage: number = 1;
+  public crewMembersPerPage: number = 50;
+  public totalCrewMembers: number = 0;
 
   public movieFullCrew: WritableSignal<CrewMember[]> = signal([]);
 
@@ -52,6 +56,8 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
 
   @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
+
+  @ViewChild('title') title!: ElementRef;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCrewSubscription: Subscription = new Subscription();
@@ -92,6 +98,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
       next: (crew) => {
         this.movieFullCrew.set(crew);
+        this.totalCrewMembers = this.movieFullCrew().length;
       },
       error: (error) => {
         this.handleError(error);
@@ -112,6 +119,11 @@ export class MovieFullCrew implements OnInit, OnDestroy {
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
     this.currentOrder.set(orderCriteria);
+  }
+
+  public changePage(page: number): void {
+    this.currentPage = page;
+    this.title.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   ngOnDestroy(): void {

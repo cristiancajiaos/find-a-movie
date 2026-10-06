@@ -4,7 +4,7 @@
     </app-movie-error>
   }
   @if (!movieFullCrewError) {
-    <h2>Full Crew</h2>
+    <h2 #title>Full Crew</h2>
     @if (movieFullCrew().length > 0) {
       <app-order-select
         #orderSelectMovieFullCrew
@@ -23,7 +23,17 @@
             </tr>
           </thead>
           <tbody>
-            @for (crewMember of movieFullCrew() | orderCrewMemberBy:currentOrder(); track crewMember.id) {
+            @for (
+              crewMember of movieFullCrew()
+                | orderCrewMemberBy: currentOrder()
+                | paginate
+                  : {
+                      itemsPerPage: crewMembersPerPage,
+                      currentPage: currentPage,
+                      totalItems: totalCrewMembers,
+                    };
+              track crewMember.id
+            ) {
               <tr>
                 <td>
                   <a href="" [routerLink]="['/person', crewMember.id]">
@@ -35,6 +45,9 @@
             }
           </tbody>
         </table>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
       </div>
     } @else {
       <p>This movie has no recognizable crew</p>
