@@ -131,8 +131,8 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   public clearSelectYearFrom(event: boolean) {
-    this.fromYear = null;
-    this.toYear = null;
+    this.fromYear.set(null)
+    this.toYear.set(null);
     this.yearsTo.set([]);
     this.fromSelect.yearsFromSelectForm.reset();
     this.toSelect.disableSelect();
