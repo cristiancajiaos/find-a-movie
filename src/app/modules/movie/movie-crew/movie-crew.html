@@ -106,6 +106,19 @@
                 </td>
               </tr>
             }
+            @if (basedOnFilmWrittenBy.length > 0) {
+              <tr>
+                <td>Based on a Film Written By:</td>
+                <td>
+                  @for (author of basedOnFilmWrittenBy; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
             @if (producing.length > 0) {
               <tr>
                 <td>Produced By:</td>
