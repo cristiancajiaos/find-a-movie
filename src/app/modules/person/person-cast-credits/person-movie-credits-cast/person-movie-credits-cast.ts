@@ -32,9 +32,9 @@ export class PersonMovieCreditsCast implements OnInit {
   public yearsFrom: WritableSignal<number[]> = signal([]);
   public yearsTo: WritableSignal<number[]> = signal([]);
 
-  public fromYear: number = null;
-  public toYear: number = null;
-  public lastYear: number = null;
+  public fromYear: WritableSignal<number> = signal(null);
+  public toYear: WritableSignal<number> = signal(null);
+  public lastYear: WritableSignal<number> = signal(null);
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
@@ -57,6 +57,7 @@ export class PersonMovieCreditsCast implements OnInit {
   public page: number = 1;
 
   castCredits: InputSignal<ResponsePersonCastCredit[]> = input.required<ResponsePersonCastCredit[]>();
+  orderParam: InputSignal<string> = input<string>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCastCredits') orderSelectPersonCastCredits: OrderSelect;
@@ -67,11 +68,33 @@ export class PersonMovieCreditsCast implements OnInit {
   ngOnInit(): void {
     this.getPerson();
     this.setYearsLimit();
+    this.setOrderParam();
   }
 
   private getPerson(): void {
     this.loadingPerson = true;
     this.currentPerson = this.sessionStorageService.getItem('person');
+  }
+
+  private setOrderParam(): void {
+    if (this.orderParam()) {
+      switch (this.orderParam()) {
+        case 'titleAsc': {
+          this.selectedOrderCriteria.set({ id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' })
+          this.orderSelectPersonCastCredits.orderCriteriaChange(this.selectedOrderCriteria());
+          break;
+        }
+
+        case 'titleDesc': {
+          this.selectedOrderCriteria.set({ id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' })
+          break;
+        }
+
+        default: {
+          break;
+        }
+      }
+    }
   }
 
   private setYearsLimit(): void {
@@ -82,20 +105,20 @@ export class PersonMovieCreditsCast implements OnInit {
     const firstYear: number = years
       .filter((year) => !isNaN(year))
       .reduce((min, year) => (year < min ? year : min));
-    this.lastYear = years
+    this.lastYear.set(years
       .filter((year) => !isNaN(year))
-      .reduce((max, year) => (year > max ? year : max));
-    for (let i = firstYear; i <= this.lastYear; i++) {
+      .reduce((max, year) => (year > max ? year : max)));
+    for (let i = firstYear; i <= this.lastYear(); i++) {
       this.yearsFrom.update(numbers => [...numbers, i]);
     }
   }
 
   public setYearFrom(year: number): void {
     if (year) {
-      this.fromYear = year;
+      this.fromYear.set(year);
       let yearsTo: number[] = [];
       this.toSelect.yearsToSelectForm.reset();
-      for (let i = year; i <= this.lastYear; i++) {
+      for (let i = year; i <= this.lastYear(); i++) {
         yearsTo.push(i);
         this.toSelect.enableSelect();
       }
@@ -116,11 +139,11 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   public setYearTo(year: number): void {
-    this.toYear = year ? year : null;
+    this.toYear.set(year);
   }
 
   public clearSelectYearTo(event: boolean) {
-    this.setYearFrom(this.fromYear);
+    this.setYearFrom(this.fromYear());
   }
 
   public changePage(pageNumber: number) {

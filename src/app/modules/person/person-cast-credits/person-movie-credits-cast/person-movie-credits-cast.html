@@ -49,7 +49,7 @@
               <div class="row" #castCreditsList>
                 @for (
                   castRole of castCredits()
-                  | orderPersonCastCreditsBy:selectedOrderCriteria():fromYear:toYear
+                  | orderPersonCastCreditsBy:selectedOrderCriteria():fromYear():toYear()
                   | paginate: { itemsPerPage: 20, currentPage: page }
                   ; track
                   castRole.id) {
@@ -65,7 +65,7 @@
             <section class="cast-credits-display-list">
               @for (
                 castRole of castCredits()
-                | orderPersonCastCreditsBy:selectedOrderCriteria():fromYear:toYear
+                | orderPersonCastCreditsBy:selectedOrderCriteria():fromYear():toYear()
                 | paginate: { itemsPerPage: 20, currentPage: page }
                 ; track
                 castRole.id) {
