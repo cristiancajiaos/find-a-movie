@@ -13,15 +13,15 @@ export class SearchService {
 
   private http = inject(HttpClient);
 
-  private movieResults = new Map<string, ResponseSearchMovie>();
-  private personResults = new Map<string, ResponseSearchPerson>();
+  private movieResponse = new Map<string, ResponseSearchMovie>();
+  private personResponse = new Map<string, ResponseSearchPerson>();
   private movieInputResults = new Map<string, ResponseMovieResult[]>();
   private personInputResults = new Map<string, ResponsePersonResult[]>();
 
   public searchMovie(query: string, page: number = 1): Observable<ResponseSearchMovie> {
     const queryCached = query.replace(/\s/, '').trim();
-    if (this.movieResults.has(`movieResults-${queryCached}-${page}`)) {
-      return of(this.movieResults.get(`movieResults-${queryCached}-${page}`));
+    if (this.movieResponse.has(`movieResponse-${queryCached}-${page}`)) {
+      return of(this.movieResponse.get(`movieResponse-${queryCached}-${page}`));
     }
 
     return this.http.get<ResponseSearchMovie>(`/search/movie`, {
@@ -31,14 +31,14 @@ export class SearchService {
         page: page,
       }
     }).pipe(
-      tap(movieResults => this.movieResults.set(`movieResults-${queryCached}-${page}`, movieResults))
+      tap(movieResponse => this.movieResponse.set(`movieResponse-${queryCached}-${page}`, movieResponse))
     )
   }
 
   public searchPerson(query: string, page: number = 1): Observable<ResponseSearchPerson> {
     const queryCached = query.replace(/\s/, '').trim();
-    if (this.personResults.has(`personResults-${queryCached}-${page}`)) {
-      return of(this.personResults.get(`personResults-${queryCached}-${page}`));
+    if (this.personResponse.has(`personResponse-${queryCached}-${page}`)) {
+      return of(this.personResponse.get(`personResponse-${queryCached}-${page}`));
     }
     return this.http.get<ResponseSearchPerson>('/search/person', {
       params: {
@@ -47,7 +47,7 @@ export class SearchService {
         page: page,
       },
     }).pipe(
-      tap(personResults => this.personResults.set(`personResults-${queryCached}-${page}`, personResults))
+      tap(personResponse => this.personResponse.set(`personResponse-${queryCached}-${page}`, personResponse))
     )
   }
 
@@ -66,7 +66,10 @@ export class SearchService {
         context: new HttpContext().set(SkipLoading, true)
       })
       .pipe(
-        map((responseSearchMovie) => responseSearchMovie.results),
+        map((responseSearchMovie) => responseSearchMovie.results.filter((movieResult) => {
+          const date = new Date(movieResult.release_date);
+          return !isNaN(date.getFullYear());
+        })),
         tap(movieResults => this.movieInputResults.set(`movieInputResults-${query}`, movieResults))
       );
   }
