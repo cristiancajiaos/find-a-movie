@@ -19,6 +19,8 @@
       editors.length > 0 ||
       musicComposers.length > 0 ||
       additionalMusicComposers.length > 0 ||
+      musicSupervisors.length > 0 ||
+      soundDesigners.length > 0 ||
       visualEffectsSupervisors.length > 0 ||
       costumeDesigners.length > 0 ||
       castingCrew.length > 0
@@ -136,6 +138,25 @@
                 </td>
               </tr>
             }
+            @if (associateProducing.length > 0) {
+              <tr>
+                <td>
+                  @if (associateProducing.length > 1) {
+                    Associate Producers:
+                  } @else {
+                    Associate Producer:
+                  }
+                </td>
+                <td>
+                  @for (associateProducer of associateProducing; track associateProducer.id) {
+                    <a [routerLink]="['/person', associateProducer.id]">
+                      {{ associateProducer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
             @if (coProducing.length > 0) {
               <tr>
                 <td>
@@ -238,6 +259,50 @@
                   ) {
                     <a [routerLink]="['/person', additionalMusicComposer.id]">
                       {{ additionalMusicComposer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (musicSupervisors.length > 0) {
+              <tr>
+                <td>
+                  @if (musicSupervisors.length > 1) {
+                    Music Supervisors:
+                  } @else {
+                    Music Supervisor:
+                  }
+                </td>
+                <td>
+                  @for (
+                    musicSupervisor of musicSupervisors;
+                    track musicSupervisor.id
+                  ) {
+                    <a [routerLink]="['/person', musicSupervisor.id]">
+                      {{ musicSupervisor.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (soundDesigners.length > 0) {
+              <tr>
+                <td>
+                  @if (soundDesigners.length > 1) {
+                    Sound Designers:
+                  } @else {
+                    Sound Designer:
+                  }
+                </td>
+                <td>
+                  @for (
+                    soundDesigner of soundDesigners;
+                    track soundDesigner.id
+                  ) {
+                    <a [routerLink]="['/person', soundDesigner.id]">
+                      {{ soundDesigner.name }}
                     </a>
                     <br />
                   }

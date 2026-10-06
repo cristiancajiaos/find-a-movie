@@ -38,12 +38,15 @@ export class MovieCrew implements OnInit, OnDestroy {
   public basedOnCharactersBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
+  public associateProducing: CrewMember[] = [];
   public coProducing: CrewMember[] = [];
   public directorsOfPhotography: CrewMember[] = [];
   public productionDesigners: CrewMember[] = [];
   public editors: CrewMember[] = [];
   public musicComposers: CrewMember[] = [];
   public additionalMusicComposers: CrewMember[] = [];
+  public musicSupervisors: CrewMember[] = [];
+  public soundDesigners: CrewMember[] = [];
   public visualEffectsSupervisors: CrewMember[] = [];
   public costumeDesigners: CrewMember[] = [];
   public castingCrew: CrewMember[] = [];
@@ -133,6 +136,10 @@ export class MovieCrew implements OnInit, OnDestroy {
       (crewMember) => crewMember.job == 'Executive Producer',
     );
 
+    this.associateProducing = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Associate Producer',
+    );
+
     this.coProducing = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Producer');
 
     this.directorsOfPhotography = this.movieCrew().filter(
@@ -151,6 +158,14 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.additionalMusicComposers = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Additional Music',
+    );
+
+    this.musicSupervisors = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Music Supervisor',
+    );
+
+    this.soundDesigners = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Sound Designer',
     );
 
     this.visualEffectsSupervisors = this.movieCrew().filter(
