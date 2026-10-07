@@ -37,10 +37,16 @@ export class MovieSimilar implements OnInit, OnDestroy {
   private endLoadingSubscription: Subscription = new Subscription();
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieSimilarSubscription: Subscription = new Subscription();
+  private queryParamsSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.setId();
     this.getMovie();
+    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['displayMode']) {
+        this.displayMode.set(queryParams['displayMode']);
+      }
+    });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       if (this.movie) {
         this.setTitle();
@@ -104,6 +110,9 @@ export class MovieSimilar implements OnInit, OnDestroy {
     }
     if (this.getMovieSimilarSubscription) {
       this.getMovieSimilarSubscription.unsubscribe();
+    }
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
     }
   }
 
