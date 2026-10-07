@@ -37,10 +37,17 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieRecommendedSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
+  private queryParamsSubscription: Subscription = new Subscription();
+
 
   ngOnInit(): void {
     this.setId();
     this.getMovie();
+    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['displayMode']) {
+        this.displayMode.set(queryParams['displayMode']);
+      }
+    });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       if (this.movie) {
         this.setTitle();
@@ -101,6 +108,9 @@ export class MovieRecommendations implements OnInit, OnDestroy {
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
+    }
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
     }
   }
 
