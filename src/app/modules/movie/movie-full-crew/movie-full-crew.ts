@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, WritableSignal, signal, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -19,7 +19,7 @@ import { SessionStorageService } from '../../../services/session-storage-service
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-full-crew.scss',
 })
-export class MovieFullCrew implements OnInit, OnDestroy {
+export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
 
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
@@ -42,6 +42,7 @@ export class MovieFullCrew implements OnInit, OnDestroy {
   public errorMessage: string = '';
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
+    { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
     { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
     { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
     { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' },
@@ -53,15 +54,18 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     orderCriteriaName: 'Default Order',
   });
 
+  private currentOrderStr: WritableSignal<string | null> = signal(null);
   public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
 
-  @ViewChild('orderSelectMovieFullCrew') orderSelectMovieFullCrew: OrderSelect;
+  @ViewChildren('orderSelectMovieFullCrew') orderSelectMovieFullCrew!: QueryList<OrderSelect>;
 
   @ViewChild('title') title!: ElementRef;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCrewSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
+  private queryParamsSubscription: Subscription = new Subscription();
+  private orderSelectSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.getMovie();
@@ -70,6 +74,17 @@ export class MovieFullCrew implements OnInit, OnDestroy {
       if (this.movie) {
         this.setTitle();
       }
+    });
+    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['order']) {
+        this.currentOrderStr.set(queryParams['order']);
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.orderSelectSubscription = this.orderSelectMovieFullCrew.changes.subscribe((list) => {
+      this.setInitialOrder();
     });
   }
 
@@ -84,6 +99,30 @@ export class MovieFullCrew implements OnInit, OnDestroy {
         this.getFullCrew();
       },
     );
+  }
+
+  private setInitialOrder(): void {
+    let orderCriteria: OrderCriteria = null;
+
+    if (this.currentOrderStr() == 'defaultValue') {
+      orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
+    } else if (this.currentOrderStr() == 'nameAsc') {
+      orderCriteria = { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' };
+    } else if (this.currentOrderStr() == 'nameDesc') {
+      orderCriteria = { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' };
+    } else if (this.currentOrderStr() == 'jobAsc') {
+      orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' };
+    } else if (this.currentOrderStr() == 'jobDesc') {
+      orderCriteria = { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' };
+    }
+
+    if (this.currentOrderStr() != null) {
+      this.currentOrder.set(orderCriteria);
+    }
+
+    if (this.orderSelectMovieFullCrew.length > 0) {
+      this.orderSelectMovieFullCrew.first.setOrderCriteria(orderCriteria);
+    }
   }
 
   private setTitle(): void {
@@ -135,6 +174,12 @@ export class MovieFullCrew implements OnInit, OnDestroy {
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
+    }
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
+    if (this.orderSelectSubscription) {
+      this.orderSelectSubscription.unsubscribe();
     }
   }
 }
