@@ -26,6 +26,7 @@ export class MovieOverviewMainCrew implements OnChanges {
   public basedOnComicBookBy: CrewMember[] = [];
   public basedOnFilmWrittenBy: CrewMember[] = [];
   public basedOnTVSeriesCreatedBy: CrewMember[] = [];
+  public basedOnTheatrePlayBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
 
@@ -50,27 +51,31 @@ export class MovieOverviewMainCrew implements OnChanges {
       this.basedOnWorkBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
 
       this.basedOnCharactersBy = this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Characters',
+        (crewMember) => crewMember.job == 'Characters'
       );
 
       this.basedOnBookBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Book');
 
       this.basedOnComicBookBy = this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Comic Book',
+        (crewMember) => crewMember.job == 'Comic Book'
       );
 
       this.basedOnFilmWrittenBy = this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Original Film Writer',
+        (crewMember) => crewMember.job == 'Original Film Writer'
       );
 
       this.basedOnTVSeriesCreatedBy = this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Original Series Creator',
+        (crewMember) => crewMember.job == 'Original Series Creator'
+      );
+
+      this.basedOnTheatrePlayBy = this.movieCrew().filter(
+        (crewMember) => crewMember.job == 'Theatre Play'
       );
 
       this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');
 
       this.executiveProducing = this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Executive Producer',
+        (crewMember) => crewMember.job == 'Executive Producer'
       );
     }
   }

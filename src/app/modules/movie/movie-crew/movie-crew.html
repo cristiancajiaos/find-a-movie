@@ -150,18 +150,31 @@
               </tr>
             }
             @if (basedOnTVSeriesCreatedBy.length > 0) {
-            <tr>
-              <td>Based on a TV Series Created By:</td>
-              <td>
-                @for (creator of basedOnTVSeriesCreatedBy; track creator.id) {
-                  <a [routerLink]="['/person', creator.id]">
-                    {{ creator.name }}
-                  </a>
-                  <br />
-                }
-              </td>
-            </tr>
-          }
+              <tr>
+                <td>Based on a TV Series Created By:</td>
+                <td>
+                  @for (author of basedOnTVSeriesCreatedBy; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (basedOnTheatrePlayBy.length > 0) {
+              <tr>
+                <td>Based on a Theatre Play By:</td>
+                <td>
+                  @for (author of basedOnTheatrePlayBy; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
             @if (producing.length > 0) {
               <tr>
                 <td>Produced By:</td>
@@ -331,10 +344,7 @@
                   }
                 </td>
                 <td>
-                  @for (
-                    musicSupervisor of musicSupervisors;
-                    track musicSupervisor.id
-                  ) {
+                  @for (musicSupervisor of musicSupervisors; track musicSupervisor.id) {
                     <a [routerLink]="['/person', musicSupervisor.id]">
                       {{ musicSupervisor.name }}
                     </a>
@@ -353,10 +363,7 @@
                   }
                 </td>
                 <td>
-                  @for (
-                    soundDesigner of soundDesigners;
-                    track soundDesigner.id
-                  ) {
+                  @for (soundDesigner of soundDesigners; track soundDesigner.id) {
                     <a [routerLink]="['/person', soundDesigner.id]">
                       {{ soundDesigner.name }}
                     </a>
