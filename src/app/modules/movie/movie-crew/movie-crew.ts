@@ -44,6 +44,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   public basedOnWorkBy: CrewMember[] = [];
   public basedOnCharactersBy: CrewMember[] = [];
   public basedOnBookBy: CrewMember[] = [];
+  public basedOnComicBookBy: CrewMember[] = [];
   public basedOnFilmWrittenBy: CrewMember[] = [];
   public basedOnTVSeriesCreatedBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
@@ -130,7 +131,7 @@ export class MovieCrew implements OnInit, OnDestroy {
     this.coDirection = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director');
 
     this.writing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer',
+      (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer'
     );
 
     this.story = this.movieCrew().filter((crewMember) => crewMember.job == 'Story');
@@ -138,65 +139,69 @@ export class MovieCrew implements OnInit, OnDestroy {
     this.basedOnWorkBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
 
     this.basedOnCharactersBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Characters',
+      (crewMember) => crewMember.job == 'Characters'
     );
 
     this.basedOnBookBy = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Book'
     );
 
+    this.basedOnComicBookBy = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Comic Book'
+    );
+
     this.basedOnFilmWrittenBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Film Writer',
+      (crewMember) => crewMember.job == 'Original Film Writer'
     );
 
     this.basedOnTVSeriesCreatedBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Series Creator',
+      (crewMember) => crewMember.job == 'Original Series Creator'
     );
 
     this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');
 
     this.executiveProducing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Executive Producer',
+      (crewMember) => crewMember.job == 'Executive Producer'
     );
 
     this.associateProducing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Associate Producer',
+      (crewMember) => crewMember.job == 'Associate Producer'
     );
 
     this.coProducing = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Producer');
 
     this.directorsOfPhotography = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Director of Photography',
+      (crewMember) => crewMember.job == 'Director of Photography'
     );
 
     this.productionDesigners = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Production Design',
+      (crewMember) => crewMember.job == 'Production Design'
     );
 
     this.editors = this.movieCrew().filter((crewMember) => crewMember.job == 'Editor');
 
     this.musicComposers = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Music Composer',
+      (crewMember) => crewMember.job == 'Original Music Composer'
     );
 
     this.additionalMusicComposers = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Additional Music',
+      (crewMember) => crewMember.job == 'Additional Music'
     );
 
     this.musicSupervisors = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Music Supervisor',
+      (crewMember) => crewMember.job == 'Music Supervisor'
     );
 
     this.soundDesigners = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Sound Designer',
+      (crewMember) => crewMember.job == 'Sound Designer'
     );
 
     this.visualEffectsSupervisors = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Visual Effects Supervisor',
+      (crewMember) => crewMember.job == 'Visual Effects Supervisor'
     );
 
     this.costumeDesigners = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Costume Design',
+      (crewMember) => crewMember.job == 'Costume Design'
     );
 
     this.castingCrew = this.movieCrew().filter((crewMember) => crewMember.job == 'Casting');

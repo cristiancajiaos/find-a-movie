@@ -12,6 +12,7 @@
       basedOnWorkBy.length > 0 ||
       basedOnCharactersBy.length > 0 ||
       basedOnBookBy.length > 0 ||
+      basedOnComicBookBy.length > 0 ||
       basedOnFilmWrittenBy.length > 0 ||
       basedOnTVSeriesCreatedBy.length > 0 ||
       producing.length > 0 ||
@@ -114,6 +115,19 @@
                 <td>Based on a Book By:</td>
                 <td>
                   @for (author of basedOnBookBy; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (basedOnComicBookBy.length > 0) {
+              <tr>
+                <td>Based on a Comic Book By:</td>
+                <td>
+                  @for (author of basedOnComicBookBy; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
