@@ -46,6 +46,19 @@
               </td>
             </tr>
           }
+          @if (teleplay.length > 0) {
+              <tr>
+                <td>Teleplay By:</td>
+                <td class="text-end">
+                  @for (teleplayWriter of teleplay; track teleplayWriter.id) {
+                    <a [routerLink]="['/person', teleplayWriter.id]">
+                      {{ teleplayWriter.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
           @if (story.length > 0) {
             <tr>
               <td>Story By:</td>
@@ -59,11 +72,24 @@
               </td>
             </tr>
           }
-          @if (basedOnWorkBy.length > 0) {
+          @if (basedOnNovelBy.length > 0) {
             <tr>
-              <td>Based on Work By:</td>
+              <td>Based on a Novel By:</td>
               <td class="text-end">
-                @for (author of basedOnWorkBy; track author) {
+                @for (author of basedOnNovelBy; track author) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (basedOnStoryBy.length > 0) {
+            <tr>
+              <td>Based on a Story By:</td>
+              <td class="text-end">
+                @for (author of basedOnStoryBy; track author.id) {
                   <a [routerLink]="['/person', author.id]">
                     {{ author.name }}
                   </a>
@@ -85,11 +111,76 @@
               </td>
             </tr>
           }
+          @if (basedOnBookBy.length > 0) {
+            <tr>
+              <td>Based on a Book By:</td>
+              <td class="text-end">
+                @for (author of basedOnBookBy; track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (basedOnComicBookBy.length > 0) {
+            <tr>
+              <td>Based on a Comic Book By:</td>
+              <td class="text-end">
+                @for (author of basedOnComicBookBy; track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
           @if (basedOnFilmWrittenBy.length > 0) {
             <tr>
               <td>Based on a Film Written By:</td>
               <td class="text-end">
                 @for (author of basedOnFilmWrittenBy; track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (basedOnTVSeriesCreatedBy.length > 0) {
+            <tr>
+              <td>Based on a TV Series Created By:</td>
+              <td class="text-end">
+                @for (creator of basedOnTVSeriesCreatedBy; track creator.id) {
+                  <a [routerLink]="['/person', creator.id]">
+                    {{ creator.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (basedOnTheatrePlayBy.length > 0) {
+            <tr>
+              <td>Based on a Theatre Play By:</td>
+              <td class="text-end">
+                @for (author of basedOnTheatrePlayBy; track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (basedOnMusicalBy.length > 0) {
+            <tr>
+              <td>Based on a Musical By:</td>
+              <td class="text-end">
+                @for (author of basedOnMusicalBy; track author.id) {
                   <a [routerLink]="['/person', author.id]">
                     {{ author.name }}
                   </a>
