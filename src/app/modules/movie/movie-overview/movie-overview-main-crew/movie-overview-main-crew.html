@@ -46,6 +46,19 @@
               </td>
             </tr>
           }
+          @if (teleplay.length > 0) {
+              <tr>
+                <td>Teleplay By:</td>
+                <td class="text-end">
+                  @for (teleplayWriter of teleplay; track teleplayWriter.id) {
+                    <a [routerLink]="['/person', teleplayWriter.id]">
+                      {{ teleplayWriter.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
           @if (story.length > 0) {
             <tr>
               <td>Story By:</td>

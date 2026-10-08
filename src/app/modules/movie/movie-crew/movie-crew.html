@@ -8,6 +8,7 @@
       direction.length > 0 ||
       coDirection.length > 0 ||
       writing.length > 0 ||
+      teleplay.length > 0 ||
       story.length > 0 ||
       basedOnNovelBy.length > 0 ||
       basedOnStoryBy.length > 0 ||
@@ -70,6 +71,19 @@
                   @for (writer of writing; track writer.id) {
                     <a [routerLink]="['/person', writer.id]">
                       {{ writer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (teleplay.length > 0) {
+              <tr>
+                <td>Teleplay By:</td>
+                <td>
+                  @for (teleplayWriter of teleplay; track teleplayWriter.id) {
+                    <a [routerLink]="['/person', teleplayWriter.id]">
+                      {{ teleplayWriter.name }}
                     </a>
                     <br />
                   }
