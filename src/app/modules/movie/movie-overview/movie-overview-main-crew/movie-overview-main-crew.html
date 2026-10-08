@@ -72,6 +72,19 @@
               </td>
             </tr>
           }
+          @if (basedOnStoryBy.length > 0) {
+            <tr>
+              <td>Based on a Story By:</td>
+              <td class="text-end">
+                @for (author of basedOnStoryBy; track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
           @if (basedOnCharactersBy.length > 0) {
             <tr>
               <td>Based on Characters Created By:</td>

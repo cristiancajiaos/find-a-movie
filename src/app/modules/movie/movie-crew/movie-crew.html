@@ -10,6 +10,7 @@
       writing.length > 0 ||
       story.length > 0 ||
       basedOnNovelBy.length > 0 ||
+      basedOnStoryBy.length > 0 ||
       basedOnCharactersBy.length > 0 ||
       basedOnBookBy.length > 0 ||
       basedOnComicBookBy.length > 0 ||
@@ -93,6 +94,19 @@
                 <td>Based on a Novel By:</td>
                 <td>
                   @for (author of basedOnNovelBy; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (basedOnStoryBy.length > 0) {
+              <tr>
+                <td>Based on a Story By:</td>
+                <td>
+                  @for (author of basedOnStoryBy; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
