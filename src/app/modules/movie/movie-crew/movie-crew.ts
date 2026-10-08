@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CrewMember } from '../../../classes/credits/crew-member';
@@ -17,7 +25,6 @@ import { SessionStorageService } from '../../../services/session-storage-service
   styleUrl: './movie-crew.scss',
 })
 export class MovieCrew implements OnInit, OnDestroy {
-
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
   private sessionStorageService = inject(SessionStorageService);
@@ -37,6 +44,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   public basedOnWorkBy: CrewMember[] = [];
   public basedOnCharactersBy: CrewMember[] = [];
   public basedOnFilmWrittenBy: CrewMember[] = [];
+  public basedOnTVSeriesCreatedBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
   public associateProducing: CrewMember[] = [];
@@ -85,7 +93,9 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   private setTitle(): void {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title, this.movie.original_title, this.movie.release_date
+      this.movie.title,
+      this.movie.original_title,
+      this.movie.release_date,
     );
     this.titleService.setMovieFeaturedCrewTitle(formattedTitle);
   }
@@ -100,8 +110,7 @@ export class MovieCrew implements OnInit, OnDestroy {
       error: (error) => {
         this.handleError(error);
       },
-      complete: () => {
-      }
+      complete: () => {},
     });
   }
 
@@ -133,6 +142,10 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.basedOnFilmWrittenBy = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Original Film Writer',
+    );
+
+    this.basedOnTVSeriesCreatedBy = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Original Series Creator',
     );
 
     this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');

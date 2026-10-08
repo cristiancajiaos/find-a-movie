@@ -11,6 +11,8 @@
       story.length > 0 ||
       basedOnWorkBy.length > 0 ||
       basedOnCharactersBy.length > 0 ||
+      basedOnFilmWrittenBy.length > 0 ||
+      basedOnTVSeriesCreatedBy.length > 0 ||
       producing.length > 0 ||
       executiveProducing.length > 0 ||
       coProducing.length > 0 ||
@@ -119,6 +121,19 @@
                 </td>
               </tr>
             }
+            @if (basedOnTVSeriesCreatedBy.length > 0) {
+            <tr>
+              <td>Based on a TV Series Created By:</td>
+              <td>
+                @for (creator of basedOnTVSeriesCreatedBy; track creator.id) {
+                  <a [routerLink]="['/person', creator.id]">
+                    {{ creator.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
             @if (producing.length > 0) {
               <tr>
                 <td>Produced By:</td>

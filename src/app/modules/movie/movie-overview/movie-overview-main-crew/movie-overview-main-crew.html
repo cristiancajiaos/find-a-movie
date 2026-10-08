@@ -98,6 +98,19 @@
               </td>
             </tr>
           }
+          @if (basedOnTVSeriesCreatedBy.length > 0) {
+            <tr>
+              <td>Based on a TV Series Created By:</td>
+              <td class="text-end">
+                @for (creator of basedOnTVSeriesCreatedBy; track creator.id) {
+                  <a [routerLink]="['/person', creator.id]">
+                    {{ creator.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
           @if (producing.length > 0) {
             <tr>
               <td>Produced By:</td>
