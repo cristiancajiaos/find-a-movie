@@ -81,13 +81,14 @@ export class MovieCrew implements OnInit, OnDestroy {
     this.setId();
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       if (this.movie) {
-        this.setTitle();
+
       }
     });
   }
 
   private getMovie(): void {
     this.movie = this.sessionStorageService.getItem('movie');
+    this.setTitle();
   }
 
   private setId(): void {

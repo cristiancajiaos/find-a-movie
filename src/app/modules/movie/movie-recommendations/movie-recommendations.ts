@@ -57,6 +57,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
 
   private getMovie(): void {
     this.movie = this.sessionStorageService.getItem('movie');
+    this.setTitle();
   }
 
   private setId(): void {

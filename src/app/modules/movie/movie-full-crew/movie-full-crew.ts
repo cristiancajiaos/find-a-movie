@@ -90,6 +90,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
 
   private getMovie(): void {
     this.movie = this.sessionStorageService.getItem('movie');
+    this.setTitle();
   }
 
   private setId(): void {
