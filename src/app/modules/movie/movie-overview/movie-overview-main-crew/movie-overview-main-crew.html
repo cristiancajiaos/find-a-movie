@@ -59,11 +59,11 @@
               </td>
             </tr>
           }
-          @if (basedOnWorkBy.length > 0) {
+          @if (basedOnNovelBy.length > 0) {
             <tr>
-              <td>Based on Work By:</td>
+              <td>Based on a Novel By:</td>
               <td class="text-end">
-                @for (author of basedOnWorkBy; track author) {
+                @for (author of basedOnNovelBy; track author) {
                   <a [routerLink]="['/person', author.id]">
                     {{ author.name }}
                   </a>

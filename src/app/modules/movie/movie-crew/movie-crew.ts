@@ -41,7 +41,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   public coDirection: CrewMember[] = [];
   public writing: CrewMember[] = [];
   public story: CrewMember[] = [];
-  public basedOnWorkBy: CrewMember[] = [];
+  public basedOnNovelBy: CrewMember[] = [];
   public basedOnCharactersBy: CrewMember[] = [];
   public basedOnBookBy: CrewMember[] = [];
   public basedOnComicBookBy: CrewMember[] = [];
@@ -140,7 +140,7 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.story = this.movieCrew().filter((crewMember) => crewMember.job == 'Story');
 
-    this.basedOnWorkBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
+    this.basedOnNovelBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
 
     this.basedOnCharactersBy = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Characters'
