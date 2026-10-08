@@ -22,6 +22,7 @@ export class MovieOverviewMainCrew implements OnChanges {
   public story: CrewMember[] = [];
   public basedOnWorkBy: CrewMember[] = [];
   public basedOnCharactersBy: CrewMember[] = [];
+  public basedOnBookBy: CrewMember[] = [];
   public basedOnFilmWrittenBy: CrewMember[] = [];
   public basedOnTVSeriesCreatedBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
@@ -51,12 +52,14 @@ export class MovieOverviewMainCrew implements OnChanges {
         (crewMember) => crewMember.job == 'Characters',
       );
 
+      this.basedOnBookBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Book');
+
       this.basedOnFilmWrittenBy = this.movieCrew().filter(
         (crewMember) => crewMember.job == 'Original Film Writer',
       );
 
       this.basedOnTVSeriesCreatedBy = this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Original Series Creator'
+        (crewMember) => crewMember.job == 'Original Series Creator',
       );
 
       this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');

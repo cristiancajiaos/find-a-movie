@@ -85,6 +85,19 @@
               </td>
             </tr>
           }
+          @if (basedOnBookBy.length > 0) {
+            <tr>
+              <td>Based on a Book By:</td>
+              <td class="text-end">
+                @for (author of basedOnBookBy; track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
           @if (basedOnFilmWrittenBy.length > 0) {
             <tr>
               <td>Based on a Film Written By:</td>
