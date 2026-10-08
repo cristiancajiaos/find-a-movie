@@ -7,7 +7,10 @@ import {
   inject,
   WritableSignal,
   signal,
-  ElementRef
+  ElementRef,
+  AfterViewInit,
+  ViewChildren,
+  QueryList,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -29,7 +32,7 @@ import { SessionStorageService } from '../../../services/session-storage-service
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-cast.scss',
 })
-export class MovieCast implements OnInit, OnDestroy {
+export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
   private sessionStorageService = inject(SessionStorageService);
@@ -60,19 +63,22 @@ export class MovieCast implements OnInit, OnDestroy {
   ]);
 
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
-    id: Order.DefaultOrder,
-    orderCriteriaName: 'Default Order',
+    id: Order.CastOrderAsc,
+    orderCriteriaName: 'Cast order (ascending)',
   });
 
-  public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
+  private currentOrderStr: WritableSignal<string | null> = signal(null);
+  public currentOrder: WritableSignal<OrderCriteria | null> = signal(this.defaultOrder());
 
-  @ViewChild('orderSelectMovieCast') orderSelectMovieCast: OrderSelect;
+  @ViewChildren('orderSelectMovieCast') orderSelectMovieCast!: QueryList<OrderSelect>;
 
   @ViewChild('title') title!: ElementRef;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCastSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
+  private queryParamsSubscription: Subscription = new Subscription();
+  private orderSelectSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.getMovie();
@@ -81,6 +87,17 @@ export class MovieCast implements OnInit, OnDestroy {
       if (this.movie) {
         this.setTitle();
       }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['order']) {
+        this.currentOrderStr.set(queryParams['order']);
+      }
+    });
+    this.orderSelectSubscription = this.orderSelectMovieCast.changes.subscribe((list) => {
+      this.setInitialOrder();
     });
   }
 
@@ -95,6 +112,38 @@ export class MovieCast implements OnInit, OnDestroy {
         this.getCast();
       },
     );
+  }
+
+  private setInitialOrder() {
+    let orderCriteria: OrderCriteria = null;
+
+    if (this.currentOrderStr() == 'castOrderAsc') {
+      orderCriteria = { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order (ascending)' };
+    } else if (this.currentOrderStr() == 'castOrderDesc') {
+      orderCriteria = { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order (descending)' };
+    } else if (this.currentOrderStr() == 'nameAsc') {
+      orderCriteria = { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' };
+    } else if (this.currentOrderStr() == 'nameDesc') {
+      orderCriteria = { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' };
+    } else if (this.currentOrderStr() == 'characterNameAsc') {
+      orderCriteria = {
+        id: Order.CharacterNameAsc,
+        orderCriteriaName: 'Character name (ascending)',
+      };
+    } else if (this.currentOrderStr() == 'characterNameDesc') {
+      orderCriteria = {
+        id: Order.CharacterNameDesc,
+        orderCriteriaName: 'Character name (descending)',
+      };
+    }
+
+    if (this.currentOrderStr() != null) {
+      this.currentOrder.set(orderCriteria);
+    }
+
+    if (this.orderSelectMovieCast.length > 0) {
+      this.orderSelectMovieCast.first.setOrderCriteria(orderCriteria);
+    }
   }
 
   private setTitle() {
@@ -113,6 +162,7 @@ export class MovieCast implements OnInit, OnDestroy {
         this.movieCast.set(cast);
         this.totalActors = this.movieCast().length;
         this.castFound = true;
+        // this.setOrder();
       },
       error: (error) => {
         this.handleError(error);
@@ -131,7 +181,11 @@ export class MovieCast implements OnInit, OnDestroy {
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
-    this.currentOrder.set(orderCriteria);
+    if (orderCriteria) {
+      this.currentOrder.set(orderCriteria);
+    } else {
+      this.currentOrder.set(null);
+    }
   }
 
   public changePage(page: number): void {
@@ -148,6 +202,12 @@ export class MovieCast implements OnInit, OnDestroy {
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
+    }
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
+    }
+    if (this.orderSelectSubscription) {
+      this.orderSelectSubscription.unsubscribe();
     }
   }
 }

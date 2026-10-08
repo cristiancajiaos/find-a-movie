@@ -14,9 +14,9 @@ export class OrderSelect implements OnInit {
 
   private fb = inject(FormBuilder);
 
-  public orderForm: FormGroup = new FormGroup({})
+  public orderForm: FormGroup = new FormGroup({});
 
-  public orderSelectLabel: string = 'Order by:'
+  public orderSelectLabel: string = 'Order by:';
   public orderSelectPlaceholder: string = 'Select an order criteria';
 
   orderCriterias: InputSignal<OrderCriteria[]> = input.required<OrderCriteria[]>();
@@ -29,8 +29,14 @@ export class OrderSelect implements OnInit {
 
   ngOnInit(): void {
     this.orderForm = this.fb.group({
-      order: new FormControl()
+      order: new FormControl(this.defaultOrderCriteria().id)
     });
+  }
+
+  public setOrderCriteria(orderCriteria: OrderCriteria | null): void {
+    if (orderCriteria) {
+      this.orderForm.controls['order'].setValue(orderCriteria.id);
+    }
   }
 
   public orderCriteriaChange(orderCriteria: OrderCriteria): void {
