@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal, AfterViewInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { Person } from '../../../../classes/person';
 import { faArrowRotateLeft, faFilter, faGrip, faList, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,8 @@ import { OrderSelect } from '../../../../components/shared/order-select/order-se
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { SessionStorageService } from '../../../../services/session-storage-service';
+import { PersonCreditsQuery } from '../../../../classes/person/person-credits-query';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-person-movie-credits-cast',
@@ -16,7 +18,7 @@ import { SessionStorageService } from '../../../../services/session-storage-serv
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-movie-credits-cast.scss',
 })
-export class PersonMovieCreditsCast implements OnInit {
+export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy {
 
   private sessionStorageService = inject(SessionStorageService);
 
@@ -37,6 +39,7 @@ export class PersonMovieCreditsCast implements OnInit {
   public lastYear: WritableSignal<number> = signal(null);
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
+    { id: Order.DefaultOrder, orderCriteriaName: 'Default Order' },
     { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
     { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' },
     { id: Order.CharacterNameAsc, orderCriteriaName: 'Character Name (ascending)' },
@@ -57,17 +60,22 @@ export class PersonMovieCreditsCast implements OnInit {
   public page: number = 1;
 
   castCredits: InputSignal<ResponsePersonCastCredit[]> = input.required<ResponsePersonCastCredit[]>();
-  orderParam: InputSignal<string> = input<string>();
+  personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
-  @ViewChild('orderSelectPersonCastCredits') orderSelectPersonCastCredits: OrderSelect;
+  @ViewChildren('orderSelectPersonCastCredits') orderSelectPersonCastCredits: QueryList<OrderSelect>;
   @ViewChild('castCreditsList') castCreditsList!: ElementRef;
   @ViewChild('fromSelect') fromSelect: FromSelect;
   @ViewChild('toSelect') toSelect: ToSelect;
 
+  private orderSelectPersonCastCreditsSubscription: Subscription = new Subscription();
+
   ngOnInit(): void {
     this.getPerson();
     this.setYearsLimit();
+  }
+
+  ngAfterViewInit(): void {
     this.setOrderParam();
   }
 
@@ -77,24 +85,29 @@ export class PersonMovieCreditsCast implements OnInit {
   }
 
   private setOrderParam(): void {
-    if (this.orderParam()) {
-      switch (this.orderParam()) {
-        case 'titleAsc': {
-          this.selectedOrderCriteria.set({ id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' })
-          this.orderSelectPersonCastCredits.orderCriteriaChange(this.selectedOrderCriteria());
-          break;
-        }
+    let orderCriteria: OrderCriteria = null;
 
-        case 'titleDesc': {
-          this.selectedOrderCriteria.set({ id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' })
-          break;
-        }
-
-        default: {
-          break;
-        }
-      }
+    if (this.personCreditsQuery().order == 'defaultOrder') {
+      orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
+    } else if (this.personCreditsQuery().order == 'titleAsc') {
+      orderCriteria = { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' };
+    } else if (this.personCreditsQuery().order == 'titleDesc') {
+      orderCriteria = { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' };
+    } else if (this.personCreditsQuery().order == 'characterNameAsc') {
+      orderCriteria = { id: Order.CharacterNameAsc, orderCriteriaName: 'Character Name (ascending)' };
+    } else if (this.personCreditsQuery().order == 'characterNameDesc') {
+      orderCriteria = { id: Order.CharacterNameDesc, orderCriteriaName: 'Character Name (descending)' };
+    } else if (this.personCreditsQuery().order == 'releaseDateAsc') {
+      orderCriteria = { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)' };
+    } else if (this.personCreditsQuery().order == 'releaseDateDesc') {
+      orderCriteria = { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)' };
     }
+
+    if (orderCriteria) {
+      this.selectedOrderCriteria.set(orderCriteria);
+    }
+
+    this.orderSelectPersonCastCredits.first.setOrderCriteria(orderCriteria);
   }
 
   private setYearsLimit(): void {
@@ -168,8 +181,14 @@ export class PersonMovieCreditsCast implements OnInit {
   public resetFiltersByDefault(): void {
     this.page = 1;
     this.displayMode.set('grid');
-    this.orderSelectPersonCastCredits.clearOrderCriteria();
+    this.orderSelectPersonCastCredits.first.clearOrderCriteria();
     this.clearSelectYearFrom(true);
     this.selectedOrderCriteria.set(null);
+  }
+
+  ngOnDestroy(): void {
+    if (this.orderSelectPersonCastCreditsSubscription) {
+      this.orderSelectPersonCastCreditsSubscription.unsubscribe();
+    }
   }
 }

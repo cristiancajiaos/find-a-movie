@@ -8,7 +8,9 @@
       <p>This person has no acting roles in movies</p>
     }
     @if (personCastCredits().length > 0) {
-      <app-person-movie-credits-cast [castCredits]="personCastCredits()">
+      <app-person-movie-credits-cast
+        [castCredits]="personCastCredits()"
+        [personCreditsQuery]="personCreditsQuery()">
       </app-person-movie-credits-cast>
     }
   }
