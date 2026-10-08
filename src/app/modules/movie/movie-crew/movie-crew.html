@@ -25,6 +25,8 @@
       editors.length > 0 ||
       musicComposers.length > 0 ||
       additionalMusicComposers.length > 0 ||
+      songsBy.length > 0 ||
+      lyricsBy.length > 0 ||
       musicSupervisors.length > 0 ||
       soundDesigners.length > 0 ||
       visualEffectsSupervisors.length > 0 ||
@@ -343,6 +345,38 @@
                   ) {
                     <a [routerLink]="['/person', additionalMusicComposer.id]">
                       {{ additionalMusicComposer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (songsBy.length > 0) {
+              <tr>
+                <td>Songs By:</td>
+                <td>
+                  @for (
+                    songsAuthor of songsBy;
+                    track songsAuthor.id
+                  ) {
+                    <a [routerLink]="['/person', songsAuthor.id]">
+                      {{ songsAuthor.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (lyricsBy.length > 0) {
+              <tr>
+                <td>Lyrics By:</td>
+                <td>
+                  @for (
+                    lyricsAuthor of lyricsBy;
+                    track lyricsAuthor.id
+                  ) {
+                    <a [routerLink]="['/person', lyricsAuthor.id]">
+                      {{ lyricsAuthor.name }}
                     </a>
                     <br />
                   }

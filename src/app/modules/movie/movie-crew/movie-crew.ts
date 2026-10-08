@@ -58,6 +58,8 @@ export class MovieCrew implements OnInit, OnDestroy {
   public editors: CrewMember[] = [];
   public musicComposers: CrewMember[] = [];
   public additionalMusicComposers: CrewMember[] = [];
+  public songsBy: CrewMember[] = [];
+  public lyricsBy: CrewMember[] = [];
   public musicSupervisors: CrewMember[] = [];
   public soundDesigners: CrewMember[] = [];
   public visualEffectsSupervisors: CrewMember[] = [];
@@ -196,6 +198,14 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.additionalMusicComposers = this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Additional Music'
+    );
+
+    this.songsBy = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Songs'
+    );
+
+    this.lyricsBy = this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Lyricist'
     );
 
     this.musicSupervisors = this.movieCrew().filter(
