@@ -88,14 +88,14 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
         this.setTitle();
       }
     });
-  }
-
-  ngAfterViewInit(): void {
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['order']) {
         this.currentOrderStr.set(queryParams['order']);
       }
     });
+  }
+
+  ngAfterViewInit(): void {
     this.orderSelectSubscription = this.orderSelectMovieCast.changes.subscribe((list) => {
       this.setInitialOrder();
     });
