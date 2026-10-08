@@ -15,6 +15,8 @@
       basedOnComicBookBy.length > 0 ||
       basedOnFilmWrittenBy.length > 0 ||
       basedOnTVSeriesCreatedBy.length > 0 ||
+      basedOnTheatrePlayBy.length > 0 ||
+      basedOnMusicalBy.length > 0 ||
       producing.length > 0 ||
       executiveProducing.length > 0 ||
       coProducing.length > 0 ||
@@ -167,6 +169,19 @@
                 <td>Based on a Theatre Play By:</td>
                 <td>
                   @for (author of basedOnTheatrePlayBy; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (basedOnMusicalBy.length > 0) {
+              <tr>
+                <td>Based on a Musical By:</td>
+                <td>
+                  @for (author of basedOnMusicalBy; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
