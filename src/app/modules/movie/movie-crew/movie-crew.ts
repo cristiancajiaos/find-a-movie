@@ -37,37 +37,37 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public movieCrew: WritableSignal<CrewMember[]> = signal([]);
 
-  public direction: CrewMember[] = [];
-  public coDirection: CrewMember[] = [];
-  public writing: CrewMember[] = [];
-  public teleplay: CrewMember[] = [];
-  public story: CrewMember[] = [];
-  public basedOnNovelBy: CrewMember[] = [];
-  public basedOnStoryBy: CrewMember[] = [];
-  public basedOnCharactersBy: CrewMember[] = [];
-  public basedOnBookBy: CrewMember[] = [];
-  public basedOnComicBookBy: CrewMember[] = [];
-  public basedOnFilmWrittenBy: CrewMember[] = [];
-  public basedOnTVSeriesCreatedBy: CrewMember[] = [];
-  public basedOnTheatrePlayBy: CrewMember[] = [];
-  public basedOnMusicalBy: CrewMember[] = [];
-  public producing: CrewMember[] = [];
-  public executiveProducing: CrewMember[] = [];
-  public coExecutiveProducing: CrewMember[] = [];
-  public associateProducing: CrewMember[] = [];
-  public coProducing: CrewMember[] = [];
-  public directorsOfPhotography: CrewMember[] = [];
-  public productionDesigners: CrewMember[] = [];
-  public editors: CrewMember[] = [];
-  public musicComposers: CrewMember[] = [];
-  public additionalMusicComposers: CrewMember[] = [];
-  public songsBy: CrewMember[] = [];
-  public lyricsBy: CrewMember[] = [];
-  public musicSupervisors: CrewMember[] = [];
-  public soundDesigners: CrewMember[] = [];
-  public visualEffectsSupervisors: CrewMember[] = [];
-  public costumeDesigners: CrewMember[] = [];
-  public castingCrew: CrewMember[] = [];
+  public direction: WritableSignal<CrewMember[]> = signal([]);
+  public coDirection: WritableSignal<CrewMember[]> = signal([]);
+  public writing: WritableSignal<CrewMember[]> = signal([]);
+  public teleplay: WritableSignal<CrewMember[]> = signal([]);
+  public story: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnNovelBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnStoryBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnCharactersBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnBookBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnComicBookBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnFilmWrittenBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnTVSeriesCreatedBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnTheatrePlayBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnMusicalBy: WritableSignal<CrewMember[]> = signal([]);
+  public producing: WritableSignal<CrewMember[]> = signal([]);
+  public executiveProducing: WritableSignal<CrewMember[]> = signal([]);
+  public coExecutiveProducing: WritableSignal<CrewMember[]> = signal([]);
+  public associateProducing: WritableSignal<CrewMember[]> = signal([]);
+  public coProducing: WritableSignal<CrewMember[]> = signal([]);
+  public directorsOfPhotography: WritableSignal<CrewMember[]> = signal([]);
+  public productionDesigners: WritableSignal<CrewMember[]> = signal([]);
+  public editors: WritableSignal<CrewMember[]> = signal([]);
+  public musicComposers: WritableSignal<CrewMember[]> = signal([]);
+  public additionalMusicComposers: WritableSignal<CrewMember[]> = signal([]);
+  public songsBy: WritableSignal<CrewMember[]> = signal([]);
+  public lyricsBy: WritableSignal<CrewMember[]> = signal([]);
+  public musicSupervisors: WritableSignal<CrewMember[]> = signal([]);
+  public soundDesigners: WritableSignal<CrewMember[]> = signal([]);
+  public visualEffectsSupervisors: WritableSignal<CrewMember[]> = signal([]);
+  public costumeDesigners: WritableSignal<CrewMember[]> = signal([]);
+  public castingCrew: WritableSignal<CrewMember[]> = signal([]);
 
   public crewFound: boolean = false;
   public movieCrewError: boolean = false;
@@ -82,7 +82,6 @@ export class MovieCrew implements OnInit, OnDestroy {
     this.setId();
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       if (this.movie) {
-
       }
     });
   }
@@ -134,111 +133,107 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private filterCrew(): void {
-    this.direction = this.movieCrew().filter((crewMember) => crewMember.job == 'Director');
+    this.direction.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Director'));
 
-    this.coDirection = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director');
+    this.coDirection.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director'));
 
-    this.writing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer'
+    this.writing.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer',
+    ));
+
+    this.teleplay.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Teleplay'));
+
+    this.story.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Story'));
+
+    this.basedOnNovelBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Novel'));
+
+    this.basedOnStoryBy.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Original Story',
+    ));
+
+    this.basedOnCharactersBy.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Characters',
+    ));
+
+    this.basedOnBookBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Book'));
+
+    this.basedOnComicBookBy.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Comic Book',
+    ));
+
+    this.basedOnFilmWrittenBy.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Original Film Writer',
+    ));
+
+    this.basedOnTVSeriesCreatedBy.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Original Series Creator',
+    ));
+
+    this.basedOnTheatrePlayBy.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Theatre Play',
+    ));
+
+    this.basedOnMusicalBy.set(
+      this.movieCrew().filter((crewMember) => crewMember.job == 'Musical')
     );
 
-    this.teleplay = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Teleplay'
+    this.producing.set(
+      this.movieCrew().filter((crewMember) => crewMember.job == 'Producer')
     );
 
-    this.story = this.movieCrew().filter((crewMember) => crewMember.job == 'Story');
+    this.executiveProducing.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Executive Producer',
+    ));
 
-    this.basedOnNovelBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Novel');
+    this.coExecutiveProducing.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Co-Executive Producer',
+    ));
 
-    this.basedOnStoryBy = this.movieCrew().filter((crewMember) => crewMember.job == 'Original Story');
+    this.associateProducing.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Associate Producer',
+    ));
 
-    this.basedOnCharactersBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Characters'
-    );
+    this.coProducing.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Producer'));
 
-    this.basedOnBookBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Book'
-    );
+    this.directorsOfPhotography.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Director of Photography',
+    ));
 
-    this.basedOnComicBookBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Comic Book'
-    );
+    this.productionDesigners.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Production Design',
+    ));
 
-    this.basedOnFilmWrittenBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Film Writer'
-    );
+    this.editors.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Editor'));
 
-    this.basedOnTVSeriesCreatedBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Series Creator'
-    );
+    this.musicComposers.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Original Music Composer',
+    ));
 
-    this.basedOnTheatrePlayBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Theatre Play'
-    );
+    this.additionalMusicComposers.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Additional Music',
+    ));
 
-    this.basedOnMusicalBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Musical'
-    );
+    this.songsBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Songs'));
 
-    this.producing = this.movieCrew().filter((crewMember) => crewMember.job == 'Producer');
+    this.lyricsBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Lyricist'));
 
-    this.executiveProducing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Executive Producer'
-    );
+    this.musicSupervisors.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Music Supervisor',
+    ));
 
-    this.coExecutiveProducing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Co-Executive Producer'
-    );
+    this.soundDesigners.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Sound Designer',
+    ));
 
-    this.associateProducing = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Associate Producer'
-    );
+    this.visualEffectsSupervisors.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Visual Effects Supervisor',
+    ));
 
-    this.coProducing = this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Producer');
+    this.costumeDesigners.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Costume Design',
+    ));
 
-    this.directorsOfPhotography = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Director of Photography'
-    );
-
-    this.productionDesigners = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Production Design'
-    );
-
-    this.editors = this.movieCrew().filter((crewMember) => crewMember.job == 'Editor');
-
-    this.musicComposers = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Music Composer'
-    );
-
-    this.additionalMusicComposers = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Additional Music'
-    );
-
-    this.songsBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Songs'
-    );
-
-    this.lyricsBy = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Lyricist'
-    );
-
-    this.musicSupervisors = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Music Supervisor'
-    );
-
-    this.soundDesigners = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Sound Designer'
-    );
-
-    this.visualEffectsSupervisors = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Visual Effects Supervisor'
-    );
-
-    this.costumeDesigners = this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Costume Design'
-    );
-
-    this.castingCrew = this.movieCrew().filter((crewMember) => crewMember.job == 'Casting');
+    this.castingCrew.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Casting'));
   }
 
   ngOnDestroy(): void {

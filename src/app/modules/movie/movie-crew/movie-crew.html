@@ -5,46 +5,46 @@
   @if (!movieCrewError) {
     <h2>Featured Crew</h2>
     @if (
-      direction.length > 0 ||
-      coDirection.length > 0 ||
-      writing.length > 0 ||
-      teleplay.length > 0 ||
-      story.length > 0 ||
-      basedOnNovelBy.length > 0 ||
-      basedOnStoryBy.length > 0 ||
-      basedOnCharactersBy.length > 0 ||
-      basedOnBookBy.length > 0 ||
-      basedOnComicBookBy.length > 0 ||
-      basedOnFilmWrittenBy.length > 0 ||
-      basedOnTVSeriesCreatedBy.length > 0 ||
-      basedOnTheatrePlayBy.length > 0 ||
-      basedOnMusicalBy.length > 0 ||
-      producing.length > 0 ||
-      executiveProducing.length > 0 ||
-      coExecutiveProducing.length > 0 ||
-      associateProducing.length > 0 ||
-      coProducing.length > 0 ||
-      directorsOfPhotography.length > 0 ||
-      productionDesigners.length > 0 ||
-      editors.length > 0 ||
-      musicComposers.length > 0 ||
-      additionalMusicComposers.length > 0 ||
-      songsBy.length > 0 ||
-      lyricsBy.length > 0 ||
-      musicSupervisors.length > 0 ||
-      soundDesigners.length > 0 ||
-      visualEffectsSupervisors.length > 0 ||
-      costumeDesigners.length > 0 ||
-      castingCrew.length > 0
+      direction().length > 0 ||
+      coDirection().length > 0 ||
+      writing().length > 0 ||
+      teleplay().length > 0 ||
+      story().length > 0 ||
+      basedOnNovelBy().length > 0 ||
+      basedOnStoryBy().length > 0 ||
+      basedOnCharactersBy().length > 0 ||
+      basedOnBookBy().length > 0 ||
+      basedOnComicBookBy().length > 0 ||
+      basedOnFilmWrittenBy().length > 0 ||
+      basedOnTVSeriesCreatedBy().length > 0 ||
+      basedOnTheatrePlayBy().length > 0 ||
+      basedOnMusicalBy().length > 0 ||
+      producing().length > 0 ||
+      executiveProducing().length > 0 ||
+      coExecutiveProducing().length > 0 ||
+      associateProducing().length > 0 ||
+      coProducing().length > 0 ||
+      directorsOfPhotography().length > 0 ||
+      productionDesigners().length > 0 ||
+      editors().length > 0 ||
+      musicComposers().length > 0 ||
+      additionalMusicComposers().length > 0 ||
+      songsBy().length > 0 ||
+      lyricsBy().length > 0 ||
+      musicSupervisors().length > 0 ||
+      soundDesigners().length > 0 ||
+      visualEffectsSupervisors().length > 0 ||
+      costumeDesigners().length > 0 ||
+      castingCrew().length > 0
     ) {
       <div class="table-responsive">
         <table class="table">
           <tbody>
-            @if (direction.length > 0) {
+            @if (direction().length > 0) {
               <tr>
                 <td>Directed By:</td>
                 <td>
-                  @for (director of direction; track director.id) {
+                  @for (director of direction(); track director.id) {
                     <a [routerLink]="['/person', director.id]">
                       {{ director.name }}
                     </a>
@@ -53,11 +53,11 @@
                 </td>
               </tr>
             }
-            @if (coDirection.length > 0) {
+            @if (coDirection().length > 0) {
               <tr>
                 <td>Co-Directed By:</td>
                 <td>
-                  @for (coDirector of coDirection; track coDirector.id) {
+                  @for (coDirector of coDirection(); track coDirector.id) {
                     <a [routerLink]="['/person', coDirector.id]">
                       {{ coDirector.name }}
                     </a>
@@ -66,11 +66,11 @@
                 </td>
               </tr>
             }
-            @if (writing.length > 0) {
+            @if (writing().length > 0) {
               <tr>
                 <td>Written By:</td>
                 <td>
-                  @for (writer of writing; track writer.id) {
+                  @for (writer of writing(); track writer.id) {
                     <a [routerLink]="['/person', writer.id]">
                       {{ writer.name }}
                     </a>
@@ -79,11 +79,11 @@
                 </td>
               </tr>
             }
-            @if (teleplay.length > 0) {
+            @if (teleplay().length > 0) {
               <tr>
                 <td>Teleplay By:</td>
                 <td>
-                  @for (teleplayWriter of teleplay; track teleplayWriter.id) {
+                  @for (teleplayWriter of teleplay(); track teleplayWriter.id) {
                     <a [routerLink]="['/person', teleplayWriter.id]">
                       {{ teleplayWriter.name }}
                     </a>
@@ -92,11 +92,11 @@
                 </td>
               </tr>
             }
-            @if (story.length > 0) {
+            @if (story().length > 0) {
               <tr>
                 <td>Story By:</td>
                 <td>
-                  @for (storyArtist of story; track storyArtist.id) {
+                  @for (storyArtist of story(); track storyArtist.id) {
                     <a [routerLink]="['/person', storyArtist.id]">
                       {{ storyArtist.name }}
                     </a>
@@ -105,11 +105,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnNovelBy.length > 0) {
+            @if (basedOnNovelBy().length > 0) {
               <tr>
                 <td>Based on a Novel By:</td>
                 <td>
-                  @for (author of basedOnNovelBy; track author.id) {
+                  @for (author of basedOnNovelBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -118,11 +118,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnStoryBy.length > 0) {
+            @if (basedOnStoryBy().length > 0) {
               <tr>
                 <td>Based on a Story By:</td>
                 <td>
-                  @for (author of basedOnStoryBy; track author.id) {
+                  @for (author of basedOnStoryBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -131,11 +131,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnCharactersBy.length > 0) {
+            @if (basedOnCharactersBy().length > 0) {
               <tr>
                 <td>Based on Characters Created By:</td>
                 <td>
-                  @for (author of basedOnCharactersBy; track author.id) {
+                  @for (author of basedOnCharactersBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -144,11 +144,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnBookBy.length > 0) {
+            @if (basedOnBookBy().length > 0) {
               <tr>
                 <td>Based on a Book By:</td>
                 <td>
-                  @for (author of basedOnBookBy; track author.id) {
+                  @for (author of basedOnBookBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -157,11 +157,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnComicBookBy.length > 0) {
+            @if (basedOnComicBookBy().length > 0) {
               <tr>
                 <td>Based on a Comic Book By:</td>
                 <td>
-                  @for (author of basedOnComicBookBy; track author.id) {
+                  @for (author of basedOnComicBookBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -170,11 +170,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnFilmWrittenBy.length > 0) {
+            @if (basedOnFilmWrittenBy().length > 0) {
               <tr>
                 <td>Based on a Film Written By:</td>
                 <td>
-                  @for (author of basedOnFilmWrittenBy; track author.id) {
+                  @for (author of basedOnFilmWrittenBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -183,11 +183,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnTVSeriesCreatedBy.length > 0) {
+            @if (basedOnTVSeriesCreatedBy().length > 0) {
               <tr>
                 <td>Based on a TV Series Created By:</td>
                 <td>
-                  @for (author of basedOnTVSeriesCreatedBy; track author.id) {
+                  @for (author of basedOnTVSeriesCreatedBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -196,11 +196,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnTheatrePlayBy.length > 0) {
+            @if (basedOnTheatrePlayBy().length > 0) {
               <tr>
                 <td>Based on a Theatre Play By:</td>
                 <td>
-                  @for (author of basedOnTheatrePlayBy; track author.id) {
+                  @for (author of basedOnTheatrePlayBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -209,11 +209,11 @@
                 </td>
               </tr>
             }
-            @if (basedOnMusicalBy.length > 0) {
+            @if (basedOnMusicalBy().length > 0) {
               <tr>
                 <td>Based on a Musical By:</td>
                 <td>
-                  @for (author of basedOnMusicalBy; track author.id) {
+                  @for (author of basedOnMusicalBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -222,11 +222,11 @@
                 </td>
               </tr>
             }
-            @if (producing.length > 0) {
+            @if (producing().length > 0) {
               <tr>
                 <td>Produced By:</td>
                 <td>
-                  @for (producer of producing; track producer.id) {
+                  @for (producer of producing(); track producer.id) {
                     <a [routerLink]="['/person', producer.id]">
                       {{ producer.name }}
                     </a>
@@ -235,17 +235,17 @@
                 </td>
               </tr>
             }
-            @if (executiveProducing.length > 0) {
+            @if (executiveProducing().length > 0) {
               <tr>
                 <td>
-                  @if (executiveProducing.length > 1) {
+                  @if (executiveProducing().length > 1) {
                     Executive Producers:
                   } @else {
                     Executive Producer:
                   }
                 </td>
                 <td>
-                  @for (executiveProducer of executiveProducing; track executiveProducer.id) {
+                  @for (executiveProducer of executiveProducing(); track executiveProducer.id) {
                     <a [routerLink]="['/person', executiveProducer.id]">
                       {{ executiveProducer.name }}
                     </a>
@@ -254,17 +254,17 @@
                 </td>
               </tr>
             }
-            @if (coExecutiveProducing.length > 0) {
+            @if (coExecutiveProducing().length > 0) {
               <tr>
                 <td>
-                  @if (coExecutiveProducing.length > 1) {
+                  @if (coExecutiveProducing().length > 1) {
                     Co-Executive Producers:
                   } @else {
                     Co-Executive Producer:
                   }
                 </td>
                 <td>
-                  @for (coExecutiveProducer of coExecutiveProducing; track coExecutiveProducer.id) {
+                  @for (coExecutiveProducer of coExecutiveProducing(); track coExecutiveProducer.id) {
                     <a [routerLink]="['/person', coExecutiveProducer.id]">
                       {{ coExecutiveProducer.name }}
                     </a>
@@ -273,17 +273,17 @@
                 </td>
               </tr>
             }
-            @if (associateProducing.length > 0) {
+            @if (associateProducing().length > 0) {
               <tr>
                 <td>
-                  @if (associateProducing.length > 1) {
+                  @if (associateProducing().length > 1) {
                     Associate Producers:
                   } @else {
                     Associate Producer:
                   }
                 </td>
                 <td>
-                  @for (associateProducer of associateProducing; track associateProducer.id) {
+                  @for (associateProducer of associateProducing(); track associateProducer.id) {
                     <a [routerLink]="['/person', associateProducer.id]">
                       {{ associateProducer.name }}
                     </a>
@@ -292,17 +292,17 @@
                 </td>
               </tr>
             }
-            @if (coProducing.length > 0) {
+            @if (coProducing().length > 0) {
               <tr>
                 <td>
-                  @if (coProducing.length > 1) {
+                  @if (coProducing().length > 1) {
                     Co-Producers:
                   } @else {
                     Co-Producer:
                   }
                 </td>
                 <td>
-                  @for (coProducer of coProducing; track coProducer.id) {
+                  @for (coProducer of coProducing(); track coProducer.id) {
                     <a [routerLink]="['/person', coProducer.id]">
                       {{ coProducer.name }}
                     </a>
@@ -311,10 +311,10 @@
                 </td>
               </tr>
             }
-            @if (directorsOfPhotography.length > 0) {
+            @if (directorsOfPhotography().length > 0) {
               <tr>
                 <td>
-                  @if (directorsOfPhotography.length > 1) {
+                  @if (directorsOfPhotography().length > 1) {
                     Directors of Photography:
                   } @else {
                     Director of Photography:
@@ -322,7 +322,7 @@
                 </td>
                 <td>
                   @for (
-                    directorOfPhotography of directorsOfPhotography;
+                    directorOfPhotography of directorsOfPhotography();
                     track directorOfPhotography.id
                   ) {
                     <a [routerLink]="['/person', directorOfPhotography.id]">
@@ -333,17 +333,17 @@
                 </td>
               </tr>
             }
-            @if (productionDesigners.length > 0) {
+            @if (productionDesigners().length > 0) {
               <tr>
                 <td>
-                  @if (productionDesigners.length > 1) {
+                  @if (productionDesigners().length > 1) {
                     Production Designers:
                   } @else {
                     Production Designer:
                   }
                 </td>
                 <td>
-                  @for (productionDesigner of productionDesigners; track productionDesigner.id) {
+                  @for (productionDesigner of productionDesigners(); track productionDesigner.id) {
                     <a [routerLink]="['/person', productionDesigner.id]">
                       {{ productionDesigner.name }}
                     </a>
@@ -352,17 +352,17 @@
                 </td>
               </tr>
             }
-            @if (editors.length > 0) {
+            @if (editors().length > 0) {
               <tr>
                 <td>
-                  @if (editors.length > 1) {
+                  @if (editors().length > 1) {
                     Editors:
                   } @else {
                     Editor:
                   }
                 </td>
                 <td>
-                  @for (editor of editors; track editor.id) {
+                  @for (editor of editors(); track editor.id) {
                     <a [routerLink]="['/person', editor.id]">
                       {{ editor.name }}
                     </a>
@@ -371,11 +371,11 @@
                 </td>
               </tr>
             }
-            @if (musicComposers.length > 0) {
+            @if (musicComposers().length > 0) {
               <tr>
                 <td>Music By:</td>
                 <td>
-                  @for (musicComposer of musicComposers; track musicComposer.id) {
+                  @for (musicComposer of musicComposers(); track musicComposer.id) {
                     <a [routerLink]="['/person', musicComposer.id]">
                       {{ musicComposer.name }}
                     </a>
@@ -384,12 +384,12 @@
                 </td>
               </tr>
             }
-            @if (additionalMusicComposers.length > 0) {
+            @if (additionalMusicComposers().length > 0) {
               <tr>
                 <td>Additional Music By:</td>
                 <td>
                   @for (
-                    additionalMusicComposer of additionalMusicComposers;
+                    additionalMusicComposer of additionalMusicComposers();
                     track additionalMusicComposer.id
                   ) {
                     <a [routerLink]="['/person', additionalMusicComposer.id]">
@@ -400,12 +400,12 @@
                 </td>
               </tr>
             }
-            @if (songsBy.length > 0) {
+            @if (songsBy().length > 0) {
               <tr>
                 <td>Songs By:</td>
                 <td>
                   @for (
-                    songsAuthor of songsBy;
+                    songsAuthor of songsBy();
                     track songsAuthor.id
                   ) {
                     <a [routerLink]="['/person', songsAuthor.id]">
@@ -416,12 +416,12 @@
                 </td>
               </tr>
             }
-            @if (lyricsBy.length > 0) {
+            @if (lyricsBy().length > 0) {
               <tr>
                 <td>Lyrics By:</td>
                 <td>
                   @for (
-                    lyricsAuthor of lyricsBy;
+                    lyricsAuthor of lyricsBy();
                     track lyricsAuthor.id
                   ) {
                     <a [routerLink]="['/person', lyricsAuthor.id]">
@@ -432,17 +432,17 @@
                 </td>
               </tr>
             }
-            @if (musicSupervisors.length > 0) {
+            @if (musicSupervisors().length > 0) {
               <tr>
                 <td>
-                  @if (musicSupervisors.length > 1) {
+                  @if (musicSupervisors().length > 1) {
                     Music Supervisors:
                   } @else {
                     Music Supervisor:
                   }
                 </td>
                 <td>
-                  @for (musicSupervisor of musicSupervisors; track musicSupervisor.id) {
+                  @for (musicSupervisor of musicSupervisors(); track musicSupervisor.id) {
                     <a [routerLink]="['/person', musicSupervisor.id]">
                       {{ musicSupervisor.name }}
                     </a>
@@ -451,17 +451,17 @@
                 </td>
               </tr>
             }
-            @if (soundDesigners.length > 0) {
+            @if (soundDesigners().length > 0) {
               <tr>
                 <td>
-                  @if (soundDesigners.length > 1) {
+                  @if (soundDesigners().length > 1) {
                     Sound Designers:
                   } @else {
                     Sound Designer:
                   }
                 </td>
                 <td>
-                  @for (soundDesigner of soundDesigners; track soundDesigner.id) {
+                  @for (soundDesigner of soundDesigners(); track soundDesigner.id) {
                     <a [routerLink]="['/person', soundDesigner.id]">
                       {{ soundDesigner.name }}
                     </a>
@@ -470,10 +470,10 @@
                 </td>
               </tr>
             }
-            @if (visualEffectsSupervisors.length > 0) {
+            @if (visualEffectsSupervisors().length > 0) {
               <tr>
                 <td>
-                  @if (visualEffectsSupervisors.length > 1) {
+                  @if (visualEffectsSupervisors().length > 1) {
                     Visual Effects Supervisors:
                   } @else {
                     Visual Effects Supervisor:
@@ -481,7 +481,7 @@
                 </td>
                 <td>
                   @for (
-                    visualEffectsSupervisor of visualEffectsSupervisors;
+                    visualEffectsSupervisor of visualEffectsSupervisors();
                     track visualEffectsSupervisor.id
                   ) {
                     <a [routerLink]="['/person', visualEffectsSupervisor.id]">
@@ -492,17 +492,17 @@
                 </td>
               </tr>
             }
-            @if (costumeDesigners.length > 0) {
+            @if (costumeDesigners().length > 0) {
               <tr>
                 <td>
-                  @if (costumeDesigners.length > 1) {
+                  @if (costumeDesigners().length > 1) {
                     Costume Designers:
                   } @else {
                     Costume Designer:
                   }
                 </td>
                 <td>
-                  @for (costumeDesigner of costumeDesigners; track costumeDesigner.id) {
+                  @for (costumeDesigner of costumeDesigners(); track costumeDesigner.id) {
                     <a [routerLink]="['/person', costumeDesigner.id]">
                       {{ costumeDesigner.name }}
                     </a>
@@ -511,11 +511,11 @@
                 </td>
               </tr>
             }
-            @if (castingCrew.length > 0) {
+            @if (castingCrew().length > 0) {
               <tr>
                 <td>Casting By:</td>
                 <td>
-                  @for (casting of castingCrew; track casting.id) {
+                  @for (casting of castingCrew(); track casting.id) {
                     <a [routerLink]="['/person', casting.id]">
                       {{ casting.name }}
                     </a>
