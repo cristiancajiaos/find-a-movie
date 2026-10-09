@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy, OutputEmitterRef, InputSignal, input, output, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, OutputEmitterRef, InputSignal, input, output, inject, WritableSignal, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { faCircleInfo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -15,7 +16,7 @@ export class RoleSelect implements OnInit {
 
   public roleForm: FormGroup = new FormGroup({});
 
-  // public selectedRoles: string[] = [];
+  public circleInfo: IconDefinition = faCircleInfo;
 
   public roleSelectLabel: string = 'Filter by role:';
   public roleSelectPlaceholder: string = 'Select one or various roles';
@@ -23,7 +24,9 @@ export class RoleSelect implements OnInit {
   roles: InputSignal<string[]> = input.required<string[]>();
 
   onRoleSelectChange: OutputEmitterRef<string[]> = output<string[]>();
-  onClearRoleSelect: OutputEmitterRef<boolean> = output<boolean>()
+  onClearRoleSelect: OutputEmitterRef<boolean> = output<boolean>();
+
+  enabledParams: WritableSignal<string> = signal('Enabled queryParam roles');
 
   @ViewChild('roleSelect') roleSelect: NgSelectComponent;
 

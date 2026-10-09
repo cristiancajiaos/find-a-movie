@@ -2,6 +2,9 @@
   <form [formGroup]="roleForm">
     <label for="filterRole" (click)="focusSelectRole()">
       {{ roleSelectLabel }}
+      <span [ngbTooltip]="enabledParams()" placement="top">
+        <fa-icon [icon]="circleInfo" [fixedWidth]="true"></fa-icon>
+      </span>
     </label>
     <ng-select
       #roleSelect
