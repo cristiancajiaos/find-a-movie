@@ -39,7 +39,10 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public direction: WritableSignal<CrewMember[]> = signal([]);
   public coDirection: WritableSignal<CrewMember[]> = signal([]);
+
+  public allWriters: WritableSignal<CrewMember[]> = signal([]);
   public writing: WritableSignal<CrewMember[]> = signal([]);
+
   public teleplay: WritableSignal<CrewMember[]> = signal([]);
   public story: WritableSignal<CrewMember[]> = signal([]);
   public basedOnNovelBy: WritableSignal<CrewMember[]> = signal([]);
@@ -137,9 +140,17 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.coDirection.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director'));
 
-    this.writing.set(this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer',
-    ));
+    this.allWriters.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Writer' || crewMember.job == 'Screenplay' || crewMember.job == 'Script'
+    ))
+
+    this.allWriters().forEach((writer) => {
+      if (!this.writing().map(writerMap => writerMap.id).find(writerFind => writerFind == writer.id)) {
+        this.writing.update(writers => {
+          return [...writers, writer]
+        })
+      }
+    })
 
     this.teleplay.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Teleplay'));
 
