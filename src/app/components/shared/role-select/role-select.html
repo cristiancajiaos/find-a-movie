@@ -1,20 +1,23 @@
 <div class="form-group mb-3">
-  <label for="filterRole" (click)="focusSelectRole()">
-    {{roleSelectLabel}}
-  </label>
-  <ng-select
-    #roleSelect
-    multiple="true"
-    [placeholder]="roleSelectPlaceholder"
-    bindLabel="filterRole"
-    [(ngModel)]="selectedRoles"
-    (change)="onChangeRoles($event)"
-    (clear)="clearRoleSelect()"
-  >
-    @for (role of roles(); track role) {
-      <ng-option [value]="role">
-        {{ role }}
-      </ng-option>
-    }
-  </ng-select>
+  <form [formGroup]="roleForm">
+    <label for="filterRole" (click)="focusSelectRole()">
+      {{ roleSelectLabel }}
+    </label>
+    <ng-select
+      #roleSelect
+      multiple="true"
+      hideSelected="true"
+      [placeholder]="roleSelectPlaceholder"
+      bindLabel="filterRole"
+      formControlName="selectedRoles"
+      (change)="onChangeRoles($event)"
+      (clear)="clearRoleSelect()"
+    >
+      @for (role of roles(); track role) {
+        <ng-option [value]="role">
+          {{ role }}
+        </ng-option>
+      }
+    </ng-select>
+  </form>
 </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal, AfterViewInit } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { Person } from '../../../../classes/person';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
@@ -10,6 +10,7 @@ import { FromSelect } from '../../../../components/shared/from-select/from-selec
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { RoleSelect } from '../../../../components/shared/role-select/role-select';
 import { SessionStorageService } from '../../../../services/session-storage-service';
+import { PersonCreditsQuery } from '../../../../classes/person/person-credits-query';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -18,7 +19,7 @@ import { SessionStorageService } from '../../../../services/session-storage-serv
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './person-movie-credits-crew.scss',
 })
-export class PersonMovieCreditsCrew implements OnInit {
+export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   private sessionStorageService = inject(SessionStorageService);
 
@@ -61,6 +62,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   public page: number = 1;
 
   crewCredits: InputSignal<ResponsePersonCrewCredit[]> = input.required<ResponsePersonCrewCredit[]>();
+  personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
   @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
@@ -74,6 +76,13 @@ export class PersonMovieCreditsCrew implements OnInit {
     this.setYearsLimit();
   }
 
+  ngAfterViewInit(): void {
+    this.setOrderParam();
+    this.setRolesParam();
+    this.setYearFromParam();
+    this.setYearToParam();
+  }
+
   private setRoles(): void {
     const roles: string[] = this.crewCredits().map((crewCredit) => crewCredit.job);
     this.roles.set([...new Set(roles)]);
@@ -82,6 +91,52 @@ export class PersonMovieCreditsCrew implements OnInit {
   private getPerson(): void {
     this.loadingPerson = true;
     this.currentPerson = this.sessionStorageService.getItem('person');
+  }
+
+  private setOrderParam(): void {
+    let orderCriteria: OrderCriteria = null;
+
+    if (this.personCreditsQuery().order == 'defaultOrder') {
+      orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
+    } else if (this.personCreditsQuery().order == 'titleAsc') {
+      orderCriteria = { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' };
+    } else if (this.personCreditsQuery().order == 'titleDesc') {
+      orderCriteria = { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' };
+    } else if (this.personCreditsQuery().order == 'jobAsc') {
+      orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' };
+    } else if (this.personCreditsQuery().order == 'jobDesc') {
+      orderCriteria = { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' };
+    } else if (this.personCreditsQuery().order == 'releaseDateAsc') {
+      orderCriteria = { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)' };
+    } else if (this.personCreditsQuery().order == 'releaseDateDesc') {
+      orderCriteria = { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)' };
+    }
+
+    if (orderCriteria) {
+      this.selectedOrderCriteria.set(orderCriteria);
+    }
+
+    this.orderSelectPersonCrewCredits.setOrderCriteria(orderCriteria);
+  }
+
+  private setRolesParam(): void {
+    const roles = this.personCreditsQuery().roles;
+    if (roles && roles.length > 0) {
+      this.roleSelect.setRoles(roles);
+      this.defineSelectedRoles(roles);
+    }
+  }
+
+  private setYearFromParam(): void {
+    if (this.personCreditsQuery().fromYear) {
+      this.setYearFrom(this.personCreditsQuery().fromYear);
+    }
+  }
+
+  private setYearToParam(): void {
+    if (this.personCreditsQuery().toYear) {
+      this.setYearTo(this.personCreditsQuery().toYear);
+    }
   }
 
   public defineSelectedRoles(roles: string[]): void {
@@ -107,6 +162,7 @@ export class PersonMovieCreditsCrew implements OnInit {
   public setYearFrom(year: number): void {
     if (year) {
       this.fromYear.set(year);
+      this.fromSelect.setYearFrom(year);
       let yearsTo: number[] = [];
       this.toSelect.yearsToSelectForm.reset();
       for (let i = year; i <= this.lastYear(); i++) {
@@ -131,6 +187,7 @@ export class PersonMovieCreditsCrew implements OnInit {
 
   public setYearTo(year: number): void {
     this.toYear.set(year ? year : null);
+    this.toSelect.setYearTo(year);
   }
 
   public clearSelectYearTo(event: boolean) {

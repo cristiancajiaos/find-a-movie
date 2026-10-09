@@ -8,7 +8,9 @@
       <p>This person has no technical or production roles in movies</p>
     }
     @if (personCrewCredits().length > 0) {
-      <app-person-movie-credits-crew [crewCredits]="personCrewCredits()">
+      <app-person-movie-credits-crew
+        [crewCredits]="personCrewCredits()"
+        [personCreditsQuery]="personCreditsQuery()">
       </app-person-movie-credits-crew>
     }
   }

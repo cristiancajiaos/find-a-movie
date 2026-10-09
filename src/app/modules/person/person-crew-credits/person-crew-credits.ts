@@ -9,6 +9,7 @@ import { Person } from '../../../classes/person';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
+import { PersonCreditsQuery } from '../../../classes/person/person-credits-query';
 
 @Component({
   selector: 'app-person-crew-credits',
@@ -39,9 +40,12 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   public personMovieCreditsError: boolean = false;
   public errorMessage: string = '';
 
+  public personCreditsQuery: WritableSignal<PersonCreditsQuery> = signal(new PersonCreditsQuery());
+
   private activatedRouteParentSubscription: Subscription = new Subscription()
   private getCrewCreditsSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
+  private queryParamsSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.getPerson();
@@ -53,6 +57,40 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
         if (this.personMovieCreditsError) {
           this.titleService.setPersonServiceErrorTitle();
         }
+      }
+    });
+    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['order']) {
+        this.personCreditsQuery.update((query) => {
+          return {
+            ...query,
+            order: queryParams['order']
+          }
+        });
+      }
+      if (queryParams['roles']) {
+        this.personCreditsQuery.update((query) => {
+          return {
+            ...query,
+            roles: new String(queryParams['roles']).split(',')
+          }
+        });
+      }
+      if (queryParams['fromYear']) {
+        this.personCreditsQuery.update((query) => {
+          return {
+            ...query,
+            fromYear: parseInt(queryParams['fromYear'])
+          }
+        });
+      }
+      if (queryParams['toYear']) {
+        this.personCreditsQuery.update((query) => {
+          return {
+            ...query,
+            toYear: parseInt(queryParams['toYear'])
+          }
+        });
       }
     });
   }
@@ -109,6 +147,9 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
     }
     if (this.endLoadingSubscription) {
       this.endLoadingSubscription.unsubscribe();
+    }
+    if (this.queryParamsSubscription) {
+      this.queryParamsSubscription.unsubscribe();
     }
   }
 

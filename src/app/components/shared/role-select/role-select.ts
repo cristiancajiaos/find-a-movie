@@ -15,7 +15,7 @@ export class RoleSelect implements OnInit {
 
   public roleForm: FormGroup = new FormGroup({});
 
-  public selectedRoles: string[] = [];
+  // public selectedRoles: string[] = [];
 
   public roleSelectLabel: string = 'Filter by role:';
   public roleSelectPlaceholder: string = 'Select one or various roles';
@@ -37,8 +37,14 @@ export class RoleSelect implements OnInit {
     this.roleSelect.focus();
   }
 
+  public setRoles(roles: string[]) {
+    this.roleForm.controls['selectedRoles'].setValue(roles);
+  }
+
   public onChangeRoles(roles: string[]): void {
-    this.onRoleSelectChange.emit(this.selectedRoles);
+    const selectedRolesControl = this.roleForm.controls['selectedRoles'];
+    selectedRolesControl.setValue(roles);
+    this.onRoleSelectChange.emit(selectedRolesControl.value);
   }
 
   public clearRoleSelect(): void {
