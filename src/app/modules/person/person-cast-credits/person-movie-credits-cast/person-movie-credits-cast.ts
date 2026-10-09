@@ -77,6 +77,8 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   ngAfterViewInit(): void {
     this.setOrderParam();
+    this.setYearFromParam();
+    this.setYearToParam();
   }
 
   private getPerson(): void {
@@ -110,6 +112,18 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     this.orderSelectPersonCastCredits.first.setOrderCriteria(orderCriteria);
   }
 
+  private setYearFromParam(): void {
+    if (this.personCreditsQuery().fromYear) {
+      this.setYearFrom(this.personCreditsQuery().fromYear);
+    }
+  }
+
+  private setYearToParam(): void {
+    if (this.personCreditsQuery().toYear) {
+      this.setYearTo(this.personCreditsQuery().toYear);
+    }
+  }
+
   private setYearsLimit(): void {
     let years: number[] = this.castCredits().map((castCredit) => {
       const date = new Date(castCredit.release_date);
@@ -129,6 +143,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public setYearFrom(year: number): void {
     if (year) {
       this.fromYear.set(year);
+      this.fromSelect.setYearFrom(year);
       let yearsTo: number[] = [];
       this.toSelect.yearsToSelectForm.reset();
       for (let i = year; i <= this.lastYear(); i++) {
@@ -153,6 +168,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public setYearTo(year: number): void {
     this.toYear.set(year);
+    this.toSelect.setYearTo(year);
   }
 
   public clearSelectYearTo(event: boolean) {

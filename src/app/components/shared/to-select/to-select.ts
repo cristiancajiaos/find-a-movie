@@ -12,7 +12,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 export class ToSelect implements OnInit {
 
   private fb = inject(FormBuilder);
-  
+
   public yearsToSelectForm: FormGroup;
 
   public toSelectLabel: string = 'To:';
@@ -37,6 +37,14 @@ export class ToSelect implements OnInit {
 
   public focusSelect(): void {
     this.toSelect.focus();
+  }
+
+  public setDefaultValue() {
+    this.yearsToSelectForm.controls['toYear'].setValue('');
+  }
+
+  public setYearTo(year: number) {
+    this.yearsToSelectForm.controls['toYear'].setValue(year);
   }
 
   public onToYearChange(year: number): void {

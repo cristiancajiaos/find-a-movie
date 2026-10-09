@@ -39,6 +39,10 @@ export class FromSelect implements OnInit {
     this.yearsFromSelectForm.controls['fromYear'].setValue('');
   }
 
+  public setYearFrom(year: number) {
+    this.yearsFromSelectForm.controls['fromYear'].setValue(year);
+  }
+
   public onFromYearChange(year: number): void {
     this.onSelectFromYear.emit(year);
   }
