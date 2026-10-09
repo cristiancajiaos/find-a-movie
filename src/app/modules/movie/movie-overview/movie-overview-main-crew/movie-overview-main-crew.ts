@@ -32,6 +32,7 @@ export class MovieOverviewMainCrew implements OnChanges {
   public basedOnMusicalBy: CrewMember[] = [];
   public producing: CrewMember[] = [];
   public executiveProducing: CrewMember[] = [];
+  public coExecutiveProducing: CrewMember[] = [];
 
   movieCrew: InputSignal<CrewMember[]> = input.required<CrewMember[]>();
 
@@ -87,6 +88,10 @@ export class MovieOverviewMainCrew implements OnChanges {
 
       this.executiveProducing = this.movieCrew().filter(
         (crewMember) => crewMember.job == 'Executive Producer',
+      );
+
+      this.coExecutiveProducing = this.movieCrew().filter(
+        (crewMember) => crewMember.job == 'Co-Executive Producer',
       );
     }
   }

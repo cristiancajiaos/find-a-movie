@@ -47,18 +47,18 @@
             </tr>
           }
           @if (teleplay.length > 0) {
-              <tr>
-                <td>Teleplay By:</td>
-                <td class="text-end">
-                  @for (teleplayWriter of teleplay; track teleplayWriter.id) {
-                    <a [routerLink]="['/person', teleplayWriter.id]">
-                      {{ teleplayWriter.name }}
-                    </a>
-                    <br />
-                  }
-                </td>
-              </tr>
-            }
+            <tr>
+              <td>Teleplay By:</td>
+              <td class="text-end">
+                @for (teleplayWriter of teleplay; track teleplayWriter.id) {
+                  <a [routerLink]="['/person', teleplayWriter.id]">
+                    {{ teleplayWriter.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
           @if (story.length > 0) {
             <tr>
               <td>Story By:</td>
@@ -215,6 +215,25 @@
                 @for (executiveProducer of executiveProducing; track executiveProducer) {
                   <a [routerLink]="['/person', executiveProducer.id]">
                     {{ executiveProducer.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
+          @if (coExecutiveProducing.length > 0) {
+            <tr>
+              <td>
+                @if (coExecutiveProducing.length > 1) {
+                  Co-Executive Producers:
+                } @else {
+                  Co-Executive Producer:
+                }
+              </td>
+              <td class="text-end">
+                @for (coExecutiveProducer of coExecutiveProducing; track coExecutiveProducer.id) {
+                  <a [routerLink]="['/person', coExecutiveProducer.id]">
+                    {{ coExecutiveProducer.name }}
                   </a>
                   <br />
                 }

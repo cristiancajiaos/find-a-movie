@@ -21,6 +21,8 @@
       basedOnMusicalBy.length > 0 ||
       producing.length > 0 ||
       executiveProducing.length > 0 ||
+      coExecutiveProducing.length > 0 ||
+      associateProducing.length > 0 ||
       coProducing.length > 0 ||
       directorsOfPhotography.length > 0 ||
       productionDesigners.length > 0 ||
@@ -246,6 +248,25 @@
                   @for (executiveProducer of executiveProducing; track executiveProducer.id) {
                     <a [routerLink]="['/person', executiveProducer.id]">
                       {{ executiveProducer.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (coExecutiveProducing.length > 0) {
+              <tr>
+                <td>
+                  @if (coExecutiveProducing.length > 1) {
+                    Co-Executive Producers:
+                  } @else {
+                    Co-Executive Producer:
+                  }
+                </td>
+                <td>
+                  @for (coExecutiveProducer of coExecutiveProducing; track coExecutiveProducer.id) {
+                    <a [routerLink]="['/person', coExecutiveProducer.id]">
+                      {{ coExecutiveProducer.name }}
                     </a>
                     <br />
                   }
