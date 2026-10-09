@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, sign
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { Person } from '../../../../classes/person';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
-import { faCircleInfo, faArrowRotateLeft, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
@@ -23,9 +23,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   private sessionStorageService = inject(SessionStorageService);
 
-  public faCircleInfo: IconDefinition = faCircleInfo;
   public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
-  public filterIcon: IconDefinition = faFilter;
 
   public roles: WritableSignal<string[]> = signal([]);
 
@@ -69,6 +67,8 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   @ViewChild('roleSelect') roleSelect: RoleSelect;
   @ViewChild('fromSelect') fromSelect: FromSelect;
   @ViewChild('toSelect') toSelect: ToSelect;
+
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
 
   ngOnInit(): void {
     this.getPerson();

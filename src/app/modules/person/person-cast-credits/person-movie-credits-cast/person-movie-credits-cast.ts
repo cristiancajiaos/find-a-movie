@@ -70,6 +70,8 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   private orderSelectPersonCastCreditsSubscription: Subscription = new Subscription();
 
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, characterNameAsc, characterNameDesc, releaseDateAsc, releaseDateDesc');
+
   ngOnInit(): void {
     this.getPerson();
     this.setYearsLimit();

@@ -80,6 +80,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   private queryParamsSubscription: Subscription = new Subscription();
   private orderSelectSubscription: Subscription = new Subscription();
 
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: castOrderAsc, castOrderDesc, nameAsc, nameDesc, characterNameAsc, characterNameDesc');
+
   ngOnInit(): void {
     this.getMovie();
     this.setId();

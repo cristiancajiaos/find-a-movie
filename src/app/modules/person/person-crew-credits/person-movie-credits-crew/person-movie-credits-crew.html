@@ -12,6 +12,7 @@
           <div class="col-12 col-lg-6">
             <app-order-select
               #orderSelectPersonCrewCredits
+              [enabledOrderParams]="enabledOrderParams()"
               [orderCriterias]="orderCriterias()"
               [defaultOrderCriteria]="defaultOrder()"
               (onOrderCriteriaChange)="orderCriteriaChange($event)"

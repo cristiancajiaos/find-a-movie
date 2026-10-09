@@ -67,6 +67,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   private queryParamsSubscription: Subscription = new Subscription();
   private orderSelectSubscription: Subscription = new Subscription();
 
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, jobAsc, jobDesc');
+
   ngOnInit(): void {
     this.getMovie();
     this.setId();

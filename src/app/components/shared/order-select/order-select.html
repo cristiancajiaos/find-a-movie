@@ -3,6 +3,11 @@
     <div class="form-group mb-3">
       <label (click)="focusSelect()">
         {{orderSelectLabel}}
+        <span
+          [ngbTooltip]="enabledOrderParams()"
+          placement="top">
+          <fa-icon [icon]="circleInfo" [fixedWidth]="true"></fa-icon>
+        </span>
       </label>
       <ng-select
         #orderSelect

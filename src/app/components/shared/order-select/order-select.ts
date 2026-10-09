@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy, input, InputSign
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrderCriteria } from '../../../interfaces/order-criteria';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { faCircleInfo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-order-select',
@@ -14,10 +15,14 @@ export class OrderSelect implements OnInit {
 
   private fb = inject(FormBuilder);
 
+  public circleInfo: IconDefinition = faCircleInfo;
+
   public orderForm: FormGroup = new FormGroup({});
 
   public orderSelectLabel: string = 'Order by:';
   public orderSelectPlaceholder: string = 'Select an order criteria';
+
+  enabledOrderParams: InputSignal<string> = input<string>();
 
   orderCriterias: InputSignal<OrderCriteria[]> = input.required<OrderCriteria[]>();
   defaultOrderCriteria: InputSignal<OrderCriteria> = input.required<OrderCriteria>();
