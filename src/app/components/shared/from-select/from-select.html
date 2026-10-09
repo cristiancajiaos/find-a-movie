@@ -2,14 +2,18 @@
   <form [formGroup]="yearsFromSelectForm">
     <div class="form-group mb-3">
       <label (click)="focusSelect()">
-        {{fromSelectLabel}}
+        {{ fromSelectLabel }}
+        <span [ngbTooltip]="enabledParams()" placement="top">
+          <fa-icon [icon]="circleInfo" [fixedWidth]="true"></fa-icon>
+        </span>
       </label>
       <ng-select
         #fromSelect
         formControlName="fromYear"
         [placeholder]="fromSelectPlaceholder"
         (change)="onFromYearChange($event)"
-        (clear)="onClearSelect()">
+        (clear)="onClearSelect()"
+      >
         @for (year of yearsFrom(); track year) {
           <ng-option [value]="year">{{ year }}</ng-option>
         }

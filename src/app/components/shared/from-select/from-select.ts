@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ChangeDetectionStrategy, InputSignal, input, OutputEmitterRef, output, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy, InputSignal, input, OutputEmitterRef, output, inject, WritableSignal, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { faCircleInfo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -13,6 +14,8 @@ export class FromSelect implements OnInit {
 
   private fb = inject(FormBuilder);
 
+  public circleInfo: IconDefinition = faCircleInfo;
+
   public yearsFromSelectForm: FormGroup;
 
   public fromSelectLabel: string = 'From:';
@@ -24,6 +27,8 @@ export class FromSelect implements OnInit {
 
   onSelectFromYear: OutputEmitterRef<number> = output<number>();
   onClearSelectFromYear: OutputEmitterRef<boolean> = output<boolean>();
+
+  enabledParams: WritableSignal<string> = signal('Enabled queryParam fromYear: Number of the year');
 
   ngOnInit(): void {
     this.yearsFromSelectForm = this.fb.group({
