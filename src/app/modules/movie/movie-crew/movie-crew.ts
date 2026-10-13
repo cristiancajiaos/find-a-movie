@@ -62,7 +62,10 @@ export class MovieCrew implements OnInit, OnDestroy {
   public directorsOfPhotography: WritableSignal<CrewMember[]> = signal([]);
   public productionDesigners: WritableSignal<CrewMember[]> = signal([]);
   public editors: WritableSignal<CrewMember[]> = signal([]);
+
+  public allMusicComposers: WritableSignal<CrewMember[]> = signal([]);
   public musicComposers: WritableSignal<CrewMember[]> = signal([]);
+
   public additionalMusicComposers: WritableSignal<CrewMember[]> = signal([]);
   public songsBy: WritableSignal<CrewMember[]> = signal([]);
   public lyricsBy: WritableSignal<CrewMember[]> = signal([]);
@@ -216,9 +219,17 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.editors.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Editor'));
 
-    this.musicComposers.set(this.movieCrew().filter(
-      (crewMember) => crewMember.job == 'Original Music Composer',
+    this.allMusicComposers.set(this.movieCrew().filter(
+      (crewMember) => crewMember.job == 'Original Music Composer' || crewMember.job == 'Music'
     ));
+
+    this.allMusicComposers().forEach((musicComposer) => {
+      if (!this.musicComposers().map(musicMap => musicMap.id).find(musicFind => musicFind == musicComposer.id)) {
+        this.musicComposers.update(musics => {
+          return [...musics, musicComposer]
+        })
+      }
+    });
 
     this.additionalMusicComposers.set(this.movieCrew().filter(
       (crewMember) => crewMember.job == 'Additional Music',
