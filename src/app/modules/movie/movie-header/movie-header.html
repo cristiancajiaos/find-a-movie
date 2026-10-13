@@ -7,29 +7,36 @@
       ></div>
       <div class="header-movie-container">
         <div class="header-movie-info">
-          <h1>
-            <fa-icon [icon]="film" [fixedWidth]="true"></fa-icon>
-            @if (movie().title == movie().original_title) {
-              {{ movie().title }}
-            }
-            @if (movie().title != movie().original_title) {
-              {{ movie().title }}
-              <small>({{ movie().original_title }})</small>
-            }
-          </h1>
-          <h2>
-            <fa-icon [icon]="calendar" [fixedWidth]="true"></fa-icon>
-            @if (year) {
-              {{ year }}
-            }
-            @if (!year) {
-              No Release Date
-            }
-            @if (movie().runtime > 0) {
-              <fa-icon [icon]="clock" [fixedWidth]="true"></fa-icon>
-              {{ movie().runtime | runtime }}
-            }
-          </h2>
+          <div class="row d-flex flex-col align-items-lg-end flex-lg-row">
+            <div class="col-12 col-lg-9">
+              <h1>
+                <fa-icon [icon]="film" [fixedWidth]="true"></fa-icon>
+                @if (movie().title == movie().original_title) {
+                  {{ movie().title }}
+                }
+                @if (movie().title != movie().original_title) {
+                  {{ movie().title }}
+                  <small>({{ movie().original_title }})</small>
+                }
+                @if (year) {
+                  ({{ year }})
+                }
+                @if (!year) {
+                  (No Release Date)
+                }
+              </h1>
+            </div>
+            <div class="col-12 col-lg-3 d-flex justify-content-lg-end">
+              <div class="d-flex">
+                @if (movie().runtime > 0) {
+                  <h2>
+                    <fa-icon [icon]="clock" [fixedWidth]="true"></fa-icon>
+                    {{ movie().runtime | runtime }}
+                  </h2>
+                }
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
