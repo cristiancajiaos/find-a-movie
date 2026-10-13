@@ -20,7 +20,10 @@ import { WritableSignal } from '@angular/core';
 export class MovieOverviewMainCrew implements OnChanges {
   public direction: WritableSignal<CrewMember[]> = signal([]);
   public coDirection: WritableSignal<CrewMember[]> = signal([]);
+
+  public allWriters: WritableSignal<CrewMember[]> = signal([]);
   public writing: WritableSignal<CrewMember[]> = signal([]);
+
   public teleplay: WritableSignal<CrewMember[]> = signal([]);
   public story: WritableSignal<CrewMember[]> = signal([]);
   public basedOnNovelBy: WritableSignal<CrewMember[]> = signal([]);
@@ -50,11 +53,20 @@ export class MovieOverviewMainCrew implements OnChanges {
         this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Director'),
       );
 
-      this.writing.set(
+      this.allWriters.set(
         this.movieCrew().filter(
-          (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer',
+          (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer' || crewMember.job == 'Script'
         ),
       );
+
+      this.allWriters().forEach((writer) => {
+        if (!this.writing().map(writerMap => writerMap.id).find(writerFind => writerFind == writer.id)) {
+          this.writing.update((writers) => {
+            return [...writers, writer]
+          });
+        }
+      });
+
 
       this.teleplay.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Teleplay'));
 
