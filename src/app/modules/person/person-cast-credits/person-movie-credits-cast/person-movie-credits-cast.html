@@ -74,11 +74,7 @@
               }
             </section>
           }
-          <section class="cast-credits-pagination">
-            <div class="d-flex justify-content-center">
-              <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
-            </div>
-          </section>
+          <app-pagination (pageChange)="changePage($event)"></app-pagination>
         } @else {
           <p>No results were obtained by the applied filters.</p>
         }
