@@ -77,9 +77,7 @@
               </section>
             }
           </section>
-          <div class="d-flex justify-content-center align-items-center">
-            <pagination-controls (pageChange)="changePage($event)"> </pagination-controls>
-          </div>
+          <app-pagination (pageChange)="changePage($event)"></app-pagination>
         }
       }
     </div>

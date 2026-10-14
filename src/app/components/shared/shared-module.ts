@@ -10,6 +10,8 @@ import { FromSelect } from './from-select/from-select';
 import { ToSelect } from './to-select/to-select';
 import { RoleSelect } from './role-select/role-select';
 import { Loading } from './loading/loading';
+import { Pagination } from './pagination/pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { Loading } from './loading/loading';
     FromSelect,
     ToSelect,
     RoleSelect,
+    Pagination,
   ],
   imports: [
     CommonModule,
@@ -26,7 +29,8 @@ import { Loading } from './loading/loading';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxPaginationModule
   ],
   exports: [
     Loading,
@@ -34,7 +38,8 @@ import { Loading } from './loading/loading';
     OrderSelect,
     FromSelect,
     ToSelect,
-    RoleSelect
+    RoleSelect,
+    Pagination
   ]
 })
 export class SharedModule { }
