@@ -57,12 +57,17 @@ export class SearchMovie implements OnInit, OnDestroy {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery.set(params['searchQuery']);
       this.setSearchMovieTitle();
-      this.searchMovie();
     });
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['displayMode']) {
         this.displayMode.set(queryParams['displayMode']);
       };
+      if (queryParams['page']) {
+        this.currentPage.set(parseInt(queryParams['page']));
+        this.searchMovieUpdatePage();
+      } else {
+        this.searchMovie();
+      }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       this.setSearchMovieTitle();
@@ -84,13 +89,16 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   public changePage(page: number) {
-    this.searchMovieUpdatePage(page);
+    this.currentPage.set(page);
+    this.searchMovieUpdatePage();
     this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  public searchMovieUpdatePage(page: number) {
+  public searchMovieUpdatePage() {
     this.searchError = false;
-    this.getMovieChangePageSubscription = this.searchService.searchMovie(this.searchQuery(), page).subscribe({
+    this.getMovieChangePageSubscription = this.searchService.searchMovie(
+      this.searchQuery(), this.currentPage()
+    ).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
       },
