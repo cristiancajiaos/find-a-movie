@@ -34,6 +34,7 @@
               <strong>{{ searchQuery() }}</strong> returned {{ totalResults() }} results. Showing
               results {{ currentPageStart() }}-{{ currentPageEnd() }} of {{ totalResults() }}:
             </p>
+            <hr/>
             @if (displayMode() == 'grid') {
               <section class="search-movie-results-grid">
                 <div class="row">
@@ -77,6 +78,7 @@
               </section>
             }
           </section>
+          <hr/>
           <app-pagination (pageChange)="changePage($event)"></app-pagination>
         }
       }
