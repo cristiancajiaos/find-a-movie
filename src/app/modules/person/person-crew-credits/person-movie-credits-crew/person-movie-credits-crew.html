@@ -91,11 +91,8 @@
           <p>No results were obtained by the applied filters.</p>
         }
       </section>
-      <section class="crew-credits-pagination">
-        <div class="d-flex justify-content-center">
-          <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
-        </div>
-      </section>
+      <hr/>
+      <app-pagination (pageChange)="changePage($event)"></app-pagination>
     </div>
   </div>
 </section>
