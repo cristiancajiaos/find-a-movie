@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -26,13 +26,13 @@ export class SearchPerson implements OnInit, OnDestroy {
   public searchIcon: IconDefinition = faSearch;
   public userIcon: IconDefinition = faUser;
 
-  public searchQuery: string = '';
-  public currentPage: number = 1;
-  public itemsPerPage: number = 20;
-  public totalResults: number = 0;
+  public searchQuery: WritableSignal<string> = signal('');
+  public currentPage: WritableSignal<number> = signal(1);
+  public itemsPerPage: WritableSignal<number> = signal(20);
+  public totalResults: WritableSignal<number> = signal(0);
 
-  public currentPageStart: number = 0;
-  public currentPageEnd: number = 0;
+  public currentPageStart: WritableSignal<number> = signal(0);
+  public currentPageEnd: WritableSignal<number> = signal(0);
 
   public responseSearchPerson: ResponseSearchPerson = new ResponseSearchPerson();
   public personResults: ResponsePersonResult[] = [];
@@ -55,8 +55,8 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
-      this.searchQuery = params['searchQuery'];
-      this.setSearchPersonTitle(this.searchQuery);
+      this.searchQuery.set(params['searchQuery']);
+      this.setSearchPersonTitle();
       this.searchPerson();
     });
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
@@ -65,13 +65,13 @@ export class SearchPerson implements OnInit, OnDestroy {
       }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      this.setSearchPersonTitle(this.searchQuery);
+      this.setSearchPersonTitle();
     });
   }
 
   public searchPerson(): void {
     this.searchError = false;
-    this.getPersonSubscription = this.searchService.searchPerson(this.searchQuery).subscribe({
+    this.getPersonSubscription = this.searchService.searchPerson(this.searchQuery()).subscribe({
       next: (response) => {
         this.handlePersonResults(response);
       },
@@ -90,7 +90,7 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   public searchPersonUpdatePage(page: number) {
     this.searchError = false;
-    this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery, page).subscribe({
+    this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery(), page).subscribe({
       next: (response) => {
         this.handlePersonResults(response);
       },
@@ -105,18 +105,18 @@ export class SearchPerson implements OnInit, OnDestroy {
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
     this.responseSearchPerson = responseSearchPerson;
     this.personResults = responseSearchPerson.results;
-    this.totalResults = responseSearchPerson.total_results;
-    this.currentPage = responseSearchPerson.page;
+    this.totalResults.set(responseSearchPerson.total_results);
+    this.currentPage.set(responseSearchPerson.page);
     this.calculatePageLimits();
     this.noResults = this.personResults.length == 0;
   }
 
   private calculatePageLimits(): void {
-    this.currentPageStart = 1 + (this.currentPage - 1) * this.itemsPerPage;
-    this.currentPageEnd =
-      this.totalResults - this.currentPage * this.itemsPerPage > 0
-        ? this.currentPage * this.itemsPerPage
-        : this.totalResults;
+    this.currentPageStart.set(1 + (this.currentPage() - 1) * this.itemsPerPage());
+    this.currentPageEnd.set(
+      this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
+        ? this.currentPage() * this.itemsPerPage()
+        : this.totalResults());
   }
 
   private handleError(error: HttpErrorResponse): void {
@@ -128,8 +128,8 @@ export class SearchPerson implements OnInit, OnDestroy {
     this.displayMode.set(display);
   }
 
-  private setSearchPersonTitle(query: string) {
-    this.titleService.setTitle(`Search Person: ${query}`);
+  private setSearchPersonTitle() {
+    this.titleService.setTitle(`Search Person: ${this.searchQuery()}`);
   }
 
   ngOnDestroy(): void {
