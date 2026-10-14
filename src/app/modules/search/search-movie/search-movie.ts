@@ -57,26 +57,54 @@ export class SearchMovie implements OnInit, OnDestroy {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery.set(params['searchQuery']);
       this.setSearchMovieTitle();
+      if (this.activatedRoute.snapshot.queryParams['page']) {
+        this.handleSearchMovie(this.activatedRoute.snapshot.queryParams['page']);
+      } else {
+        this.handleSearchMovie();
+      }
     });
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['displayMode']) {
         this.displayMode.set(queryParams['displayMode']);
       };
-      if (queryParams['page']) {
-        this.currentPage.set(parseInt(queryParams['page']));
-        this.searchMovieUpdatePage();
-      } else {
-        this.searchMovie();
-      }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       this.setSearchMovieTitle();
     });
   }
 
-  public searchMovie(): void {
+  private handleSearchMovie(page?: string) {
+    if (page) {
+      this.currentPage.set(parseInt(page));
+      this.searchMovieUpdatePage();
+    } else {
+      this.searchMovie();
+    }
+  }
+
+  public handleReloadError() {
+    this.searchMovieUpdatePage();
+  }
+
+  private searchMovie(): void {
     this.searchError = false;
     this.getMovieSubscription = this.searchService.searchMovie(this.searchQuery()).subscribe({
+      next: (response) => {
+        this.handleMovieResults(response);
+      },
+      error: (error) => {
+        this.handleError(error);
+      },
+      complete: () => {
+      }
+    });
+  }
+
+  private searchMovieUpdatePage() {
+    this.searchError = false;
+    this.getMovieChangePageSubscription = this.searchService.searchMovie(
+      this.searchQuery(), this.currentPage()
+    ).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
       },
@@ -94,21 +122,6 @@ export class SearchMovie implements OnInit, OnDestroy {
     this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  public searchMovieUpdatePage() {
-    this.searchError = false;
-    this.getMovieChangePageSubscription = this.searchService.searchMovie(
-      this.searchQuery(), this.currentPage()
-    ).subscribe({
-      next: (response) => {
-        this.handleMovieResults(response);
-      },
-      error: (error) => {
-        this.handleError(error);
-      },
-      complete: () => {
-      }
-    });
-  }
 
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
     this.responseSearchMovie = responseSearchMovie;

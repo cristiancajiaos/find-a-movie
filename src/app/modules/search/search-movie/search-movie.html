@@ -6,7 +6,7 @@
   <main>
     <div class="container-fluid">
       @if (searchError) {
-        <app-search-error [errorMessage]="errorMessage" (reload)="searchMovie()">
+        <app-search-error [errorMessage]="errorMessage" (reload)="handleReloadError()">
         </app-search-error>
       }
       @if (!searchError) {
