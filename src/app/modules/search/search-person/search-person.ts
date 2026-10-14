@@ -1,4 +1,14 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+  inject,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -17,7 +27,6 @@ import { LoadingService } from '../../../services/loading-service';
   styleUrl: './search-person.scss',
 })
 export class SearchPerson implements OnInit, OnDestroy {
-
   private activatedRoute = inject(ActivatedRoute);
   private searchService = inject(SearchService);
   private titleService = inject(TitleService);
@@ -95,29 +104,29 @@ export class SearchPerson implements OnInit, OnDestroy {
       error: (error) => {
         this.handleError(error);
       },
-      complete: () => {
-      },
+      complete: () => {},
     });
+  }
+
+  private searchPersonUpdatePage() {
+    this.searchError = false;
+    this.getPersonChangePageSubscription = this.searchService
+      .searchPerson(this.searchQuery(), this.currentPage())
+      .subscribe({
+        next: (response) => {
+          this.handlePersonResults(response);
+        },
+        error: (error) => {
+          this.handleError(error);
+        },
+        complete: () => {},
+      });
   }
 
   public changePage(page: number) {
     this.currentPage.set(page);
     this.searchPersonUpdatePage();
     this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  private searchPersonUpdatePage() {
-    this.searchError = false;
-    this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery(), this.currentPage()).subscribe({
-      next: (response) => {
-        this.handlePersonResults(response);
-      },
-      error: (error) => {
-        this.handleError(error);
-      },
-      complete: () => {
-      }
-    });
   }
 
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
@@ -134,7 +143,8 @@ export class SearchPerson implements OnInit, OnDestroy {
     this.currentPageEnd.set(
       this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
         ? this.currentPage() * this.itemsPerPage()
-        : this.totalResults());
+        : this.totalResults(),
+    );
   }
 
   private handleError(error: HttpErrorResponse): void {
