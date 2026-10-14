@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, input, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, inject, input, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faFilm, faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   public searchIcon: IconDefinition = faSearch;
   public movieIcon: IconDefinition = faFilm;
 
-  public searchQuery: string = '';
+  public searchQuery: WritableSignal<string> = signal('');
   public currentPage: number = 1;
   public itemsPerPage: number = 20;
   public totalResults: number = 0;
@@ -55,8 +55,8 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
-      this.searchQuery = params['searchQuery'];
-      this.setSearchMovieTitle(this.searchQuery);
+      this.searchQuery.set(params['searchQuery']);
+      this.setSearchMovieTitle();
       this.searchMovie();
     });
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
@@ -65,13 +65,13 @@ export class SearchMovie implements OnInit, OnDestroy {
       };
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      this.setSearchMovieTitle(this.searchQuery);
+      this.setSearchMovieTitle();
     });
   }
 
   public searchMovie(): void {
     this.searchError = false;
-    this.getMovieSubscription = this.searchService.searchMovie(this.searchQuery).subscribe({
+    this.getMovieSubscription = this.searchService.searchMovie(this.searchQuery()).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
       },
@@ -90,7 +90,7 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public searchMovieUpdatePage(page: number) {
     this.searchError = false;
-    this.getMovieChangePageSubscription = this.searchService.searchMovie(this.searchQuery, page).subscribe({
+    this.getMovieChangePageSubscription = this.searchService.searchMovie(this.searchQuery(), page).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
       },
@@ -130,8 +130,8 @@ export class SearchMovie implements OnInit, OnDestroy {
     this.displayMode.set(display);
   }
 
-  private setSearchMovieTitle(query: string) {
-    this.titleService.setTitle(`Search Movie: ${query}`);
+  private setSearchMovieTitle() {
+    this.titleService.setTitle(`Search Movie: ${this.searchQuery()}`);
   }
 
   ngOnDestroy(): void {
