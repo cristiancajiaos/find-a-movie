@@ -57,11 +57,16 @@ export class SearchPerson implements OnInit, OnDestroy {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
       this.searchQuery.set(params['searchQuery']);
       this.setSearchPersonTitle();
-      this.searchPerson();
     });
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['displayMode']) {
         this.displayMode.set(queryParams['displayMode']);
+      }
+      if (queryParams['page']) {
+        this.currentPage.set(parseInt(queryParams['page']));
+        this.searchPersonUpdatePage();
+      } else {
+        this.searchPerson();
       }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
@@ -84,13 +89,14 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   public changePage(page: number) {
-    this.searchPersonUpdatePage(page);
+    this.currentPage.set(page);
+    this.searchPersonUpdatePage();
     this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  public searchPersonUpdatePage(page: number) {
+  public searchPersonUpdatePage() {
     this.searchError = false;
-    this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery(), page).subscribe({
+    this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery(), this.currentPage()).subscribe({
       next: (response) => {
         this.handlePersonResults(response);
       },
