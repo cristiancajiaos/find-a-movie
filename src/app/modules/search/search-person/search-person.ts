@@ -55,7 +55,6 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
-      console.log(params);
       this.searchQuery.set(params['searchQuery']);
       this.setSearchPersonTitle();
       if (this.activatedRoute.snapshot.queryParams['page']) {
