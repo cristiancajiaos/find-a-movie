@@ -55,23 +55,36 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params) => {
+      console.log(params);
       this.searchQuery.set(params['searchQuery']);
       this.setSearchPersonTitle();
+      if (this.activatedRoute.snapshot.queryParams['page']) {
+        this.handleSearchPerson(this.activatedRoute.snapshot.queryParams['page']);
+      } else {
+        this.handleSearchPerson();
+      }
     });
     this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['displayMode']) {
         this.displayMode.set(queryParams['displayMode']);
       }
-      if (queryParams['page']) {
-        this.currentPage.set(parseInt(queryParams['page']));
-        this.searchPersonUpdatePage();
-      } else {
-        this.searchPerson();
-      }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       this.setSearchPersonTitle();
     });
+  }
+
+  private handleSearchPerson(page?: string) {
+    if (page) {
+      this.currentPage.set(parseInt(page));
+      this.searchPersonUpdatePage();
+    } else {
+      this.searchPerson();
+    }
+  }
+
+  public handleReloadError(): void {
+    this.searchPersonUpdatePage();
   }
 
   public searchPerson(): void {
@@ -94,7 +107,7 @@ export class SearchPerson implements OnInit, OnDestroy {
     this.header.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  public searchPersonUpdatePage() {
+  private searchPersonUpdatePage() {
     this.searchError = false;
     this.getPersonChangePageSubscription = this.searchService.searchPerson(this.searchQuery(), this.currentPage()).subscribe({
       next: (response) => {
