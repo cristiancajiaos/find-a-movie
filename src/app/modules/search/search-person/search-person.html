@@ -36,6 +36,7 @@
               <strong>{{ searchQuery }}</strong> returned {{ totalResults }} results. Showing
               results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
             </p>
+            <hr/>
             @if (displayMode() == 'grid') {
               <section class="search-person-results-grid">
                 <div class="row">
@@ -76,9 +77,8 @@
                 </div>
               </section>
             }
-            <div class="d-flex justify-content-center align-items-center">
-              <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
-            </div>
+            <hr/>
+            <app-pagination (pageChange)="changePage($event)"></app-pagination>
           </section>
         }
       }
