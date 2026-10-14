@@ -31,8 +31,8 @@
           </section>
           <section class="search-movie-results">
             <p>
-              <strong>{{ searchQuery() }}</strong> returned {{ totalResults }} results. Showing
-              results {{ currentPageStart }}-{{ currentPageEnd }} of {{ totalResults }}:
+              <strong>{{ searchQuery() }}</strong> returned {{ totalResults() }} results. Showing
+              results {{ currentPageStart() }}-{{ currentPageEnd() }} of {{ totalResults() }}:
             </p>
             @if (displayMode() == 'grid') {
               <section class="search-movie-results-grid">
@@ -41,9 +41,9 @@
                     movieResult of movieResults
                       | paginate
                         : {
-                            itemsPerPage: 20,
-                            currentPage: currentPage,
-                            totalItems: totalResults,
+                            itemsPerPage: itemsPerPage(),
+                            currentPage: currentPage(),
+                            totalItems: totalResults(),
                           };
                     track movieResult.id
                   ) {
@@ -62,9 +62,9 @@
                     movieResult of movieResults
                       | paginate
                         : {
-                            itemsPerPage: 20,
-                            currentPage: currentPage,
-                            totalItems: totalResults,
+                            itemsPerPage: itemsPerPage(),
+                            currentPage: currentPage(),
+                            totalItems: totalResults(),
                           };
                     track movieResult.id
                   ) {

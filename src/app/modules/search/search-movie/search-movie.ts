@@ -27,12 +27,12 @@ export class SearchMovie implements OnInit, OnDestroy {
   public movieIcon: IconDefinition = faFilm;
 
   public searchQuery: WritableSignal<string> = signal('');
-  public currentPage: number = 1;
-  public itemsPerPage: number = 20;
-  public totalResults: number = 0;
+  public currentPage: WritableSignal<number> = signal(1);
+  public itemsPerPage: WritableSignal<number> = signal(20);
+  public totalResults: WritableSignal<number> = signal(0);
 
-  public currentPageStart: number = 0;
-  public currentPageEnd: number = 0;
+  public currentPageStart: WritableSignal<number> = signal(0);
+  public currentPageEnd: WritableSignal<number> = signal(0);
 
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public movieResults: ResponseMovieResult[] = [];
@@ -105,8 +105,8 @@ export class SearchMovie implements OnInit, OnDestroy {
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
     this.responseSearchMovie = responseSearchMovie;
     this.movieResults = responseSearchMovie.results;
-    this.totalResults = responseSearchMovie.total_results;
-    this.currentPage = responseSearchMovie.page;
+    this.totalResults.set(responseSearchMovie.total_results);
+    this.currentPage.set(responseSearchMovie.page);
     this.calculatePageLimits();
     if (this.movieResults.length == 0) {
       this.noResults = true;
@@ -114,11 +114,10 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   private calculatePageLimits(): void {
-    this.currentPageStart = 1 + (this.currentPage - 1) * this.itemsPerPage;
-    this.currentPageEnd =
-      this.totalResults - this.currentPage * this.itemsPerPage > 0
-        ? this.currentPage * this.itemsPerPage
-        : this.totalResults;
+    this.currentPageStart.set(1 + (this.currentPage() - 1) * this.itemsPerPage());
+    this.currentPageEnd.set(this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
+        ? this.currentPage() * this.itemsPerPage()
+        : this.totalResults());
   }
 
   private handleError(error: HttpErrorResponse) {
