@@ -61,7 +61,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
 
   public itemsPerPage: WritableSignal<number> = signal(20);
-  public page: WritableSignal<number> = signal(1);
+  public currentPage: WritableSignal<number> = signal(1);
 
   crewCredits: InputSignal<ResponsePersonCrewCredit[]> = input.required<ResponsePersonCrewCredit[]>();
   personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
@@ -216,7 +216,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   }
 
   public changePage(pageNumber: number) {
-    this.page.set(pageNumber);
+    this.currentPage.set(pageNumber);
     this.crewParagraph.nativeElement.scrollIntoView({ behaviour: 'smooth', block: 'start' });
   }
 
@@ -238,12 +238,13 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   public changeItemsPerPage(itemsPerPage: number) {
     this.itemsPerPage.set(itemsPerPage);
+    this.currentPage.set(1);
   }
 
   public resetFiltersByDefault(): void {
     this.itemsPerPage.set(20);
     this.personCrewCreditsShowXResults.setDefaultValue();
-    this.page.set(1);
+    this.currentPage.set(1);
     this.displayMode.set('grid');
     this.orderSelectPersonCrewCredits.clearOrderCriteria();
     this.roleSelect.clearRoleSelect();

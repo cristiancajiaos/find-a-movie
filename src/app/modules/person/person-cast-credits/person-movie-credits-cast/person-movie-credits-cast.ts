@@ -81,7 +81,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
 
   public itemsPerPage: WritableSignal<number> = signal(20);
-  public page: WritableSignal<number> = signal(1);
+  public currentPage: WritableSignal<number> = signal(1);
 
   castCredits: InputSignal<ResponsePersonCastCredit[]> =
     input.required<ResponsePersonCastCredit[]>();
@@ -229,7 +229,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public changePage(pageNumber: number) {
-    this.page.set(pageNumber);
+    this.currentPage.set(pageNumber);
     this.castParagraph.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -239,18 +239,18 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
     this.selectedOrderCriteria.set(orderCriteria);
-    this.page.set(1);
+    this.currentPage.set(1);
   }
 
   public clearOrderCriteria(event: boolean): void {
     this.selectedOrderCriteria.set(null);
-    this.page.set(1);
+    this.currentPage.set(1);
   }
 
   public resetFiltersByDefault(): void {
     this.itemsPerPage.set(20);
     this.personCastCreditsShowXResults.setDefaultValue();
-    this.page.set(1);
+    this.currentPage.set(1);
     this.displayMode.set('grid');
     this.orderSelectPersonCastCredits.first.clearOrderCriteria();
     this.clearSelectYearFrom(true);
@@ -259,6 +259,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public changeItemsPerPage(itemsPerPage: number) {
     this.itemsPerPage.set(itemsPerPage);
+    this.currentPage.set(1);
   }
 
   ngOnDestroy(): void {
