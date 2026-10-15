@@ -113,8 +113,10 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setResultsPerPage(results: number) {
-    this.crewMembersPerPage.set(results);
-    this.movieCrewShowXResults.setXResults(results);
+    if (this.resultsOptions().includes(results)) {
+      this.crewMembersPerPage.set(results);
+      this.movieCrewShowXResults.setXResults(results);
+    }
   }
 
   private setInitialOrder(): void {

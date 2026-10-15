@@ -126,8 +126,10 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setResultsPerPage(results: number) {
-    this.actorsPerPage.set(results);
-    this.movieCastShowXResults.setXResults(results);
+    if (this.resultsOptions().includes(results)) {
+      this.actorsPerPage.set(results);
+      this.movieCastShowXResults.setXResults(results);
+    }
   }
 
   private setInitialOrder() {
