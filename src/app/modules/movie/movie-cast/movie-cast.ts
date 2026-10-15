@@ -24,6 +24,7 @@ import { Movie } from '../../../classes/movie';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
+import { ShowXResults } from '../../../components/shared/show-x-results/show-x-results';
 
 @Component({
   selector: 'app-movie-cast',
@@ -41,9 +42,9 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
 
   public id: number = 0;
 
-  public currentPage: number = 1;
-  public actorsPerPage: number = 50;
-  public totalActors: number = 0;
+  public currentPage: WritableSignal<number> = signal(1);
+  public actorsPerPage: WritableSignal<number> = signal(25);
+  public totalActors: WritableSignal<number> = signal(0);
 
   private movie: Movie = null;
 
@@ -62,6 +63,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name (descending)' },
   ]);
 
+  public resultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
+
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.CastOrderAsc,
     orderCriteriaName: 'Cast order (ascending)',
@@ -71,7 +74,7 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   public currentOrder: WritableSignal<OrderCriteria | null> = signal(this.defaultOrder());
 
   @ViewChildren('orderSelectMovieCast') orderSelectMovieCast!: QueryList<OrderSelect>;
-
+  @ViewChild('movieCastShowXResults') movieCastShowXResults!: ShowXResults;
   @ViewChild('title') title!: ElementRef;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
@@ -81,6 +84,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   private orderSelectSubscription: Subscription = new Subscription();
 
   public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: castOrderAsc, castOrderDesc, nameAsc, nameDesc, characterNameAsc, characterNameDesc');
+
+  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 25, 50, 100 (other values are not valid)');
 
   ngOnInit(): void {
     this.getMovie();
@@ -93,6 +98,9 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['order']) {
         this.currentOrderStr.set(queryParams['order']);
+      }
+      if (queryParams['resultsPerPage']) {
+        this.setResultsPerPage(parseInt(queryParams['resultsPerPage']));
       }
     });
   }
@@ -115,6 +123,11 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
         this.getCast();
       },
     );
+  }
+
+  private setResultsPerPage(results: number) {
+    this.actorsPerPage.set(results);
+    this.movieCastShowXResults.setXResults(results);
   }
 
   private setInitialOrder() {
@@ -163,9 +176,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     this.getMovieCastSubscription = this.movieService.getMovieCast(this.id).subscribe({
       next: (cast) => {
         this.movieCast.set(cast);
-        this.totalActors = this.movieCast().length;
+        this.totalActors.set(this.movieCast().length);
         this.castFound = true;
-        // this.setOrder();
       },
       error: (error) => {
         this.handleError(error);
@@ -192,8 +204,13 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public changePage(page: number): void {
-    this.currentPage = page;
+    this.currentPage.set(page);
     this.title.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  public changeItemsPerPage(itemsPerPage: number) {
+    this.actorsPerPage.set(itemsPerPage);
+    this.currentPage.set(1);
   }
 
   ngOnDestroy(): void {

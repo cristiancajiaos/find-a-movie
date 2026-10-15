@@ -5,14 +5,27 @@
   @if (!movieCastError) {
     <h2 #title>Cast</h2>
     @if (movieCast().length > 0) {
-      <app-order-select
-        #orderSelectMovieCast
-        [enabledOrderParams]="enabledOrderParams()"
-        [orderCriterias]="orderCriterias()"
-        [defaultOrderCriteria]="defaultOrder()"
-        (onOrderCriteriaChange)="orderCriteriaChange($event)"
-      >
-      </app-order-select>
+      <div class="row">
+        <div class="col-12 col-lg-9">
+          <app-order-select
+            #orderSelectMovieCast
+            [enabledOrderParams]="enabledOrderParams()"
+            [orderCriterias]="orderCriterias()"
+            [defaultOrderCriteria]="defaultOrder()"
+            (onOrderCriteriaChange)="orderCriteriaChange($event)"
+          >
+          </app-order-select>
+        </div>
+        <div class="col-12 col-lg-3">
+          <app-show-x-results
+            #movieCastShowXResults
+            [resultsOptions]="resultsOptions()"
+            [enabledResultsParams]="enabledResultsParams()"
+            [itemsPerPage]="actorsPerPage()"
+            (onSelectResultOption)="changeItemsPerPage($event)">
+          </app-show-x-results>
+        </div>
+      </div>
       <hr />
       <div class="table-responsive">
         <table class="table">
@@ -28,9 +41,9 @@
                 | orderCastMemberBy: currentOrder()
                 | paginate
                   : {
-                      itemsPerPage: actorsPerPage,
-                      currentPage: currentPage,
-                      totalItems: totalActors,
+                      itemsPerPage: actorsPerPage(),
+                      currentPage: currentPage(),
+                      totalItems: totalActors(),
                     };
               track castMember.id
             ) {
