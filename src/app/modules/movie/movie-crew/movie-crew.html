@@ -10,6 +10,7 @@
       writing().length > 0 ||
       teleplay().length > 0 ||
       story().length > 0 ||
+      basedOnPoemBy().length > 0 ||
       basedOnNovelBy().length > 0 ||
       basedOnStoryBy().length > 0 ||
       basedOnCharactersBy().length > 0 ||
@@ -99,6 +100,19 @@
                   @for (storyArtist of story(); track storyArtist.id) {
                     <a [routerLink]="['/person', storyArtist.id]">
                       {{ storyArtist.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (basedOnPoemBy().length > 0) {
+              <tr>
+                <td>Based on a Poem By:</td>
+                <td>
+                  @for (author of basedOnPoemBy(); track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
                     </a>
                     <br />
                   }

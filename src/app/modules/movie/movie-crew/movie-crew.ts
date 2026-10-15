@@ -45,6 +45,7 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public teleplay: WritableSignal<CrewMember[]> = signal([]);
   public story: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnPoemBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnNovelBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnStoryBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnCharactersBy: WritableSignal<CrewMember[]> = signal([]);
@@ -158,6 +159,8 @@ export class MovieCrew implements OnInit, OnDestroy {
     this.teleplay.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Teleplay'));
 
     this.story.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Story'));
+
+    this.basedOnPoemBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Poem'));
 
     this.basedOnNovelBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Novel'));
 
