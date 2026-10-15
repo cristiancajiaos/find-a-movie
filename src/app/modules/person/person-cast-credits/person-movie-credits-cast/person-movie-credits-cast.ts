@@ -78,6 +78,8 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public currentPerson!: Person;
 
+  public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+
   public itemsPerPage: WritableSignal<number> = signal(20);
   public page: WritableSignal<number> = signal(1);
 
@@ -98,6 +100,8 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public enabledOrderParams: WritableSignal<string> = signal(
     'Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, characterNameAsc, characterNameDesc, releaseDateAsc, releaseDateDesc',
   );
+
+  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
   ngOnInit(): void {
     this.getPerson();

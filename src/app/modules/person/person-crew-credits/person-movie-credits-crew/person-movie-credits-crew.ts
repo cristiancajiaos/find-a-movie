@@ -58,6 +58,8 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   public currentPerson!: Person;
 
+  public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+
   public itemsPerPage: WritableSignal<number> = signal(20);
   public page: WritableSignal<number> = signal(1);
 
@@ -72,6 +74,8 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   @ViewChild('toSelect') toSelect: ToSelect;
 
   public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
+
+  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
   ngOnInit(): void {
     this.getPerson();

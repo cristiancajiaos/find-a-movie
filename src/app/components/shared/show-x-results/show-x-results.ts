@@ -21,12 +21,12 @@ export class ShowXResults implements OnInit {
 
   @ViewChild('showResults') showResults: NgSelectComponent;
 
-  public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+  resultsOptions: InputSignal<number[]> = input.required<number[]>();
 
   itemsPerPage: InputSignal<number> = input.required<number>();
   onSelectResultOption: OutputEmitterRef<number> = output<number>();
 
-  enabledParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
+  enabledResultsParams: InputSignal<string> = input.required<string>();
 
   ngOnInit(): void {
     this.showXResultsForm = this.fb.group({
