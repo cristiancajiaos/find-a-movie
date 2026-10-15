@@ -11,6 +11,7 @@ import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { RoleSelect } from '../../../../components/shared/role-select/role-select';
 import { SessionStorageService } from '../../../../services/session-storage-service';
 import { PersonCreditsQuery } from '../../../../classes/person/person-credits-query';
+import { ShowXResults } from '../../../../components/shared/show-x-results/show-x-results';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -57,12 +58,14 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   public currentPerson!: Person;
 
-  public page: number = 1;
+  public itemsPerPage: WritableSignal<number> = signal(20);
+  public page: WritableSignal<number> = signal(1);
 
   crewCredits: InputSignal<ResponsePersonCrewCredit[]> = input.required<ResponsePersonCrewCredit[]>();
   personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
+  @ViewChild('personCrewCreditsShowXResults') personCrewCreditsShowXResults!: ShowXResults;
   @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
   @ViewChild('roleSelect') roleSelect: RoleSelect;
   @ViewChild('fromSelect') fromSelect: FromSelect;
@@ -77,6 +80,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.setResultsPerPage();
     this.setOrderParam();
     this.setRolesParam();
     this.setYearFromParam();
@@ -91,6 +95,19 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   private getPerson(): void {
     this.loadingPerson = true;
     this.currentPerson = this.sessionStorageService.getItem('person');
+  }
+
+  private setResultsPerPage(): void {
+    if (this.personCreditsQuery().resultsPerPage) {
+      if (
+        this.personCrewCreditsShowXResults
+          .resultsOptions()
+          .includes(this.personCreditsQuery().resultsPerPage)
+      ) {
+        this.itemsPerPage.set(this.personCreditsQuery().resultsPerPage);
+        this.personCrewCreditsShowXResults.setXResults(this.itemsPerPage());
+      }
+    }
   }
 
   private setOrderParam(): void {
@@ -195,7 +212,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   }
 
   public changePage(pageNumber: number) {
-    this.page = pageNumber;
+    this.page.set(pageNumber);
     this.crewParagraph.nativeElement.scrollIntoView({ behaviour: 'smooth', block: 'start' });
   }
 
@@ -215,8 +232,14 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     this.selectedRoles.set([]);
   }
 
+  public changeItemsPerPage(itemsPerPage: number) {
+    this.itemsPerPage.set(itemsPerPage);
+  }
+
   public resetFiltersByDefault(): void {
-    this.page = 1;
+    this.itemsPerPage.set(20);
+    this.personCrewCreditsShowXResults.setDefaultValue();
+    this.page.set(1);
     this.displayMode.set('grid');
     this.orderSelectPersonCrewCredits.clearOrderCriteria();
     this.roleSelect.clearRoleSelect();

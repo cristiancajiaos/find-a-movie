@@ -3,11 +3,20 @@
     <div class="col-12">
       <section class="person-crew-credits-controls">
         <div class="row">
-          <div class="col-12 col-lg-6">
+          <div class="col-6 col-lg-3">
             <app-display-selector
               [displayMode]="displayMode()"
-              (onDisplayChange)="changeDisplay($event)">
+              (onDisplayChange)="changeDisplay($event)"
+            >
             </app-display-selector>
+          </div>
+          <div class="col-6 col-lg-3">
+            <app-show-x-results
+              #personCrewCreditsShowXResults
+              [itemsPerPage]="itemsPerPage()"
+              (onSelectResultOption)="changeItemsPerPage($event)"
+            >
+            </app-show-x-results>
           </div>
           <div class="col-12 col-lg-6">
             <app-order-select
@@ -17,7 +26,7 @@
               [defaultOrderCriteria]="defaultOrder()"
               (onOrderCriteriaChange)="orderCriteriaChange($event)"
               (onClearOrderCriteria)="clearOrderCriteria($event)"
-              >
+            >
             </app-order-select>
           </div>
           <div class="col-12 col-lg-6">
@@ -25,7 +34,8 @@
               #roleSelect
               [roles]="roles()"
               (onRoleSelectChange)="defineSelectedRoles($event)"
-              (onClearRoleSelect)="clearRoleSelect($event)">
+              (onClearRoleSelect)="clearRoleSelect($event)"
+            >
             </app-role-select>
           </div>
           <div class="col-6 col-lg-3">
@@ -34,7 +44,7 @@
               [yearsFrom]="yearsFrom()"
               (onSelectFromYear)="setYearFrom($event)"
               (onClearSelectFromYear)="clearSelectYearFrom($event)"
-              >
+            >
             </app-from-select>
           </div>
           <div class="col-6 col-lg-3">
@@ -43,7 +53,7 @@
               [yearsTo]="yearsTo()"
               (onSelectToYear)="setYearTo($event)"
               (onClearSelectToYear)="clearSelectYearTo($event)"
-              >
+            >
             </app-to-select>
           </div>
         </div>
@@ -62,10 +72,14 @@
               <div class="row" #crewCreditsGrid>
                 @for (
                   crewRole of crewCredits()
-                  | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles():fromYear():toYear()
-                  | paginate: { itemsPerPage: 20, currentPage: page }
-                  ; track
-                  crewRole) {
+                    | orderPersonCrewCreditsBy
+                      : selectedOrderCriteria()
+                      : selectedRoles()
+                      : fromYear()
+                      : toYear()
+                    | paginate: { itemsPerPage: itemsPerPage(), currentPage: page() };
+                  track crewRole
+                ) {
                   <div class="col-12 col-sm-6 col-lg-3">
                     <app-person-crew-credit-grid
                       [crewRole]="crewRole"
@@ -79,10 +93,14 @@
             <section class="crew-credits-display-list">
               @for (
                 crewRole of crewCredits()
-                | orderPersonCrewCreditsBy:selectedOrderCriteria():selectedRoles():fromYear():toYear()
-                | paginate: { itemsPerPage: 20, currentPage: page }
-                ; track
-                crewRole) {
+                  | orderPersonCrewCreditsBy
+                    : selectedOrderCriteria()
+                    : selectedRoles()
+                    : fromYear()
+                    : toYear()
+                  | paginate: { itemsPerPage: itemsPerPage(), currentPage: page() };
+                track crewRole
+              ) {
                 <app-person-crew-credit-list [crewRole]="crewRole"></app-person-crew-credit-list>
               }
             </section>
@@ -91,7 +109,7 @@
           <p>No results were obtained by the applied filters.</p>
         }
       </section>
-      <hr/>
+      <hr />
       <app-pagination (pageChange)="changePage($event)"></app-pagination>
     </div>
   </div>

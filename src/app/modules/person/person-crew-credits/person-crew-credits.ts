@@ -60,6 +60,14 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
       }
     });
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['resultsPerPage']) {
+        this.personCreditsQuery.update((query) => {
+          return {
+            ...query,
+            resultsPerPage: parseInt(queryParams['resultsPerPage'])
+          }
+        });
+      }
       if (queryParams['order']) {
         this.personCreditsQuery.update((query) => {
           return {
