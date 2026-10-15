@@ -1,0 +1,20 @@
+<section class="show-x-results">
+  <form [formGroup]="showXResultsForm">
+    <div class="form-group mb-3">
+      <label (click)="focusSelect()">
+        {{showResultsLabel}}
+      </label>
+      <ng-select
+        #showResults
+        formControlName="showResults"
+        clearable="false"
+        (change)="onSelectResultOptionChange($event)">
+        @for (resultsOption of resultsOptions(); track resultsOption) {
+          <ng-option [value]="resultsOption">
+            {{resultsOption}}
+          </ng-option>
+        }
+      </ng-select>
+    </div>
+  </form>
+</section>

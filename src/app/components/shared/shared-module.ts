@@ -12,6 +12,7 @@ import { RoleSelect } from './role-select/role-select';
 import { Loading } from './loading/loading';
 import { Pagination } from './pagination/pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ShowXResults } from './show-x-results/show-x-results';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ToSelect,
     RoleSelect,
     Pagination,
+    ShowXResults,
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FromSelect,
     ToSelect,
     RoleSelect,
-    Pagination
+    Pagination,
+    ShowXResults
   ]
 })
 export class SharedModule { }

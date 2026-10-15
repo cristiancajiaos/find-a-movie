@@ -1,10 +1,23 @@
 <section class="person-movie-credits-cast">
   <div class="row">
     <div class="col-12">
-      <app-display-selector
-        [displayMode]="displayMode()"
-        (onDisplayChange)="changeDisplay($event)">
-      </app-display-selector>
+      <div class="row">
+        <div class="col-6 col-lg-9">
+          <app-display-selector
+            [displayMode]="displayMode()"
+            (onDisplayChange)="changeDisplay($event)"
+          >
+          </app-display-selector>
+        </div>
+        <div class="col-6 col-lg-3">
+          <app-show-x-results
+            #personCastCreditsShowXResults
+            [itemsPerPage]="itemsPerPage()"
+            (onSelectResultOption)="changeItemsPerPage($event)">
+          </app-show-x-results>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12 col-lg-6">
           <app-order-select
@@ -14,7 +27,7 @@
             [defaultOrderCriteria]="defaultOrder()"
             (onOrderCriteriaChange)="orderCriteriaChange($event)"
             (onClearOrderCriteria)="clearOrderCriteria($event)"
-            >
+          >
           </app-order-select>
         </div>
         <div class="col-6 col-lg-3">
@@ -23,7 +36,7 @@
             [yearsFrom]="yearsFrom()"
             (onSelectFromYear)="setYearFrom($event)"
             (onClearSelectFromYear)="clearSelectYearFrom($event)"
-            >
+          >
           </app-from-select>
         </div>
         <div class="col-6 col-lg-3">
@@ -32,7 +45,7 @@
             [yearsTo]="yearsTo()"
             (onSelectToYear)="setYearTo($event)"
             (onClearSelectToYear)="clearSelectYearTo($event)"
-            >
+          >
           </app-to-select>
         </div>
       </div>
@@ -50,10 +63,10 @@
               <div class="row" #castCreditsList>
                 @for (
                   castRole of castCredits()
-                  | orderPersonCastCreditsBy:selectedOrderCriteria():fromYear():toYear()
-                  | paginate: { itemsPerPage: 20, currentPage: page }
-                  ; track
-                  castRole.id) {
+                    | orderPersonCastCreditsBy: selectedOrderCriteria() : fromYear() : toYear()
+                    | paginate: { itemsPerPage: itemsPerPage(), currentPage: page() };
+                  track castRole.id
+                ) {
                   <div class="col-12 col-sm-6 col-lg-3">
                     <app-person-cast-credit-grid [castRole]="castRole">
                     </app-person-cast-credit-grid>
@@ -66,15 +79,15 @@
             <section class="cast-credits-display-list">
               @for (
                 castRole of castCredits()
-                | orderPersonCastCreditsBy:selectedOrderCriteria():fromYear():toYear()
-                | paginate: { itemsPerPage: 20, currentPage: page }
-                ; track
-                castRole.id) {
+                  | orderPersonCastCreditsBy: selectedOrderCriteria() : fromYear() : toYear()
+                  | paginate: { itemsPerPage: itemsPerPage(), currentPage: page() };
+                track castRole.id
+              ) {
                 <app-person-cast-credit-list [castRole]="castRole"> </app-person-cast-credit-list>
               }
             </section>
           }
-          <hr/>
+          <hr />
           <app-pagination (pageChange)="changePage($event)"></app-pagination>
         } @else {
           <p>No results were obtained by the applied filters.</p>

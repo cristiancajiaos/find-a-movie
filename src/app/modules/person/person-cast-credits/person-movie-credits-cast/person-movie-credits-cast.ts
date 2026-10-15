@@ -10,6 +10,7 @@ import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { SessionStorageService } from '../../../../services/session-storage-service';
 import { PersonCreditsQuery } from '../../../../classes/person/person-credits-query';
 import { Subscription } from 'rxjs';
+import { ShowXResults } from '../../../../components/shared/show-x-results/show-x-results';
 
 @Component({
   selector: 'app-person-movie-credits-cast',
@@ -57,12 +58,14 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public currentPerson!: Person;
 
-  public page: number = 1;
+  public itemsPerPage: WritableSignal<number> = signal(20);
+  public page: WritableSignal<number> = signal(1);
 
   castCredits: InputSignal<ResponsePersonCastCredit[]> = input.required<ResponsePersonCastCredit[]>();
   personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
+  @ViewChild('personCastCreditsShowXResults') personCastCreditsShowXResults!: ShowXResults;
   @ViewChildren('orderSelectPersonCastCredits') orderSelectPersonCastCredits: QueryList<OrderSelect>;
   @ViewChild('castCreditsList') castCreditsList!: ElementRef;
   @ViewChild('fromSelect') fromSelect: FromSelect;
@@ -178,7 +181,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public changePage(pageNumber: number) {
-    this.page = pageNumber;
+    this.page.set(pageNumber);
     this.castParagraph.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -188,20 +191,26 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public orderCriteriaChange(orderCriteria: OrderCriteria) {
     this.selectedOrderCriteria.set(orderCriteria);
-    this.page = 1;
+    this.page.set(1);
   }
 
   public clearOrderCriteria(event: boolean): void {
     this.selectedOrderCriteria.set(null);
-    this.page = 1;
+    this.page.set(1);
   }
 
   public resetFiltersByDefault(): void {
-    this.page = 1;
+    this.itemsPerPage.set(20);
+    this.personCastCreditsShowXResults.setDefaultValue();
+    this.page.set(1);
     this.displayMode.set('grid');
     this.orderSelectPersonCastCredits.first.clearOrderCriteria();
     this.clearSelectYearFrom(true);
     this.selectedOrderCriteria.set(null);
+  }
+
+  public changeItemsPerPage(itemsPerPage: number) {
+    this.itemsPerPage.set(itemsPerPage)
   }
 
   ngOnDestroy(): void {
