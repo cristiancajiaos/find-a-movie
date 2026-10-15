@@ -107,6 +107,19 @@
                 </td>
               </tr>
             }
+            @if (screenstory().length > 0) {
+              <tr>
+                <td>Screenstory By:</td>
+                <td>
+                  @for (screenstoryArtist of screenstory(); track screenstoryArtist.id) {
+                    <a [routerLink]="['/person', screenstoryArtist.id]">
+                      {{ screenstoryArtist.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
             @if (basedOnPoemBy().length > 0) {
               <tr>
                 <td>Based on a Poem By:</td>
