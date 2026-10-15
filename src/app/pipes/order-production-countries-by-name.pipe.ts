@@ -9,8 +9,8 @@ export class OrderProductionCountriesByNamePipe implements PipeTransform {
 
   transform(productionCountries: ProductionCountry[]): ProductionCountry[] {
       productionCountries.sort((a, b) => {
-        const productionCountryA = a.name;
-        const productionCountryB = b.name;
+        const productionCountryA: string = a.name;
+        const productionCountryB: string = b.name;
         return productionCountryA.localeCompare(productionCountryB);
       });
 

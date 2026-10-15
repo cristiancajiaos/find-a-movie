@@ -9,8 +9,8 @@ export class OrderProductionCompaniesByNamePipe implements PipeTransform {
 
   transform(productionCompanies: ProductionCompany[]): ProductionCompany[] {
     productionCompanies.sort((a, b) => {
-      const productionCompanyA = a.name;
-      const productionCompanyB = b.name;
+      const productionCompanyA: string = a.name;
+      const productionCompanyB: string = b.name;
       return productionCompanyA.localeCompare(productionCompanyB)
     });
 
