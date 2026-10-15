@@ -37,6 +37,10 @@ export class ShowXResults implements OnInit {
     this.showXResultsForm.controls['showResults'].setValue(this.resultsOptions()[0]);
   }
 
+  public setXResults(results: number) {
+    this.showXResultsForm.controls['showResults'].setValue(results);
+  }
+
   public onSelectResultOptionChange(resultsOption: number) {
     this.onSelectResultOption.emit(resultsOption);
   }

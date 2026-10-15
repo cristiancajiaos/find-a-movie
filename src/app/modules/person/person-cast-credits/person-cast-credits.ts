@@ -66,6 +66,14 @@ export class PersonCastCredits implements OnInit, OnDestroy {
       }
     });
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
+      if (queryParams['resultsPerPage']) {
+        this.personCreditsQuery.update((query) => {
+          return {
+            ...query,
+            resultsPerPage: parseInt(queryParams['resultsPerPage'])
+          }
+        });
+      }
       if (queryParams['order']) {
         this.personCreditsQuery.update((query) => {
           return {
@@ -74,16 +82,6 @@ export class PersonCastCredits implements OnInit, OnDestroy {
           }
         });
       }
-      /*
-      if (queryParams['roles']) {
-        this.personCreditsQuery.update((query) => {
-          return {
-            ...query,
-            roles: new String(queryParams['roles']).split(',')
-          }
-        });
-      }
-      */
       if (queryParams['fromYear']) {
         this.personCreditsQuery.update((query) => {
           return {
