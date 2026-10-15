@@ -37,7 +37,7 @@
                 }
               </td>
               <td>
-                @for (productionCompany of movie().production_companies; track productionCompany) {
+                @for (productionCompany of movie().production_companies | orderProductionCompaniesByName; track productionCompany) {
                   {{ productionCompany.name }}
                   <br />
                 }
