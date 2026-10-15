@@ -10,6 +10,7 @@ import { OrderCrewMembersByLastNamePipe } from './order-crew-members-by-last-nam
 import { OrderGenresByNamePipe } from './order-genres-by-name.pipe';
 import { OrderProductionCompaniesByNamePipe } from './order-production-companies-by-name.pipe';
 import { OrderProductionCountriesByNamePipe } from './order-production-countries-by-name.pipe';
+import { OrderLanguagesByNamePipe } from './order-languages-by-name.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { OrderProductionCountriesByNamePipe } from './order-production-countries
     OrderCrewMembersByLastNamePipe,
     OrderGenresByNamePipe,
     OrderProductionCompaniesByNamePipe,
-    OrderProductionCountriesByNamePipe
+    OrderProductionCountriesByNamePipe,
+    OrderLanguagesByNamePipe
   ],
   imports: [
     CommonModule
@@ -37,7 +39,8 @@ import { OrderProductionCountriesByNamePipe } from './order-production-countries
     OrderCrewMembersByLastNamePipe,
     OrderGenresByNamePipe,
     OrderProductionCompaniesByNamePipe,
-    OrderProductionCountriesByNamePipe
+    OrderProductionCountriesByNamePipe,
+    OrderLanguagesByNamePipe
   ]
 })
 export class PipesModule { }

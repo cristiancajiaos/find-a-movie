@@ -71,7 +71,7 @@
               }
             </td>
             <td>
-              @for (spokenLanguage of movie().spoken_languages; track spokenLanguage) {
+              @for (spokenLanguage of movie().spoken_languages | orderLanguagesByName; track spokenLanguage) {
                 {{ spokenLanguage.english_name }}
                 <br />
               }
