@@ -11,6 +11,7 @@ import { Movie } from '../../../classes/movie';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
+import { ShowXResults } from '../../../components/shared/show-x-results/show-x-results';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -31,9 +32,9 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
 
   private movie: Movie = null;
 
-  public currentPage: number = 1;
-  public crewMembersPerPage: number = 50;
-  public totalCrewMembers: number = 0;
+  public currentPage: WritableSignal<number> = signal(1);
+  public crewMembersPerPage: WritableSignal<number> = signal(25);
+  public totalCrewMembers: WritableSignal<number> = signal(0);
 
   public movieFullCrew: WritableSignal<CrewMember[]> = signal([]);
 
@@ -49,6 +50,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
   ]);
 
+  public resultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
+
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
@@ -58,7 +61,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
 
   @ViewChildren('orderSelectMovieFullCrew') orderSelectMovieFullCrew!: QueryList<OrderSelect>;
-
+  @ViewChild('movieCrewShowXResults') movieCrewShowXResults!: ShowXResults;
   @ViewChild('title') title!: ElementRef;
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
@@ -68,6 +71,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   private orderSelectSubscription: Subscription = new Subscription();
 
   public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, jobAsc, jobDesc');
+
+  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 25, 50, 100 (other values are not valid)');
 
   ngOnInit(): void {
     this.getMovie();
@@ -80,6 +85,9 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
       if (queryParams['order']) {
         this.currentOrderStr.set(queryParams['order']);
+      }
+      if (queryParams['resultsPerPage']) {
+        this.setResultsPerPage(parseInt(queryParams['resultsPerPage']));
       }
     });
   }
@@ -102,6 +110,11 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
         this.getFullCrew();
       },
     );
+  }
+
+  private setResultsPerPage(results: number) {
+    this.crewMembersPerPage.set(results);
+    this.movieCrewShowXResults.setXResults(results);
   }
 
   private setInitialOrder(): void {
@@ -140,7 +153,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
       next: (crew) => {
         this.movieFullCrew.set(crew);
-        this.totalCrewMembers = this.movieFullCrew().length;
+        this.totalCrewMembers.set(this.movieFullCrew().length);
       },
       error: (error) => {
         this.handleError(error);
@@ -164,8 +177,13 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public changePage(page: number): void {
-    this.currentPage = page;
+    this.currentPage.set(page);
     this.title.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  public changeItemsPerPage(itemsPerPage: number) {
+    this.crewMembersPerPage.set(itemsPerPage);
+    this.currentPage.set(1);
   }
 
   ngOnDestroy(): void {
