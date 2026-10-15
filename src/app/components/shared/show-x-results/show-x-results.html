@@ -3,6 +3,9 @@
     <div class="form-group mb-3">
       <label (click)="focusSelect()">
         {{showResultsLabel}}
+        <span [ngbTooltip]="enabledParams()" placement="top">
+          <fa-icon [icon]="circleInfo" [fixedWidth]="true"></fa-icon>
+        </span>
       </label>
       <ng-select
         #showResults

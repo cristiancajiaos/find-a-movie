@@ -1,5 +1,6 @@
 import { Component, inject, input, InputSignal, OnInit, output, OutputEmitterRef, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { faCircleInfo, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -12,6 +13,8 @@ export class ShowXResults implements OnInit {
 
   private fb = inject(FormBuilder);
 
+  public circleInfo: IconDefinition = faCircleInfo;
+
   public showResultsLabel: string = 'Results per page:';
 
   public showXResultsForm: FormGroup;
@@ -22,6 +25,8 @@ export class ShowXResults implements OnInit {
 
   itemsPerPage: InputSignal<number> = input.required<number>();
   onSelectResultOption: OutputEmitterRef<number> = output<number>();
+
+  enabledParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
   ngOnInit(): void {
     this.showXResultsForm = this.fb.group({
