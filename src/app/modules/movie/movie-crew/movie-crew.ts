@@ -55,6 +55,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   public basedOnTVSeriesCreatedBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnTheatrePlayBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnMusicalBy: WritableSignal<CrewMember[]> = signal([]);
+  public originalConceptBy: WritableSignal<CrewMember[]> = signal([]);
   public producing: WritableSignal<CrewMember[]> = signal([]);
   public executiveProducing: WritableSignal<CrewMember[]> = signal([]);
   public coExecutiveProducing: WritableSignal<CrewMember[]> = signal([]);
@@ -192,6 +193,10 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.basedOnMusicalBy.set(
       this.movieCrew().filter((crewMember) => crewMember.job == 'Musical')
+    );
+
+    this.originalConceptBy.set(
+      this.movieCrew().filter((crewMember) => crewMember.job == 'Original Concept')
     );
 
     this.producing.set(

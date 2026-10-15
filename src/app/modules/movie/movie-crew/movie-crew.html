@@ -20,6 +20,7 @@
       basedOnTVSeriesCreatedBy().length > 0 ||
       basedOnTheatrePlayBy().length > 0 ||
       basedOnMusicalBy().length > 0 ||
+      originalConceptBy().length > 0 ||
       producing().length > 0 ||
       executiveProducing().length > 0 ||
       coExecutiveProducing().length > 0 ||
@@ -228,6 +229,19 @@
                 <td>Based on a Musical By:</td>
                 <td>
                   @for (author of basedOnMusicalBy(); track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
+            @if (originalConceptBy().length > 0) {
+              <tr>
+                <td>Original Concept By:</td>
+                <td>
+                  @for (author of originalConceptBy(); track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>

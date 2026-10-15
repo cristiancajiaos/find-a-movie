@@ -202,6 +202,19 @@
               </td>
             </tr>
           }
+          @if (originalConceptBy().length > 0) {
+            <tr>
+              <td>Original Concept By:</td>
+              <td class="text-end">
+                @for (author of originalConceptBy(); track author.id) {
+                  <a [routerLink]="['/person', author.id]">
+                    {{ author.name }}
+                  </a>
+                  <br />
+                }
+              </td>
+            </tr>
+          }
           @if (producing().length > 0) {
             <tr>
               <td>Produced By:</td>
