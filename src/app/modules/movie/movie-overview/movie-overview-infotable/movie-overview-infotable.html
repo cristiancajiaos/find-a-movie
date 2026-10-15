@@ -54,7 +54,7 @@
                 }
               </td>
               <td>
-                @for (productionCountry of movie().production_countries; track productionCountry) {
+                @for (productionCountry of movie().production_countries | orderProductionCountriesByName; track productionCountry) {
                   {{ productionCountry.name }}
                   <br />
                 }
