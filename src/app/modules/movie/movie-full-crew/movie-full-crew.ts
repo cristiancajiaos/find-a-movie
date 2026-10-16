@@ -72,7 +72,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   private queryParamsSubscription: Subscription = new Subscription();
   private orderSelectSubscription: Subscription = new Subscription();
 
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, jobAsc, jobDesc');
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, lastNameAsc, lastNameDesc, jobAsc, jobDesc');
 
   public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 25, 50, 100 (other values are not valid)');
 
@@ -130,6 +130,10 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
       orderCriteria = { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' };
     } else if (this.currentOrderStr() == 'nameDesc') {
       orderCriteria = { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' };
+    } else if (this.currentOrderStr() == 'lastNameAsc') {
+      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' };
+    } else if (this.currentOrderStr() == 'lastNameDesc') {
+      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' };
     } else if (this.currentOrderStr() == 'jobAsc') {
       orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' };
     } else if (this.currentOrderStr() == 'jobDesc') {
