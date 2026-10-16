@@ -60,13 +60,13 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public lastYear: WritableSignal<number> = signal(null);
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
-    { id: Order.DefaultOrder, orderCriteriaName: 'Default Order' },
-    { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' },
-    { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' },
-    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character Name (ascending)' },
-    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character Name (descending)' },
-    { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)' },
-    { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)' },
+    { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
+    { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' },
+    { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' },
+    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name - ascending' },
+    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name - descending' },
+    { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' },
+    { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date - descending' },
   ]);
 
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
@@ -139,23 +139,23 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     if (this.personCreditsQuery().order == 'defaultOrder') {
       orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
     } else if (this.personCreditsQuery().order == 'titleAsc') {
-      orderCriteria = { id: Order.TitleAsc, orderCriteriaName: 'Title (ascending)' };
+      orderCriteria = { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' };
     } else if (this.personCreditsQuery().order == 'titleDesc') {
-      orderCriteria = { id: Order.TitleDesc, orderCriteriaName: 'Title (descending)' };
+      orderCriteria = { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' };
     } else if (this.personCreditsQuery().order == 'characterNameAsc') {
       orderCriteria = {
         id: Order.CharacterNameAsc,
-        orderCriteriaName: 'Character Name (ascending)',
+        orderCriteriaName: 'Character name - ascending',
       };
     } else if (this.personCreditsQuery().order == 'characterNameDesc') {
       orderCriteria = {
         id: Order.CharacterNameDesc,
-        orderCriteriaName: 'Character Name (descending)',
+        orderCriteriaName: 'Character name - descending',
       };
     } else if (this.personCreditsQuery().order == 'releaseDateAsc') {
-      orderCriteria = { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release Date (ascending)' };
+      orderCriteria = { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' };
     } else if (this.personCreditsQuery().order == 'releaseDateDesc') {
-      orderCriteria = { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release Date (descending)' };
+      orderCriteria = { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date -descending' };
     }
 
     if (orderCriteria) {
