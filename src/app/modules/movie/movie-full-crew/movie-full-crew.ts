@@ -44,12 +44,12 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
-    { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
-    { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
-    { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' },
-    { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' },
-    { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' },
-    { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
+    { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' },
+    { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' },
+    { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' },
+    { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' },
+    { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' },
+    { id: Order.JobDesc, orderCriteriaName: 'Job - descending' },
   ]);
 
   public resultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
@@ -127,17 +127,17 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     if (this.currentOrderStr() == 'defaultValue') {
       orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
     } else if (this.currentOrderStr() == 'nameAsc') {
-      orderCriteria = { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' };
+      orderCriteria = { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' };
     } else if (this.currentOrderStr() == 'nameDesc') {
-      orderCriteria = { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' };
+      orderCriteria = { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' };
     } else if (this.currentOrderStr() == 'lastNameAsc') {
-      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' };
+      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' };
     } else if (this.currentOrderStr() == 'lastNameDesc') {
-      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' };
+      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' };
     } else if (this.currentOrderStr() == 'jobAsc') {
-      orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' };
+      orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' };
     } else if (this.currentOrderStr() == 'jobDesc') {
-      orderCriteria = { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' };
+      orderCriteria = { id: Order.JobDesc, orderCriteriaName: 'Job - descending' };
     }
 
     if (this.currentOrderStr() != null) {

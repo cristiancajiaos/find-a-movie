@@ -55,14 +55,14 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   public errorMessage: string = '';
 
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
-    { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order (ascending)' },
-    { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order (descending)' },
-    { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
-    { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
-    { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' },
-    { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' },
-    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name (ascending)' },
-    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name (descending)' },
+    { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order - ascending' },
+    { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order - descending' },
+    { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' },
+    { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' },
+    { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' },
+    { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' },
+    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name - ascending' },
+    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name - descending' },
   ]);
 
   public resultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
@@ -138,26 +138,26 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     let orderCriteria: OrderCriteria = null;
 
     if (this.currentOrderStr() == 'castOrderAsc') {
-      orderCriteria = { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order (ascending)' };
+      orderCriteria = { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order - ascending' };
     } else if (this.currentOrderStr() == 'castOrderDesc') {
-      orderCriteria = { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order (descending)' };
+      orderCriteria = { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order -descending' };
     } else if (this.currentOrderStr() == 'nameAsc') {
-      orderCriteria = { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' };
+      orderCriteria = { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' };
     } else if (this.currentOrderStr() == 'nameDesc') {
-      orderCriteria = { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' };
+      orderCriteria = { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' };
     } else if (this.currentOrderStr() == 'lastNameAsc') {
-      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' };
+      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' };
     } else if (this.currentOrderStr() == 'lastNameDesc') {
-      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' };
+      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' };
     } else if (this.currentOrderStr() == 'characterNameAsc') {
       orderCriteria = {
         id: Order.CharacterNameAsc,
-        orderCriteriaName: 'Character name (ascending)',
+        orderCriteriaName: 'Character name - ascending',
       };
     } else if (this.currentOrderStr() == 'characterNameDesc') {
       orderCriteria = {
         id: Order.CharacterNameDesc,
-        orderCriteriaName: 'Character name (descending)',
+        orderCriteriaName: 'Character name - descending',
       };
     }
 

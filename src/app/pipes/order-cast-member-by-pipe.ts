@@ -18,11 +18,11 @@ export class OrderCastMemberByPipe implements PipeTransform {
         movieCast.sort((a, b) => {
           return b.order - a.order;
         });
-      } else if (orderCriteria.id == Order.NameAsc) {
+      } else if (orderCriteria.id == Order.FirstNameAsc) {
         movieCast.sort((a, b) => {
           return a.name.localeCompare(b.name);
         });
-      } else if (orderCriteria.id == Order.NameDesc) {
+      } else if (orderCriteria.id == Order.FirstNameDesc) {
         movieCast.sort((a, b) => {
           return b.name.localeCompare(a.name);
         });

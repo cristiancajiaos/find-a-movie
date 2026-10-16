@@ -9,11 +9,11 @@ import { Order } from '../enums/order';
 })
 export class OrderCrewMemberByPipe implements PipeTransform {
   transform(movieCrew: CrewMember[], orderCriteria: OrderCriteria): CrewMember[] {
-    if (orderCriteria.id == Order.NameAsc) {
+    if (orderCriteria.id == Order.FirstNameAsc) {
       movieCrew.sort((a, b) => {
         return a.name.localeCompare(b.name);
       });
-    } else if (orderCriteria.id == Order.NameDesc) {
+    } else if (orderCriteria.id == Order.FirstNameDesc) {
       movieCrew.sort((a, b) => {
         return b.name.localeCompare(a.name);
       });
