@@ -46,6 +46,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
     { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
     { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
+    { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' },
+    { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' },
     { id: Order.JobAsc, orderCriteriaName: 'Job (ascending)' },
     { id: Order.JobDesc, orderCriteriaName: 'Job (descending)' },
   ]);

@@ -85,7 +85,7 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   private queryParamsSubscription: Subscription = new Subscription();
   private orderSelectSubscription: Subscription = new Subscription();
 
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: castOrderAsc, castOrderDesc, nameAsc, nameDesc, characterNameAsc, characterNameDesc');
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: castOrderAsc, castOrderDesc, nameAsc, nameDesc, lastNameAsc, lastNameDesc, characterNameAsc, characterNameDesc');
 
   public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 25, 50, 100 (other values are not valid)');
 
@@ -145,6 +145,10 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
       orderCriteria = { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' };
     } else if (this.currentOrderStr() == 'nameDesc') {
       orderCriteria = { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' };
+    } else if (this.currentOrderStr() == 'lastNameAsc') {
+      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' };
+    } else if (this.currentOrderStr() == 'lastNameDesc') {
+      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' };
     } else if (this.currentOrderStr() == 'characterNameAsc') {
       orderCriteria = {
         id: Order.CharacterNameAsc,
