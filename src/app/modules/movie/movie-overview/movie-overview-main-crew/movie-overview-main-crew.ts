@@ -37,6 +37,7 @@ export class MovieOverviewMainCrew implements OnChanges {
   public basedOnTVSeriesCreatedBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnTheatrePlayBy: WritableSignal<CrewMember[]> = signal([]);
   public basedOnMusicalBy: WritableSignal<CrewMember[]> = signal([]);
+  public basedOnVideoGameBy: WritableSignal<CrewMember[]> = signal([]);
   public originalConceptBy: WritableSignal<CrewMember[]> = signal([]);
   public producing: WritableSignal<CrewMember[]> = signal([]);
   public executiveProducing: WritableSignal<CrewMember[]> = signal([]);
@@ -58,76 +59,84 @@ export class MovieOverviewMainCrew implements OnChanges {
 
       this.allWriters.set(
         this.movieCrew().filter(
-          (crewMember) => crewMember.job == 'Screenplay' || crewMember.job == 'Writer' || crewMember.job == 'Script'
+          (crewMember) =>
+            crewMember.job == 'Screenplay' ||
+            crewMember.job == 'Writer' ||
+            crewMember.job == 'Script',
         ),
       );
 
       this.allWriters().forEach((writer) => {
-        if (!this.writing().map(writerMap => writerMap.id).find(writerFind => writerFind == writer.id)) {
+        if (
+          !this.writing()
+            .map((writerMap) => writerMap.id)
+            .find((writerFind) => writerFind == writer.id)
+        ) {
           this.writing.update((writers) => {
-            return [...writers, writer]
+            return [...writers, writer];
           });
         }
       });
-
 
       this.teleplay.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Teleplay'));
 
       this.story.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Story'));
 
-      this.screenstory.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Screenstory'));
+      this.screenstory.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Screenstory'),
+      );
 
       this.basedOnPoemBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Poem'));
 
       this.basedOnNovelBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Novel'));
 
-      this.basedOnStoryBy.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Original Story',
-      ));
-
-      this.basedOnCharactersBy.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Characters',
-      ));
-
-      this.basedOnBookBy.set(
-        this.movieCrew().filter((crewMember) => crewMember.job == 'Book')
+      this.basedOnStoryBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Original Story'),
       );
 
-      this.basedOnComicBookBy.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Comic Book',
-      ));
+      this.basedOnCharactersBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Characters'),
+      );
 
-      this.basedOnFilmWrittenBy.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Original Film Writer',
-      ));
+      this.basedOnBookBy.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Book'));
 
-      this.basedOnTVSeriesCreatedBy.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Original Series Creator',
-      ));
+      this.basedOnComicBookBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Comic Book'),
+      );
 
-      this.basedOnTheatrePlayBy.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Theatre Play',
-      ));
+      this.basedOnFilmWrittenBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Original Film Writer'),
+      );
+
+      this.basedOnTVSeriesCreatedBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Original Series Creator'),
+      );
+
+      this.basedOnTheatrePlayBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Theatre Play'),
+      );
 
       this.basedOnMusicalBy.set(
-        this.movieCrew().filter((crewMember) => crewMember.job == 'Musical')
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Musical'),
+      );
+
+      this.basedOnVideoGameBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Video Game'),
       );
 
       this.originalConceptBy.set(
-        this.movieCrew().filter((crewMember) => crewMember.job == 'Original Concept')
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Original Concept'),
       );
 
-      this.producing.set(
-        this.movieCrew().filter((crewMember) => crewMember.job == 'Producer')
+      this.producing.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Producer'));
+
+      this.executiveProducing.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Executive Producer'),
       );
 
-      this.executiveProducing.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Executive Producer',
-      ));
-
-      this.coExecutiveProducing.set(this.movieCrew().filter(
-        (crewMember) => crewMember.job == 'Co-Executive Producer',
-      ));
+      this.coExecutiveProducing.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Co-Executive Producer'),
+      );
     }
   }
 }

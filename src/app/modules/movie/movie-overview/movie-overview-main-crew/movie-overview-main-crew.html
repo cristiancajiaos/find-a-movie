@@ -215,6 +215,19 @@
               </td>
             </tr>
           }
+          @if (basedOnVideoGameBy().length > 0) {
+              <tr>
+                <td>Based on a Video Game By:</td>
+                <td class="text-end">
+                  @for (author of basedOnVideoGameBy() | orderCrewMembersByLastName; track author.id) {
+                    <a [routerLink]="['/person', author.id]">
+                      {{ author.name }}
+                    </a>
+                    <br />
+                  }
+                </td>
+              </tr>
+            }
           @if (originalConceptBy().length > 0) {
             <tr>
               <td>Original Concept By:</td>
