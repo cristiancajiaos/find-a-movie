@@ -56,9 +56,7 @@ export class MovieComponent implements OnInit, OnDestroy {
     });
 
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      if (this.movieFound) {
-        this.setTitle();
-      } else {
+      if (!this.movieFound) {
         if (this.movieError) {
           if (this.movieError.status && this.movieError.status === 404) {
             this.movieNotFound = true;
@@ -96,15 +94,6 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   public reloadMovie(event: boolean): void {
     this.getMovie();
-  }
-
-  private setTitle(): void {
-    this.formattedTitle = this.movieService.getFormattedMovieTitle(
-      this.movie().title,
-      this.movie().original_title,
-      this.movie().release_date,
-    );
-    this.titleService.setTitle(this.formattedTitle);
   }
 
   private setMoviePoster(): void {

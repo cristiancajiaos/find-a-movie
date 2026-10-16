@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
@@ -7,6 +15,7 @@ import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseVideo } from '../../../classes/response-video';
 import { BackdropImage } from '../../../classes/response-image/backdrop-image';
+import { TitleService } from '../../../services/title-service';
 
 @Component({
   selector: 'app-movie-overview',
@@ -16,9 +25,9 @@ import { BackdropImage } from '../../../classes/response-image/backdrop-image';
   styleUrl: './movie-overview.scss',
 })
 export class MovieOverview implements OnInit, OnDestroy {
-
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
+  private titleService = inject(TitleService);
 
   public id: number = 0;
 
@@ -68,20 +77,24 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getTrailer: Observable<ResponseVideo> = this.movieService.getMovieVideos(this.id);
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
 
-    this.getMovieDetailsSubscription = forkJoin([getMovie, getCredits, getTrailer, getImages]).subscribe({
+    this.getMovieDetailsSubscription = forkJoin([
+      getMovie,
+      getCredits,
+      getTrailer,
+      getImages,
+    ]).subscribe({
       next: ([movie, credits, responseVideo, movieImages]) => {
         this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideo);
         this.movieImages.set(movieImages);
         this.movieFound = true;
+        this.setTitle();
       },
       error: (error) => {
         this.handleError(error);
       },
-      complete: () => {
-
-      }
+      complete: () => {},
     });
   }
 
@@ -92,6 +105,15 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public reloadMovieOverview(event: boolean) {
     this.getMovieAndCredits();
+  }
+
+  private setTitle(): void {
+    const formattedTitle = this.movieService.getFormattedMovieTitle(
+      this.movie().title,
+      this.movie().original_title,
+      this.movie().release_date,
+    );
+    this.titleService.setTitle(formattedTitle);
   }
 
   ngOnDestroy(): void {
