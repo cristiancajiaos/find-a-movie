@@ -12,5 +12,7 @@ export enum Order {
   CharacterNameAsc = 10,
   CharacterNameDesc = 11,
   CastOrderAsc = 12,
-  CastOrderDesc = 13
+  CastOrderDesc = 13,
+  LastNameAsc = 14,
+  LastNameDesc = 15
 }

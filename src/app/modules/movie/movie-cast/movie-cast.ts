@@ -59,6 +59,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order (descending)' },
     { id: Order.NameAsc, orderCriteriaName: 'Name (ascending)' },
     { id: Order.NameDesc, orderCriteriaName: 'Name (descending)' },
+    { id: Order.LastNameAsc, orderCriteriaName: 'Last name (ascending)' },
+    { id: Order.LastNameDesc, orderCriteriaName: 'Last name (descending)' },
     { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name (ascending)' },
     { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name (descending)' },
   ]);
