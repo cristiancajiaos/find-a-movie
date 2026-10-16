@@ -91,14 +91,30 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     this.setYearToParam();
   }
 
+  private getPerson(): void {
+    this.loadingPerson = true;
+    this.currentPerson = this.sessionStorageService.getItem('person');
+  }
+
   private setRoles(): void {
     const roles: string[] = this.crewCredits().map((crewCredit) => crewCredit.job);
     this.roles.set([...new Set(roles)]);
   }
 
-  private getPerson(): void {
-    this.loadingPerson = true;
-    this.currentPerson = this.sessionStorageService.getItem('person');
+  private setYearsLimit(): void {
+    let years: number[] = this.crewCredits().map((crewCredit) => {
+      const date = new Date(crewCredit.release_date);
+      return date.getFullYear();
+    });
+    const firstYear: number = years
+      .filter((year) => !isNaN(year))
+      .reduce((min, year) => (year < min ? year : min));
+    this.lastYear.set(years
+      .filter((year) => !isNaN(year))
+      .reduce((max, year) => (year > max ? year : max)));
+    for (let i = firstYear; i <= this.lastYear(); i++) {
+      this.yearsFrom.update(numbers => [...numbers, i]);
+    }
   }
 
   private setResultsPerPage(): void {
@@ -160,24 +176,38 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     }
   }
 
-  public defineSelectedRoles(roles: string[]): void {
-    this.selectedRoles.set(roles);
+  private resetToPageOne(): void {
+    this.currentPage.set(1);
   }
 
-  private setYearsLimit(): void {
-    let years: number[] = this.crewCredits().map((crewCredit) => {
-      const date = new Date(crewCredit.release_date);
-      return date.getFullYear();
-    });
-    const firstYear: number = years
-      .filter((year) => !isNaN(year))
-      .reduce((min, year) => (year < min ? year : min));
-    this.lastYear.set(years
-      .filter((year) => !isNaN(year))
-      .reduce((max, year) => (year > max ? year : max)));
-    for (let i = firstYear; i <= this.lastYear(); i++) {
-      this.yearsFrom.update(numbers => [...numbers, i]);
-    }
+  public changeDisplay(display: string) {
+    this.displayMode.set(display);
+  }
+
+  public changeItemsPerPage(itemsPerPage: number) {
+    this.itemsPerPage.set(itemsPerPage);
+    this.resetToPageOne();
+  }
+
+
+  public orderCriteriaChange(orderCriteria: OrderCriteria) {
+    this.selectedOrderCriteria.set(orderCriteria);
+    this.resetToPageOne();
+  }
+
+  public clearOrderCriteria(event: boolean): void {
+    this.selectedOrderCriteria.set(null);
+    this.resetToPageOne();
+  }
+
+  public defineSelectedRoles(roles: string[]): void {
+    this.selectedRoles.set(roles);
+    this.resetToPageOne();
+  }
+
+  public clearRoleSelect(event: boolean): void {
+    this.selectedRoles.set([]);
+    this.resetToPageOne();
   }
 
   public setYearFrom(year: number): void {
@@ -193,6 +223,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
       if (year) {
         this.yearsTo.set(structuredClone(yearsTo));
       }
+      this.resetToPageOne();
     } else {
       this.fromYear.set(null);
     }
@@ -204,15 +235,18 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     this.yearsTo.set([]);
     this.fromSelect.yearsFromSelectForm.reset();
     this.toSelect.disableSelect();
+    this.resetToPageOne();
   }
 
   public setYearTo(year: number): void {
     this.toYear.set(year ? year : null);
     this.toSelect.setYearTo(year);
+    this.resetToPageOne();
   }
 
   public clearSelectYearTo(event: boolean) {
     this.setYearFrom(this.fromYear());
+    this.resetToPageOne();
   }
 
   public changePage(pageNumber: number) {
@@ -220,35 +254,14 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     this.crewParagraph.nativeElement.scrollIntoView({ behaviour: 'smooth', block: 'start' });
   }
 
-  public changeDisplay(display: string) {
-    this.displayMode.set(display);
-  }
-
-  public orderCriteriaChange(orderCriteria: OrderCriteria) {
-    this.selectedOrderCriteria.set(orderCriteria);
-  }
-
-  public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria.set(null);
-  }
-
-  public clearRoleSelect(event: boolean): void {
-    this.selectedRoles.set([]);
-  }
-
-  public changeItemsPerPage(itemsPerPage: number) {
-    this.itemsPerPage.set(itemsPerPage);
-    this.currentPage.set(1);
-  }
-
   public resetFiltersByDefault(): void {
+    this.displayMode.set('grid');
     this.itemsPerPage.set(20);
     this.personCrewCreditsShowXResults.setDefaultValue();
-    this.currentPage.set(1);
-    this.displayMode.set('grid');
     this.orderSelectPersonCrewCredits.clearOrderCriteria();
     this.roleSelect.clearRoleSelect();
     this.selectedRoles.set([]);
     this.clearSelectYearFrom(true);
+    this.resetToPageOne();
   }
 }

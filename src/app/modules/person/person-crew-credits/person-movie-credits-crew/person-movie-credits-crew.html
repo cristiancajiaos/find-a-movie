@@ -80,7 +80,7 @@
                       : fromYear()
                       : toYear()
                     | paginate: { itemsPerPage: itemsPerPage(), currentPage: currentPage() };
-                  track crewRole
+                  track crewRole.credit_id
                 ) {
                   <div class="col-12 col-sm-6 col-lg-3">
                     <app-person-crew-credit-grid
@@ -101,7 +101,7 @@
                     : fromYear()
                     : toYear()
                   | paginate: { itemsPerPage: itemsPerPage(), currentPage: currentPage() };
-                track crewRole
+                track crewRole.credit_id
               ) {
                 <app-person-crew-credit-list [crewRole]="crewRole"></app-person-crew-credit-list>
               }
