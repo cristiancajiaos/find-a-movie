@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input, WritableSignal, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -29,8 +29,12 @@ export class SearchInputPerson implements OnInit, OnDestroy {
   dropdownMenuEnd = input<boolean>(true);
 
   public personInput: FormControl = new FormControl('');
-  public placeholder: string = 'Eg. Steven Spielberg';
-  public ariaLabel: string = 'Search Person';
+  public placeholder: WritableSignal<string> = signal('Eg. Steven Spielberg');
+  public ariaLabel: WritableSignal<string> = signal('Search Person');
+
+  public viewAllResultsText: WritableSignal<string> = signal('View all results');
+  public noResultsObtainedText: WritableSignal<string> = signal('No results obtained');
+
   @ViewChild('searchPersonInput') searchPersonInput: ElementRef;
 
   @ViewChild('personSearchDropdown') personSearchDropdown: NgbDropdown;

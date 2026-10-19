@@ -9,8 +9,8 @@
           type="search"
           (search)="togglePersonSearchDropdownBySearch()"
           (focus)="togglePersonSearchDropdownByFocus()"
-          [placeholder]="placeholder"
-          [aria-label]="ariaLabel"
+          [placeholder]="placeholder()"
+          [aria-label]="ariaLabel()"
           [formControl]="personInput"
         />
         <button class="btn border text-light" type="submit">
@@ -34,11 +34,13 @@
           <div class="dropdown-divider"></div>
           <a ngbDropdownItem class="view-all-results" (click)="processPersonSearch()">
             <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
-            View all results
+            {{viewAllResultsText()}}
           </a>
         }
         @if (personResults.length == 0) {
-          <a ngbDropdownItem class="no-results-obtained">No results obtained</a>
+          <a ngbDropdownItem class="no-results-obtained">
+            {{noResultsObtainedText()}}
+          </a>
         }
       </div>
     </div>
