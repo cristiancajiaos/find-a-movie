@@ -1,46 +1,46 @@
 <section class="person-infotable">
-  <h2>General Information</h2>
+  <h2>{{generalInformationTitle()}}</h2>
   <div class="table-responsive">
     <table class="table table-bordered table-striped">
       <tbody>
         @if (person().birthday) {
           <tr>
-            <td>Born:</td>
+            <td>{{bornTable()}}</td>
             <td>
-              {{ personBirthDay | date: 'longDate' }}
+              {{ personBirthDay() | date: 'longDate' }}
               @if (person().place_of_birth) {
                 <br />
-                in {{ person().place_of_birth }}
+                {{bornInTable()}} {{ person().place_of_birth }}
               }
             </td>
           </tr>
         }
         @if (person().deathday) {
           <tr>
-            <td>Died:</td>
+            <td>{{diedTable()}}</td>
             <td>
-              {{ personDeathDay | date: 'longDate' }}
+              {{ personDeathDay() | date: 'longDate' }}
             </td>
           </tr>
         }
         @if (person().gender) {
           <tr>
-            <td>Gender:</td>
+            <td>{{genderTable()}}</td>
             <td>
               @switch (person().gender) {
                 @case (1) {
                   <fa-icon [icon]="femaleIcon"></fa-icon>
-                  Female
+                  {{femaleTable()}}
                 }
 
                 @case (2) {
                   <fa-icon [icon]="maleIcon"></fa-icon>
-                  Male
+                  {{maleTable()}}
                 }
 
                 @default {
                   <fa-icon [icon]="questionIcon"></fa-icon>
-                  ?
+                  {{unknownTable()}}
                 }
               }
             </td>
@@ -48,7 +48,7 @@
         }
         @if (person().known_for_department) {
           <tr>
-            <td>Main occupation:</td>
+            <td>{{mainOccupationTable()}}</td>
             <td>
               {{ person().known_for_department }}
             </td>
@@ -56,7 +56,7 @@
         }
         @if (person().also_known_as.length > 0) {
           <tr>
-            <td>Also known as:</td>
+            <td>{{alsoKnownAsTable()}}</td>
             <td>
               @for (personAlternateName of this.person().also_known_as; track personAlternateName) {
                 {{ personAlternateName }}<br />
@@ -69,15 +69,15 @@
   </div>
   @if (person().imdb_id) {
     <div class="d-grid mb-2">
-      <a [href]="personIMDBUrl" class="btn btn-primary" target="_blank">
-        <fa-icon [icon]="imdbIcon"></fa-icon> View IMDB
+      <a [href]="personIMDBUrl()" class="btn btn-primary" target="_blank">
+        <fa-icon [icon]="imdbIcon"></fa-icon> {{viewIMDBText()}}
       </a>
     </div>
   }
   @if (person().homepage) {
     <div class="d-grid mb-2">
-      <a [href]="personHomepageUrl" class="btn btn-primary" target="_blank">
-        <fa-icon [icon]="globeIcon"></fa-icon> View Homepage
+      <a [href]="personHomepageUrl()" class="btn btn-primary" target="_blank">
+        <fa-icon [icon]="globeIcon"></fa-icon> {{viewHomepageText()}}
       </a>
     </div>
   }
