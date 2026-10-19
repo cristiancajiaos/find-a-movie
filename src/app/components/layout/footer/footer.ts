@@ -10,8 +10,8 @@ import { environment } from '../../../../environments/environment.development';
 })
 export class Footer implements OnInit {
 
-  public creationYear: number = 0;
-  public currentYear: number = 0;
+  public creationYear: WritableSignal<number> = signal(0);
+  public currentYear: WritableSignal<number> = signal(0);
 
   public authorText: WritableSignal<string> = signal('Cristian Cajiao Skarnic, ');
 
@@ -25,8 +25,8 @@ export class Footer implements OnInit {
     const creationDate: Date = new Date (2025, 9, 3);
     const currentDate = new Date();
 
-    this.creationYear = creationDate.getFullYear();
-    this.currentYear = currentDate.getFullYear();
+    this.creationYear.set(creationDate.getFullYear());
+    this.currentYear.set(currentDate.getFullYear());
   }
 
 }

@@ -3,7 +3,7 @@
     <div class="col-12 col-lg-8">
       &#169; {{authorText()}}
       <ng-container
-        *ngTemplateOutlet="creationYear == currentYear ? year : rangeYears"
+        *ngTemplateOutlet="creationYear() == currentYear() ? year : rangeYears"
       ></ng-container>
       <br />
       {{usesAPIOne()}}
@@ -19,6 +19,6 @@
 </footer>
 
 <ng-template #year>
-  {{ currentYear }}
+  {{ currentYear() }}
 </ng-template>
-<ng-template #rangeYears> {{ creationYear }} - {{ currentYear }} </ng-template>
+<ng-template #rangeYears> {{ creationYear() }} - {{ currentYear() }} </ng-template>
