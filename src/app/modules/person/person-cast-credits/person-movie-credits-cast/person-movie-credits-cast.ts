@@ -16,13 +16,6 @@ import {
 } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { Person } from '../../../../classes/person';
-import {
-  faArrowRotateLeft,
-  faFilter,
-  faGrip,
-  faList,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
 import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
@@ -41,24 +34,20 @@ import { ShowXResults } from '../../../../components/shared/show-x-results/show-
   styleUrl: './person-movie-credits-cast.scss',
 })
 export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy {
+
   private sessionStorageService = inject(SessionStorageService);
 
-  public gridIcon: IconDefinition = faGrip;
-  public listIcon: IconDefinition = faList;
-  public filterIcon: IconDefinition = faFilter;
-  public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
-
+  public currentPerson!: Person;
   public loadingPerson: boolean = false;
 
   public displayMode: WritableSignal<string> = signal('grid');
 
-  public yearsFrom: WritableSignal<number[]> = signal([]);
-  public yearsTo: WritableSignal<number[]> = signal([]);
+  @ViewChild('personCastCreditsShowXResults') personCastCreditsShowXResults!: ShowXResults;
+  public numberResultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+  public enabledNumberResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
-  public fromYear: WritableSignal<number> = signal(null);
-  public toYear: WritableSignal<number> = signal(null);
-  public lastYear: WritableSignal<number> = signal(null);
-
+  @ViewChildren('orderSelectPersonCastCredits')
+  orderSelectPersonCastCredits: QueryList<OrderSelect>;
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
     { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' },
@@ -68,17 +57,23 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' },
     { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date - descending' },
   ]);
-
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
   });
-
   public selectedOrderCriteria: WritableSignal<OrderCriteria | null> = signal(null);
+  public enabledOrderParams: WritableSignal<string> = signal(
+    'Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, characterNameAsc, characterNameDesc, releaseDateAsc, releaseDateDesc',
+  );
 
-  public currentPerson!: Person;
+  @ViewChild('fromSelect') fromSelect: FromSelect;
+  public yearsFrom: WritableSignal<number[]> = signal([]);
+  public fromYear: WritableSignal<number> = signal(null);
 
-  public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+  @ViewChild('toSelect') toSelect: ToSelect;
+  public yearsTo: WritableSignal<number[]> = signal([]);
+  public lastYear: WritableSignal<number> = signal(null);
+  public toYear: WritableSignal<number> = signal(null);
 
   public itemsPerPage: WritableSignal<number> = signal(20);
   public currentPage: WritableSignal<number> = signal(1);
@@ -88,20 +83,8 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
-  @ViewChild('personCastCreditsShowXResults') personCastCreditsShowXResults!: ShowXResults;
-  @ViewChildren('orderSelectPersonCastCredits')
-  orderSelectPersonCastCredits: QueryList<OrderSelect>;
-  @ViewChild('castCreditsList') castCreditsList!: ElementRef;
-  @ViewChild('fromSelect') fromSelect: FromSelect;
-  @ViewChild('toSelect') toSelect: ToSelect;
 
   private orderSelectPersonCastCreditsSubscription: Subscription = new Subscription();
-
-  public enabledOrderParams: WritableSignal<string> = signal(
-    'Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, characterNameAsc, characterNameDesc, releaseDateAsc, releaseDateDesc',
-  );
-
-  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
   public noResultsFilters: WritableSignal<string> = signal('No results were obtained by the applied filters.');
 
@@ -125,9 +108,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   private setResultsPerPage(): void {
     if (this.personCreditsQuery().resultsPerPage) {
       if (
-        this.personCastCreditsShowXResults
-          .resultsOptions()
-          .includes(this.personCreditsQuery().resultsPerPage)
+        this.numberResultsOptions().includes(this.personCreditsQuery().resultsPerPage)
       ) {
         this.itemsPerPage.set(this.personCreditsQuery().resultsPerPage);
         this.personCastCreditsShowXResults.setXResults(this.itemsPerPage());
@@ -230,11 +211,6 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     this.setYearFrom(this.fromYear());
   }
 
-  public changePage(pageNumber: number) {
-    this.currentPage.set(pageNumber);
-    this.castParagraph.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   public changeDisplay(display: string) {
     this.displayMode.set(display);
   }
@@ -262,6 +238,11 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public changeItemsPerPage(itemsPerPage: number) {
     this.itemsPerPage.set(itemsPerPage);
     this.currentPage.set(1);
+  }
+
+  public changePage(pageNumber: number) {
+    this.currentPage.set(pageNumber);
+    this.castParagraph.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   ngOnDestroy(): void {

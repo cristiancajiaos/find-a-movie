@@ -12,8 +12,8 @@
         <div class="col-6 col-lg-3">
           <app-show-x-results
             #personCastCreditsShowXResults
-            [resultsOptions]="resultsOptions()"
-            [enabledResultsParams]="enabledResultsParams()"
+            [resultsOptions]="numberResultsOptions()"
+            [enabledResultsParams]="enabledNumberResultsParams()"
             [itemsPerPage]="itemsPerPage()"
             (onSelectResultOption)="changeItemsPerPage($event)">
           </app-show-x-results>
@@ -59,7 +59,7 @@
         @if (castCredits().length > 0) {
           @if (displayMode() == 'grid') {
             <section class="cast-credits-display-grid">
-              <div class="row" #castCreditsList>
+              <div class="row">
                 @for (
                   castRole of castCredits()
                     | orderPersonCastCreditsBy: selectedOrderCriteria() : fromYear() : toYear()
