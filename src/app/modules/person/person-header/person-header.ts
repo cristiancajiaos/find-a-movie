@@ -1,4 +1,4 @@
-import { Component, OnChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
+import { Component, OnChanges, ChangeDetectionStrategy, input, InputSignal, WritableSignal, signal } from '@angular/core';
 import { faUser, faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Person } from '../../../classes/person';
 import { environment } from '../../../../environments/environment.development';
@@ -27,6 +27,8 @@ export class PersonHeader implements OnChanges {
 
   id: InputSignal<number> = input.required<number>();
   person: InputSignal<Person> = input.required<Person>();
+
+  public knownForText: WritableSignal<string> = signal('Known for:');
 
   ngOnChanges() {
     this.setProfileImg();
