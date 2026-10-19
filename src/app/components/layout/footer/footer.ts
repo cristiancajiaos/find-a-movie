@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 
 @Component({
@@ -13,7 +13,13 @@ export class Footer implements OnInit {
   public creationYear: number = 0;
   public currentYear: number = 0;
 
-  public appVersion: string = environment.appVersion;
+  public authorText: WritableSignal<string> = signal('Cristian Cajiao Skarnic, ');
+
+  public usesAPIOne: WritableSignal<string> = signal('Uses the');
+  public usesAPITwo: WritableSignal<string> = signal('API');
+
+  public appVersionText: WritableSignal<string> = signal('App version: ');
+  public appVersion: WritableSignal<string> = signal(environment.appVersion);
 
   ngOnInit(): void {
     const creationDate: Date = new Date (2025, 9, 3);
@@ -21,7 +27,6 @@ export class Footer implements OnInit {
 
     this.creationYear = creationDate.getFullYear();
     this.currentYear = currentDate.getFullYear();
-
   }
 
 }
