@@ -13,9 +13,9 @@ import { MovieService } from '../../../services/movie-service';
 import { Movie } from '../../../classes/movie';
 import { Credits } from '../../../classes/credits';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ResponseVideo } from '../../../classes/response-video';
 import { BackdropImage } from '../../../classes/response-image/backdrop-image';
 import { TitleService } from '../../../services/title-service';
+import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
 
 @Component({
   selector: 'app-movie-overview',
@@ -33,7 +33,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public movie: WritableSignal<Movie> = signal(new Movie());
   public credits: WritableSignal<Credits> = signal(new Credits());
-  public movieResponseVideo: WritableSignal<ResponseVideo> = signal(new ResponseVideo());
+  public movieResponseVideo: WritableSignal<ResponseVideoResult> = signal(new ResponseVideoResult());
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
 
   public movieTagline: string = null;
@@ -72,13 +72,13 @@ export class MovieOverview implements OnInit, OnDestroy {
   private getMovieAndCredits() {
     this.movie.set(new Movie());
     this.credits.set(new Credits());
-    this.movieResponseVideo.set(new ResponseVideo());
+    this.movieResponseVideo.set(new ResponseVideoResult());
     this.movieImages.set([]);
     this.movieErrorFound = false;
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
-    const getTrailer: Observable<ResponseVideo> = this.movieService.getMovieVideos(this.id);
+    const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id);
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
 
     this.getMovieDetailsSubscription = forkJoin([
@@ -87,10 +87,10 @@ export class MovieOverview implements OnInit, OnDestroy {
       getTrailer,
       getImages,
     ]).subscribe({
-      next: ([movie, credits, responseVideo, movieImages]) => {
+      next: ([movie, credits, responseVideoResult, movieImages]) => {
         this.movie.set(movie);
         this.credits.set(credits);
-        this.movieResponseVideo.set(responseVideo);
+        this.movieResponseVideo.set(responseVideoResult);
         this.movieImages.set(movieImages);
         this.movieFound = true;
         this.setTitle();

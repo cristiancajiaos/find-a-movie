@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Movie } from '../classes/movie';
-import { map, Observable, of, take, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { CastMember } from '../classes/credits/cast-member';
 import { Credits } from '../classes/credits';
 import { CrewMember } from '../classes/credits/crew-member';
@@ -11,6 +11,7 @@ import { ResponseImage } from '../classes/response-image';
 import { BackdropImage } from '../classes/response-image/backdrop-image';
 import { ResponseMovieResult } from '../classes/response-search-movie/response-movie-result';
 import { environment } from '../../environments/environment.development';
+import { ResponseVideoResult } from '../classes/response-video/response-video-result';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class MovieService {
   private credits = new Map<string, Credits>();
   private creditsCast = new Map<string, CastMember[]>();
   private creditsCrew = new Map<string, CrewMember[]>();
-  private movieVideos = new Map<string, ResponseVideo>();
+  private movieTrailer = new Map<string, ResponseVideoResult>();
   private movieImages = new Map<string, BackdropImage[]>();
   private movieRecommendations = new Map<string, ResponseMovieResult[]>();
   private movieSimilar = new Map<string, ResponseMovieResult[]>();
@@ -82,12 +83,15 @@ export class MovieService {
     )
   }
 
-  public getMovieVideos(id: number): Observable<ResponseVideo> {
-    if (this.movieVideos.has(`movieVideos-${id}`)) {
-      return of(this.movieVideos.get(`movieVideos-${id}`));
+  public getMovieTrailer(id: number): Observable<ResponseVideoResult> {
+    if (this.movieTrailer.has(`movieTrailer-${id}`)) {
+      return of(this.movieTrailer.get(`movieTrailer-${id}`));
     }
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
-      tap(responseVideo => this.movieVideos.set(`movieVideos-${id}`, responseVideo))
+      map(responseVideoResult => responseVideoResult.results.filter((responseVideos) => {
+        return responseVideos.type == 'Trailer'
+      })[0]),
+      tap(responseVideo => this.movieTrailer.set(`movieTrailer-${id}`, responseVideo))
     )
   }
 

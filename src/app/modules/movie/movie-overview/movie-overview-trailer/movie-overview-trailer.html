@@ -1,19 +1,15 @@
 <section class="movie-overview-trailer">
-  @if (movieTrailerFound && movieTrailerKey) {
+  <h3>{{trailerTitle()}}</h3>
+  @if (movieTrailerKey) {
     <section class="movie-trailer">
-      <h3>Trailer</h3>
-      @if (movieTrailerFound) {
-        <div class="row">
-          <div class="col-12">
-            <iframe [src]="movieTrailerUrl | safeUrl"></iframe>
-          </div>
+      <div class="row">
+        <div class="col-12">
+          <iframe [src]="movieTrailerUrl() | safeUrl"></iframe>
         </div>
-      }
+      </div>
     </section>
-  }
-  @if (!movieTrailerFound) {
+  } @else {
     <section class="no-trailer-available">
-      <h3>Trailer</h3>
       <img
         src="img/default-images/movie_trailer_not_available.jpg"
         alt="No trailer available"

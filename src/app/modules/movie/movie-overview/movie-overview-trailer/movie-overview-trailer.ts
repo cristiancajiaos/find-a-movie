@@ -1,7 +1,15 @@
-import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
-import { ResponseVideo } from '../../../../classes/response-video';
+import {
+  Component,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+  input,
+  InputSignal,
+  signal,
+} from '@angular/core';
 import { ResponseVideoResult } from '../../../../classes/response-video/response-video-result';
 import { environment } from '../../../../../environments/environment.development';
+import { WritableSignal } from '@angular/core';
 @Component({
   selector: 'app-movie-overview-trailer',
   standalone: false,
@@ -11,35 +19,22 @@ import { environment } from '../../../../../environments/environment.development
 })
 export class MovieOverviewTrailer implements OnChanges {
 
-  public movieTrailerUrl: string = '';
+  public movieTrailerUrl: WritableSignal<string> = signal('');
+  public movieTrailerKey: WritableSignal<string> = signal('');
 
-  public loadingTrailer: boolean = false;
-  public movieTrailerFound: boolean = false;
+  responseVideo: InputSignal<ResponseVideoResult> = input<ResponseVideoResult>();
 
-  public movieTrailerKey: string = '';
-
-  responseVideo: InputSignal<ResponseVideo> = input.required<ResponseVideo>();
+  public trailerTitle: WritableSignal<string> = signal('Trailer');
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setMovieTrailer();
   }
 
   private setMovieTrailer(): void {
-    if (this.responseVideo().results.length == 0) {
-      return;
+    if (this.responseVideo()) {
+      const key: string = this.responseVideo().key;
+      this.movieTrailerKey.set(this.responseVideo().key ? this.responseVideo().key : '');
+      this.movieTrailerUrl.set(`${environment.youtubeEmbedUrl}${key}`);
     }
-    const responseVideoResult: ResponseVideoResult = this.responseVideo().results
-      .filter((responseVideoResult) => responseVideoResult.type == 'Trailer')
-      .slice(0, 1)[0];
-
-    if (responseVideoResult) {
-      this.movieTrailerFound = true;
-    } else {
-      return;
-    }
-
-    const key: string = responseVideoResult.key;
-    this.movieTrailerKey = responseVideoResult.key ? responseVideoResult.key : '';
-    this.movieTrailerUrl = `${environment.youtubeEmbedUrl}${key}`;
   }
 }
