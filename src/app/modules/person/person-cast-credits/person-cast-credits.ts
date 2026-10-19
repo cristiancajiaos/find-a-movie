@@ -34,7 +34,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
   private person: Person;
 
@@ -47,6 +47,8 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   public errorMessage: string = '';
 
   public personCreditsQuery: WritableSignal<PersonCreditsQuery> = signal(new PersonCreditsQuery());
+
+  public noCastCredits: WritableSignal<string> = signal('This person has no acting roles in movies.');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getCreditsCastSubscription: Subscription = new Subscription();
@@ -109,7 +111,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
-        this.id = parseInt(params['id']);
+        this.id.set(parseInt(params['id']));
         this.getPersonMovieCredits();
       },
     );
@@ -121,7 +123,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
 
   private getPersonMovieCredits(): void {
     this.personMovieCreditsError = false;
-    this.personService.getCastCredits(this.id).subscribe({
+    this.personService.getCastCredits(this.id()).subscribe({
       next: (castCredits) => {
         this.personCastCredits.set(castCredits);
         this.personMovieCreditsFound = true;
