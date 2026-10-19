@@ -2,16 +2,19 @@
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">
       <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
-      Find a Movie
+      {{appTitle()}}
     </a>
     <div
       class="collapse navbar-collapse d-flex justify-content-end"
-      [ngbCollapse]="isMenuCollapsed">
+      [ngbCollapse]="isMenuCollapsed"
+    >
       <div ngbDropdown class="search-dropdown d-flex">
-        <button class="btn border me-2"
+        <button
+          class="btn border me-2"
           (click)="toggleLightDark()"
           ngbTooltip="Toggle Dark Mode"
-          tooltipClass="btn-tooltip">
+          tooltipClass="btn-tooltip"
+        >
           @if (isLight$ | async) {
             <fa-icon class="text-light" [icon]="darkIcon"></fa-icon>
           } @else {
@@ -24,28 +27,32 @@
           id="selectSearchType"
           ngbDropdownToggle
         >
-          @if (searchType == 'movie') {
-            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> Movie
-          }
-          @if (searchType == 'person') {
-            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> Person
+          @switch (searchType()) {
+            @case ('movie') {
+              <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> {{movieButtonText()}}
+            }
+            @case ('person') {
+              <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> {{personButtonText()}}
+            }
           }
         </button>
         <div ngbDropdownMenu aria-labelledby="selectSearchType">
           <button ngbDropdownItem (click)="selectSearchType('movie')">
             <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
-            Movie
+            {{movieButtonText()}}
           </button>
           <button ngbDropdownItem (click)="selectSearchType('person')">
             <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
-            Person
+            {{personButtonText()}}
           </button>
         </div>
-        @if (searchType == 'movie') {
-          <app-search-input-movie></app-search-input-movie>
-        }
-        @if (searchType == 'person') {
-          <app-search-input-person></app-search-input-person>
+        @switch (searchType()) {
+          @case ('movie') {
+            <app-search-input-movie></app-search-input-movie>
+          }
+          @case ('person') {
+            <app-search-input-person></app-search-input-person>
+          }
         }
       </div>
     </div>

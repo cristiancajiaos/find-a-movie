@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, inject, OnDestroy, WritableSignal, signal } from '@angular/core';
 import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { LightDarkService } from '../../../services/light-dark-service';
 import { Observable, Subscription } from 'rxjs';
@@ -13,8 +12,6 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class Navbar implements OnInit, OnDestroy {
 
-  private fb = inject(FormBuilder);
-
   private lightDarkService = inject(LightDarkService);
 
   public filmIcon: IconDefinition = faFilm;
@@ -22,13 +19,15 @@ export class Navbar implements OnInit, OnDestroy {
   public barsIcon: IconDefinition = faBars;
   public searchIcon: IconDefinition = faMagnifyingGlass;
 
-  public isMenuCollapsed: boolean = false;
-  public searchType: string = 'movie';
-
-  public searchNavbarForm: FormGroup = new FormGroup({});
-
   public lightIcon: IconDefinition = faSun;
   public darkIcon: IconDefinition = faMoon;
+
+  public appTitle: WritableSignal<string> = signal('Find a Movie');
+  public movieButtonText: WritableSignal<string> = signal('Movie');
+  public personButtonText: WritableSignal<string> = signal('Person');
+
+  public isMenuCollapsed: boolean = false;
+  public searchType: WritableSignal<string> = signal('movie');
 
   public isLight: boolean = true;
   public isLight$: Observable<boolean> = this.lightDarkService.isLight;
@@ -36,25 +35,15 @@ export class Navbar implements OnInit, OnDestroy {
   public changeLightDarkSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
-    this.searchNavbarForm = this.fb.group({
-      movieSearch: new FormControl(''),
-      personSearch: new FormControl('')
-    });
     this.changeLightDarkSubscription = this.isLight$.subscribe({
       next: (status) => {
         this.isLight = status;
-      },
-      error: (error) => {},
-      complete: () => {}
+      }
     });
   }
 
-  public toggleCollapse(): void {
-    this.isMenuCollapsed = !this.isMenuCollapsed;
-  }
-
   public selectSearchType(searchType: string): void {
-    this.searchType = searchType;
+    this.searchType.set(searchType);
   }
 
   public toggleLightDark() {
