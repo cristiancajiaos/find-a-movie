@@ -12,14 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PersonService } from '../../../services/person-service';
-import {
-  faCircleQuestion,
-  faGlobe,
-  faMars,
-  faVenus,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 
@@ -36,13 +28,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
-  public maleIcon: IconDefinition = faMars;
-  public femaleIcon: IconDefinition = faVenus;
-  public imdbIcon: IconDefinition = faImdb;
-  public globeIcon: IconDefinition = faGlobe;
-  public questionIcon: IconDefinition = faCircleQuestion;
-
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
   public person: WritableSignal<Person> = signal(new Person());
 
@@ -75,7 +61,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
-        this.id = parseInt(params['id']);
+        this.id.set(parseInt(params['id']));
         this.getPerson();
       },
     );
@@ -84,7 +70,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   private getPerson(): void {
     this.personErrorFound = false;
 
-    this.getPersonSubscription = this.personService.getPerson(this.id).subscribe({
+    this.getPersonSubscription = this.personService.getPerson(this.id()).subscribe({
       next: (person) => {
         this.person.set(person);
         this.personFound = true;
