@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, inject } from '@angular/core';
-import { ResponseMovieResult } from '../../../../../classes/response-search-movie/response-movie-result';
-import { MovieService } from '../../../../../services/movie-service';
-import { environment } from '../../../../../../environments/environment.development';
+import { MovieService } from '../../../../services/movie-service';
+import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
+import { environment } from '../../../../../environments/environment.development';
+
 
 @Component({
   selector: 'app-search-input-movie-result',

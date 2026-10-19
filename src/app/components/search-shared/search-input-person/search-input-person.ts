@@ -2,10 +2,10 @@ import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, Cha
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { ResponsePersonResult } from '../../../../classes/response-search-person/response-person-result';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { SearchService } from '../../../../services/search-service';
 import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
+import { SearchService } from '../../../services/search-service';
+import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
 
 @Component({
   selector: 'app-search-input-person',

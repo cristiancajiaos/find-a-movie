@@ -9,6 +9,11 @@ import { SearchMovieResultGrid } from './search-movie-result-grid/search-movie-r
 import { SearchMovieResultList } from './search-movie-result-list/search-movie-result-list';
 import { SearchPersonResultGrid } from './search-person-result-grid/search-person-result-grid';
 import { SearchPersonResultList } from './search-person-result-list/search-person-result-list';
+import { SearchInputMovie } from './search-input-movie/search-input-movie';
+import { SearchInputMovieResult } from './search-input-movie/search-input-movie-result/search-input-movie-result';
+import { SearchInputPerson } from './search-input-person/search-input-person';
+import { SearchInputPersonResult } from './search-input-person/search-input-person-result/search-input-person-result';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,13 +22,19 @@ import { SearchPersonResultList } from './search-person-result-list/search-perso
     SearchMovieResultGrid,
     SearchMovieResultList,
     SearchPersonResultGrid,
-    SearchPersonResultList
+    SearchPersonResultList,
+    SearchInputMovie,
+    SearchInputMovieResult,
+    SearchInputPerson,
+    SearchInputPersonResult
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
     NgbModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     SearchError,
@@ -31,7 +42,11 @@ import { SearchPersonResultList } from './search-person-result-list/search-perso
     SearchMovieResultGrid,
     SearchMovieResultList,
     SearchPersonResultGrid,
-    SearchPersonResultList
+    SearchPersonResultList,
+    SearchInputMovie,
+    SearchInputMovieResult,
+    SearchInputPerson,
+    SearchInputPersonResult
   ]
 })
 export class SearchSharedModule { }

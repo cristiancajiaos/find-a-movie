@@ -3,9 +3,9 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
-import { SearchService } from '../../../../services/search-service';
 import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
+import { SearchService } from '../../../services/search-service';
+import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 
 @Component({
   selector: 'app-search-input-movie',

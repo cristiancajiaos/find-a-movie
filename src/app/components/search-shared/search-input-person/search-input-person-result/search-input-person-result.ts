@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
-import { ResponsePersonResult } from '../../../../../classes/response-search-person/response-person-result';
-import { environment } from '../../../../../../environments/environment.development';
+import { ResponsePersonResult } from '../../../../classes/response-search-person/response-person-result';
+import { environment } from '../../../../../environments/environment.development';
+
 
 @Component({
   selector: 'app-search-input-person-result',

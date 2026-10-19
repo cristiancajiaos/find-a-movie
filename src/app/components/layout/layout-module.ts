@@ -6,39 +6,27 @@ import { Footer } from './footer/footer';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SearchInputMovie } from './navbar/search-input-movie/search-input-movie';
-import { SearchInputMovieResult } from './navbar/search-input-movie/search-input-movie-result/search-input-movie-result';
-import { SearchInputPerson } from './navbar/search-input-person/search-input-person';
-import { SearchInputPersonResult } from './navbar/search-input-person/search-input-person-result/search-input-person-result';
 import { SharedModule } from '../shared/shared-module';
+import { SearchSharedModule } from '../search-shared/search-shared-module';
 
 @NgModule({
   declarations: [
     Layout,
     Navbar,
-    Footer,
-    SearchInputMovie,
-    SearchInputMovieResult,
-    SearchInputPerson,
-    SearchInputPersonResult
+    Footer
   ],
   imports: [
     CommonModule,
     NgbModule,
     FontAwesomeModule,
     RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    SearchSharedModule
   ],
   exports: [
     Layout,
     Navbar,
     Footer,
-    SearchInputMovie,
-    SearchInputMovieResult,
-    SearchInputPerson
   ]
 })
 export class LayoutModule { }
