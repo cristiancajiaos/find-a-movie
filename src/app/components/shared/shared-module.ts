@@ -13,6 +13,7 @@ import { Loading } from './loading/loading';
 import { Pagination } from './pagination/pagination';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ShowXResults } from './show-x-results/show-x-results';
+import { ResetFilters } from './reset-filters/reset-filters';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ShowXResults } from './show-x-results/show-x-results';
     RoleSelect,
     Pagination,
     ShowXResults,
+    ResetFilters,
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { ShowXResults } from './show-x-results/show-x-results';
     ToSelect,
     RoleSelect,
     Pagination,
-    ShowXResults
+    ShowXResults,
+    ResetFilters
   ]
 })
 export class SharedModule { }

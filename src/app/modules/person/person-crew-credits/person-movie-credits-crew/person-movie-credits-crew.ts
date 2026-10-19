@@ -254,7 +254,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     this.crewParagraph.nativeElement.scrollIntoView({ behaviour: 'smooth', block: 'start' });
   }
 
-  public resetFiltersByDefault(): void {
+  public resetFiltersByDefault(event: boolean): void {
     this.displayMode.set('grid');
     this.itemsPerPage.set(20);
     this.personCrewCreditsShowXResults.setDefaultValue();

@@ -247,7 +247,7 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     this.currentPage.set(1);
   }
 
-  public resetFiltersByDefault(): void {
+  public resetFiltersByDefault(event: boolean): void {
     this.itemsPerPage.set(20);
     this.personCastCreditsShowXResults.setDefaultValue();
     this.currentPage.set(1);
