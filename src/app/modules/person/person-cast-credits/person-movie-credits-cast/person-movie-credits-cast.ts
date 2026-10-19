@@ -38,7 +38,6 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   private sessionStorageService = inject(SessionStorageService);
 
   public currentPerson: WritableSignal<Person> = signal(null);
-  public loadingPerson: boolean = false;
 
   public castCreditsTitle: WritableSignal<string> = signal('Cast Credits');
   public castCreditsText: WritableSignal<string> = signal('acted in the following movies:');
@@ -104,7 +103,6 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private getPerson(): void {
-    this.loadingPerson = true;
     this.currentPerson.set(this.sessionStorageService.getItem('person'));
   }
 
