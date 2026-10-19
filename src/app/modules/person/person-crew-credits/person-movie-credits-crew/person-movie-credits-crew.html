@@ -1,4 +1,7 @@
 <section class="person-movie-credits-crew">
+  <h2>{{crewCreditsTitle()}}</h2>
+  <p><strong>{{currentPerson().name}}</strong> {{crewCreditsText()}}</p>
+  <hr/>
   <div class="row">
     <div class="col-12">
       <section class="person-crew-credits-controls">
@@ -13,8 +16,8 @@
           <div class="col-6 col-lg-3">
             <app-show-x-results
               #personCrewCreditsShowXResults
-              [resultsOptions]="resultsOptions()"
-              [enabledResultsParams]="enabledResultsParams()"
+              [resultsOptions]="numberResultsOptions()"
+              [enabledResultsParams]="enabledNumberResultsParams()"
               [itemsPerPage]="itemsPerPage()"
               (onSelectResultOption)="changeItemsPerPage($event)">
             >

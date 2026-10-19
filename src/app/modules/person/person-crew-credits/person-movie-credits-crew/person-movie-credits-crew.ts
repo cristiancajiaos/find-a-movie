@@ -2,8 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, sign
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { Person } from '../../../../classes/person';
 import { OrderCriteria } from '../../../../interfaces/order-criteria';
-import { faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
-import { IconDefinition } from '@fortawesome/angular-fontawesome';
 import { Order } from '../../../../enums/order';
 import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
@@ -26,18 +24,18 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   public roles: WritableSignal<string[]> = signal([]);
 
-  public loadingPerson: boolean = false;
+  public currentPerson: WritableSignal<Person> = signal(null);
+
+  public crewCreditsTitle: WritableSignal<string> = signal('Crew Credits');
+  public crewCreditsText: WritableSignal<string> = signal('has been part of the production and/or technical staff in the following movies:');
 
   public displayMode: WritableSignal<string> = signal('grid');
 
-  public selectedRoles: WritableSignal<string[]> = signal([]);
-  public yearsFrom: WritableSignal<number[]> = signal([]);
-  public yearsTo: WritableSignal<number[]> = signal([]);
+  @ViewChild('personCrewCreditsShowXResults') personCrewCreditsShowXResults!: ShowXResults;
+  public numberResultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+  public enabledNumberResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
-  public fromYear: WritableSignal<number> = signal(null);
-  public toYear: WritableSignal<number> = signal(null);
-  public lastYear: WritableSignal<number> = signal(null);
-
+  @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' },
     { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' },
@@ -46,17 +44,24 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' },
     { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date - descending' },
   ]);
-
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
   });
-
   public selectedOrderCriteria: WritableSignal<OrderCriteria> = signal(null);
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
 
-  public currentPerson!: Person;
+  @ViewChild('roleSelect') roleSelect: RoleSelect;
+  public selectedRoles: WritableSignal<string[]> = signal([]);
 
-  public resultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
+  @ViewChild('fromSelect') fromSelect: FromSelect;
+  public yearsFrom: WritableSignal<number[]> = signal([]);
+  public fromYear: WritableSignal<number> = signal(null);
+
+  @ViewChild('toSelect') toSelect: ToSelect;
+  public yearsTo: WritableSignal<number[]> = signal([]);
+  public lastYear: WritableSignal<number> = signal(null);
+  public toYear: WritableSignal<number> = signal(null);
 
   public itemsPerPage: WritableSignal<number> = signal(20);
   public currentPage: WritableSignal<number> = signal(1);
@@ -65,15 +70,6 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
-  @ViewChild('personCrewCreditsShowXResults') personCrewCreditsShowXResults!: ShowXResults;
-  @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
-  @ViewChild('roleSelect') roleSelect: RoleSelect;
-  @ViewChild('fromSelect') fromSelect: FromSelect;
-  @ViewChild('toSelect') toSelect: ToSelect;
-
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
-
-  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
   public noResultsFilters: WritableSignal<string> = signal('No results were obtained by the applied filters.');
 
@@ -92,8 +88,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   }
 
   private getPerson(): void {
-    this.loadingPerson = true;
-    this.currentPerson = this.sessionStorageService.getItem('person');
+    this.currentPerson.set(this.sessionStorageService.getItem('person'));
   }
 
   private setRoles(): void {
