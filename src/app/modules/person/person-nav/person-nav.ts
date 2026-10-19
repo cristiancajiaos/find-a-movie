@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
+import { Writable } from 'stream';
 
 @Component({
   selector: 'app-person-nav',
@@ -8,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class PersonNav {
 
+  public overviewMenu: WritableSignal<string> = signal('Overview');
+  public castCreditsMenu: WritableSignal<string> = signal('Cast Credits');
+  public crewCreditsMenu: WritableSignal<string> = signal('Crew Credits');
 }
