@@ -5,7 +5,7 @@
   }
   @if (!personMovieCreditsError) {
     @if (personCrewCredits().length === 0) {
-      <p>This person has no technical or production roles in movies</p>
+      <p>{{noCrewCredits()}}</p>
     }
     @if (personCrewCredits().length > 0) {
       <app-person-movie-credits-crew

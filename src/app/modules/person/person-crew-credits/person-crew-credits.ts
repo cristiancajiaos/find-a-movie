@@ -26,7 +26,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
   private person: Person;
 
@@ -41,6 +41,8 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   public errorMessage: string = '';
 
   public personCreditsQuery: WritableSignal<PersonCreditsQuery> = signal(new PersonCreditsQuery());
+
+  public noCrewCredits: WritableSignal<string> = signal('This person has no technical or production roles in movies.');
 
   private activatedRouteParentSubscription: Subscription = new Subscription()
   private getCrewCreditsSubscription: Subscription = new Subscription();
@@ -110,7 +112,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
 
   private setId() {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(params => {
-      this.id = parseInt(params['id']);
+      this.id.set(parseInt(params['id']));
       this.getPersonMovieCredits();
     });
   }
@@ -122,7 +124,7 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   private getPersonMovieCredits() {
     this.personMovieCreditsError = false;
     this.loadingPersonMovieCredits = true;
-    this.personService.getCrewCredits(this.id).subscribe({
+    this.personService.getCrewCredits(this.id()).subscribe({
       next: (crewCredits) => {
         this.personCrewCredits.set(crewCredits);
         this.personMovieCreditsFound = true;
