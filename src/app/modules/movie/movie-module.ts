@@ -24,6 +24,7 @@ import { MovieRecommendations } from './movie-recommendations/movie-recommendati
 import { MovieNav } from './movie-nav/movie-nav';
 import { MovieOverviewImages } from './movie-overview/movie-overview-images/movie-overview-images';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MovieOverviewSynopsis } from './movie-overview/movie-overview-synopsis/movie-overview-synopsis';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MovieRecommendations,
     MovieNav,
     MovieOverviewImages,
+    MovieOverviewSynopsis,
   ],
   imports: [
     CommonModule,

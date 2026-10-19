@@ -1,0 +1,15 @@
+<section class="movie-overview-synopsis">
+  @if (movie().tagline) {
+    <section class="movie-tagline">
+      <p>{{ movie().tagline }}</p>
+    </section>
+  }
+  @if (movie().overview) {
+    <section class="movie-overview">
+      <p>{{ movie().overview }}</p>
+    </section>
+  }
+  @if (movie().tagline || movie().overview) {
+    <hr />
+  }
+</section>
