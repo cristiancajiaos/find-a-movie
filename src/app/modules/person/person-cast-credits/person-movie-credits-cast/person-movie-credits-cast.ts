@@ -103,6 +103,8 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
 
   public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
+  public noResultsFilters: WritableSignal<string> = signal('No results were obtained by the applied filters.');
+
   ngOnInit(): void {
     this.getPerson();
     this.setYearsLimit();
