@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal, WritableSignal, signal } from '@angular/core';
 import { CastMember } from '../../../../classes/credits/cast-member';
 
 @Component({
@@ -10,15 +10,19 @@ import { CastMember } from '../../../../classes/credits/cast-member';
 })
 export class MovieOverviewMainCast implements OnChanges {
 
-  public movieMainCast: CastMember[] = [];
+  public movieMainCast: WritableSignal<CastMember[]> = signal([]);
 
   movieCast: InputSignal<CastMember[]> = input.required<CastMember[]>();
+
+  public mainCastTitle: WritableSignal<string> = signal('Main Cast');
+  public noCastText: WritableSignal<string> = signal('This movie has no recognizable cast');
+  public starringText: WritableSignal<string> = signal('Starring:');
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setMainCast();
   }
 
   private setMainCast(): void {
-    this.movieMainCast = this.movieCast().slice(0, 7);
+    this.movieMainCast.set(this.movieCast().slice(0, 7));
   }
 }
