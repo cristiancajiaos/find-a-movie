@@ -3,7 +3,7 @@
     <header>
       <div
         class="header-backdrop"
-        [ngStyle]="{ 'background-image': 'url(' + backdropImg + ')' }"
+        [ngStyle]="{ 'background-image': 'url(' + backdropImg() + ')' }"
       ></div>
       <div class="header-movie-container">
         <div class="header-movie-info">
@@ -18,11 +18,11 @@
                   {{ movie().title }}
                   <small>({{ movie().original_title }})</small>
                 }
-                @if (year) {
-                  ({{ year }})
+                @if (year()) {
+                  ({{ year() }})
                 }
-                @if (!year) {
-                  (No Release Date)
+                @if (!year()) {
+                  ({{noReleaseDateText()}})
                 }
               </h1>
             </div>
