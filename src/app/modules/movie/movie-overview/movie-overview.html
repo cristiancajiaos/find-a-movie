@@ -26,21 +26,21 @@
             <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
                 <a [routerLink]="['/movie', movie().id, 'cast']" class="btn btn-primary">
-                  View Full Cast
+                  {{viewFullCastText()}}
                 </a>
               </div>
             </div>
             <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
                 <a [routerLink]="['/movie', movie().id, 'crew']" class="btn btn-primary">
-                  View Featured Crew
+                  {{viewFeaturedCrewText()}}
                 </a>
               </div>
             </div>
             <div class="col-12 col-lg-4">
               <div class="d-grid mb-2">
                 <a [routerLink]="['/movie', movie().id, 'full-crew']" class="btn btn-primary">
-                  View Full Crew
+                  {{viewFullCrewText()}}
                 </a>
               </div>
             </div>
