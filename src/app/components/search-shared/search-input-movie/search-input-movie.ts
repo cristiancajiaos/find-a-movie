@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input, WritableSignal, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -29,8 +29,11 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   dropdownMenuEnd = input<boolean>(true);
 
   public movieInput: FormControl = new FormControl('');
-  public placeholder: string = 'Eg. Star Wars';
-  public ariaLabel: string = 'Search Movie';
+  public placeholder: WritableSignal<string> = signal('Eg. Star Wars');
+  public ariaLabel: WritableSignal<string> = signal('Search Movie');
+
+  public viewAllResultsText: WritableSignal<string> = signal('View all results');
+  public noResultsObtainedText: WritableSignal<string> = signal('No results obtained');
 
   @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
   @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;

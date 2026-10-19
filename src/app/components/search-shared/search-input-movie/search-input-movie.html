@@ -9,8 +9,8 @@
           type="search"
           (search)="toggleMovieSearchDropdownBySearch()"
           (focus)="toggleMovieSearchDropdownByFocus()"
-          [placeholder]="placeholder"
-          [aria-label]="ariaLabel"
+          [placeholder]="placeholder()"
+          [aria-label]="ariaLabel()"
           [formControl]="movieInput"
         />
         <button
@@ -36,11 +36,13 @@
           <div class="dropdown-divider"></div>
           <a ngbDropdownItem class="view-all-results" (click)="processMovieSearch()">
             <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
-            View all results
+            {{viewAllResultsText()}}
           </a>
         }
         @if (movieResults.length == 0) {
-          <a ngbDropdownItem class="no-results-obtained">No results obtained</a>
+          <a ngbDropdownItem class="no-results-obtained">
+            {{noResultsObtainedText()}}
+          </a>
         }
       </div>
     </div>
