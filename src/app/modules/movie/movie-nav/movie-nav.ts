@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 
 @Component({
   selector: 'app-movie-nav',
@@ -8,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class MovieNav {
 
+  public overviewMenu: WritableSignal<string> = signal('Overview');
+  public castMenu: WritableSignal<string> = signal('Cast');
+  public featuredCrewMenu: WritableSignal<string> = signal('Featured Crew');
+  public fullCrewMenu: WritableSignal<string> = signal('Full Crew');
+  public recommendationsMenu: WritableSignal<string> = signal('Recommendations');
+  public similarMenu: WritableSignal<string> = signal('Similar');
 }
