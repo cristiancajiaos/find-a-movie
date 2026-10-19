@@ -24,8 +24,6 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
 
   private sessionStorageService = inject(SessionStorageService);
 
-  public arrowRotateLeftIcon: IconDefinition = faArrowRotateLeft;
-
   public roles: WritableSignal<string[]> = signal([]);
 
   public loadingPerson: boolean = false;
@@ -76,6 +74,8 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
 
   public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
+
+  public noResultsFilters: WritableSignal<string> = signal('No results were obtained by the applied filters.');
 
   ngOnInit(): void {
     this.getPerson();
