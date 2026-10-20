@@ -1,12 +1,12 @@
 <section class="movie-overview-infotable">
   @if (movie()) {
-    <h3>Movie Info</h3>
+    <h3>{{movieInfoTitle()}}</h3>
     <div class="table-responsive">
       <table class="table table-striped">
         <tbody>
           @if (movie().original_language != 'en') {
             <tr>
-              <td>Original Title:</td>
+              <td>{{originalTitleText()}}</td>
               <td>{{ movie().original_title }}</td>
             </tr>
           }
@@ -14,9 +14,9 @@
             <tr>
               <td>
                 @if (movie().genres.length > 1) {
-                  Genres:
+                  {{genresText()}}
                 } @else {
-                  Genre:
+                  {{genreText()}}
                 }
               </td>
               <td>
@@ -31,9 +31,9 @@
             <tr>
               <td>
                 @if (movie().production_companies.length > 1) {
-                  Production Companies:
+                  {{productionCompaniesText()}}
                 } @else {
-                  Production Company:
+                  {{productionCompanyText()}}
                 }
               </td>
               <td>
@@ -48,9 +48,9 @@
             <tr>
               <td>
                 @if (movie().production_countries.length > 1) {
-                  Production Countries:
+                  {{productionCountriesText()}}
                 } @else {
-                  Production Country:
+                  {{productionCountryText()}}
                 }
               </td>
               <td>
@@ -65,9 +65,9 @@
             @if (movie().spoken_languages.length > 0) {
             <td>
               @if (movie().spoken_languages.length > 1) {
-                Languages:
+                {{languagesText()}}
               } @else {
-                Language:
+                {{languageText()}}
               }
             </td>
             <td>
@@ -78,28 +78,28 @@
             </td>
             }
           </tr>
-          @if (movieReleaseDate) {
+          @if (movieReleaseDate()) {
             <tr>
-              <td>Release Date:</td>
-              <td>{{ movieReleaseDate | date: 'longDate' }}</td>
+              <td>{{releaseDateText()}}</td>
+              <td>{{ movieReleaseDate() | date: 'longDate' }}</td>
             </tr>
           }
           @if (movie().runtime && movie().runtime > 0) {
             <tr>
-              <td>Runtime:</td>
+              <td>{{runtimeText()}}</td>
               <td>{{ movie().runtime }} min</td>
             </tr>
           }
           @if (movie().budget && movie().budget > 0) {
             <tr>
-              <td>Budget:</td>
-              <td>USD {{ movie().budget | currency: 'USD' : 'symbol' : '1.0' }}</td>
+              <td>{{budgetText()}}</td>
+              <td>{{ movie().budget | currency: 'USD' : 'code' : '1.0-2': 'en-US' }}</td>
             </tr>
           }
           @if (movie().revenue && movie().revenue > 0) {
             <tr>
-              <td>Box Office:</td>
-              <td>USD {{ movie().revenue | currency: 'USD' : 'symbol' : '1.0' }}</td>
+              <td>{{boxOfficeText()}}</td>
+              <td>{{ movie().revenue | currency: 'USD' : 'code' : '1.0' }}</td>
             </tr>
           }
         </tbody>
@@ -109,17 +109,17 @@
       <section class="movie-external-links">
         @if (movie().imdb_id) {
           <div class="d-grid mb-2">
-            <a [href]="movieIMDB" class="btn btn-primary" target="_blank">
+            <a [href]="movieImdb()" class="btn btn-primary" target="_blank">
               <fa-icon [icon]="imdbIcon"></fa-icon>
-              IMDB
+              {{imdbText()}}
             </a>
           </div>
         }
         @if (movie().homepage) {
           <div class="d-grid mb-2">
-            <a [href]="movieHomepage" class="btn btn-primary" target="_blank">
+            <a [href]="movieOfficialWebsite()" class="btn btn-primary" target="_blank">
               <fa-icon [icon]="globeIcon"></fa-icon>
-              Official Site
+              {{officialWebsiteText()}}
             </a>
           </div>
         }
