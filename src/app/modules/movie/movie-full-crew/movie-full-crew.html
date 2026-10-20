@@ -4,7 +4,7 @@
     </app-movie-error>
   }
   @if (!movieFullCrewError) {
-    <h2 #title>Full Crew</h2>
+    <h2 #title>{{fullCrewTitle()}}</h2>
     @if (movieFullCrew().length > 0) {
       <div class="row">
         <div class="col-12 col-lg-9">
@@ -20,7 +20,7 @@
         <div class="col-12 col-lg-3">
           <app-show-x-results
             #movieCrewShowXResults
-            [resultsOptions]="resultsOptions()"
+            [resultsOptions]="numberResultsOptions()"
             [enabledResultsParams]="enabledResultsParams()"
             [itemsPerPage]="crewMembersPerPage()"
             (onSelectResultOption)="changeItemsPerPage($event)">
@@ -32,8 +32,8 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Role</th>
+              <th>{{nameText()}}</th>
+              <th>{{jobText()}}</th>
             </tr>
           </thead>
           <tbody>
@@ -62,7 +62,7 @@
       </div>
       <app-pagination (pageChange)="changePage($event)"></app-pagination>
     } @else {
-      <p>This movie has no recognizable crew</p>
+      <p>{{noRecognizableCrewText()}}</p>
     }
   }
 </section>

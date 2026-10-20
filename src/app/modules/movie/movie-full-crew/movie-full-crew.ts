@@ -28,20 +28,24 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
-  private movie: Movie = null;
+  private movie: WritableSignal<Movie> = signal(null);
+
+  public movieFullCrew: WritableSignal<CrewMember[]> = signal([]);
 
   public currentPage: WritableSignal<number> = signal(1);
   public crewMembersPerPage: WritableSignal<number> = signal(25);
   public totalCrewMembers: WritableSignal<number> = signal(0);
 
-  public movieFullCrew: WritableSignal<CrewMember[]> = signal([]);
-
   public fullCrewFound: boolean = false;
   public movieFullCrewError: boolean = false;
   public errorMessage: string = '';
 
+  @ViewChild('title') title!: ElementRef;
+  public fullCrewTitle: WritableSignal<string> = signal('Full Crew');
+
+  @ViewChildren('orderSelectMovieFullCrew') orderSelectMovieFullCrew!: QueryList<OrderSelect>;
   public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
     { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
     { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' },
@@ -51,30 +55,28 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' },
     { id: Order.JobDesc, orderCriteriaName: 'Job - descending' },
   ]);
-
-  public resultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
-
   public defaultOrder: WritableSignal<OrderCriteria> = signal({
     id: Order.DefaultOrder,
     orderCriteriaName: 'Default Order',
   });
-
   private currentOrderStr: WritableSignal<string | null> = signal(null);
   public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
+  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, lastNameAsc, lastNameDesc, jobAsc, jobDesc');
 
-  @ViewChildren('orderSelectMovieFullCrew') orderSelectMovieFullCrew!: QueryList<OrderSelect>;
   @ViewChild('movieCrewShowXResults') movieCrewShowXResults!: ShowXResults;
-  @ViewChild('title') title!: ElementRef;
+  public numberResultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
+  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 25, 50, 100 (other values are not valid)');
+
+  public nameText: WritableSignal<string> = signal('Name');
+  public jobText: WritableSignal<string> = signal('Job');
+
+  public noRecognizableCrewText: WritableSignal<string> = signal('This movie has no recognizable cast');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCrewSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
   private queryParamsSubscription: Subscription = new Subscription();
   private orderSelectSubscription: Subscription = new Subscription();
-
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, lastNameAsc, lastNameDesc, jobAsc, jobDesc');
-
-  public enabledResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 25, 50, 100 (other values are not valid)');
 
   ngOnInit(): void {
     this.getMovie();
@@ -101,21 +103,21 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.sessionStorageService.getItem('movie');
+    this.movie.set(this.sessionStorageService.getItem('movie'));
     this.setTitle();
   }
 
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
-        this.id = parseInt(params['id']);
+        this.id.set(parseInt(params['id']));
         this.getFullCrew();
       },
     );
   }
 
   private setResultsPerPage(results: number) {
-    if (this.resultsOptions().includes(results)) {
+    if (this.numberResultsOptions().includes(results)) {
       this.crewMembersPerPage.set(results);
       this.movieCrewShowXResults.setXResults(results);
     }
@@ -151,14 +153,14 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
 
   private setTitle(): void {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title, this.movie.original_title, this.movie.release_date
+      this.movie().title, this.movie().original_title, this.movie().release_date
     );
     this.titleService.setMovieFullCrewTitle(formattedTitle);
   }
 
   private getFullCrew(): void {
     this.movieFullCrewError = false;
-    this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id).subscribe({
+    this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id()).subscribe({
       next: (crew) => {
         this.movieFullCrew.set(crew);
         this.totalCrewMembers.set(this.movieFullCrew().length);
