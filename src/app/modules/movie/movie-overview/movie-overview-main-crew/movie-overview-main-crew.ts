@@ -18,29 +18,73 @@ import { WritableSignal } from '@angular/core';
   styleUrl: './movie-overview-main-crew.scss',
 })
 export class MovieOverviewMainCrew implements OnChanges {
+
+  public mainCrewTitle: WritableSignal<string> = signal('Main Crew');
+
+  public directionText: WritableSignal<string> = signal('Directed By:');
   public direction: WritableSignal<CrewMember[]> = signal([]);
+
+  public coDirectionText: WritableSignal<string> = signal('Co-Directed By:');
   public coDirection: WritableSignal<CrewMember[]> = signal([]);
 
+  public writingText: WritableSignal<string> = signal('Written By:');
   public allWriters: WritableSignal<CrewMember[]> = signal([]);
   public writing: WritableSignal<CrewMember[]> = signal([]);
 
+  public teleplayText: WritableSignal<string> = signal('Teleplay By:');
   public teleplay: WritableSignal<CrewMember[]> = signal([]);
+
+  public storyText: WritableSignal<string> = signal('Story By:');
   public story: WritableSignal<CrewMember[]> = signal([]);
+
+  public screenstoryText: WritableSignal<string> = signal('Screenstory By:');
   public screenstory: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnPoemText: WritableSignal<string> = signal('Based on a Poem By:');
   public basedOnPoemBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnNovelText: WritableSignal<string> = signal('Based on a Novel By:');
   public basedOnNovelBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnStoryText: WritableSignal<string> = signal('Based on a Story By:');
   public basedOnStoryBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnCharacterText: WritableSignal<string> = signal('Based on Characters Created By:');
   public basedOnCharactersBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnBookText: WritableSignal<string> = signal('Based on a Book By:');
   public basedOnBookBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnComicBookText: WritableSignal<string> = signal('Based on a Comic Book By:');
   public basedOnComicBookBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnFilmWrittenText: WritableSignal<string> = signal('Based on a Film Written By:');
   public basedOnFilmWrittenBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnTVSeriesCreatedText: WritableSignal<string> = signal('Based on a TV Series Created By:');
   public basedOnTVSeriesCreatedBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnTheatrePlayText: WritableSignal<string> = signal('Based on a Theatre Play By:');
   public basedOnTheatrePlayBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnMusicalText: WritableSignal<string> = signal('Based on a Musical By:');
   public basedOnMusicalBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public basedOnVideoGameText: WritableSignal<string> = signal('Based on a Video Game By:');
   public basedOnVideoGameBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public originalConceptText: WritableSignal<string> = signal('Original Concept By:');
   public originalConceptBy: WritableSignal<CrewMember[]> = signal([]);
+
+  public producingText: WritableSignal<string> = signal('Produced By:');
   public producing: WritableSignal<CrewMember[]> = signal([]);
+
+  public executiveProducersText: WritableSignal<string> = signal('Executive Producers:');
+  public executiveProducerText: WritableSignal<string> = signal('Executive Producer:');
   public executiveProducing: WritableSignal<CrewMember[]> = signal([]);
+
+  public coExecutiveProducersText: WritableSignal<string> = signal('Co-Executive Producers:');
+  public coExecutiveProducerText: WritableSignal<string> = signal('Co-Executive Producer:');
   public coExecutiveProducing: WritableSignal<CrewMember[]> = signal([]);
 
   movieCrew: InputSignal<CrewMember[]> = input.required<CrewMember[]>();
