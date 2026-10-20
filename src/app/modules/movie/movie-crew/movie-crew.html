@@ -3,7 +3,7 @@
     <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCrew($event)"> </app-movie-error>
   }
   @if (!movieCrewError) {
-    <h2>Featured Crew</h2>
+    <h2>{{featuredCrewTitle()}}</h2>
     @if (
       direction().length > 0 ||
       coDirection().length > 0 ||
@@ -45,7 +45,7 @@
           <tbody>
             @if (direction().length > 0) {
               <tr>
-                <td>Directed By:</td>
+                <td>{{directionText()}}</td>
                 <td>
                   @for (director of direction() | orderCrewMembersByLastName; track director.id) {
                     <a [routerLink]="['/person', director.id]">
@@ -58,7 +58,7 @@
             }
             @if (coDirection().length > 0) {
               <tr>
-                <td>Co-Directed By:</td>
+                <td>{{coDirectionText()}}</td>
                 <td>
                   @for (coDirector of coDirection() | orderCrewMembersByLastName; track coDirector.id) {
                     <a [routerLink]="['/person', coDirector.id]">
@@ -71,7 +71,7 @@
             }
             @if (writing().length > 0) {
               <tr>
-                <td>Written By:</td>
+                <td>{{writingText()}}</td>
                 <td>
                   @for (writer of writing() | orderCrewMembersByLastName; track writer.id) {
                     <a [routerLink]="['/person', writer.id]">
@@ -84,7 +84,7 @@
             }
             @if (teleplay().length > 0) {
               <tr>
-                <td>Teleplay By:</td>
+                <td>{{teleplayText()}}</td>
                 <td>
                   @for (teleplayWriter of teleplay() | orderCrewMembersByLastName; track teleplayWriter.id) {
                     <a [routerLink]="['/person', teleplayWriter.id]">
@@ -97,7 +97,7 @@
             }
             @if (story().length > 0) {
               <tr>
-                <td>Story By:</td>
+                <td>{{storyText()}}</td>
                 <td>
                   @for (storyArtist of story() | orderCrewMembersByLastName; track storyArtist.id) {
                     <a [routerLink]="['/person', storyArtist.id]">
@@ -110,7 +110,7 @@
             }
             @if (screenstory().length > 0) {
               <tr>
-                <td>Screenstory By:</td>
+                <td>{{screenstoryText()}}</td>
                 <td>
                   @for (screenstoryArtist of screenstory() | orderCrewMembersByLastName; track screenstoryArtist.id) {
                     <a [routerLink]="['/person', screenstoryArtist.id]">
@@ -123,7 +123,7 @@
             }
             @if (basedOnPoemBy().length > 0) {
               <tr>
-                <td>Based on a Poem By:</td>
+                <td>{{basedOnPoemText()}}</td>
                 <td>
                   @for (author of basedOnPoemBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -136,7 +136,7 @@
             }
             @if (basedOnNovelBy().length > 0) {
               <tr>
-                <td>Based on a Novel By:</td>
+                <td>{{basedOnNovelText()}}</td>
                 <td>
                   @for (author of basedOnNovelBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -149,7 +149,7 @@
             }
             @if (basedOnStoryBy().length > 0) {
               <tr>
-                <td>Based on a Story By:</td>
+                <td>{{basedOnStoryText()}}</td>
                 <td>
                   @for (author of basedOnStoryBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -162,7 +162,7 @@
             }
             @if (basedOnCharactersBy().length > 0) {
               <tr>
-                <td>Based on Characters Created By:</td>
+                <td>{{basedOnCharacterText()}}</td>
                 <td>
                   @for (author of basedOnCharactersBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -175,7 +175,7 @@
             }
             @if (basedOnBookBy().length > 0) {
               <tr>
-                <td>Based on a Book By:</td>
+                <td>{{basedOnBookText()}}</td>
                 <td>
                   @for (author of basedOnBookBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -188,7 +188,7 @@
             }
             @if (basedOnComicBookBy().length > 0) {
               <tr>
-                <td>Based on a Comic Book By:</td>
+                <td>{{basedOnComicBookText()}}</td>
                 <td>
                   @for (author of basedOnComicBookBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -201,7 +201,7 @@
             }
             @if (basedOnFilmWrittenBy().length > 0) {
               <tr>
-                <td>Based on a Film Written By:</td>
+                <td>{{basedOnFilmWrittenText()}}</td>
                 <td>
                   @for (author of basedOnFilmWrittenBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -214,7 +214,7 @@
             }
             @if (basedOnTVSeriesCreatedBy().length > 0) {
               <tr>
-                <td>Based on a TV Series Created By:</td>
+                <td>{{basedOnTVSeriesCreatedText()}}</td>
                 <td>
                   @for (author of basedOnTVSeriesCreatedBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -227,7 +227,7 @@
             }
             @if (basedOnTheatrePlayBy().length > 0) {
               <tr>
-                <td>Based on a Theatre Play By:</td>
+                <td>{{basedOnTheatrePlayText()}}</td>
                 <td>
                   @for (author of basedOnTheatrePlayBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -240,7 +240,7 @@
             }
             @if (basedOnMusicalBy().length > 0) {
               <tr>
-                <td>Based on a Musical By:</td>
+                <td>{{basedOnMusicalText()}}</td>
                 <td>
                   @for (author of basedOnMusicalBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -253,7 +253,7 @@
             }
             @if (basedOnVideoGameBy().length > 0) {
               <tr>
-                <td>Based on a Video Game By:</td>
+                <td>{{basedOnVideoGameText()}}</td>
                 <td>
                   @for (author of basedOnVideoGameBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -266,7 +266,7 @@
             }
             @if (originalConceptBy().length > 0) {
               <tr>
-                <td>Original Concept By:</td>
+                <td>{{originalConceptText()}}</td>
                 <td>
                   @for (author of originalConceptBy() | orderCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
@@ -279,7 +279,7 @@
             }
             @if (producing().length > 0) {
               <tr>
-                <td>Produced By:</td>
+                <td>{{producingText()}}</td>
                 <td>
                   @for (producer of producing() | orderCrewMembersByLastName; track producer.id) {
                     <a [routerLink]="['/person', producer.id]">
@@ -294,9 +294,9 @@
               <tr>
                 <td>
                   @if (executiveProducing().length > 1) {
-                    Executive Producers:
+                    {{executiveProducersText()}}
                   } @else {
-                    Executive Producer:
+                    {{executiveProducerText()}}
                   }
                 </td>
                 <td>
@@ -313,9 +313,9 @@
               <tr>
                 <td>
                   @if (coExecutiveProducing().length > 1) {
-                    Co-Executive Producers:
+                    {{coExecutiveProducersText()}}
                   } @else {
-                    Co-Executive Producer:
+                    {{coExecutiveProducerText()}}
                   }
                 </td>
                 <td>
@@ -332,9 +332,9 @@
               <tr>
                 <td>
                   @if (associateProducing().length > 1) {
-                    Associate Producers:
+                    {{associateProducersText()}}
                   } @else {
-                    Associate Producer:
+                    {{associateProducerText()}}
                   }
                 </td>
                 <td>
@@ -351,9 +351,9 @@
               <tr>
                 <td>
                   @if (coProducing().length > 1) {
-                    Co-Producers:
+                    {{coProducersText()}}
                   } @else {
-                    Co-Producer:
+                    {{coProducerText()}}
                   }
                 </td>
                 <td>
@@ -370,9 +370,9 @@
               <tr>
                 <td>
                   @if (directorsOfPhotography().length > 1) {
-                    Directors of Photography:
+                    {{directorsOfPhotographyText()}}
                   } @else {
-                    Director of Photography:
+                    {{directorOfPhotographyText()}}
                   }
                 </td>
                 <td>
@@ -392,9 +392,9 @@
               <tr>
                 <td>
                   @if (productionDesigners().length > 1) {
-                    Production Designers:
+                    {{productionDesignersText()}}
                   } @else {
-                    Production Designer:
+                    {{productionDesignerText()}}
                   }
                 </td>
                 <td>
@@ -411,9 +411,9 @@
               <tr>
                 <td>
                   @if (editors().length > 1) {
-                    Editors:
+                    {{editorsText()}}
                   } @else {
-                    Editor:
+                    {{editorText()}}
                   }
                 </td>
                 <td>
@@ -428,7 +428,7 @@
             }
             @if (musicComposers().length > 0) {
               <tr>
-                <td>Music By:</td>
+                <td>{{musicText()}}</td>
                 <td>
                   @for (musicComposer of musicComposers() | orderCrewMembersByLastName; track musicComposer.id) {
                     <a [routerLink]="['/person', musicComposer.id]">
@@ -441,7 +441,7 @@
             }
             @if (additionalMusicComposers().length > 0) {
               <tr>
-                <td>Additional Music By:</td>
+                <td>{{additionalMusicText()}}</td>
                 <td>
                   @for (
                     additionalMusicComposer of additionalMusicComposers() | orderCrewMembersByLastName;
@@ -457,7 +457,7 @@
             }
             @if (songsBy().length > 0) {
               <tr>
-                <td>Songs By:</td>
+                <td>{{songsText()}}</td>
                 <td>
                   @for (
                     songsAuthor of songsBy() | orderCrewMembersByLastName;
@@ -473,7 +473,7 @@
             }
             @if (lyricsBy().length > 0) {
               <tr>
-                <td>Lyrics By:</td>
+                <td>{{lyricsText()}}</td>
                 <td>
                   @for (
                     lyricsAuthor of lyricsBy() | orderCrewMembersByLastName;
@@ -491,9 +491,9 @@
               <tr>
                 <td>
                   @if (musicSupervisors().length > 1) {
-                    Music Supervisors:
+                    {{musicSupervisorsText()}}
                   } @else {
-                    Music Supervisor:
+                    {{musicSupervisorText()}}
                   }
                 </td>
                 <td>
@@ -510,9 +510,9 @@
               <tr>
                 <td>
                   @if (soundDesigners().length > 1) {
-                    Sound Designers:
+                    {{soundDesignersText()}}
                   } @else {
-                    Sound Designer:
+                    {{soundDesignerText()}}
                   }
                 </td>
                 <td>
@@ -529,9 +529,9 @@
               <tr>
                 <td>
                   @if (visualEffectsSupervisors().length > 1) {
-                    Visual Effects Supervisors:
+                    {{visualEffectsSupervisorsText()}}
                   } @else {
-                    Visual Effects Supervisor:
+                    {{visualEffectsSupervisorText()}}
                   }
                 </td>
                 <td>
@@ -551,9 +551,9 @@
               <tr>
                 <td>
                   @if (costumeDesigners().length > 1) {
-                    Costume Designers:
+                    {{costumeDesignersText()}}
                   } @else {
-                    Costume Designer:
+                    {{costumeDesignerText()}}
                   }
                 </td>
                 <td>
@@ -568,7 +568,7 @@
             }
             @if (castingCrew().length > 0) {
               <tr>
-                <td>Casting By:</td>
+                <td>{{castingText()}}</td>
                 <td>
                   @for (casting of castingCrew() | orderCrewMembersByLastName; track casting.id) {
                     <a [routerLink]="['/person', casting.id]">
@@ -583,10 +583,12 @@
         </table>
       </div>
       <div class="d-grid">
-        <a routerLink="../full-crew" class="btn btn-primary mb-2"> View Full Crew </a>
+        <a routerLink="../full-crew" class="btn btn-primary mb-2">
+          {{viewFullCrewText()}}
+        </a>
       </div>
     } @else {
-      <p>This movie has no recognizable crew</p>
+      <p>{{noRecognizableCrewText()}}</p>
     }
   }
 </section>
