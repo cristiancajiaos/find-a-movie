@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input, InputSignal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, InputSignal, WritableSignal, signal } from '@angular/core';
 import { BackdropImage } from '../../../../classes/response-image/backdrop-image';
 
 @Component({
@@ -11,5 +11,7 @@ import { BackdropImage } from '../../../../classes/response-image/backdrop-image
 export class MovieOverviewImages {
 
   movieImages: InputSignal<BackdropImage[]> = input.required<BackdropImage[]>();
+
+  imagesGalleryTitle: WritableSignal<string> = signal('Images Gallery');
 
 }
