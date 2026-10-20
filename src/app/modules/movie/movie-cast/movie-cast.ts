@@ -35,7 +35,7 @@ import { sign } from 'crypto';
   styleUrl: './movie-cast.scss',
 })
 export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
-  
+
   private activatedRoute = inject(ActivatedRoute);
   private movieService = inject(MovieService);
   private sessionStorageService = inject(SessionStorageService);
@@ -88,7 +88,7 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
 
   public uncreditedCharacterText: WritableSignal<string> = signal('An uncredited character');
   public characterNotDefinedText: WritableSignal<string> = signal('A character not defined');
-  public noRecoginzableCastText: WritableSignal<string> = signal('This movie has no recognizable cast');
+  public noRecognizableCastText: WritableSignal<string> = signal('This movie has no recognizable cast');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCastSubscription: Subscription = new Subscription();

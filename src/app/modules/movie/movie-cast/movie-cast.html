@@ -70,7 +70,7 @@
               </tr>
             } @empty {
               <tr>
-                <td colspan="3">{{noRecoginzableCastText()}}</td>
+                <td colspan="3">{{noRecognizableCastText()}}</td>
               </tr>
             }
           </tbody>
@@ -78,7 +78,7 @@
       </div>
       <app-pagination (pageChange)="changePage($event)"></app-pagination>
     } @else {
-      <p>{{noRecoginzableCastText()}}</p>
+      <p>{{noRecognizableCastText()}}</p>
     }
   }
 </section>
