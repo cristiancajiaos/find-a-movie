@@ -43,6 +43,8 @@ export class MovieComponent implements OnInit, OnDestroy {
   public movieErrorFound: boolean = false;
   public errorMessage: string = '';
 
+  public openPosterText: WritableSignal<string> = signal('Open Poster in New Tab');
+
   public routeSubscription: Subscription = new Subscription();
   public getMovieSubscription: Subscription = new Subscription();
   public endLoadingSubscription: Subscription = new Subscription();
