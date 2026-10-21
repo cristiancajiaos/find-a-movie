@@ -17,4 +17,6 @@ export class SearchMainMovie {
 
   public movieIcon: IconDefinition = faFilm;
 
+  public searchMovieText: WritableSignal<string> = signal('Search a Movie');
+
 }

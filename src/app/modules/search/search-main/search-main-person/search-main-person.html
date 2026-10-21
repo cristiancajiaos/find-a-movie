@@ -5,7 +5,10 @@
   <div class="container-fluid">
     <div class="search-container">
       <div class="search-box search-person-box bg-dark">
-        <h2 class="text-center"><fa-icon [icon]="userIcon"></fa-icon> Search a Person</h2>
+        <h2 class="text-center">
+          <fa-icon [icon]="userIcon"></fa-icon>
+          {{searchPersonText()}}
+        </h2>
         <hr />
         <div class="d-flex justify-content-center">
           <app-search-input-person

@@ -17,4 +17,6 @@ export class SearchMainPerson {
 
   public userIcon: IconDefinition = faUser;
 
+  public searchPersonText: WritableSignal<string> = signal('Search a Person');
+
 }
