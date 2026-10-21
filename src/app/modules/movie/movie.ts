@@ -31,11 +31,11 @@ export class MovieComponent implements OnInit, OnDestroy {
   public id: WritableSignal<number> = signal(0);
   public movie: WritableSignal<Movie> = signal(new Movie());
 
-  public formattedTitle: string = '';
+  public formattedTitle: WritableSignal<string> = signal('');
 
-  public altPosterText: string = '';
-  public posterSizeSmall: string = '';
-  public posterSizeOriginal: string = '';
+  public altPosterText: WritableSignal<string> = signal('')
+  public posterSizeSmall: WritableSignal<string> = signal('');
+  public posterSizeOriginal: WritableSignal<string> = signal('');
 
   public movieFound: boolean = false;
   private movieError: HttpErrorResponse = null;
@@ -99,15 +99,16 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private setMoviePoster(): void {
-    this.posterSizeSmall = this.movie().poster_path
+    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(this.movie().title, this.movie().original_title, this.movie().release_date));
+    this.posterSizeSmall.set(this.movie().poster_path
       ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie().poster_path}`
-      : 'img/default-images/movie_poster_notavailable_w500.jpg';
-    this.posterSizeOriginal = this.movie().poster_path
+      : 'img/default-images/movie_poster_notavailable_w500.jpg');
+    this.posterSizeOriginal.set(this.movie().poster_path
       ? `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie().poster_path}`
-      : '';
-    this.altPosterText = this.movie().poster_path
-      ? `Poster from the movie ${this.formattedTitle}`
-      : `Poster from the movie ${this.formattedTitle} is not available`;
+      : '');
+    this.altPosterText.set(this.movie().poster_path
+      ? `Poster from the movie ${this.formattedTitle()}`
+      : `Poster from the movie ${this.formattedTitle()} is not available`);
   }
 
   ngOnDestroy(): void {
