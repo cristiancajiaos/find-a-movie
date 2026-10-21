@@ -31,8 +31,8 @@
           </section>
           <section class="search-movie-results">
             <p>
-              <strong>{{ searchQuery() }}</strong> returned {{ totalResults() }} results. Showing
-              results {{ currentPageStart() }}-{{ currentPageEnd() }} of {{ totalResults() }}:
+              <strong>{{ searchQuery() }}</strong> {{returnedText()}} {{ totalResults() }} {{resultsText()}}
+              {{showingResults()}} {{ currentPageStart() }}{{hyphenText()}}{{ currentPageEnd() }} {{ofText()}} {{ totalResults() }}{{colonText()}}
             </p>
             <hr/>
             @if (displayMode() == 'grid') {

@@ -41,6 +41,13 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public noResultsText: WritableSignal<string> = signal('returned no results.');
 
+  public returnedText: WritableSignal<string> = signal('returned');
+  public resultsText: WritableSignal<string> = signal('results.');
+  public showingResults: WritableSignal<string> = signal('Showing results');
+  public hyphenText: WritableSignal<string> = signal('-');
+  public ofText: WritableSignal<string> = signal('of');
+  public colonText: WritableSignal<string> = signal(':');
+
   public displayMode = signal('grid');
 
   public loadingPage: boolean = false;
