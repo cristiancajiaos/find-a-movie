@@ -24,15 +24,22 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
-  public movie: Movie = null;
+  public movie: WritableSignal<Movie> = signal(null);
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public movieRecommendedError: boolean = false;
   public errorMessage: string = '';
 
-  public displayMode = signal('grid');
+  public movieRecommendationsTitle: WritableSignal<string> = signal('Movie Recommendations');
+
+  public ifYouLikedText: WritableSignal<string> = signal('If you liked');
+  public youWouldLikeText: WritableSignal<string> = signal(', you would like also the following movies:');
+
+  public displayMode: WritableSignal<string> = signal('grid');
+
+  public noRecommendedMovies: WritableSignal<string> = signal('There are no recommended movies to');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieRecommendedSubscription: Subscription = new Subscription();
@@ -56,27 +63,27 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.sessionStorageService.getItem('movie');
+    this.movie.set(this.sessionStorageService.getItem('movie'));
     this.setTitle();
   }
 
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent.params?.subscribe((params) => {
-      this.id = parseInt(params['id']);
+      this.id.set(parseInt(params['id']));
       this.getRecommendedMovies();
     });
   }
 
   private setTitle(): void {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title, this.movie.original_title, this.movie.release_date
+      this.movie().title, this.movie().original_title, this.movie().release_date
     );
     this.titleService.setMovieRecommendedTitle(formattedTitle);
   }
 
   private getRecommendedMovies(): void {
     this.movieRecommendedError = false;
-    this.getMovieRecommendedSubscription = this.movieService.getMovieRecommendedMovies(this.id).subscribe({
+    this.getMovieRecommendedSubscription = this.movieService.getMovieRecommendedMovies(this.id()).subscribe({
       next: (movieResults) => {
         this.movieResults.set(movieResults);
       },

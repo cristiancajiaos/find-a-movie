@@ -5,10 +5,10 @@
   }
   @if (!movieRecommendedError) {
     @if (movieResults().length > 0) {
-      <h2>Movie Recommendations</h2>
+      <h2>{{movieRecommendationsTitle()}}</h2>
       <p>
-        If you liked <strong>{{ movie.title }}</strong
-        >, you would like also the following movies:
+        {{ifYouLikedText()}} <strong>{{ movie().title }}</strong
+        >{{youWouldLikeText()}}
       </p>
       <app-display-selector
         [displayMode]="displayMode()"
@@ -16,7 +16,7 @@
       </app-display-selector>
       @if (displayMode() == 'grid') {
         <div class="row">
-          @for (movieResult of movieResults(); track movie.id) {
+          @for (movieResult of movieResults(); track movieResult.id) {
             <div class="col-12 col-sm-6 col-lg-3">
               <app-search-movie-result-grid [movieResult]="movieResult">
               </app-search-movie-result-grid>
@@ -25,12 +25,12 @@
         </div>
       }
       @if (displayMode() == 'list') {
-        @for (movieResult of movieResults(); track movie.id) {
+        @for (movieResult of movieResults(); track movieResult.id) {
           <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
         }
       }
     } @else {
-      <p>There are no recommended movies to {{ movie.title }}.</p>
+      <p>{{noRecommendedMovies()}} {{ movie().title }}.</p>
     }
   }
 </section>
