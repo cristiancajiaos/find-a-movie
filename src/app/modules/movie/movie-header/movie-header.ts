@@ -29,17 +29,10 @@ export class MovieHeader implements OnChanges {
 
   ngOnChanges() {
     this.setYear();
-    this.setBackdrop();
   }
 
   public setYear(): void {
     const releaseYear: Date = new Date(this.movie().release_date);
     this.year.set(releaseYear.getFullYear());
-  }
-
-  public setBackdrop(): void {
-    this.backdropImg.set(this.movie().backdrop_path
-      ? `${environment.imgUrl}${environment.backdropSize}${this.movie().backdrop_path}`
-      : 'img/default-images/movie_backdrop_notavailable_w1280.jpg');
   }
 }

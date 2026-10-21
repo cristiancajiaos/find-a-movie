@@ -37,6 +37,10 @@ export class MovieService {
     }
 
     return this.http.get<Movie>((`/movie/${id}`)).pipe(
+      map((movie) => {
+        movie.backdrop_path = movie.backdrop_path ? `${environment.imgUrl}${environment.backdropSize}${movie.backdrop_path}` : 'img/default-images/movie_backdrop_notavailable_w1280.jpg';
+        return movie;
+      }),
       tap(
         movie => this.movie.set(`movie-${id}`, movie)
       )
