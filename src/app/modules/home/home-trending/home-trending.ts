@@ -25,6 +25,8 @@ export class HomeTrending implements OnInit, OnDestroy {
   public filmIcon: IconDefinition = faFilm;
   public trendUpIcon: IconDefinition = faArrowTrendUp;
 
+  public trendingMoviesTitle: WritableSignal<string> = signal('Trending Movies');
+
   private isLoadingSubscription = new Subscription();
   private getTrendingMoviesSubscription = new Subscription();
 
