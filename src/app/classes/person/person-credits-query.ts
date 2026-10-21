@@ -1,5 +1,3 @@
-import { OrderCriteria } from "../../interfaces/order-criteria";
-
 export class PersonCreditsQuery {
   public resultsPerPage: number;
   public order: string;
