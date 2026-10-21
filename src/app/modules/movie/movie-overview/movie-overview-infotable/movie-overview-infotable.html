@@ -27,17 +27,17 @@
               </td>
             </tr>
           }
-          @if (movie().production_companies.length > 0) {
+          @if (allProductionCompanies().length > 0) {
             <tr>
               <td>
-                @if (movie().production_companies.length > 1) {
+                @if (allProductionCompanies().length > 1) {
                   {{productionCompaniesText()}}
                 } @else {
                   {{productionCompanyText()}}
                 }
               </td>
               <td>
-                @for (productionCompany of movie().production_companies | orderProductionCompaniesByName; track productionCompany) {
+                @for (productionCompany of allProductionCompanies() | orderProductionCompaniesByName; track productionCompany) {
                   {{ productionCompany.name }}
                   <br />
                 }
