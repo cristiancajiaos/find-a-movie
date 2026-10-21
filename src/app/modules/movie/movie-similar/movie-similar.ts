@@ -24,15 +24,21 @@ export class MovieSimilar implements OnInit, OnDestroy {
   private titleService = inject(TitleService);
   private loadingService = inject(LoadingService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
-  public movie: Movie = null;
+  public movie: WritableSignal<Movie> = signal(null);
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public movieSimilarError: boolean = false;
   public errorMessage: string = '';
 
+  public similarMoviesTitle: WritableSignal<string> = signal('Similar Movies');
+
+  public similarMoviesText: WritableSignal<string> = signal('These movies are similar to');
+
   public displayMode = signal('grid');
+
+  public noSimilarMoviesText: WritableSignal<string> = signal('There are no similar movies to');
 
   private endLoadingSubscription: Subscription = new Subscription();
   private activatedRouteParentSubscription: Subscription = new Subscription();
@@ -55,26 +61,26 @@ export class MovieSimilar implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movie = this.sessionStorageService.getItem('movie');
+    this.movie.set(this.sessionStorageService.getItem('movie'));
   }
 
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent.params?.subscribe((params) => {
-      this.id = parseInt(params['id']);
+      this.id.set(parseInt(params['id']));
       this.getSimilarMovies();
     });
   }
 
   private setTitle() {
     const formattedTitle: string = this.movieService.getFormattedMovieTitle(
-      this.movie.title, this.movie.original_title, this.movie.release_date
+      this.movie().title, this.movie().original_title, this.movie().release_date
     );
     this.titleService.setMovieSimilarTitle(formattedTitle);
   }
 
   private getSimilarMovies(): void {
     this.movieSimilarError = false;
-    this.getMovieSimilarSubscription = this.movieService.getMovieSimilarMovies(this.id).subscribe({
+    this.getMovieSimilarSubscription = this.movieService.getMovieSimilarMovies(this.id()).subscribe({
       next: (movieResults) => {
         this.movieResults.set(movieResults);
       },

@@ -5,9 +5,9 @@
   }
   @if (!movieSimilarError) {
     @if (movieResults().length > 0) {
-      <h2>Similar Movies</h2>
+      <h2>{{similarMoviesTitle()}}</h2>
       <p>
-        These movies are similar to <strong>{{ movie.title }}</strong
+        {{similarMoviesText()}} <strong>{{ movie().title }}</strong
         >:
       </p>
       <app-display-selector
@@ -30,7 +30,7 @@
         }
       }
     } @else {
-      <p>There are no similar movies to <strong>{{movie.title}}</strong>.</p>
+      <p>{{noSimilarMoviesText()}} <strong>{{movie().title}}</strong>.</p>
     }
   }
 </section>
