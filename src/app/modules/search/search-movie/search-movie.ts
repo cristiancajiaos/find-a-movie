@@ -37,6 +37,10 @@ export class SearchMovie implements OnInit, OnDestroy {
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public movieResults: ResponseMovieResult[] = [];
 
+  public searchMovieTitle: WritableSignal<string> = signal('Search Movie');
+
+  public noResultsText: WritableSignal<string> = signal('returned no results.');
+
   public displayMode = signal('grid');
 
   public loadingPage: boolean = false;
