@@ -1,7 +1,7 @@
 .search-result-list {
   position: relative;
   margin-bottom: 1rem;
-  border: 3px solid black;
+  border: 3px solid rgba(33, 37, 41, 1);
 
   a {
     text-decoration: none;
@@ -19,7 +19,7 @@
 
         img {
           height: 150px;
-          border-right: 3px solid black;
+          border-right: 3px solid rgba(33, 37, 41, 1);
         }
       }
 
