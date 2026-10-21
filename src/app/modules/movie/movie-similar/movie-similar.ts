@@ -35,6 +35,7 @@ export class MovieSimilar implements OnInit, OnDestroy {
   public similarMoviesTitle: WritableSignal<string> = signal('Similar Movies');
 
   public similarMoviesText: WritableSignal<string> = signal('These movies are similar to');
+  public colonText: WritableSignal<string> = signal(':');
 
   public displayMode = signal('grid');
 
