@@ -20,7 +20,7 @@ import { environment } from '../../../../../environments/environment.development
   styleUrl: './movie-overview-external-links.scss',
 })
 export class MovieOverviewExternalLinks implements OnChanges {
-  public externalLinksText: WritableSignal<string> = signal('External Links');
+  public externalLinksTitle: WritableSignal<string> = signal('External Links');
 
   public movieImdb: WritableSignal<string> = signal('');
   public imdbIcon: IconDefinition = faImdb;
