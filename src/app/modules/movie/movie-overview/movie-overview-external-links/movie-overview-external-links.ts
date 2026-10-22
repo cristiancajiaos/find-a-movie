@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   WritableSignal,
 } from '@angular/core';
-import { faFacebook, faImdb, faInstagram, faTwitter, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faImdb, faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { Movie } from '../../../../classes/movie';
 import { MovieExternalIds } from '../../../../classes/movie-external-ids';
