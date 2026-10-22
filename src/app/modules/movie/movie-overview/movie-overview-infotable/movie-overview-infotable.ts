@@ -40,21 +40,11 @@ export class MovieOverviewInfotable implements OnChanges {
   public usdText: WritableSignal<string> = signal('USD');
   public boxOfficeText: WritableSignal<string> = signal('Box Office:');
 
-  public movieImdb: WritableSignal<string> = signal('');
-  public imdbIcon: IconDefinition = faImdb;
-  public imdbText: WritableSignal<string> = signal('IMDB');
-
-  public movieOfficialWebsite: WritableSignal<string> = signal('');
-  public globeIcon: IconDefinition = faGlobe;
-  public officialWebsiteText: WritableSignal<string> = signal('Official website');
-
   movie: InputSignal<Movie> = input.required<Movie>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setProductionCompanies();
     this.setReleaseDate();
-    this.setMovieIMDB();
-    this.setMovieOfficialWebsite();
   }
 
   private setProductionCompanies() {
@@ -70,18 +60,6 @@ export class MovieOverviewInfotable implements OnChanges {
   private setReleaseDate(): void {
     if (this.movie().release_date) {
       this.movieReleaseDate.set(new Date(this.movie().release_date));
-    }
-  }
-
-  private setMovieIMDB(): void {
-    if (this.movie().imdb_id) {
-      this.movieImdb.set(`${environment.imdbMovieUrl}${this.movie().imdb_id}/`);
-    }
-  }
-
-  private setMovieOfficialWebsite(): void {
-    if (this.movie().homepage) {
-      this.movieOfficialWebsite.set(`${this.movie().homepage}`);
     }
   }
 }

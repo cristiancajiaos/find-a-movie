@@ -105,25 +105,5 @@
         </tbody>
       </table>
     </div>
-    @if (movie().imdb_id || movie().homepage) {
-      <section class="movie-external-links">
-        @if (movie().imdb_id) {
-          <div class="d-grid mb-2">
-            <a [href]="movieImdb()" class="btn btn-primary" target="_blank">
-              <fa-icon [icon]="imdbIcon"></fa-icon>
-              {{imdbText()}}
-            </a>
-          </div>
-        }
-        @if (movie().homepage) {
-          <div class="d-grid mb-2">
-            <a [href]="movieOfficialWebsite()" class="btn btn-primary" target="_blank">
-              <fa-icon [icon]="globeIcon"></fa-icon>
-              {{officialWebsiteText()}}
-            </a>
-          </div>
-        }
-      </section>
-    }
   }
 </section>

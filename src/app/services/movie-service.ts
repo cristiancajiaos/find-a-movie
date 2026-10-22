@@ -12,6 +12,7 @@ import { BackdropImage } from '../classes/response-image/backdrop-image';
 import { ResponseMovieResult } from '../classes/response-search-movie/response-movie-result';
 import { environment } from '../../environments/environment.development';
 import { ResponseVideoResult } from '../classes/response-video/response-video-result';
+import { MovieExternalIds } from '../classes/movie-external-ids';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,7 @@ export class MovieService {
   private creditsCrew = new Map<string, CrewMember[]>();
   private movieTrailer = new Map<string, ResponseVideoResult>();
   private movieImages = new Map<string, BackdropImage[]>();
+  private movieExternalIds = new Map<string, MovieExternalIds>();
   private movieRecommendations = new Map<string, ResponseMovieResult[]>();
   private movieSimilar = new Map<string, ResponseMovieResult[]>();
 
@@ -119,6 +121,16 @@ export class MovieService {
       ),
       tap(movieImages => this.movieImages.set(`movieImages-${id}`, movieImages))
     )
+  }
+
+  public getMovieExternalIds(id: number): Observable<MovieExternalIds> {
+    if (this.movieExternalIds.has(`movieExternalIds-${id}`)) {
+      return of(this.movieExternalIds.get(`movieExternalIds-${id}`));
+    }
+
+    return this.http.get<MovieExternalIds>(`/movie/${id}/external_ids`).pipe(
+      tap(movieExternalIds => this.movieExternalIds.set(`movieExternalIds-${id}`, movieExternalIds))
+    );
   }
 
   public getMovieRecommendedMovies(id: number): Observable<ResponseMovieResult[]> {

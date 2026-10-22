@@ -1,0 +1,26 @@
+<section class="movie-overview-external-links">
+  <h3>External Links</h3>
+  <div class="row">
+    @if (movie().imdb_id) {
+      <div class="col-4">
+        <div class="d-grid mb-2">
+          <a [href]="movieImdb()" class="btn btn-primary" target="_blank">
+            <fa-icon [icon]="imdbIcon"></fa-icon>
+            {{ imdbText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (movie().homepage) {
+      <div class="col-4">
+        <div class="d-grid mb-2">
+          <a [href]="movieOfficialWebsite()" class="btn btn-primary" target="_blank">
+            <fa-icon [icon]="globeIcon"></fa-icon>
+            {{ officialWebsiteText() }}
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+  <p>Movie External IDs: {{ movieExternalIds() | json }}</p>
+</section>

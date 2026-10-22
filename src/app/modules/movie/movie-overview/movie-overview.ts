@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BackdropImage } from '../../../classes/response-image/backdrop-image';
 import { TitleService } from '../../../services/title-service';
 import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
+import { MovieExternalIds } from '../../../classes/movie-external-ids';
 
 @Component({
   selector: 'app-movie-overview',
@@ -35,6 +36,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public credits: WritableSignal<Credits> = signal(new Credits());
   public movieResponseVideo: WritableSignal<ResponseVideoResult> = signal(new ResponseVideoResult());
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
+  public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
 
   public movieTagline: string = null;
   public movieOverview: string = null;
@@ -80,18 +82,21 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
     const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id);
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
+    const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id);
 
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
       getCredits,
       getTrailer,
       getImages,
+      getExternalIds
     ]).subscribe({
-      next: ([movie, credits, responseVideoResult, movieImages]) => {
+      next: ([movie, credits, responseVideoResult, movieImages, movieExternalIds]) => {
         this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideoResult);
         this.movieImages.set(movieImages);
+        this.movieExternalIds.set(movieExternalIds);
         this.movieFound = true;
         this.setTitle();
       },
