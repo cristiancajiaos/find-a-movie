@@ -3,7 +3,6 @@ export const environment = {
   production: true,
   apiUrl: 'https://api.themoviedb.org/3',
   authToken: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYmQ4MzUxYjc1MDViZDk3ODVkMWVhOGZmZWU3N2U3ZCIsIm5iZiI6MTQ2NjAxNTg0Ny4zMDksInN1YiI6IjU3NjFhMDY2OTI1MTQxMDY3ZjAwMDA2OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P5-ylXwQaIEG3wESl5KcKv9LI8nTLTgLsXUA6wyBquk',
-  langParameter: '?language=en-US',
   imgUrl: 'https://image.tmdb.org/t/p',
   backdropSize: '/w1280',
   posterSizeSmall: '/w500',
@@ -11,5 +10,8 @@ export const environment = {
   profileSizeSmall: '/w185',
   youtubeEmbedUrl: 'https://www.youtube.com/embed/',
   imdbPersonUrl: 'https://www.imdb.com/name/',
-  imdbMovieUrl: 'https://www.imdb.com/title/'
+  imdbMovieUrl: 'https://www.imdb.com/title/',
+  facebookUrl: 'https://www.facebook.com/',
+  instagramUrl: 'https://www.instagram.com/',
+  twitterUrl: 'https://x.com/'
 };

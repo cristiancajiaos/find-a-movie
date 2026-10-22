@@ -2,9 +2,9 @@
   <h3>External Links</h3>
   <div class="row">
     @if (movie().imdb_id) {
-      <div class="col-4">
+      <div class="col-12 col-sm-6 col-lg-4">
         <div class="d-grid mb-2">
-          <a [href]="movieImdb()" class="btn btn-primary" target="_blank">
+          <a [href]="movieImdb()" class="btn btn-outline-dark" target="_blank">
             <fa-icon [icon]="imdbIcon"></fa-icon>
             {{ imdbText() }}
           </a>
@@ -12,15 +12,44 @@
       </div>
     }
     @if (movie().homepage) {
-      <div class="col-4">
+      <div class="col-12 col-sm-6 col-lg-4">
         <div class="d-grid mb-2">
-          <a [href]="movieOfficialWebsite()" class="btn btn-primary" target="_blank">
+          <a [href]="movieOfficialWebsite()" class="btn btn-outline-dark" target="_blank">
             <fa-icon [icon]="globeIcon"></fa-icon>
             {{ officialWebsiteText() }}
           </a>
         </div>
       </div>
     }
+    @if (movieExternalIds().facebook_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="facebookOfficialPage()" class="btn btn-outline-dark" target="_blank">
+            <fa-icon [icon]="facebookIcon"></fa-icon>
+            {{ facebookPageText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (movieExternalIds().instagram_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="instagramOfficialPage()" class="btn btn-outline-dark" target="_blank">
+            <fa-icon [icon]="instagramIcon"></fa-icon>
+            {{ instagramPageText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (movieExternalIds().twitter_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="twitterOfficialPage()" class="btn btn-outline-dark" target="_blank">
+            <fa-icon [icon]="twitterIcon"></fa-icon>
+            {{ twitterPageText() }}
+          </a>
+        </div>
+      </div>
+    }
   </div>
-  <p>Movie External IDs: {{ movieExternalIds() | json }}</p>
 </section>

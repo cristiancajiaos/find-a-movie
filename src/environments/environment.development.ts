@@ -10,5 +10,8 @@ export const environment = {
   profileSizeSmall: '/w185',
   youtubeEmbedUrl: 'https://www.youtube.com/embed/',
   imdbPersonUrl: 'https://www.imdb.com/name/',
-  imdbMovieUrl: 'https://www.imdb.com/title/'
+  imdbMovieUrl: 'https://www.imdb.com/title/',
+  facebookUrl: 'https://www.facebook.com/',
+  instagramUrl: 'https://www.instagram.com/',
+  twitterUrl: 'https://x.com/'
 };
