@@ -1,8 +1,5 @@
 import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal, WritableSignal, signal } from '@angular/core';
 import { Movie } from '../../../../classes/movie';
-import { environment } from '../../../../../environments/environment.development';
-import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import { ProductionCompany } from '../../../../classes/movie/production-company';
 
 @Component({

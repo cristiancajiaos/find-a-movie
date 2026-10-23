@@ -37,7 +37,7 @@
                 }
               </td>
               <td>
-                @for (productionCompany of allProductionCompanies() | orderProductionCompaniesByName; track productionCompany) {
+                @for (productionCompany of allProductionCompanies() | sortProductionCompaniesByName; track productionCompany) {
                   {{ productionCompany.name }}
                   <br />
                 }
