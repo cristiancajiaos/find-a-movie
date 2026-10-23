@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RuntimePipe } from './runtime-pipe';
 import { SafeUrlPipe } from './safe-url-pipe';
-import { OrderCrewMemberByPipe } from './order-crew-member-by-pipe';
 import { OrderPersonCastCreditsByPipe } from './order-person-cast-credits-by.pipe';
 import { OrderPersonCrewCreditsByPipe } from './order-person-crew-credits-by-pipe';
 import { OrderCrewMembersByLastNamePipe } from './order-crew-members-by-last-name.pipe';
@@ -17,7 +16,6 @@ import { SortCrewMemberByPipe } from './sort-crew-member-by.pipe';
   declarations: [
     RuntimePipe,
     SafeUrlPipe,
-    OrderCrewMemberByPipe,
     OrderPersonCastCreditsByPipe,
     OrderPersonCrewCreditsByPipe,
     OrderCrewMembersByLastNamePipe,
@@ -34,7 +32,6 @@ import { SortCrewMemberByPipe } from './sort-crew-member-by.pipe';
   exports: [
     RuntimePipe,
     SafeUrlPipe,
-    OrderCrewMemberByPipe,
     OrderPersonCastCreditsByPipe,
     OrderPersonCrewCreditsByPipe,
     OrderCrewMembersByLastNamePipe,
