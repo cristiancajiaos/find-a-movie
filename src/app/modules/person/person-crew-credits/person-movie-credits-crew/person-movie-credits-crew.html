@@ -1,7 +1,9 @@
 <section class="person-movie-credits-crew">
-  <h2>{{crewCreditsTitle()}}</h2>
-  <p><strong>{{currentPerson().name}}</strong> {{crewCreditsText()}}</p>
-  <hr/>
+  <h2>{{ crewCreditsTitle() }}</h2>
+  <p>
+    <strong>{{ currentPerson().name }}</strong> {{ crewCreditsText() }}
+  </p>
+  <hr />
   <div class="row">
     <div class="col-12">
       <section class="person-crew-credits-controls">
@@ -19,20 +21,21 @@
               [resultsOptions]="numberResultsOptions()"
               [enabledResultsParams]="enabledNumberResultsParams()"
               [itemsPerPage]="itemsPerPage()"
-              (onSelectResultOption)="changeItemsPerPage($event)">
+              (onSelectResultOption)="changeItemsPerPage($event)"
             >
+              >
             </app-show-x-results>
           </div>
           <div class="col-12 col-lg-6">
-            <app-order-select
-              #orderSelectPersonCrewCredits
-              [enabledOrderParams]="enabledOrderParams()"
-              [orderCriterias]="orderCriterias()"
-              [defaultOrderCriteria]="defaultOrder()"
-              (onOrderCriteriaChange)="orderCriteriaChange($event)"
-              (onClearOrderCriteria)="clearOrderCriteria($event)"
+            <app-sort-select
+              #sortSelectPersonCrewCredits
+              [enabledSortParams]="enabledSortParams()"
+              [sortCriterias]="sortCriterias()"
+              [defaultSortCriteria]="defaultOrder()"
+              (onSortCriteriaChange)="sortCriteriaChange($event)"
+              (onClearSortCriteria)="clearSortCriteria($event)"
             >
-            </app-order-select>
+            </app-sort-select>
           </div>
           <div class="col-12 col-lg-6">
             <app-role-select
@@ -74,8 +77,8 @@
               <div class="row" #crewCreditsGrid>
                 @for (
                   crewRole of crewCredits()
-                    | orderPersonCrewCreditsBy
-                      : selectedOrderCriteria()
+                    | sortPersonCrewCreditsBy
+                      : selectedSortCriteria()
                       : selectedRoles()
                       : fromYear()
                       : toYear()
@@ -95,8 +98,8 @@
             <section class="crew-credits-display-list">
               @for (
                 crewRole of crewCredits()
-                  | orderPersonCrewCreditsBy
-                    : selectedOrderCriteria()
+                  | sortPersonCrewCreditsBy
+                    : selectedSortCriteria()
                     : selectedRoles()
                     : fromYear()
                     : toYear()
@@ -108,7 +111,7 @@
             </section>
           }
         } @else {
-          <p>{{noResultsFilters()}}</p>
+          <p>{{ noResultsFilters() }}</p>
         }
       </section>
       <hr />

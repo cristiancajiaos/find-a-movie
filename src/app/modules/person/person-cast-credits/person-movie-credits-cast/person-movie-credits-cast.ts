@@ -16,15 +16,15 @@ import {
 } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { Person } from '../../../../classes/person';
-import { OrderCriteria } from '../../../../interfaces/order-criteria';
-import { Order } from '../../../../enums/order';
-import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { SessionStorageService } from '../../../../services/session-storage-service';
 import { PersonCreditsQuery } from '../../../../classes/person/person-credits-query';
 import { Subscription } from 'rxjs';
 import { ShowXResults } from '../../../../components/shared/show-x-results/show-x-results';
+import { SortCriteria } from '../../../../interfaces/sort-criteria';
+import { Sort } from '../../../../enums/sort';
+import { SortSelect } from '../../../../components/shared/sort-select/sort-select';
 
 @Component({
   selector: 'app-person-movie-credits-cast',
@@ -48,24 +48,23 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public numberResultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
   public enabledNumberResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
-  @ViewChildren('orderSelectPersonCastCredits')
-  orderSelectPersonCastCredits: QueryList<OrderSelect>;
-  public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
-    { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
-    { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' },
-    { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' },
-    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name - ascending' },
-    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name - descending' },
-    { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' },
-    { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date - descending' },
+  @ViewChild('sortSelectPersonCastCredits') sortSelectPersonCastCredits: SortSelect;
+  public sortCriterias: WritableSignal<SortCriteria[]> = signal([
+    { id: Sort.DefaultOrder, sortCriteriaName: 'Default order' },
+    { id: Sort.TitleAsc, sortCriteriaName: 'Title - ascending' },
+    { id: Sort.TitleDesc, sortCriteriaName: 'Title - descending' },
+    { id: Sort.CharacterNameAsc, sortCriteriaName: 'Character name - ascending' },
+    { id: Sort.CharacterNameDesc, sortCriteriaName: 'Character name - descending' },
+    { id: Sort.ReleaseDateAsc, sortCriteriaName: 'Release date - ascending' },
+    { id: Sort.ReleaseDateDesc, sortCriteriaName: 'Release date - descending' },
   ]);
-  public defaultOrder: WritableSignal<OrderCriteria> = signal({
-    id: Order.DefaultOrder,
-    orderCriteriaName: 'Default Order',
+  public defaultOrder: WritableSignal<SortCriteria> = signal({
+    id: Sort.DefaultOrder,
+    sortCriteriaName: 'Default Order',
   });
-  public selectedOrderCriteria: WritableSignal<OrderCriteria | null> = signal(null);
-  public enabledOrderParams: WritableSignal<string> = signal(
-    'Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, characterNameAsc, characterNameDesc, releaseDateAsc, releaseDateDesc',
+  public selectedSortCriteria: WritableSignal<SortCriteria | null> = signal(null);
+  public enabledSortParams: WritableSignal<string> = signal(
+    'Enabled queryParams for sort: defaultOrder, titleAsc, titleDesc, characterNameAsc, characterNameDesc, releaseDateAsc, releaseDateDesc',
   );
 
   @ViewChild('fromSelect') fromSelect: FromSelect;
@@ -118,35 +117,34 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   }
 
   private setOrderParam(): void {
-    let orderCriteria: OrderCriteria = null;
+    let sortCriteria: SortCriteria = null;
 
-    if (this.personCreditsQuery().order == 'defaultOrder') {
-      orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
-    } else if (this.personCreditsQuery().order == 'titleAsc') {
-      orderCriteria = { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' };
-    } else if (this.personCreditsQuery().order == 'titleDesc') {
-      orderCriteria = { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' };
-    } else if (this.personCreditsQuery().order == 'characterNameAsc') {
-      orderCriteria = {
-        id: Order.CharacterNameAsc,
-        orderCriteriaName: 'Character name - ascending',
+    if (this.personCreditsQuery().sort == 'defaultOrder') {
+      sortCriteria = { id: Sort.DefaultOrder, sortCriteriaName: 'Default order' };
+    } else if (this.personCreditsQuery().sort == 'titleAsc') {
+      sortCriteria = { id: Sort.TitleAsc, sortCriteriaName: 'Title - ascending' };
+    } else if (this.personCreditsQuery().sort == 'titleDesc') {
+      sortCriteria = { id: Sort.TitleDesc, sortCriteriaName: 'Title - descending' };
+    } else if (this.personCreditsQuery().sort == 'characterNameAsc') {
+      sortCriteria = {
+        id: Sort.CharacterNameAsc,
+        sortCriteriaName: 'Character name - ascending',
       };
-    } else if (this.personCreditsQuery().order == 'characterNameDesc') {
-      orderCriteria = {
-        id: Order.CharacterNameDesc,
-        orderCriteriaName: 'Character name - descending',
+    } else if (this.personCreditsQuery().sort == 'characterNameDesc') {
+      sortCriteria = {
+        id: Sort.CharacterNameDesc,
+        sortCriteriaName: 'Character name - descending',
       };
-    } else if (this.personCreditsQuery().order == 'releaseDateAsc') {
-      orderCriteria = { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' };
-    } else if (this.personCreditsQuery().order == 'releaseDateDesc') {
-      orderCriteria = { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date -descending' };
+    } else if (this.personCreditsQuery().sort == 'releaseDateAsc') {
+      sortCriteria = { id: Sort.ReleaseDateAsc, sortCriteriaName: 'Release date - ascending' };
+    } else if (this.personCreditsQuery().sort == 'releaseDateDesc') {
+      sortCriteria = { id: Sort.ReleaseDateDesc, sortCriteriaName: 'Release date -descending' };
     }
 
-    if (orderCriteria) {
-      this.selectedOrderCriteria.set(orderCriteria);
+    if (sortCriteria) {
+      this.selectedSortCriteria.set(sortCriteria);
+      this.sortSelectPersonCastCredits.setSortCriteria(sortCriteria);
     }
-
-    this.orderSelectPersonCastCredits.first.setOrderCriteria(orderCriteria);
   }
 
   private setYearFromParam(): void {
@@ -216,13 +214,13 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     this.displayMode.set(display);
   }
 
-  public orderCriteriaChange(orderCriteria: OrderCriteria) {
-    this.selectedOrderCriteria.set(orderCriteria);
+  public sortCriteriaChange(sortCriteria: SortCriteria) {
+    this.selectedSortCriteria.set(sortCriteria);
     this.currentPage.set(1);
   }
 
-  public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria.set(null);
+  public clearSortCriteria(event: boolean): void {
+    this.selectedSortCriteria.set(null);
     this.currentPage.set(1);
   }
 
@@ -231,9 +229,9 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
     this.personCastCreditsShowXResults.setDefaultValue();
     this.currentPage.set(1);
     this.displayMode.set('grid');
-    this.orderSelectPersonCastCredits.first.clearOrderCriteria();
+    this.sortSelectPersonCastCredits.clearSortCriteria();
     this.clearSelectYearFrom(true);
-    this.selectedOrderCriteria.set(null);
+    this.selectedSortCriteria.set(null);
   }
 
   public changeItemsPerPage(itemsPerPage: number) {

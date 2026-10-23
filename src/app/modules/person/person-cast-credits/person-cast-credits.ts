@@ -76,11 +76,11 @@ export class PersonCastCredits implements OnInit, OnDestroy {
           }
         });
       }
-      if (queryParams['order']) {
+      if (queryParams['sort']) {
         this.personCreditsQuery.update((query) => {
           return {
             ...query,
-            order: queryParams['order']
+            sort: queryParams['sort']
           }
         });
       }

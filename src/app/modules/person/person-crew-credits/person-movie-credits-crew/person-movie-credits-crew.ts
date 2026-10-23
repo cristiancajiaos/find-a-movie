@@ -1,15 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy, signal, input, WritableSignal, inject, InputSignal, AfterViewInit } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../../classes/person-movie-credits/response-person-crew-credit';
 import { Person } from '../../../../classes/person';
-import { OrderCriteria } from '../../../../interfaces/order-criteria';
-import { Order } from '../../../../enums/order';
-import { OrderSelect } from '../../../../components/shared/order-select/order-select';
 import { FromSelect } from '../../../../components/shared/from-select/from-select';
 import { ToSelect } from '../../../../components/shared/to-select/to-select';
 import { RoleSelect } from '../../../../components/shared/role-select/role-select';
 import { SessionStorageService } from '../../../../services/session-storage-service';
 import { PersonCreditsQuery } from '../../../../classes/person/person-credits-query';
 import { ShowXResults } from '../../../../components/shared/show-x-results/show-x-results';
+import { SortSelect } from '../../../../components/shared/sort-select/sort-select';
+import { SortCriteria } from '../../../../interfaces/sort-criteria';
+import { Sort } from '../../../../enums/sort';
 
 @Component({
   selector: 'app-person-movie-credits-crew',
@@ -35,21 +35,21 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   public numberResultsOptions: WritableSignal<number[]> = signal([20, 40, 100]);
   public enabledNumberResultsParams: WritableSignal<string> = signal('Enabled queryParam resultsPerPage: 20, 40, 100 (other values are not valid)');
 
-  @ViewChild('orderSelectPersonCrewCredits') orderSelectPersonCrewCredits: OrderSelect;
-  public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
-    { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' },
-    { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' },
-    { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' },
-    { id: Order.JobDesc, orderCriteriaName: 'Job - descending' },
-    { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' },
-    { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date - descending' },
+  @ViewChild('sortSelectPersonCrewCredits') sortSelectPersonCrewCredits: SortSelect;
+  public sortCriterias: WritableSignal<SortCriteria[]> = signal([
+    { id: Sort.TitleAsc, sortCriteriaName: 'Title - ascending' },
+    { id: Sort.TitleDesc, sortCriteriaName: 'Title - descending' },
+    { id: Sort.JobAsc, sortCriteriaName: 'Job - ascending' },
+    { id: Sort.JobDesc, sortCriteriaName: 'Job - descending' },
+    { id: Sort.ReleaseDateAsc, sortCriteriaName: 'Release date - ascending' },
+    { id: Sort.ReleaseDateDesc, sortCriteriaName: 'Release date - descending' },
   ]);
-  public defaultOrder: WritableSignal<OrderCriteria> = signal({
-    id: Order.DefaultOrder,
-    orderCriteriaName: 'Default Order',
+  public defaultOrder: WritableSignal<SortCriteria> = signal({
+    id: Sort.DefaultOrder,
+    sortCriteriaName: 'Default Order',
   });
-  public selectedOrderCriteria: WritableSignal<OrderCriteria> = signal(null);
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
+  public selectedSortCriteria: WritableSignal<SortCriteria> = signal(null);
+  public enabledSortParams: WritableSignal<string> = signal('Enabled queryParams for sort: defaultOrder, titleAsc, titleDesc, jobAsc, jobDesc, releaseDateAsc, releaseDateDesc');
 
   @ViewChild('roleSelect') roleSelect: RoleSelect;
   public selectedRoles: WritableSignal<string[]> = signal([]);
@@ -126,29 +126,31 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   }
 
   private setOrderParam(): void {
-    let orderCriteria: OrderCriteria = null;
+    console.log('setOrderParam()');
+    let sortCriteria: SortCriteria = null;
 
-    if (this.personCreditsQuery().order == 'defaultOrder') {
-      orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
-    } else if (this.personCreditsQuery().order == 'titleAsc') {
-      orderCriteria = { id: Order.TitleAsc, orderCriteriaName: 'Title - ascending' };
-    } else if (this.personCreditsQuery().order == 'titleDesc') {
-      orderCriteria = { id: Order.TitleDesc, orderCriteriaName: 'Title - descending' };
-    } else if (this.personCreditsQuery().order == 'jobAsc') {
-      orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' };
-    } else if (this.personCreditsQuery().order == 'jobDesc') {
-      orderCriteria = { id: Order.JobDesc, orderCriteriaName: 'Job - descending' };
-    } else if (this.personCreditsQuery().order == 'releaseDateAsc') {
-      orderCriteria = { id: Order.ReleaseDateAsc, orderCriteriaName: 'Release date - ascending' };
-    } else if (this.personCreditsQuery().order == 'releaseDateDesc') {
-      orderCriteria = { id: Order.ReleaseDateDesc, orderCriteriaName: 'Release date - descending' };
+    if (this.personCreditsQuery().sort == 'defaultOrder') {
+      sortCriteria = { id: Sort.DefaultOrder, sortCriteriaName: 'Default order' };
+    } else if (this.personCreditsQuery().sort == 'titleAsc') {
+      sortCriteria = { id: Sort.TitleAsc, sortCriteriaName: 'Title - ascending' };
+    } else if (this.personCreditsQuery().sort == 'titleDesc') {
+      sortCriteria = { id: Sort.TitleDesc, sortCriteriaName: 'Title - descending' };
+    } else if (this.personCreditsQuery().sort == 'jobAsc') {
+      sortCriteria = { id: Sort.JobAsc, sortCriteriaName: 'Job - ascending' };
+    } else if (this.personCreditsQuery().sort == 'jobDesc') {
+      sortCriteria = { id: Sort.JobDesc, sortCriteriaName: 'Job - descending' };
+    } else if (this.personCreditsQuery().sort == 'releaseDateAsc') {
+      sortCriteria = { id: Sort.ReleaseDateAsc, sortCriteriaName: 'Release date - ascending' };
+    } else if (this.personCreditsQuery().sort == 'releaseDateDesc') {
+      sortCriteria = { id: Sort.ReleaseDateDesc, sortCriteriaName: 'Release date - descending' };
     }
 
-    if (orderCriteria) {
-      this.selectedOrderCriteria.set(orderCriteria);
-    }
+    console.log(sortCriteria);
 
-    this.orderSelectPersonCrewCredits.setOrderCriteria(orderCriteria);
+    if (sortCriteria) {
+      this.selectedSortCriteria.set(sortCriteria);
+      this.sortSelectPersonCrewCredits.setSortCriteria(sortCriteria);
+    }
   }
 
   private setRolesParam(): void {
@@ -185,13 +187,13 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   }
 
 
-  public orderCriteriaChange(orderCriteria: OrderCriteria) {
-    this.selectedOrderCriteria.set(orderCriteria);
+  public sortCriteriaChange(sortCriteria: SortCriteria) {
+    this.selectedSortCriteria.set(sortCriteria);
     this.resetToPageOne();
   }
 
-  public clearOrderCriteria(event: boolean): void {
-    this.selectedOrderCriteria.set(null);
+  public clearSortCriteria(event: boolean): void {
+    this.selectedSortCriteria.set(null);
     this.resetToPageOne();
   }
 
@@ -253,7 +255,7 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
     this.displayMode.set('grid');
     this.itemsPerPage.set(20);
     this.personCrewCreditsShowXResults.setDefaultValue();
-    this.orderSelectPersonCrewCredits.clearOrderCriteria();
+    this.sortSelectPersonCrewCredits.clearSortCriteria();
     this.roleSelect.clearRoleSelect();
     this.selectedRoles.set([]);
     this.clearSelectYearFrom(true);

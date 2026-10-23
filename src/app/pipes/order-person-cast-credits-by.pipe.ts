@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ResponsePersonCastCredit } from '../classes/person-movie-credits/response-person-cast-credit';
-import { OrderCriteria } from '../interfaces/order-criteria';
-import { Order } from '../enums/order';
+import { SortCriteria } from '../interfaces/sort-criteria';
+import { Sort } from '../enums/sort';
 
 @Pipe({
   name: 'orderPersonCastCreditsBy',
@@ -10,7 +10,7 @@ import { Order } from '../enums/order';
 export class OrderPersonCastCreditsByPipe implements PipeTransform {
   transform(
     castCredits: ResponsePersonCastCredit[],
-    orderCriteria?: OrderCriteria | null,
+    sortCriteria?: SortCriteria | null,
     fromYear?: number | null,
     toYear?: number | null,
   ): ResponsePersonCastCredit[] {
@@ -19,30 +19,30 @@ export class OrderPersonCastCreditsByPipe implements PipeTransform {
       return !isNaN(date.getFullYear());
     });
 
-    if (orderCriteria) {
-      if (orderCriteria.id == Order.TitleAsc) {
+    if (sortCriteria) {
+      if (sortCriteria.id == Sort.TitleAsc) {
         filteredCastCredits.sort((a, b) => {
           return a.title.localeCompare(b.title);
         });
-      } else if (orderCriteria.id == Order.TitleDesc) {
+      } else if (sortCriteria.id == Sort.TitleDesc) {
         filteredCastCredits.sort((a, b) => {
           return b.title.localeCompare(a.title);
         });
-      } else if (orderCriteria.id == Order.CharacterNameAsc) {
+      } else if (sortCriteria.id == Sort.CharacterNameAsc) {
         filteredCastCredits.sort((a, b) => {
           return a.character.localeCompare(b.character);
         });
-      } else if (orderCriteria.id == Order.CharacterNameDesc) {
+      } else if (sortCriteria.id == Sort.CharacterNameDesc) {
         filteredCastCredits.sort((a, b) => {
           return b.character.localeCompare(a.character);
         });
-      } else if (orderCriteria.id == Order.ReleaseDateAsc) {
+      } else if (sortCriteria.id == Sort.ReleaseDateAsc) {
         filteredCastCredits.sort((a, b) => {
             const aDate: Date = new Date(a.release_date);
             const bDate: Date = new Date(b.release_date);
             return aDate.getTime() - bDate.getTime();
           });
-      } else if (orderCriteria.id == Order.ReleaseDateDesc) {
+      } else if (sortCriteria.id == Sort.ReleaseDateDesc) {
         filteredCastCredits.sort((a, b) => {
             const aDate: Date = new Date(a.release_date);
             const bDate: Date = new Date(b.release_date);
