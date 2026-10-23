@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DisplaySelector } from './display-selector/display-selector';
-import { OrderSelect } from './order-select/order-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -20,7 +19,6 @@ import { SortSelect } from './sort-select/sort-select';
   declarations: [
     Loading,
     DisplaySelector,
-    OrderSelect,
     FromSelect,
     ToSelect,
     RoleSelect,
@@ -41,7 +39,6 @@ import { SortSelect } from './sort-select/sort-select';
   exports: [
     Loading,
     DisplaySelector,
-    OrderSelect,
     FromSelect,
     ToSelect,
     RoleSelect,
