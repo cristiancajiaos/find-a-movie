@@ -25,7 +25,9 @@ import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
 import { ShowXResults } from '../../../components/shared/show-x-results/show-x-results';
-import { sign } from 'crypto';
+import { SortCriteria } from '../../../interfaces/sort-criteria';
+import { Sort } from '../../../enums/sort';
+import { SortSelect } from '../../../components/shared/sort-select/sort-select';
 
 @Component({
   selector: 'app-movie-cast',
@@ -58,24 +60,24 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('title') title!: ElementRef;
   public castTitle: WritableSignal<string> = signal('Cast');
 
-  @ViewChildren('orderSelectMovieCast') orderSelectMovieCast!: QueryList<OrderSelect>;
-  public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
-    { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order - ascending' },
-    { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order - descending' },
-    { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' },
-    { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' },
-    { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' },
-    { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' },
-    { id: Order.CharacterNameAsc, orderCriteriaName: 'Character name - ascending' },
-    { id: Order.CharacterNameDesc, orderCriteriaName: 'Character name - descending' },
+  @ViewChildren('sortSelectMovieCast') sortSelectMovieCast!: QueryList<SortSelect>;
+  public sortCriterias: WritableSignal<SortCriteria[]> = signal([
+    { id: Sort.CastOrderAsc, sortCriteriaName: 'Cast order - ascending' },
+    { id: Sort.CastOrderDesc, sortCriteriaName: 'Cast order - descending' },
+    { id: Sort.FirstNameAsc, sortCriteriaName: 'First name - ascending' },
+    { id: Sort.FirstNameDesc, sortCriteriaName: 'First name - descending' },
+    { id: Sort.LastNameAsc, sortCriteriaName: 'Last name - ascending' },
+    { id: Sort.LastNameDesc, sortCriteriaName: 'Last name - descending' },
+    { id: Sort.CharacterNameAsc, sortCriteriaName: 'Character name - ascending' },
+    { id: Sort.CharacterNameDesc, sortCriteriaName: 'Character name - descending' },
   ]);
-  public defaultOrder: WritableSignal<OrderCriteria> = signal({
-    id: Order.CastOrderAsc,
-    orderCriteriaName: 'Cast order (ascending)',
+  public defaultSort: WritableSignal<SortCriteria> = signal({
+    id: Sort.CastOrderAsc,
+    sortCriteriaName: 'Cast order (ascending)',
   });
-  private currentOrderStr: WritableSignal<string | null> = signal(null);
-  public currentOrder: WritableSignal<OrderCriteria | null> = signal(this.defaultOrder());
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: castOrderAsc, castOrderDesc, nameAsc, nameDesc, lastNameAsc, lastNameDesc, characterNameAsc, characterNameDesc');
+  private currentSortStr: WritableSignal<string | null> = signal(null);
+  public currentSort: WritableSignal<SortCriteria | null> = signal(this.defaultSort());
+  public enabledSortParams: WritableSignal<string> = signal('Enabled queryParams for sort: castOrderAsc, castOrderDesc, nameAsc, nameDesc, lastNameAsc, lastNameDesc, characterNameAsc, characterNameDesc');
 
   @ViewChild('movieCastShowXResults') movieCastShowXResults!: ShowXResults;
   public numberResultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
@@ -94,7 +96,7 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   private getMovieCastSubscription: Subscription = new Subscription();
   private endLoadingSubscription: Subscription = new Subscription();
   private queryParamsSubscription: Subscription = new Subscription();
-  private orderSelectSubscription: Subscription = new Subscription();
+  private sortSelectSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.getMovie();
@@ -105,8 +107,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
-      if (queryParams['order']) {
-        this.currentOrderStr.set(queryParams['order']);
+      if (queryParams['sort']) {
+        this.currentSortStr.set(queryParams['sort']);
       }
       if (queryParams['resultsPerPage']) {
         this.setResultsPerPage(parseInt(queryParams['resultsPerPage']));
@@ -115,7 +117,7 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.orderSelectSubscription = this.orderSelectMovieCast.changes.subscribe((list) => {
+    this.sortSelectSubscription = this.sortSelectMovieCast.changes.subscribe((list) => {
       this.setInitialOrder();
     });
   }
@@ -151,38 +153,38 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setInitialOrder() {
-    let orderCriteria: OrderCriteria = null;
+    let sortCriteria: SortCriteria = null;
 
-    if (this.currentOrderStr() == 'castOrderAsc') {
-      orderCriteria = { id: Order.CastOrderAsc, orderCriteriaName: 'Cast order - ascending' };
-    } else if (this.currentOrderStr() == 'castOrderDesc') {
-      orderCriteria = { id: Order.CastOrderDesc, orderCriteriaName: 'Cast order -descending' };
-    } else if (this.currentOrderStr() == 'nameAsc') {
-      orderCriteria = { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' };
-    } else if (this.currentOrderStr() == 'nameDesc') {
-      orderCriteria = { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' };
-    } else if (this.currentOrderStr() == 'lastNameAsc') {
-      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' };
-    } else if (this.currentOrderStr() == 'lastNameDesc') {
-      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' };
-    } else if (this.currentOrderStr() == 'characterNameAsc') {
-      orderCriteria = {
-        id: Order.CharacterNameAsc,
-        orderCriteriaName: 'Character name - ascending',
+    if (this.currentSortStr() == 'castOrderAsc') {
+      sortCriteria = { id: Sort.CastOrderAsc, sortCriteriaName: 'Cast order - ascending' };
+    } else if (this.currentSortStr() == 'castOrderDesc') {
+      sortCriteria = { id: Sort.CastOrderDesc, sortCriteriaName: 'Cast order -descending' };
+    } else if (this.currentSortStr() == 'nameAsc') {
+      sortCriteria = { id: Sort.FirstNameAsc, sortCriteriaName: 'First name - ascending' };
+    } else if (this.currentSortStr() == 'nameDesc') {
+      sortCriteria = { id: Sort.FirstNameDesc, sortCriteriaName: 'First name - descending' };
+    } else if (this.currentSortStr() == 'lastNameAsc') {
+      sortCriteria = { id: Sort.LastNameAsc, sortCriteriaName: 'Last name - ascending' };
+    } else if (this.currentSortStr() == 'lastNameDesc') {
+      sortCriteria = { id: Sort.LastNameDesc, sortCriteriaName: 'Last name - descending' };
+    } else if (this.currentSortStr() == 'characterNameAsc') {
+      sortCriteria = {
+        id: Sort.CharacterNameAsc,
+        sortCriteriaName: 'Character name - ascending',
       };
-    } else if (this.currentOrderStr() == 'characterNameDesc') {
-      orderCriteria = {
-        id: Order.CharacterNameDesc,
-        orderCriteriaName: 'Character name - descending',
+    } else if (this.currentSortStr() == 'characterNameDesc') {
+      sortCriteria = {
+        id: Sort.CharacterNameDesc,
+        sortCriteriaName: 'Character name - descending',
       };
     }
 
-    if (this.currentOrderStr() != null) {
-      this.currentOrder.set(orderCriteria);
+    if (this.currentSortStr() != null) {
+      this.currentSort.set(sortCriteria);
     }
 
-    if (this.orderSelectMovieCast.length > 0) {
-      this.orderSelectMovieCast.first.setOrderCriteria(orderCriteria);
+    if (this.sortSelectMovieCast.length > 0) {
+      this.sortSelectMovieCast.first.setSortCriteria(sortCriteria);
     }
   }
 
@@ -210,11 +212,11 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     this.getCast();
   }
 
-  public orderCriteriaChange(orderCriteria: OrderCriteria): void {
-    if (orderCriteria) {
-      this.currentOrder.set(orderCriteria);
+  public sortCriteriaChange(sortCriteria: SortCriteria): void {
+    if (sortCriteria) {
+      this.currentSort.set(sortCriteria);
     } else {
-      this.currentOrder.set(null);
+      this.currentSort.set(null);
     }
   }
 
@@ -241,8 +243,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
     }
-    if (this.orderSelectSubscription) {
-      this.orderSelectSubscription.unsubscribe();
+    if (this.sortSelectSubscription) {
+      this.sortSelectSubscription.unsubscribe();
     }
   }
 }

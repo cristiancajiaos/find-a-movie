@@ -7,14 +7,16 @@
     @if (movieCast().length > 0) {
       <div class="row">
         <div class="col-12 col-lg-9">
-          <app-order-select
-            #orderSelectMovieCast
-            [enabledOrderParams]="enabledOrderParams()"
-            [orderCriterias]="orderCriterias()"
-            [defaultOrderCriteria]="defaultOrder()"
-            (onOrderCriteriaChange)="orderCriteriaChange($event)"
+          <app-sort-select
+            #sortSelectMovieCast
+            [enabledSortParams]="enabledSortParams()"
+            [sortCriterias]="sortCriterias()"
+            [defaultSortCriteria]="defaultSort()"
+            (onSortCriteriaChange)="sortCriteriaChange($event)"
           >
-          </app-order-select>
+          </app-sort-select>
+          <hr/>
+          <p>{{currentSort()| json}}</p>
         </div>
         <div class="col-12 col-lg-3">
           <app-show-x-results
@@ -38,7 +40,7 @@
           <tbody>
             @for (
               castMember of movieCast()
-                | orderCastMemberBy: currentOrder()
+                | sortCastMemberBy: currentSort()
                 | paginate
                   : {
                       itemsPerPage: actorsPerPage(),

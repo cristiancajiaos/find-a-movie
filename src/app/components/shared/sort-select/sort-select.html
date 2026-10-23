@@ -1,0 +1,25 @@
+<section class="sort-select">
+  <form [formGroup]="sortForm">
+    <div class="form-group mb-3">
+      <label (click)="focusSelect()">
+        {{sortSelectLabel}}
+        <span
+          [ngbTooltip]="enabledSortParams()"
+          placement="top">
+          <fa-icon [icon]="circleInfo" [fixedWidth]="true"></fa-icon>
+        </span>
+      </label>
+      <ng-select
+        #sortSelect
+        formControlName="sort"
+        [placeholder]="sortSelectPlaceholder"
+        [items]="sortCriterias()"
+        bindLabel="sortCriteriaName"
+        bindValue="id"
+        id="orderSelect"
+        (change)="sortCriteriaChange($event)"
+        (clear)="clearSortCriteria()">
+      </ng-select>
+    </div>
+  </form>
+</section>

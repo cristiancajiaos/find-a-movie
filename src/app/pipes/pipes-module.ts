@@ -11,6 +11,7 @@ import { OrderGenresByNamePipe } from './order-genres-by-name.pipe';
 import { OrderProductionCompaniesByNamePipe } from './order-production-companies-by-name.pipe';
 import { OrderProductionCountriesByNamePipe } from './order-production-countries-by-name.pipe';
 import { OrderLanguagesByNamePipe } from './order-languages-by-name.pipe';
+import { SortCastMemberByPipe } from './sort-cast-member-by-pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { OrderLanguagesByNamePipe } from './order-languages-by-name.pipe';
     OrderGenresByNamePipe,
     OrderProductionCompaniesByNamePipe,
     OrderProductionCountriesByNamePipe,
-    OrderLanguagesByNamePipe
+    OrderLanguagesByNamePipe,
+    SortCastMemberByPipe
   ],
   imports: [
     CommonModule
@@ -40,7 +42,8 @@ import { OrderLanguagesByNamePipe } from './order-languages-by-name.pipe';
     OrderGenresByNamePipe,
     OrderProductionCompaniesByNamePipe,
     OrderProductionCountriesByNamePipe,
-    OrderLanguagesByNamePipe
+    OrderLanguagesByNamePipe,
+    SortCastMemberByPipe
   ]
 })
 export class PipesModule { }
