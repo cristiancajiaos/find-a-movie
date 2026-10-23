@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RuntimePipe } from './runtime-pipe';
 import { SafeUrlPipe } from './safe-url-pipe';
-import { OrderCastMemberByPipe } from './order-cast-member-by-pipe';
 import { OrderCrewMemberByPipe } from './order-crew-member-by-pipe';
 import { OrderPersonCastCreditsByPipe } from './order-person-cast-credits-by.pipe';
 import { OrderPersonCrewCreditsByPipe } from './order-person-crew-credits-by-pipe';
@@ -11,13 +10,13 @@ import { OrderGenresByNamePipe } from './order-genres-by-name.pipe';
 import { OrderProductionCompaniesByNamePipe } from './order-production-companies-by-name.pipe';
 import { OrderProductionCountriesByNamePipe } from './order-production-countries-by-name.pipe';
 import { OrderLanguagesByNamePipe } from './order-languages-by-name.pipe';
-import { SortCastMemberByPipe } from './sort-cast-member-by-pipe';
+import { SortCastMemberByPipe } from './sort-cast-member-by.pipe';
+import { SortCrewMemberByPipe } from './sort-crew-member-by.pipe';
 
 @NgModule({
   declarations: [
     RuntimePipe,
     SafeUrlPipe,
-    OrderCastMemberByPipe,
     OrderCrewMemberByPipe,
     OrderPersonCastCreditsByPipe,
     OrderPersonCrewCreditsByPipe,
@@ -26,7 +25,8 @@ import { SortCastMemberByPipe } from './sort-cast-member-by-pipe';
     OrderProductionCompaniesByNamePipe,
     OrderProductionCountriesByNamePipe,
     OrderLanguagesByNamePipe,
-    SortCastMemberByPipe
+    SortCastMemberByPipe,
+    SortCrewMemberByPipe
   ],
   imports: [
     CommonModule
@@ -34,7 +34,6 @@ import { SortCastMemberByPipe } from './sort-cast-member-by-pipe';
   exports: [
     RuntimePipe,
     SafeUrlPipe,
-    OrderCastMemberByPipe,
     OrderCrewMemberByPipe,
     OrderPersonCastCreditsByPipe,
     OrderPersonCrewCreditsByPipe,
@@ -43,7 +42,8 @@ import { SortCastMemberByPipe } from './sort-cast-member-by-pipe';
     OrderProductionCompaniesByNamePipe,
     OrderProductionCountriesByNamePipe,
     OrderLanguagesByNamePipe,
-    SortCastMemberByPipe
+    SortCastMemberByPipe,
+    SortCrewMemberByPipe
   ]
 })
 export class PipesModule { }

@@ -4,14 +4,14 @@ import { Subscription } from 'rxjs';
 import { MovieService } from '../../../services/movie-service';
 import { CrewMember } from '../../../classes/credits/crew-member';
 import { HttpErrorResponse } from '@angular/common/http';
-import { OrderCriteria } from '../../../interfaces/order-criteria';
-import { Order } from '../../../enums/order';
-import { OrderSelect } from '../../../components/shared/order-select/order-select';
 import { Movie } from '../../../classes/movie';
 import { TitleService } from '../../../services/title-service';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
 import { ShowXResults } from '../../../components/shared/show-x-results/show-x-results';
+import { Sort } from '../../../enums/sort';
+import { SortCriteria } from '../../../interfaces/sort-criteria';
+import { SortSelect } from '../../../components/shared/sort-select/sort-select';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -45,23 +45,23 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('title') title!: ElementRef;
   public fullCrewTitle: WritableSignal<string> = signal('Full Crew');
 
-  @ViewChildren('orderSelectMovieFullCrew') orderSelectMovieFullCrew!: QueryList<OrderSelect>;
-  public orderCriterias: WritableSignal<OrderCriteria[]> = signal([
-    { id: Order.DefaultOrder, orderCriteriaName: 'Default order' },
-    { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' },
-    { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' },
-    { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' },
-    { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' },
-    { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' },
-    { id: Order.JobDesc, orderCriteriaName: 'Job - descending' },
+  @ViewChildren('sortSelectMovieFullCrew') sortSelectMovieFullCrew!: QueryList<SortSelect>;
+  public sortCriterias: WritableSignal<SortCriteria[]> = signal([
+    { id: Sort.DefaultOrder, sortCriteriaName: 'Default order' },
+    { id: Sort.FirstNameAsc, sortCriteriaName: 'First name - ascending' },
+    { id: Sort.FirstNameDesc, sortCriteriaName: 'First name - descending' },
+    { id: Sort.LastNameAsc, sortCriteriaName: 'Last name - ascending' },
+    { id: Sort.LastNameDesc, sortCriteriaName: 'Last name - descending' },
+    { id: Sort.JobAsc, sortCriteriaName: 'Job - ascending' },
+    { id: Sort.JobDesc, sortCriteriaName: 'Job - descending' },
   ]);
-  public defaultOrder: WritableSignal<OrderCriteria> = signal({
-    id: Order.DefaultOrder,
-    orderCriteriaName: 'Default Order',
+  public defaultSort: WritableSignal<SortCriteria> = signal({
+    id: Sort.DefaultOrder,
+    sortCriteriaName: 'Default Order',
   });
-  private currentOrderStr: WritableSignal<string | null> = signal(null);
-  public currentOrder: WritableSignal<OrderCriteria> = signal(this.defaultOrder());
-  public enabledOrderParams: WritableSignal<string> = signal('Enabled queryParams for order: defaultOrder, nameAsc, nameDesc, lastNameAsc, lastNameDesc, jobAsc, jobDesc');
+  private currentSortStr: WritableSignal<string | null> = signal(null);
+  public currentSort: WritableSignal<SortCriteria> = signal(this.defaultSort());
+  public enabledSortParams: WritableSignal<string> = signal('Enabled queryParams for sort: defaultOrder, nameAsc, nameDesc, lastNameAsc, lastNameDesc, jobAsc, jobDesc');
 
   @ViewChild('movieCrewShowXResults') movieCrewShowXResults!: ShowXResults;
   public numberResultsOptions: WritableSignal<number[]> = signal([25, 50, 100]);
@@ -87,8 +87,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe((queryParams) => {
-      if (queryParams['order']) {
-        this.currentOrderStr.set(queryParams['order']);
+      if (queryParams['sort']) {
+        this.currentSortStr.set(queryParams['sort']);
       }
       if (queryParams['resultsPerPage']) {
         this.setResultsPerPage(parseInt(queryParams['resultsPerPage']));
@@ -97,7 +97,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.orderSelectSubscription = this.orderSelectMovieFullCrew.changes.subscribe((list) => {
+    this.orderSelectSubscription = this.sortSelectMovieFullCrew.changes.subscribe((list) => {
       this.setInitialOrder();
     });
   }
@@ -124,30 +124,30 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setInitialOrder(): void {
-    let orderCriteria: OrderCriteria = null;
+    let sortCriteria: SortCriteria = null;
 
-    if (this.currentOrderStr() == 'defaultValue') {
-      orderCriteria = { id: Order.DefaultOrder, orderCriteriaName: 'Default order' };
-    } else if (this.currentOrderStr() == 'nameAsc') {
-      orderCriteria = { id: Order.FirstNameAsc, orderCriteriaName: 'First name - ascending' };
-    } else if (this.currentOrderStr() == 'nameDesc') {
-      orderCriteria = { id: Order.FirstNameDesc, orderCriteriaName: 'First name - descending' };
-    } else if (this.currentOrderStr() == 'lastNameAsc') {
-      orderCriteria = { id: Order.LastNameAsc, orderCriteriaName: 'Last name - ascending' };
-    } else if (this.currentOrderStr() == 'lastNameDesc') {
-      orderCriteria = { id: Order.LastNameDesc, orderCriteriaName: 'Last name - descending' };
-    } else if (this.currentOrderStr() == 'jobAsc') {
-      orderCriteria = { id: Order.JobAsc, orderCriteriaName: 'Job - ascending' };
-    } else if (this.currentOrderStr() == 'jobDesc') {
-      orderCriteria = { id: Order.JobDesc, orderCriteriaName: 'Job - descending' };
+    if (this.currentSortStr() == 'defaultValue') {
+      sortCriteria = { id: Sort.DefaultOrder, sortCriteriaName: 'Default order' };
+    } else if (this.currentSortStr() == 'nameAsc') {
+      sortCriteria = { id: Sort.FirstNameAsc, sortCriteriaName: 'First name - ascending' };
+    } else if (this.currentSortStr() == 'nameDesc') {
+      sortCriteria = { id: Sort.FirstNameDesc, sortCriteriaName: 'First name - descending' };
+    } else if (this.currentSortStr() == 'lastNameAsc') {
+      sortCriteria = { id: Sort.LastNameAsc, sortCriteriaName: 'Last name - ascending' };
+    } else if (this.currentSortStr() == 'lastNameDesc') {
+      sortCriteria = { id: Sort.LastNameDesc, sortCriteriaName: 'Last name - descending' };
+    } else if (this.currentSortStr() == 'jobAsc') {
+      sortCriteria = { id: Sort.JobAsc, sortCriteriaName: 'Job - ascending' };
+    } else if (this.currentSortStr() == 'jobDesc') {
+      sortCriteria = { id: Sort.JobDesc, sortCriteriaName: 'Job - descending' };
     }
 
-    if (this.currentOrderStr() != null) {
-      this.currentOrder.set(orderCriteria);
+    if (this.currentSortStr() != null) {
+      this.currentSort.set(sortCriteria);
     }
 
-    if (this.orderSelectMovieFullCrew.length > 0) {
-      this.orderSelectMovieFullCrew.first.setOrderCriteria(orderCriteria);
+    if (this.sortSelectMovieFullCrew.length > 0) {
+      this.sortSelectMovieFullCrew.first.setSortCriteria(sortCriteria);
     }
   }
 
@@ -182,8 +182,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
     this.getFullCrew();
   }
 
-  public orderCriteriaChange(orderCriteria: OrderCriteria): void {
-    this.currentOrder.set(orderCriteria);
+  public sortCriteriaChange(sortCriteria: SortCriteria): void {
+    this.currentSort.set(sortCriteria);
   }
 
   public changePage(page: number): void {
