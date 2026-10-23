@@ -20,7 +20,7 @@
                 }
               </td>
               <td>
-                @for (genres of movie().genres; track genres) {
+                @for (genres of movie().genres | sortGenresByName; track genres) {
                   {{ genres.name }}
                   <br />
                 }
