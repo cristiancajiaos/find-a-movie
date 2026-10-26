@@ -10,20 +10,19 @@
     .search-result-content {
       display: flex;
       align-items: center;
-      transition: color 0.1s linear, background-color 0.1s linear;
+      transition:
+        color 0.1s linear,
+        background-color 0.1s linear;
       background-size: cover;
       background-position: center;
 
-      .movie-poster, .person-profile-img {
-        z-index: 1;
-
-        img {
-          height: 150px;
-          border-right: 3px solid rgba(33, 37, 41, 1);
-        }
+      img {
+        width: 100px;
+        border-right: 3px solid rgba(33, 37, 41, 1);
       }
 
-      .movie-description, .person-name {
+      .movie-description,
+      .person-name {
         padding: 1rem;
         overflow: hidden;
         white-space: nowrap;

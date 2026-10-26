@@ -4,9 +4,7 @@
      placement="bottom"
      tooltipClass="search-tooltip">
     <section class="search-result-content">
-      <section class="movie-poster">
-        <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
-      </section>
+      <img [src]="posterSizeSmall" [alt]="altPosterText" />
       <section class="movie-description">
         {{formattedTitle}}
       </section>
