@@ -1,12 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, type PipeTransform } from '@angular/core';
 import { CrewMember } from '../classes/credits/crew-member';
 
 @Pipe({
-  name: 'orderCrewMembersByLastName',
+  name: 'sortCrewMembersByLastName',
   standalone: false
 })
-export class OrderCrewMembersByLastNamePipe implements PipeTransform {
-
+export class SortCrewMembersByLastNamePipe implements PipeTransform {
   transform(crewMembers: CrewMember[]): CrewMember[] {
     crewMembers.sort((a, b) => {
       const lastNameA: string = a.name.split(/\s/)[a.name.split(/\s/).length - 1];
@@ -16,5 +15,4 @@ export class OrderCrewMembersByLastNamePipe implements PipeTransform {
 
     return crewMembers;
   }
-
 }

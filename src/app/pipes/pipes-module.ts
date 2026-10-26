@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RuntimePipe } from './runtime-pipe';
 import { SafeUrlPipe } from './safe-url-pipe';
-import { OrderCrewMembersByLastNamePipe } from './order-crew-members-by-last-name.pipe';
 import { SortCastMemberByPipe } from './sort-cast-member-by.pipe';
 import { SortCrewMemberByPipe } from './sort-crew-member-by.pipe';
 import { SortPersonCastCreditsByPipe } from './sort-person-cast-credits-by.pipe';
@@ -11,12 +10,12 @@ import { SortProductionCompaniesByNamePipe } from './sort-production-companies-b
 import { SortProductionCountriesByNamePipe } from './sort-production-countries-by-name.pipe';
 import { SortGenresByNamePipe } from './sort-genres-by-name.pipe';
 import { SortLanguagesByNamePipe } from './sort-languages-by-name.pipe';
+import { SortCrewMembersByLastNamePipe } from './sort-crew-members-by-last-name.pipe';
 
 @NgModule({
   declarations: [
     RuntimePipe,
     SafeUrlPipe,
-    OrderCrewMembersByLastNamePipe,
     SortCastMemberByPipe,
     SortCrewMemberByPipe,
     SortPersonCastCreditsByPipe,
@@ -24,7 +23,8 @@ import { SortLanguagesByNamePipe } from './sort-languages-by-name.pipe';
     SortProductionCompaniesByNamePipe,
     SortProductionCountriesByNamePipe,
     SortGenresByNamePipe,
-    SortLanguagesByNamePipe
+    SortLanguagesByNamePipe,
+    SortCrewMembersByLastNamePipe
   ],
   imports: [
     CommonModule
@@ -32,7 +32,6 @@ import { SortLanguagesByNamePipe } from './sort-languages-by-name.pipe';
   exports: [
     RuntimePipe,
     SafeUrlPipe,
-    OrderCrewMembersByLastNamePipe,
     SortCastMemberByPipe,
     SortCrewMemberByPipe,
     SortPersonCastCreditsByPipe,
@@ -40,7 +39,8 @@ import { SortLanguagesByNamePipe } from './sort-languages-by-name.pipe';
     SortProductionCompaniesByNamePipe,
     SortProductionCountriesByNamePipe,
     SortGenresByNamePipe,
-    SortLanguagesByNamePipe
+    SortLanguagesByNamePipe,
+    SortCrewMembersByLastNamePipe
   ]
 })
 export class PipesModule { }

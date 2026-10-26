@@ -47,7 +47,7 @@
               <tr>
                 <td>{{directionText()}}</td>
                 <td>
-                  @for (director of direction() | orderCrewMembersByLastName; track director.id) {
+                  @for (director of direction() | sortCrewMembersByLastName; track director.id) {
                     <a [routerLink]="['/person', director.id]">
                       {{ director.name }}
                     </a>
@@ -60,7 +60,7 @@
               <tr>
                 <td>{{coDirectionText()}}</td>
                 <td>
-                  @for (coDirector of coDirection() | orderCrewMembersByLastName; track coDirector.id) {
+                  @for (coDirector of coDirection() | sortCrewMembersByLastName; track coDirector.id) {
                     <a [routerLink]="['/person', coDirector.id]">
                       {{ coDirector.name }}
                     </a>
@@ -73,7 +73,7 @@
               <tr>
                 <td>{{writingText()}}</td>
                 <td>
-                  @for (writer of writing() | orderCrewMembersByLastName; track writer.id) {
+                  @for (writer of writing() | sortCrewMembersByLastName; track writer.id) {
                     <a [routerLink]="['/person', writer.id]">
                       {{ writer.name }}
                     </a>
@@ -86,7 +86,7 @@
               <tr>
                 <td>{{teleplayText()}}</td>
                 <td>
-                  @for (teleplayWriter of teleplay() | orderCrewMembersByLastName; track teleplayWriter.id) {
+                  @for (teleplayWriter of teleplay() | sortCrewMembersByLastName; track teleplayWriter.id) {
                     <a [routerLink]="['/person', teleplayWriter.id]">
                       {{ teleplayWriter.name }}
                     </a>
@@ -99,7 +99,7 @@
               <tr>
                 <td>{{storyText()}}</td>
                 <td>
-                  @for (storyArtist of story() | orderCrewMembersByLastName; track storyArtist.id) {
+                  @for (storyArtist of story() | sortCrewMembersByLastName; track storyArtist.id) {
                     <a [routerLink]="['/person', storyArtist.id]">
                       {{ storyArtist.name }}
                     </a>
@@ -112,7 +112,7 @@
               <tr>
                 <td>{{screenstoryText()}}</td>
                 <td>
-                  @for (screenstoryArtist of screenstory() | orderCrewMembersByLastName; track screenstoryArtist.id) {
+                  @for (screenstoryArtist of screenstory() | sortCrewMembersByLastName; track screenstoryArtist.id) {
                     <a [routerLink]="['/person', screenstoryArtist.id]">
                       {{ screenstoryArtist.name }}
                     </a>
@@ -125,7 +125,7 @@
               <tr>
                 <td>{{basedOnPoemText()}}</td>
                 <td>
-                  @for (author of basedOnPoemBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnPoemBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -138,7 +138,7 @@
               <tr>
                 <td>{{basedOnNovelText()}}</td>
                 <td>
-                  @for (author of basedOnNovelBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnNovelBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -151,7 +151,7 @@
               <tr>
                 <td>{{basedOnStoryText()}}</td>
                 <td>
-                  @for (author of basedOnStoryBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnStoryBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -164,7 +164,7 @@
               <tr>
                 <td>{{basedOnCharacterText()}}</td>
                 <td>
-                  @for (author of basedOnCharactersBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnCharactersBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -177,7 +177,7 @@
               <tr>
                 <td>{{basedOnBookText()}}</td>
                 <td>
-                  @for (author of basedOnBookBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnBookBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -190,7 +190,7 @@
               <tr>
                 <td>{{basedOnComicBookText()}}</td>
                 <td>
-                  @for (author of basedOnComicBookBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnComicBookBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -203,7 +203,7 @@
               <tr>
                 <td>{{basedOnFilmWrittenText()}}</td>
                 <td>
-                  @for (author of basedOnFilmWrittenBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnFilmWrittenBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -216,7 +216,7 @@
               <tr>
                 <td>{{basedOnTVSeriesCreatedText()}}</td>
                 <td>
-                  @for (author of basedOnTVSeriesCreatedBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnTVSeriesCreatedBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -229,7 +229,7 @@
               <tr>
                 <td>{{basedOnTheatrePlayText()}}</td>
                 <td>
-                  @for (author of basedOnTheatrePlayBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnTheatrePlayBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -242,7 +242,7 @@
               <tr>
                 <td>{{basedOnMusicalText()}}</td>
                 <td>
-                  @for (author of basedOnMusicalBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnMusicalBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -255,7 +255,7 @@
               <tr>
                 <td>{{basedOnVideoGameText()}}</td>
                 <td>
-                  @for (author of basedOnVideoGameBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of basedOnVideoGameBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -268,7 +268,7 @@
               <tr>
                 <td>{{originalConceptText()}}</td>
                 <td>
-                  @for (author of originalConceptBy() | orderCrewMembersByLastName; track author.id) {
+                  @for (author of originalConceptBy() | sortCrewMembersByLastName; track author.id) {
                     <a [routerLink]="['/person', author.id]">
                       {{ author.name }}
                     </a>
@@ -281,7 +281,7 @@
               <tr>
                 <td>{{producingText()}}</td>
                 <td>
-                  @for (producer of producing() | orderCrewMembersByLastName; track producer.id) {
+                  @for (producer of producing() | sortCrewMembersByLastName; track producer.id) {
                     <a [routerLink]="['/person', producer.id]">
                       {{ producer.name }}
                     </a>
@@ -300,7 +300,7 @@
                   }
                 </td>
                 <td>
-                  @for (executiveProducer of executiveProducing() | orderCrewMembersByLastName; track executiveProducer.id) {
+                  @for (executiveProducer of executiveProducing() | sortCrewMembersByLastName; track executiveProducer.id) {
                     <a [routerLink]="['/person', executiveProducer.id]">
                       {{ executiveProducer.name }}
                     </a>
@@ -319,7 +319,7 @@
                   }
                 </td>
                 <td>
-                  @for (coExecutiveProducer of coExecutiveProducing() | orderCrewMembersByLastName; track coExecutiveProducer.id) {
+                  @for (coExecutiveProducer of coExecutiveProducing() | sortCrewMembersByLastName; track coExecutiveProducer.id) {
                     <a [routerLink]="['/person', coExecutiveProducer.id]">
                       {{ coExecutiveProducer.name }}
                     </a>
@@ -338,7 +338,7 @@
                   }
                 </td>
                 <td>
-                  @for (associateProducer of associateProducing() | orderCrewMembersByLastName; track associateProducer.id) {
+                  @for (associateProducer of associateProducing() | sortCrewMembersByLastName; track associateProducer.id) {
                     <a [routerLink]="['/person', associateProducer.id]">
                       {{ associateProducer.name }}
                     </a>
@@ -357,7 +357,7 @@
                   }
                 </td>
                 <td>
-                  @for (coProducer of coProducing() | orderCrewMembersByLastName; track coProducer.id) {
+                  @for (coProducer of coProducing() | sortCrewMembersByLastName; track coProducer.id) {
                     <a [routerLink]="['/person', coProducer.id]">
                       {{ coProducer.name }}
                     </a>
@@ -377,7 +377,7 @@
                 </td>
                 <td>
                   @for (
-                    directorOfPhotography of directorsOfPhotography() | orderCrewMembersByLastName;
+                    directorOfPhotography of directorsOfPhotography() | sortCrewMembersByLastName;
                     track directorOfPhotography.id
                   ) {
                     <a [routerLink]="['/person', directorOfPhotography.id]">
@@ -398,7 +398,7 @@
                   }
                 </td>
                 <td>
-                  @for (productionDesigner of productionDesigners() | orderCrewMembersByLastName; track productionDesigner.id) {
+                  @for (productionDesigner of productionDesigners() | sortCrewMembersByLastName; track productionDesigner.id) {
                     <a [routerLink]="['/person', productionDesigner.id]">
                       {{ productionDesigner.name }}
                     </a>
@@ -417,7 +417,7 @@
                   }
                 </td>
                 <td>
-                  @for (editor of editors() | orderCrewMembersByLastName; track editor.id) {
+                  @for (editor of editors() | sortCrewMembersByLastName; track editor.id) {
                     <a [routerLink]="['/person', editor.id]">
                       {{ editor.name }}
                     </a>
@@ -430,7 +430,7 @@
               <tr>
                 <td>{{musicText()}}</td>
                 <td>
-                  @for (musicComposer of musicComposers() | orderCrewMembersByLastName; track musicComposer.id) {
+                  @for (musicComposer of musicComposers() | sortCrewMembersByLastName; track musicComposer.id) {
                     <a [routerLink]="['/person', musicComposer.id]">
                       {{ musicComposer.name }}
                     </a>
@@ -444,7 +444,7 @@
                 <td>{{additionalMusicText()}}</td>
                 <td>
                   @for (
-                    additionalMusicComposer of additionalMusicComposers() | orderCrewMembersByLastName;
+                    additionalMusicComposer of additionalMusicComposers() | sortCrewMembersByLastName;
                     track additionalMusicComposer.id
                   ) {
                     <a [routerLink]="['/person', additionalMusicComposer.id]">
@@ -460,7 +460,7 @@
                 <td>{{songsText()}}</td>
                 <td>
                   @for (
-                    songsAuthor of songsBy() | orderCrewMembersByLastName;
+                    songsAuthor of songsBy() | sortCrewMembersByLastName;
                     track songsAuthor.id
                   ) {
                     <a [routerLink]="['/person', songsAuthor.id]">
@@ -476,7 +476,7 @@
                 <td>{{lyricsText()}}</td>
                 <td>
                   @for (
-                    lyricsAuthor of lyricsBy() | orderCrewMembersByLastName;
+                    lyricsAuthor of lyricsBy() | sortCrewMembersByLastName;
                     track lyricsAuthor.id
                   ) {
                     <a [routerLink]="['/person', lyricsAuthor.id]">
@@ -497,7 +497,7 @@
                   }
                 </td>
                 <td>
-                  @for (musicSupervisor of musicSupervisors() | orderCrewMembersByLastName; track musicSupervisor.id) {
+                  @for (musicSupervisor of musicSupervisors() | sortCrewMembersByLastName; track musicSupervisor.id) {
                     <a [routerLink]="['/person', musicSupervisor.id]">
                       {{ musicSupervisor.name }}
                     </a>
@@ -516,7 +516,7 @@
                   }
                 </td>
                 <td>
-                  @for (soundDesigner of soundDesigners() | orderCrewMembersByLastName; track soundDesigner.id) {
+                  @for (soundDesigner of soundDesigners() | sortCrewMembersByLastName; track soundDesigner.id) {
                     <a [routerLink]="['/person', soundDesigner.id]">
                       {{ soundDesigner.name }}
                     </a>
@@ -536,7 +536,7 @@
                 </td>
                 <td>
                   @for (
-                    visualEffectsSupervisor of visualEffectsSupervisors() | orderCrewMembersByLastName;
+                    visualEffectsSupervisor of visualEffectsSupervisors() | sortCrewMembersByLastName;
                     track visualEffectsSupervisor.id
                   ) {
                     <a [routerLink]="['/person', visualEffectsSupervisor.id]">
@@ -557,7 +557,7 @@
                   }
                 </td>
                 <td>
-                  @for (costumeDesigner of costumeDesigners() | orderCrewMembersByLastName; track costumeDesigner.id) {
+                  @for (costumeDesigner of costumeDesigners() | sortCrewMembersByLastName; track costumeDesigner.id) {
                     <a [routerLink]="['/person', costumeDesigner.id]">
                       {{ costumeDesigner.name }}
                     </a>
@@ -570,7 +570,7 @@
               <tr>
                 <td>{{castingText()}}</td>
                 <td>
-                  @for (casting of castingCrew() | orderCrewMembersByLastName; track casting.id) {
+                  @for (casting of castingCrew() | sortCrewMembersByLastName; track casting.id) {
                     <a [routerLink]="['/person', casting.id]">
                       {{ casting.name }}
                     </a>
