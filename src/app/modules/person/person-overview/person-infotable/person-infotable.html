@@ -67,18 +67,4 @@
       </tbody>
     </table>
   </div>
-  @if (person().imdb_id) {
-    <div class="d-grid mb-2">
-      <a [href]="personIMDBUrl()" class="btn btn-primary" target="_blank">
-        <fa-icon [icon]="imdbIcon"></fa-icon> {{viewIMDBText()}}
-      </a>
-    </div>
-  }
-  @if (person().homepage) {
-    <div class="d-grid mb-2">
-      <a [href]="personHomepageUrl()" class="btn btn-primary" target="_blank">
-        <fa-icon [icon]="globeIcon"></fa-icon> {{viewHomepageText()}}
-      </a>
-    </div>
-  }
 </section>

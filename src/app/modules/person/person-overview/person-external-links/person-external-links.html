@@ -1,0 +1,23 @@
+<section class="person-external-links">
+  <h2>{{ externalLinksTitle() }}</h2>
+  <div class="row">
+    @if (person().imdb_id) {
+      <div class="col-12 col-lg-6">
+        <div class="d-grid mb-2">
+          <a [href]="personIMDBUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="imdbIcon"></fa-icon> {{ viewIMDBText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (person().homepage) {
+      <div class="col-12 col-lg-6">
+        <div class="d-grid mb-2">
+          <a [href]="personHomepageUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="globeIcon"></fa-icon> {{ viewHomepageText() }}
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -20,6 +20,8 @@ import { PersonBiography } from './person-overview/person-biography/person-biogr
 import { PersonInfotable } from './person-overview/person-infotable/person-infotable';
 import { PersonNav } from './person-nav/person-nav';
 import { PipesModule } from '../../pipes/pipes-module';
+import { PersonExternalLinks } from './person-overview/person-external-links/person-external-links';
+import { PersonCredits } from './person-overview/person-credits/person-credits';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { PipesModule } from '../../pipes/pipes-module';
     PersonCrewCredits,
     PersonBiography,
     PersonInfotable,
-    PersonNav
+    PersonNav,
+    PersonExternalLinks,
+    PersonCredits
   ],
   imports: [
     CommonModule,
