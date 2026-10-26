@@ -15,7 +15,7 @@ export class DisplaySelector {
 
   public displaySelectLabel: string = 'Display:';
 
-  public displayMode = input.required();
+  public displayMode = input.required<string>();
   public onDisplayChange = output<string>();
 
   public toggleDisplay(display: string) {
