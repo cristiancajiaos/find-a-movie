@@ -2,6 +2,10 @@
   @extend .bg-dark;
   @extend .text-light;
 
+  a:not(.btn-light.border-dark) {
+    color: white;
+  }
+
   table {
     &.table {
       border-color: white;
