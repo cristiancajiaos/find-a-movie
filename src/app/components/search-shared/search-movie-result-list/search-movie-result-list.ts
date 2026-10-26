@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, input, InputSignal, WritableSignal, signal } from '@angular/core';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -14,11 +14,11 @@ export class SearchMovieResultList implements OnInit {
 
   private movieService = inject(MovieService);
 
-  public posterSizeSmall: string = '';
-  public formattedTitle: string = '';
-  public altPosterText: string = '';
+  public posterSizeSmall: WritableSignal<string> = signal('');
+  public formattedTitle: WritableSignal<string> = signal('');
+  public altPosterText: WritableSignal<string> = signal('');
 
-  @Input() movieResult: ResponseMovieResult = new ResponseMovieResult();
+  movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
 
   ngOnInit(): void {
     this.setTitle();
@@ -26,20 +26,20 @@ export class SearchMovieResultList implements OnInit {
   }
 
   public setTitle(): void {
-    this.formattedTitle = this.movieService.getFormattedMovieTitle(
-      this.movieResult.title,
-      this.movieResult.original_title,
-      this.movieResult.release_date
-    );
+    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+      this.movieResult().title,
+      this.movieResult().original_title,
+      this.movieResult().release_date
+    ));
   }
 
   public setPoster(): void {
-    this.posterSizeSmall = this.movieResult.poster_path
-      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movieResult.poster_path}`
-      : 'img/default-images/movie_poster_notavailable_w500.jpg';
-    this.altPosterText = this.movieResult.poster_path
-      ? `Poster from the movie ${this.formattedTitle}`
-      : `Poster from the movie ${this.formattedTitle} is not available`;
+    this.posterSizeSmall.set(this.movieResult().poster_path
+      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movieResult().poster_path}`
+      : 'img/default-images/movie_poster_notavailable_w500.jpg');
+    this.altPosterText.set(this.movieResult().poster_path
+      ? `Poster from the movie ${this.formattedTitle()}`
+      : `Poster from the movie ${this.formattedTitle()} is not available`);
   }
 
 }

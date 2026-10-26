@@ -1,16 +1,16 @@
 <section class="search-result-list movie-result-list">
-  <a [routerLink]="['/movie', movieResult.id]"
+  <a [routerLink]="['/movie', movieResult().id]"
      [ngbTooltip]="fullTitleYear"
      placement="bottom"
      tooltipClass="search-tooltip">
     <section class="search-result-content">
-      <img [src]="posterSizeSmall" [alt]="altPosterText" />
+      <img [src]="posterSizeSmall()" [alt]="altPosterText()" />
       <section class="movie-description">
-        {{formattedTitle}}
+        {{formattedTitle()}}
       </section>
     </section>
   </a>
   <ng-template #fullTitleYear>
-    {{formattedTitle}}
+    {{formattedTitle()}}
   </ng-template>
 </section>

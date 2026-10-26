@@ -35,7 +35,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   public currentPageEnd: WritableSignal<number> = signal(0);
 
   public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
-  public movieResults: ResponseMovieResult[] = [];
+  public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public searchMovieTitle: WritableSignal<string> = signal('Search Movie');
 
@@ -52,7 +52,6 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public loadingPage: boolean = false;
 
-  public noResults: boolean = false;
   public searchError: boolean = false;
   public errorMessage: string = '';
 
@@ -136,13 +135,10 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
     this.responseSearchMovie = responseSearchMovie;
-    this.movieResults = responseSearchMovie.results;
+    this.movieResults.set(responseSearchMovie.results);
     this.totalResults.set(responseSearchMovie.total_results);
     this.currentPage.set(responseSearchMovie.page);
     this.calculatePageLimits();
-    if (this.movieResults.length == 0) {
-      this.noResults = true;
-    }
   }
 
   private calculatePageLimits(): void {
