@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, WritableSignal, signal, OnInit } from '@angular/core';
 import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -8,9 +8,10 @@ import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './search-main-person.scss',
 })
-export class SearchMainPerson {
+export class SearchMainPerson implements OnInit {
 
-  public bgImage: string = 'img/bg/search-main-bg-1.jpg';
+  public bgImage: WritableSignal<string> = signal('img/bg/search-main-bg-1.jpg');
+  public styleBg: WritableSignal<Object> = signal({});
 
   public enableBorderRadius: WritableSignal<boolean> = signal(true);
   public dropdownMenuEnd: WritableSignal<boolean> = signal(false);
@@ -18,5 +19,11 @@ export class SearchMainPerson {
   public userIcon: IconDefinition = faUser;
 
   public searchPersonText: WritableSignal<string> = signal('Search a Person');
+
+  ngOnInit(): void {
+    this.styleBg.set({
+      'background-image': `url(${this.bgImage()})`
+    });
+  }
 
 }
