@@ -1,6 +1,6 @@
 <section class="person">
   @if (personErrorFound()) {
-    @if (!personFound()) {
+    @if (personNotFound()) {
       <app-person-not-found></app-person-not-found>
     } @else {
       <app-person-error-fullscreen [errorMessage]="errorMessage()" (reload)="reloadPerson($event)">

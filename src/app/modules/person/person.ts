@@ -30,6 +30,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
 
   private personError: WritableSignal<HttpErrorResponse>= signal(null);
   public personFound: WritableSignal<boolean> = signal(false);
+  public personNotFound: WritableSignal<boolean> = signal(false);
   public personErrorFound: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string> = signal('');
 
@@ -84,7 +85,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
     this.personErrorFound.set(true);
     this.personError.set(error);
     if (error.status && error.status === 404) {
-      this.personFound.set(false);
+      this.personNotFound.set(true);
     } else {
       this.errorMessage.set(error.message);
     }
