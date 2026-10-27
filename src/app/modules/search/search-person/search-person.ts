@@ -44,7 +44,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   public currentPageEnd: WritableSignal<number> = signal(0);
 
   public responseSearchPerson: ResponseSearchPerson = new ResponseSearchPerson();
-  public personResults: ResponsePersonResult[] = [];
+  public personResults: WritableSignal<ResponsePersonResult[]> = signal([]);
 
   public searchPersonTitle: WritableSignal<string> = signal('Search Person');
 
@@ -61,7 +61,6 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   public loadingPage: boolean = false;
 
-  public noResults: boolean = false;
   public searchError: boolean = false;
   public errorMessage: string = '';
 
@@ -142,11 +141,10 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
     this.responseSearchPerson = responseSearchPerson;
-    this.personResults = responseSearchPerson.results;
+    this.personResults.set(responseSearchPerson.results);
     this.totalResults.set(responseSearchPerson.total_results);
     this.currentPage.set(responseSearchPerson.page);
     this.calculatePageLimits();
-    this.noResults = this.personResults.length == 0;
   }
 
   private calculatePageLimits(): void {

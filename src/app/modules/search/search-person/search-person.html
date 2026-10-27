@@ -16,14 +16,13 @@
         </app-search-error>
       }
       @if (!searchError) {
-        @if (noResults) {
+        @if (personResults().length == 0) {
           <section class="search-person-no-results">
             <p>
               <strong>{{ searchQuery() }}</strong> {{noResultsText()}}
             </p>
           </section>
-        }
-        @if (!noResults) {
+        } @else {
           <section class="search-person-controls">
             <app-display-selector
               [displayMode]="displayMode()"
@@ -41,7 +40,7 @@
               <section class="search-person-results-grid">
                 <div class="row">
                   @for (
-                    personResult of personResults
+                    personResult of personResults()
                       | paginate
                         : {
                             itemsPerPage: itemsPerPage(),
@@ -62,7 +61,7 @@
               <section class="search-person-results-list">
                 <div class="row">
                   @for (
-                    personResult of personResults
+                    personResult of personResults()
                       | paginate
                         : {
                             itemsPerPage: itemsPerPage(),

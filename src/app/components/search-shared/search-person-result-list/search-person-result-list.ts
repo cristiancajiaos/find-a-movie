@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal, InputSignal, input } from '@angular/core';
 import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
 import { environment } from '../../../../environments/environment.development';
 
@@ -10,17 +10,19 @@ import { environment } from '../../../../environments/environment.development';
   styleUrl: './search-person-result-list.scss',
 })
 export class SearchPersonResultList implements OnInit {
-  public profileImg: string = '';
+  public profileImg: WritableSignal<string> = signal('');
+  public profileImgAlt: WritableSignal<string> = signal('');
 
-  @Input() personResult: ResponsePersonResult = new ResponsePersonResult();
+  personResult: InputSignal<ResponsePersonResult> = input.required<ResponsePersonResult>();
 
   ngOnInit(): void {
     this.setProfileImg();
   }
 
   public setProfileImg(): void {
-    this.profileImg = this.personResult.profile_path
-      ? `${environment.imgUrl}${environment.profileSizeSmall}${this.personResult.profile_path}`
-      : 'img/default-images/profile_image_notavailable_w500.jpg';
+    this.profileImg.set(this.personResult().profile_path
+      ? `${environment.imgUrl}${environment.profileSizeSmall}${this.personResult().profile_path}`
+      : 'img/default-images/profile_image_notavailable_w500.jpg');
+    this.profileImgAlt.set(this.personResult().profile_path ? `Profile image for ${this.personResult().name}` : 'Profile image is not available');
   }
 }
