@@ -7,12 +7,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutModule } from '../../components/layout/layout-module';
 import { HomeTrending } from './home-trending/home-trending';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SlideTrending } from './home-trending/slide-trending/slide-trending';
 
 
 @NgModule({
   declarations: [
     Home,
-    HomeTrending
+    HomeTrending,
+    SlideTrending
   ],
   imports: [
     CommonModule,

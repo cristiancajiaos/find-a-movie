@@ -1,0 +1,11 @@
+<div class="slide-trending">
+  <div class="slide-image">
+    <a [routerLink]="['movie', movieResult().id]">
+      <div class="carousel-slide" [ngStyle]="bgSlide()">
+      </div>
+    </a>
+  </div>
+  <div class="carousel-caption">
+    <h3>{{formattedTitle()}}</h3>
+  </div>
+</div>
