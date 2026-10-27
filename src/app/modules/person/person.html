@@ -7,7 +7,7 @@
       </app-person-error-fullscreen>
     }
   } @else {
-    @if (personFound) {
+    @if (personFound()) {
       <app-person-header [id]="id()" [person]="person()" #personHeader> </app-person-header>
       <app-person-nav></app-person-nav>
       <main>
