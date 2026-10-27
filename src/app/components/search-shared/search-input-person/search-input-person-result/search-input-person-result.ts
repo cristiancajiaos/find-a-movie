@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal, InputSignal, input, OutputEmitterRef, output } from '@angular/core';
 import { ResponsePersonResult } from '../../../../classes/response-search-person/response-person-result';
 import { environment } from '../../../../../environments/environment.development';
 
@@ -11,19 +11,27 @@ import { environment } from '../../../../../environments/environment.development
   styleUrl: './search-input-person-result.scss',
 })
 export class SearchInputPersonResult implements OnInit {
-  public profileImg: string = '';
+  public profileImg: WritableSignal<string> = signal('');
+  public bgImage: WritableSignal<Object> = signal({});
 
-  @Input() personResult: ResponsePersonResult;
-  @Output() clickResult: EventEmitter<boolean> = new EventEmitter<boolean>();
+  personResult: InputSignal<ResponsePersonResult> = input.required<ResponsePersonResult>();
+  clickResult: OutputEmitterRef<boolean> = output<boolean>();
 
   ngOnInit(): void {
     this.setProfileImg();
+    this.setBgImage();
   }
 
-  public setProfileImg(): void {
-    this.profileImg = this.personResult.profile_path
-      ? `${environment.imgUrl}${environment.profileSizeSmall}${this.personResult.profile_path}`
-      : 'img/default-images/profile_image_notavailable_w500.jpg';
+  private setProfileImg(): void {
+    this.profileImg.set(this.personResult().profile_path
+      ? `${environment.imgUrl}${environment.profileSizeSmall}${this.personResult().profile_path}`
+      : 'img/default-images/profile_image_notavailable_w500.jpg');
+  }
+
+  private setBgImage(): void {
+    this.bgImage.set({
+      'background-image':`url(${this.profileImg()})`
+    });
   }
 
   public onClickResult(): void {
