@@ -8,11 +8,10 @@
 
   .person-error-description {
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid white;
     padding: 1rem 2rem;
-    background-color: black;
+    background-color: rgba(33,37,41,1);
     color: white;
-
 
     button {
       font-family: 'Oswald', 'Arial', sans-serif;
