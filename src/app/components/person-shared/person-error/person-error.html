@@ -1,9 +1,9 @@
 <section class="person-error">
-  <h1>Person Service Error</h1>
+  <h1>{{personErrorTitle()}}</h1>
   <p>
-    There was an error trying to get person info: <strong>{{ errorMessage }}</strong>
+    {{personErrorText()}} <strong>{{ errorMessage() }}</strong>
   </p>
-  <button type="button" class="btn btn-primary" (click)="pressReload()">
-    <fa-icon [icon]="repeat"></fa-icon>
+  <button type="button" class="btn btn-light border-dark mb-2" (click)="pressReload()">
+    <fa-icon [icon]="repeat"></fa-icon> {{reloadButtonText()}}
   </button>
 </section>
