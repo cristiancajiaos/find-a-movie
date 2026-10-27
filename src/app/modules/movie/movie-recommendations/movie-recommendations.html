@@ -1,18 +1,15 @@
 <section class="movie-recommendations">
   @if (movieRecommendedError) {
-    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadRecommendedMovies($event)">
+    <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadRecommendedMovies($event)">
     </app-movie-error>
-  }
-  @if (!movieRecommendedError) {
+  } @else {
     @if (movieResults().length > 0) {
-      <h2>{{movieRecommendationsTitle()}}</h2>
+      <h2>{{ movieRecommendationsTitle() }}</h2>
       <p>
-        {{ifYouLikedText()}} <strong>{{ movie().title }}</strong
-        >{{youWouldLikeText()}}
+        {{ ifYouLikedText() }} <strong>{{ movie().title }}</strong
+        >{{ youWouldLikeText() }}
       </p>
-      <app-display-selector
-        [displayMode]="displayMode()"
-        (onDisplayChange)="changeDisplay($event)">
+      <app-display-selector [displayMode]="displayMode()" (onDisplayChange)="changeDisplay($event)">
       </app-display-selector>
       @if (displayMode() == 'grid') {
         <div class="row">
@@ -26,12 +23,11 @@
       }
       @if (displayMode() == 'list') {
         @for (movieResult of movieResults(); track movieResult.id) {
-          <app-search-movie-result-list [movieResult]="movieResult">
-          </app-search-movie-result-list>
+          <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
         }
       }
     } @else {
-      <p>{{noRecommendedMovies()}} {{ movie().title }}.</p>
+      <p>{{ noRecommendedMovies() }} {{ movie().title }}.</p>
     }
   }
 </section>

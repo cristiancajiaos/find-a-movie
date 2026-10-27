@@ -1,9 +1,8 @@
 <section class="movie-similar">
   @if (movieSimilarError) {
-    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadSimularMovies($event)">
+    <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadSimularMovies($event)">
     </app-movie-error>
-  }
-  @if (!movieSimilarError) {
+  } @else {
     @if (movieResults().length > 0) {
       <h2>{{similarMoviesTitle()}}</h2>
       <p>

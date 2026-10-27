@@ -29,8 +29,8 @@ export class MovieSimilar implements OnInit, OnDestroy {
   public movie: WritableSignal<Movie> = signal(null);
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
-  public movieSimilarError: boolean = false;
-  public errorMessage: string = '';
+  public movieSimilarError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   public similarMoviesTitle: WritableSignal<string> = signal('Similar Movies');
 
@@ -80,7 +80,7 @@ export class MovieSimilar implements OnInit, OnDestroy {
   }
 
   private getSimilarMovies(): void {
-    this.movieSimilarError = false;
+    this.movieSimilarError.set(false);
     this.getMovieSimilarSubscription = this.movieService.getMovieSimilarMovies(this.id()).subscribe({
       next: (movieResults) => {
         this.movieResults.set(movieResults);
@@ -95,8 +95,8 @@ export class MovieSimilar implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse) {
-    this.movieSimilarError = true;
-    this.errorMessage = error.message;
+    this.movieSimilarError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadSimularMovies(event: boolean): void {

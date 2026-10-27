@@ -29,8 +29,8 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   public movie: WritableSignal<Movie> = signal(null);
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
-  public movieRecommendedError: boolean = false;
-  public errorMessage: string = '';
+  public movieRecommendedError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   public movieRecommendationsTitle: WritableSignal<string> = signal('Movie Recommendations');
 
@@ -82,7 +82,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   }
 
   private getRecommendedMovies(): void {
-    this.movieRecommendedError = false;
+    this.movieRecommendedError.set(false);
     this.getMovieRecommendedSubscription = this.movieService.getMovieRecommendedMovies(this.id()).subscribe({
       next: (movieResults) => {
         this.movieResults.set(movieResults);
@@ -95,8 +95,8 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.movieRecommendedError = true;
-    this.errorMessage = error.message;
+    this.movieRecommendedError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadRecommendedMovies(event: boolean): void {
