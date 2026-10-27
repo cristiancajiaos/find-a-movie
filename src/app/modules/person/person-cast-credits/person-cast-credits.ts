@@ -36,15 +36,15 @@ export class PersonCastCredits implements OnInit, OnDestroy {
 
   public id: WritableSignal<number> = signal(0);
 
-  private person: Person;
+  private person: WritableSignal<Person> = signal(null);
 
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
 
   public personCastCredits: WritableSignal<ResponsePersonCastCredit[]> = signal([]);
 
-  public personMovieCreditsFound: boolean = false;
-  public personMovieCreditsError: boolean = false;
-  public errorMessage: string = '';
+  public personMovieCreditsFound: WritableSignal<boolean> = signal(false);
+  public personMovieCreditsError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   public personCreditsQuery: WritableSignal<PersonCreditsQuery> = signal(new PersonCreditsQuery());
 
@@ -104,7 +104,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   }
 
   private getPerson(): void {
-    this.person = this.sessionStorageService.getItem('person');
+    this.person.set(this.sessionStorageService.getItem('person'));
     this.setTitle();
   }
 
@@ -122,11 +122,11 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   }
 
   private getPersonMovieCredits(): void {
-    this.personMovieCreditsError = false;
+    this.personMovieCreditsError.set(false);
     this.personService.getCastCredits(this.id()).subscribe({
       next: (castCredits) => {
         this.personCastCredits.set(castCredits);
-        this.personMovieCreditsFound = true;
+        this.personMovieCreditsFound.set(true);
       },
       error: (error) => {
         this.handleError(error);
@@ -136,8 +136,8 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.personMovieCreditsError = true;
-    this.errorMessage = error.message;
+    this.personMovieCreditsError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadMovieCredits(event: boolean): void {

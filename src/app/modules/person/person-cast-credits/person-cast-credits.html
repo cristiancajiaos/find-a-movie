@@ -1,16 +1,16 @@
 <section class="person-cast-credits">
-  @if (personMovieCreditsError) {
-    <app-person-error [errorMessage]="errorMessage" (reload)="reloadMovieCredits($event)">
+  @if (personMovieCreditsError()) {
+    <app-person-error [errorMessage]="errorMessage()" (reload)="reloadMovieCredits($event)">
     </app-person-error>
-  }
-  @if (!personMovieCreditsError) {
+  } @else {
     @if (personCastCredits().length === 0) {
-      <p>{{noCastCredits()}}</p>
+      <p>{{ noCastCredits() }}</p>
     }
     @if (personCastCredits().length > 0) {
       <app-person-movie-credits-cast
         [castCredits]="personCastCredits()"
-        [personCreditsQuery]="personCreditsQuery()">
+        [personCreditsQuery]="personCreditsQuery()"
+      >
       </app-person-movie-credits-cast>
     }
   }
