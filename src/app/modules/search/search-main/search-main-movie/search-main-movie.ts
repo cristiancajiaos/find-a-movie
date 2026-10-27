@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, WritableSignal, signal, OnInit } from '@angular/core';
 import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,7 +10,7 @@ import { faFilm, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 })
 export class SearchMainMovie {
 
-  public bgImage: string = 'img/bg/search-main-bg-2.jpg';
+  public bgImage: WritableSignal<string> = signal('img/bg/search-main-bg-2.jpg');
 
   public enableBorderRadius: WritableSignal<boolean> = signal(true);
   public dropdownMenuEnd: WritableSignal<boolean> = signal(false);
