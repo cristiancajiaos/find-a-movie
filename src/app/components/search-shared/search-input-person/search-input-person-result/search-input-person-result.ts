@@ -11,7 +11,6 @@ import { environment } from '../../../../../environments/environment.development
   styleUrl: './search-input-person-result.scss',
 })
 export class SearchInputPersonResult implements OnInit {
-  public profileImg: WritableSignal<string> = signal('');
   public bgImage: WritableSignal<Object> = signal({});
 
   personResult: InputSignal<ResponsePersonResult> = input.required<ResponsePersonResult>();
@@ -19,21 +18,16 @@ export class SearchInputPersonResult implements OnInit {
 
   ngOnInit(): void {
     this.setProfileImg();
-    this.setBgImage();
   }
 
   private setProfileImg(): void {
-    this.profileImg.set(this.personResult().profile_path
+    const profileImg = this.personResult().profile_path
       ? `${environment.imgUrl}${environment.profileSizeSmall}${this.personResult().profile_path}`
-      : 'img/default-images/profile_image_notavailable_w500.jpg');
-  }
-
-  private setBgImage(): void {
+      : 'img/default-images/profile_image_notavailable_w500.jpg';
     this.bgImage.set({
-      'background-image':`url(${this.profileImg()})`
+      'background-image':`url(${profileImg})`
     });
   }
-
   public onClickResult(): void {
     this.clickResult.emit(true);
   }
