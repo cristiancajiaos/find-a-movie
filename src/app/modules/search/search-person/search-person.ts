@@ -43,7 +43,6 @@ export class SearchPerson implements OnInit, OnDestroy {
   public currentPageStart: WritableSignal<number> = signal(0);
   public currentPageEnd: WritableSignal<number> = signal(0);
 
-  public responseSearchPerson: ResponseSearchPerson = new ResponseSearchPerson();
   public personResults: WritableSignal<ResponsePersonResult[]> = signal([]);
 
   public searchPersonTitle: WritableSignal<string> = signal('Search Person');
@@ -59,10 +58,8 @@ export class SearchPerson implements OnInit, OnDestroy {
 
   public displayMode = signal('grid');
 
-  public loadingPage: boolean = false;
-
-  public searchError: boolean = false;
-  public errorMessage: string = '';
+  public searchError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   @ViewChild('header') header!: ElementRef;
 
@@ -106,7 +103,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   public searchPerson(): void {
-    this.searchError = false;
+    this.searchError.set(false);
     this.getPersonSubscription = this.searchService.searchPerson(this.searchQuery()).subscribe({
       next: (response) => {
         this.handlePersonResults(response);
@@ -119,7 +116,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   private searchPersonUpdatePage() {
-    this.searchError = false;
+    this.searchError.set(false);
     this.getPersonChangePageSubscription = this.searchService
       .searchPerson(this.searchQuery(), this.currentPage())
       .subscribe({
@@ -140,7 +137,6 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   private handlePersonResults(responseSearchPerson: ResponseSearchPerson): void {
-    this.responseSearchPerson = responseSearchPerson;
     this.personResults.set(responseSearchPerson.results);
     this.totalResults.set(responseSearchPerson.total_results);
     this.currentPage.set(responseSearchPerson.page);
@@ -157,8 +153,8 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.searchError = true;
-    this.errorMessage = error.message;
+    this.searchError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public changeDisplay(display: string) {
