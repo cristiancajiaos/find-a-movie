@@ -5,7 +5,6 @@ import {
   faClock,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-movie-header',
@@ -19,6 +18,8 @@ export class MovieHeader implements OnChanges {
   public film: IconDefinition = faFilm;
   public clock: IconDefinition = faClock;
 
+  public movieHeaderBg: WritableSignal<Object> = signal('');
+
   public noReleaseDateText: WritableSignal<string> = signal('No Release Date');
 
   id = input.required<number>();
@@ -29,10 +30,17 @@ export class MovieHeader implements OnChanges {
 
   ngOnChanges() {
     this.setYear();
+    this.setHeaderBg();
   }
 
-  public setYear(): void {
+  private setYear(): void {
     const releaseYear: Date = new Date(this.movie().release_date);
     this.year.set(releaseYear.getFullYear());
+  }
+
+  private setHeaderBg(): void {
+    this.movieHeaderBg.set({
+      'background-image': `url(${this.movie().backdrop_path})`
+    });
   }
 }

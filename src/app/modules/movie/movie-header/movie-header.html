@@ -3,7 +3,7 @@
     <header>
       <div
         class="header-backdrop"
-        [ngStyle]="{ 'background-image': 'url(' + movie().backdrop_path  + ')' }"
+        [ngStyle]="movieHeaderBg()"
       ></div>
       <div class="header-movie-container">
         <div class="header-movie-info">
