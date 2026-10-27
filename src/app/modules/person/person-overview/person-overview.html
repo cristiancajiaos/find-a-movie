@@ -1,9 +1,8 @@
 <section class="person-overview">
-  @if (personErrorFound) {
-    <app-person-error [errorMessage]="errorMessage" (reload)="reloadOverview($event)">
+  @if (personErrorFound()) {
+    <app-person-error [errorMessage]="errorMessage()" (reload)="reloadOverview($event)">
     </app-person-error>
-  }
-  @if (!personErrorFound) {
+  } @else {
     @if (personFound) {
       <div class="row">
         <div class="col-12 col-lg-8">
@@ -15,9 +14,9 @@
           </section>
         </div>
         <div class="col-12">
-          <hr/>
+          <hr />
           <app-person-credits [person]="person()"></app-person-credits>
-          <hr/>
+          <hr />
           <app-person-external-links [person]="person()"></app-person-external-links>
         </div>
       </div>

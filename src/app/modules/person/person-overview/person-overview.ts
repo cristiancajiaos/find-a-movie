@@ -32,10 +32,10 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public person: WritableSignal<Person> = signal(new Person());
 
-  private personError: HttpErrorResponse = null;
-  public personFound: boolean = false;
-  public personErrorFound: boolean = false;
-  public errorMessage: string = '';
+  private personError: WritableSignal<HttpErrorResponse> = signal(null);
+  public personFound: WritableSignal<boolean> = signal(false);
+  public personErrorFound: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getPersonSubscription: Subscription = new Subscription();
@@ -68,12 +68,12 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private getPerson(): void {
-    this.personErrorFound = false;
+    this.personErrorFound.set(false);
 
     this.getPersonSubscription = this.personService.getPerson(this.id()).subscribe({
       next: (person) => {
         this.person.set(person);
-        this.personFound = true;
+        this.personFound.set(true);
       },
       error: (error) => {
         this.handleError(error);
@@ -87,9 +87,9 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse) {
-    this.personErrorFound = true;
-    this.errorMessage = error.message;
-    this.personError = error;
+    this.personErrorFound.set(true);
+    this.errorMessage.set(error.message);
+    this.personError.set(error);
   }
 
   public reloadOverview(event: boolean): void {
