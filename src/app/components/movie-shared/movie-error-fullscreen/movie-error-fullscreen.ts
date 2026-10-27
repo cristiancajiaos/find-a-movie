@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, WritableSignal, signal, OutputEmitterRef, output, input, InputSignal } from '@angular/core';
 import { faCircleXmark, faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -13,8 +13,12 @@ export class MovieErrorFullscreen {
   public repeat: IconDefinition = faRepeat;
   public circleXIcon: IconDefinition = faCircleXmark;
 
-  @Input() errorMessage: string = '';
-  @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public movieErrorTitle: WritableSignal<string> = signal('Movie Service Error');
+  public movieErrorText: WritableSignal<string> = signal('There was an error getting info for the movie:');
+  public reloadButtonText: WritableSignal<string> = signal('Reload');
+
+  errorMessage: InputSignal<string> = input.required<string>();
+  reload: OutputEmitterRef<boolean> = output<boolean>();
 
   public pressReload(): void {
     this.reload.emit(true);
