@@ -28,12 +28,10 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   public id: WritableSignal<number> = signal(0);
   public person: WritableSignal<Person> = signal(new Person());
 
-  private personError: HttpErrorResponse = null;
-
-  public personFound: boolean = false;
-  public personNotFound: boolean = false;
-  public personErrorFound: boolean = false;
-  public errorMessage: string = '';
+  private personError: WritableSignal<HttpErrorResponse>= signal(null);
+  public personFound: WritableSignal<boolean> = signal(false);
+  public personErrorFound: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   @ViewChild('personHeader') personHeader!: PersonHeader;
 
@@ -51,7 +49,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
       if (this.person) {
         this.setPersonTitle();
       } else {
-        if (this.personError.status && this.personError.status === 404) {
+        if (this.personError().status && this.personError().status === 404) {
           this.titleService.setPersonNotFoundTitle();
         } else {
           this.titleService.setPersonServiceErrorTitle();
@@ -66,12 +64,12 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private getPerson(): void {
-    this.personFound = false;
-    this.personErrorFound = false;
+    this.personFound.set(false);
+    this.personErrorFound.set(false);
     this.getPersonSubscription = this.personService.getPerson(this.id()).subscribe({
       next: (person) => {
         this.person.set(person);
-        this.personFound = true;
+        this.personFound.set(true);
         this.sessionStorageService.setItem("person", person);
       },
       error: (error) => {
@@ -83,12 +81,12 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.personErrorFound = true;
-    this.personError = error;
+    this.personErrorFound.set(true);
+    this.personError.set(error);
     if (error.status && error.status === 404) {
-      this.personNotFound = true;
+      this.personFound.set(false);
     } else {
-      this.errorMessage = error.message;
+      this.errorMessage.set(error.message);
     }
   }
 

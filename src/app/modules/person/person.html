@@ -1,17 +1,14 @@
 <section class="person">
-  @if (personErrorFound) {
-    @if (personNotFound) {
+  @if (personErrorFound()) {
+    @if (!personFound()) {
       <app-person-not-found></app-person-not-found>
-    }
-    @if (!personNotFound) {
-      <app-person-error-fullscreen [errorMessage]="errorMessage" (reload)="reloadPerson($event)">
+    } @else {
+      <app-person-error-fullscreen [errorMessage]="errorMessage()" (reload)="reloadPerson($event)">
       </app-person-error-fullscreen>
     }
-  }
-  @if (!personErrorFound) {
+  } @else {
     @if (personFound) {
-      <app-person-header [id]="id()" [person]="person()" #personHeader>
-      </app-person-header>
+      <app-person-header [id]="id()" [person]="person()" #personHeader> </app-person-header>
       <app-person-nav></app-person-nav>
       <main>
         <div class="container-fluid">
