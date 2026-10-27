@@ -1,18 +1,15 @@
 <section class="movie">
-  @if (movieErrorFound) {
-    @if (movieNotFound) {
+  @if (movieErrorFound()) {
+    @if (movieNotFound()) {
       <app-movie-not-found></app-movie-not-found>
-    }
-    @if (!movieNotFound) {
-      <app-movie-error-fullscreen [errorMessage]="errorMessage" (reload)="reloadMovie($event)">
+    } @else {
+      <app-movie-error-fullscreen [errorMessage]="errorMessage()" (reload)="reloadMovie($event)">
       </app-movie-error-fullscreen>
     }
-  }
-  @if (!movieErrorFound) {
-    @if (movieFound) {
+  } @else {
+    @if (movieFound()) {
       <div class="navbar-cover"></div>
-      <app-movie-header [id]="id()" [movie]="movie()" #movieHeader>
-      </app-movie-header>
+      <app-movie-header [id]="id()" [movie]="movie()" #movieHeader> </app-movie-header>
       <main>
         <app-movie-nav></app-movie-nav>
         <div class="container-fluid">
@@ -28,7 +25,7 @@
                       class="btn btn-light border-dark mb-2"
                     >
                       <fa-icon [icon]="imagePortrait"></fa-icon>
-                      {{openPosterText()}}
+                      {{ openPosterText() }}
                     </a>
                   </div>
                 }

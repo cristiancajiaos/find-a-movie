@@ -37,11 +37,11 @@ export class MovieComponent implements OnInit, OnDestroy {
   public posterSizeSmall: WritableSignal<string> = signal('');
   public posterSizeOriginal: WritableSignal<string> = signal('');
 
-  public movieFound: boolean = false;
-  private movieError: HttpErrorResponse = null;
-  public movieNotFound: boolean = false;
-  public movieErrorFound: boolean = false;
-  public errorMessage: string = '';
+  private movieError: WritableSignal<HttpErrorResponse> = signal(null);
+  public movieFound: WritableSignal<boolean> = signal(false);
+  public movieNotFound: WritableSignal<boolean> = signal(false);
+  public movieErrorFound: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   public openPosterText: WritableSignal<string> = signal('Open Poster in New Tab');
 
@@ -60,11 +60,11 @@ export class MovieComponent implements OnInit, OnDestroy {
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
       if (!this.movieFound) {
         if (this.movieError) {
-          if (this.movieError.status && this.movieError.status === 404) {
-            this.movieNotFound = true;
+          if (this.movieError().status && this.movieError().status === 404) {
+            this.movieNotFound.set(true);
             this.titleService.setMovieNotFoundTitle();
           } else {
-            this.errorMessage = this.movieError.message;
+            this.errorMessage.set(this.movieError().message);
             this.titleService.setMovieServiceErrorTitle();
           }
         }
@@ -73,13 +73,13 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private getMovie(): void {
-    this.movieFound = false;
-    this.movieErrorFound = false;
+    this.movieFound.set(false);
+    this.movieErrorFound.set(false);
     this.getMovieSubscription = this.movieService.getMovie(this.id()).subscribe({
       next: (movie) => {
         this.movie.set(movie);
         this.sessionStorageService.setItem('movie', movie);
-        this.movieFound = true;
+        this.movieFound.set(true);
         this.setMoviePoster();
       },
       error: (error) => {
@@ -90,8 +90,14 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.movieErrorFound = true;
-    this.movieError = error;
+    console.log(error);
+    this.movieErrorFound.set(true);
+    this.movieError.set(error);
+    if (error.status && error.status === 404) {
+      this.movieNotFound.set(false);
+    } else {
+      this.errorMessage.set(error.message);
+    }
   }
 
   public reloadMovie(event: boolean): void {
