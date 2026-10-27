@@ -34,7 +34,6 @@ export class SearchMovie implements OnInit, OnDestroy {
   public currentPageStart: WritableSignal<number> = signal(0);
   public currentPageEnd: WritableSignal<number> = signal(0);
 
-  public responseSearchMovie: ResponseSearchMovie = new ResponseSearchMovie();
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public searchMovieTitle: WritableSignal<string> = signal('Search Movie');
@@ -50,10 +49,8 @@ export class SearchMovie implements OnInit, OnDestroy {
 
   public displayMode = signal('grid');
 
-  public loadingPage: boolean = false;
-
-  public searchError: boolean = false;
-  public errorMessage: string = '';
+  public searchError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   @ViewChild('header') header!: ElementRef;
 
@@ -97,7 +94,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   private searchMovie(): void {
-    this.searchError = false;
+    this.searchError.set(false);
     this.getMovieSubscription = this.searchService.searchMovie(this.searchQuery()).subscribe({
       next: (response) => {
         this.handleMovieResults(response);
@@ -111,7 +108,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   private searchMovieUpdatePage() {
-    this.searchError = false;
+    this.searchError.set(false);
     this.getMovieChangePageSubscription = this.searchService.searchMovie(
       this.searchQuery(), this.currentPage()
     ).subscribe({
@@ -134,7 +131,6 @@ export class SearchMovie implements OnInit, OnDestroy {
 
 
   private handleMovieResults(responseSearchMovie: ResponseSearchMovie) {
-    this.responseSearchMovie = responseSearchMovie;
     this.movieResults.set(responseSearchMovie.results);
     this.totalResults.set(responseSearchMovie.total_results);
     this.currentPage.set(responseSearchMovie.page);
@@ -149,8 +145,8 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse) {
-    this.searchError = true;
-    this.errorMessage = error.message;
+    this.searchError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public changeDisplay(display: string) {
