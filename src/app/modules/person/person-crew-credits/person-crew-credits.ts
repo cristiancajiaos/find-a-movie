@@ -28,17 +28,15 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
 
   public id: WritableSignal<number> = signal(0);
 
-  private person: Person;
+  private person: WritableSignal<Person> = signal(null);
 
   public personMovieCredits: ResponsePersonMovieCredits = new ResponsePersonMovieCredits();
 
   public personCrewCredits: WritableSignal<ResponsePersonCrewCredit[]> = signal([]);
 
-  public loadingPersonMovieCredits: boolean = false;
-
-  public personMovieCreditsFound: boolean = false;
-  public personMovieCreditsError: boolean = false;
-  public errorMessage: string = '';
+  public personMovieCreditsFound: WritableSignal<boolean> = signal(false);
+  public personMovieCreditsError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   public personCreditsQuery: WritableSignal<PersonCreditsQuery> = signal(new PersonCreditsQuery());
 
@@ -122,26 +120,23 @@ export class PersonCrewCredits implements OnInit, OnDestroy {
   }
 
   private getPersonMovieCredits() {
-    this.personMovieCreditsError = false;
-    this.loadingPersonMovieCredits = true;
+    this.personMovieCreditsError.set(false);
     this.personService.getCrewCredits(this.id()).subscribe({
       next: (crewCredits) => {
         this.personCrewCredits.set(crewCredits);
-        this.personMovieCreditsFound = true;
+        this.personMovieCreditsFound.set(true);
       },
       error: (error) => {
         this.handleError(error);
-        this.loadingPersonMovieCredits = false;
       },
       complete: () => {
-        this.loadingPersonMovieCredits = false;
       }
     });
   }
 
   private handleError(error: HttpErrorResponse) {
-    this.personMovieCreditsError = true;
-    this.errorMessage = error.message;
+    this.personMovieCreditsError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadMovieCredits(event: boolean): void {
