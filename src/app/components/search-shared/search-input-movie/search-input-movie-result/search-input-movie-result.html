@@ -1,11 +1,13 @@
-<a ngbDropdownItem
+<a
+  ngbDropdownItem
   class="search-result movie-result"
-  [routerLink]="['/movie', movieResult.id]"
-  (click)="onClickResult()">
+  [routerLink]="['/movie', movieResult().id]"
+  (click)="onClickResult()"
+>
   <span class="movie-poster">
-    <div class="movie-poster-img" [ngStyle]="{'background-image': 'url(' + posterSizeSmall + ')'}"></div>
+    <div class="movie-poster-img" [ngStyle]="posterBgImage()"></div>
   </span>
   <span class="movie-formatted-title">
-    {{formattedTitle}}
+    {{ formattedTitle() }}
   </span>
 </a>

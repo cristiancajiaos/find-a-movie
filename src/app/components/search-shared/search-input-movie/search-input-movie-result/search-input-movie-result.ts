@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, inject, InputSignal, input, OutputEmitterRef, output, WritableSignal, signal } from '@angular/core';
 import { MovieService } from '../../../../services/movie-service';
 import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
 import { environment } from '../../../../../environments/environment.development';
@@ -15,30 +15,32 @@ export class SearchInputMovieResult implements OnInit {
 
   private movieService = inject(MovieService);
 
-  public posterSizeSmall: string = '';
-  public releaseYear: number = 0;
-  public formattedTitle: string = '';
+  public posterBgImage: WritableSignal<Object> = signal({});
+  public formattedTitle: WritableSignal<string> = signal('');
 
-  @Input() movieResult: ResponseMovieResult;
-  @Output() clickResult: EventEmitter<boolean> = new EventEmitter<boolean>();
+  movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
+  clickResult: OutputEmitterRef<boolean> = output<boolean>();
 
   ngOnInit(): void {
     this.setTitle();
-    this.setPoster();
+    this.setPosterImg();
   }
 
   public setTitle() {
-    this.formattedTitle = this.movieService.getFormattedMovieTitle(
-      this.movieResult.title,
-      this.movieResult.original_title,
-      this.movieResult.release_date
-    );
+    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+      this.movieResult().title,
+      this.movieResult().original_title,
+      this.movieResult().release_date
+    ));
   }
 
-  public setPoster() {
-    this.posterSizeSmall = this.movieResult.poster_path
-        ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movieResult.poster_path}`
+  public setPosterImg() {
+    const posterImg = this.movieResult().poster_path
+        ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movieResult().poster_path}`
         : 'img/default-images/movie_poster_notavailable_w500.jpg';
+    this.posterBgImage.set({
+      'background-image':`url(${posterImg})`
+    });
   }
 
   public onClickResult(): void {
