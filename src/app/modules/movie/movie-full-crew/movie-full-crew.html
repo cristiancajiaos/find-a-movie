@@ -1,10 +1,9 @@
 <section class="movie-full-crew">
-  @if (movieFullCrewError) {
-    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadFullCrew($event)">
+  @if (movieFullCrewError()) {
+    <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadFullCrew($event)">
     </app-movie-error>
-  }
-  @if (!movieFullCrewError) {
-    <h2 #title>{{fullCrewTitle()}}</h2>
+  } @else {
+    <h2 #title>{{ fullCrewTitle() }}</h2>
     @if (movieFullCrew().length > 0) {
       <div class="row">
         <div class="col-12 col-lg-9">
@@ -23,7 +22,8 @@
             [resultsOptions]="numberResultsOptions()"
             [enabledResultsParams]="enabledResultsParams()"
             [itemsPerPage]="crewMembersPerPage()"
-            (onSelectResultOption)="changeItemsPerPage($event)">
+            (onSelectResultOption)="changeItemsPerPage($event)"
+          >
           </app-show-x-results>
         </div>
       </div>
@@ -32,8 +32,8 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>{{nameText()}}</th>
-              <th>{{jobText()}}</th>
+              <th>{{ nameText() }}</th>
+              <th>{{ jobText() }}</th>
             </tr>
           </thead>
           <tbody>
@@ -62,7 +62,7 @@
       </div>
       <app-pagination (pageChange)="changePage($event)"></app-pagination>
     } @else {
-      <p>{{noRecognizableCrewText()}}</p>
+      <p>{{ noRecognizableCrewText() }}</p>
     }
   }
 </section>

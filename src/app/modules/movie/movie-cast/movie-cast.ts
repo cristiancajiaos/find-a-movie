@@ -50,9 +50,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   public currentPage: WritableSignal<number> = signal(1);
   public totalActors: WritableSignal<number> = signal(0);
 
-  public castFound: boolean = false;
-  public movieCastError: boolean = false;
-  public errorMessage: string = '';
+  public movieCastError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   @ViewChild('title') title!: ElementRef;
   public castTitle: WritableSignal<string> = signal('Cast');
@@ -186,12 +185,11 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getCast(): void {
-    this.movieCastError = false;
+    this.movieCastError.set(false);
     this.getMovieCastSubscription = this.movieService.getMovieCast(this.id()).subscribe({
       next: (cast) => {
         this.movieCast.set(cast);
         this.totalActors.set(this.movieCast().length);
-        this.castFound = true;
       },
       error: (error) => {
         this.handleError(error);
@@ -201,8 +199,8 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.movieCastError = true;
-    this.errorMessage = error.message;
+    this.movieCastError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadCast(event: boolean): void {

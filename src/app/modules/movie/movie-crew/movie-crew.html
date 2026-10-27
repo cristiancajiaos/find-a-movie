@@ -1,8 +1,7 @@
 <section class="movie-crew">
-  @if (movieCrewError) {
-    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCrew($event)"> </app-movie-error>
-  }
-  @if (!movieCrewError) {
+  @if (movieCrewError()) {
+    <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadCrew($event)"> </app-movie-error>
+  } @else {
     <h2>{{featuredCrewTitle()}}</h2>
     @if (
       direction().length > 0 ||

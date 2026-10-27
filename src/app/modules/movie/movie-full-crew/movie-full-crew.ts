@@ -38,9 +38,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   public crewMembersPerPage: WritableSignal<number> = signal(25);
   public totalCrewMembers: WritableSignal<number> = signal(0);
 
-  public fullCrewFound: boolean = false;
-  public movieFullCrewError: boolean = false;
-  public errorMessage: string = '';
+  public movieFullCrewError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   @ViewChild('title') title!: ElementRef;
   public fullCrewTitle: WritableSignal<string> = signal('Full Crew');
@@ -159,7 +158,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getFullCrew(): void {
-    this.movieFullCrewError = false;
+    this.movieFullCrewError.set(false);
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id()).subscribe({
       next: (crew) => {
         this.movieFullCrew.set(crew);
@@ -174,8 +173,8 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.movieFullCrewError = true;
-    this.errorMessage = error.message;
+    this.movieFullCrewError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadFullCrew(event: boolean): void {

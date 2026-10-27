@@ -162,9 +162,8 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public noRecognizableCrewText: WritableSignal<string> = signal('This movie has no recognizable crew');
 
-  public crewFound: boolean = false;
-  public movieCrewError: boolean = false;
-  public errorMessage: string = '';
+  public movieCrewError: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieCrewSubscription: Subscription = new Subscription();
@@ -204,7 +203,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private getCrew(): void {
-    this.movieCrewError = false;
+    this.movieCrewError.set(false);
     this.getMovieCrewSubscription = this.movieService.getMovieCrew(this.id()).subscribe({
       next: (crew) => {
         this.movieCrew.set(crew);
@@ -218,8 +217,8 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.movieCrewError = true;
-    this.errorMessage = error.message;
+    this.movieCrewError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadCrew(event: boolean): void {

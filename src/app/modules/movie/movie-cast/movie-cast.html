@@ -1,9 +1,8 @@
 <section class="movie-cast">
-  @if (movieCastError) {
-    <app-movie-error [errorMessage]="errorMessage" (reload)="reloadCast($event)"> </app-movie-error>
-  }
-  @if (!movieCastError) {
-    <h2 #title>{{castTitle()}}</h2>
+  @if (movieCastError()) {
+    <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadCast($event)"> </app-movie-error>
+  } @else {
+    <h2 #title>{{ castTitle() }}</h2>
     @if (movieCast().length > 0) {
       <div class="row">
         <div class="col-12 col-lg-9">
@@ -22,7 +21,8 @@
             [resultsOptions]="numberResultsOptions()"
             [enabledResultsParams]="enabledNumberResultsParams()"
             [itemsPerPage]="actorsPerPage()"
-            (onSelectResultOption)="changeItemsPerPage($event)">
+            (onSelectResultOption)="changeItemsPerPage($event)"
+          >
           </app-show-x-results>
         </div>
       </div>
@@ -31,8 +31,8 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th colspan="2">{{actorText()}}</th>
-              <th>{{characterText()}}</th>
+              <th colspan="2">{{ actorText() }}</th>
+              <th>{{ characterText() }}</th>
             </tr>
           </thead>
           <tbody>
@@ -53,24 +53,24 @@
                     {{ castMember.name }}
                   </a>
                 </td>
-                <td>{{asText()}}</td>
+                <td>{{ asText() }}</td>
                 @if (castMember.character) {
                   @if (castMember.character == '(uncredited)') {
                     <td>
-                      <i>{{uncreditedCharacterText()}}</i>
+                      <i>{{ uncreditedCharacterText() }}</i>
                     </td>
                   } @else {
                     <td>{{ castMember.character }}</td>
                   }
                 } @else {
                   <td>
-                    <i>{{characterNotDefinedText()}}</i>
+                    <i>{{ characterNotDefinedText() }}</i>
                   </td>
                 }
               </tr>
             } @empty {
               <tr>
-                <td colspan="3">{{noRecognizableCastText()}}</td>
+                <td colspan="3">{{ noRecognizableCastText() }}</td>
               </tr>
             }
           </tbody>
@@ -78,7 +78,7 @@
       </div>
       <app-pagination (pageChange)="changePage($event)"></app-pagination>
     } @else {
-      <p>{{noRecognizableCastText()}}</p>
+      <p>{{ noRecognizableCastText() }}</p>
     }
   }
 </section>
