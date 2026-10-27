@@ -1,5 +1,5 @@
 <section class="movie-recommendations">
-  @if (movieRecommendedError) {
+  @if (movieRecommendedError()) {
     <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadRecommendedMovies($event)">
     </app-movie-error>
   } @else {

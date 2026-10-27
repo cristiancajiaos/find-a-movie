@@ -1,5 +1,5 @@
 <section class="movie-similar">
-  @if (movieSimilarError) {
+  @if (movieSimilarError()) {
     <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadSimularMovies($event)">
     </app-movie-error>
   } @else {
