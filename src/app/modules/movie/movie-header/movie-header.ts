@@ -1,10 +1,11 @@
-import { Component, OnChanges, ChangeDetectionStrategy, input, WritableSignal, signal } from '@angular/core';
+import { Component, OnChanges, ChangeDetectionStrategy, input, WritableSignal, signal, inject } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
   faClock,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
+import { MovieService } from '../../../services/movie-service';
 
 @Component({
   selector: 'app-movie-header',
@@ -15,11 +16,13 @@ import {
 })
 export class MovieHeader implements OnChanges {
 
+  private movieService = inject(MovieService);
+
   public film: IconDefinition = faFilm;
   public clock: IconDefinition = faClock;
 
+  public formattedTitle: WritableSignal<string> = signal('');
   public movieHeaderBg: WritableSignal<Object> = signal('');
-
   public noReleaseDateText: WritableSignal<string> = signal('No Release Date');
 
   id = input.required<number>();
@@ -30,12 +33,19 @@ export class MovieHeader implements OnChanges {
 
   ngOnChanges() {
     this.setYear();
+    this.setFormattedTitle();
     this.setHeaderBg();
   }
 
   private setYear(): void {
     const releaseYear: Date = new Date(this.movie().release_date);
     this.year.set(releaseYear.getFullYear());
+  }
+
+  private setFormattedTitle(): void {
+    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+      this.movie().title, this.movie().original_title, this.movie().release_date
+    ));
   }
 
   private setHeaderBg(): void {
