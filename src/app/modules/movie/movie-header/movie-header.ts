@@ -23,23 +23,13 @@ export class MovieHeader implements OnChanges {
 
   public formattedTitle: WritableSignal<string> = signal('');
   public movieHeaderBg: WritableSignal<Object> = signal('');
-  public noReleaseDateText: WritableSignal<string> = signal('No Release Date');
 
   id = input.required<number>();
   movie = input.required<Movie>();
 
-  public year: WritableSignal<number> = signal(0);
-  public backdropImg: WritableSignal<string> = signal('');
-
   ngOnChanges() {
-    this.setYear();
     this.setFormattedTitle();
     this.setHeaderBg();
-  }
-
-  private setYear(): void {
-    const releaseYear: Date = new Date(this.movie().release_date);
-    this.year.set(releaseYear.getFullYear());
   }
 
   private setFormattedTitle(): void {
