@@ -97,7 +97,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   private setPersonTitle(): void {
-    this.titleService.setPersonOverviewTitle(this.person.name);
+    this.titleService.setPersonOverviewTitle(this.person().name);
   }
 
   ngOnDestroy(): void {
