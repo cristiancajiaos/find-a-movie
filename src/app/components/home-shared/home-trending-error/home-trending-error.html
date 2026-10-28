@@ -1,0 +1,17 @@
+<section class="home-trending-error">
+  <div class="dark-panel home-trending-description">
+    <h2>
+      <fa-icon [icon]="circleXIcon" [fixedWidth]="true"></fa-icon>
+      {{ trendingErrorTitle() }}
+    </h2>
+    <hr />
+    <p>{{ trendingErrorText() }}</p>
+    <p>
+      <strong>{{ errorMessage() }}</strong>
+    </p>
+    <hr />
+    <button type="button" class="btn btn-light border-dark" (click)="pressReload()">
+      <fa-icon [icon]="repeat"></fa-icon> {{ reloadButtonText() }}
+    </button>
+  </div>
+</section>

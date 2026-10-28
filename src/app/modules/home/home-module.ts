@@ -8,6 +8,7 @@ import { LayoutModule } from '../../components/layout/layout-module';
 import { HomeTrending } from './home-trending/home-trending';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlideTrending } from './home-trending/slide-trending/slide-trending';
+import { HomeSharedModule } from '../../components/home-shared/home-shared-module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SlideTrending } from './home-trending/slide-trending/slide-trending';
     HomeRoutingModule,
     FontAwesomeModule,
     LayoutModule,
-    NgbModule
+    NgbModule,
+    HomeSharedModule
   ]
 })
 export class HomeModule { }

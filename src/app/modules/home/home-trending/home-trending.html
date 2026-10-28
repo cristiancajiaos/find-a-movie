@@ -1,23 +1,30 @@
-
 <section class="home-section home-trending">
   <section class="trending">
     <header class="trending-header">
       <h2>
         <fa-layers>
           <fa-icon [icon]="filmIcon" class="film-icon"></fa-icon>
-          <fa-icon [icon]="trendUpIcon" class="trend-up-icon" transform="shrink-7 down-7 right-7"></fa-icon>
+          <fa-icon
+            [icon]="trendUpIcon"
+            class="trend-up-icon"
+            transform="shrink-7 down-7 right-7"
+          ></fa-icon>
         </fa-layers>
-        {{trendingMoviesTitle()}}
+        {{ trendingMoviesTitle() }}
       </h2>
     </header>
-    <main class="trending-main">
-      <ngb-carousel>
-        @for (movie of movieResults(); track movie.id) {
-          <ng-template ngbSlide>
-            <app-slide-trending [movieResult]="movie"></app-slide-trending>
-          </ng-template>
-        }
-      </ngb-carousel>
-    </main>
+    @if (homeTrendingError()) {
+      <app-home-trending-error [errorMessage]="errorMessage()" (reload)="onReload($event)"></app-home-trending-error>
+    } @else {
+      <main class="trending-main">
+        <ngb-carousel>
+          @for (movie of movieResults(); track movie.id) {
+            <ng-template ngbSlide>
+              <app-slide-trending [movieResult]="movie"></app-slide-trending>
+            </ng-template>
+          }
+        </ngb-carousel>
+      </main>
+    }
   </section>
 </section>

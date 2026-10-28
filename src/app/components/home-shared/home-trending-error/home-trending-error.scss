@@ -1,0 +1,12 @@
+.home-trending-error {
+  width: 100%;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .home-trending-description {
+    width: 80vw;
+  }
+}
