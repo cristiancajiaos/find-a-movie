@@ -1,22 +1,22 @@
 <section class="person-cast-credit-list">
-  <a [routerLink]="['/movie', castRole.id]">
+  <a [routerLink]="['/movie', castRole().id]">
     <div class="list-content">
-      <img [src]="posterSizeSmall" [alt]="altPosterText" />
+      <img [src]="posterSizeSmall()" [alt]="altPosterText()" />
       <div class="list-detail">
         <span class="list-formatted-title">
-          {{formattedTitle}}
+          {{formattedTitle()}}
         </span>
         <br />
         <span>
-          @if (castRole.character) {
-            @if (castRole.character == '(uncredited)') {
-              as an uncredited character
+          @if (castRole().character) {
+            @if (castRole().character == '(uncredited)') {
+              {{uncreditedCharacterText()}}
             } @else {
-              as {{ castRole.character }}
+              {{asText()}} {{ castRole().character }}
             }
           }
-          @if (!castRole.character) {
-            as a role not defined
+          @if (!castRole().character) {
+            {{roleNotDefinedText()}}
           }
         </span>
       </div>

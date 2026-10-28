@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, WritableSignal, input, InputSignal, signal } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/response-person-cast-credit';
 import { environment } from '../../../../environments/environment.development';
 import { MovieService } from '../../../services/movie-service';
@@ -14,11 +14,15 @@ export class PersonCastCreditGrid implements OnInit {
 
   private movieService = inject(MovieService);
 
-  @Input() castRole: ResponsePersonCastCredit = new ResponsePersonCastCredit();
+  castRole: InputSignal<ResponsePersonCastCredit> = input.required<ResponsePersonCastCredit>();
 
-  public posterSizeSmall: string = '';
-  public formattedTitle: string = '';
-  public altPosterText: string = '';
+  public posterSizeSmall: WritableSignal<string> = signal('');
+  public formattedTitle: WritableSignal<string> = signal('');
+  public altPosterText: WritableSignal<string> = signal('');
+
+  public uncreditedCharacterText: WritableSignal<string> = signal('as an uncredited character');
+  public asText: WritableSignal<string> = signal('as');
+  public roleNotDefinedText: WritableSignal<string> = signal('as a role not defined');
 
   ngOnInit(): void {
     this.setTitle();
@@ -26,19 +30,19 @@ export class PersonCastCreditGrid implements OnInit {
   }
 
   public setTitle(): void {
-    this.formattedTitle = this.movieService.getFormattedMovieTitle(
-      this.castRole.title,
-      this.castRole.original_title,
-      this.castRole.release_date
-    );
+    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+      this.castRole().title,
+      this.castRole().original_title,
+      this.castRole().release_date
+    ));
   }
 
   public setPoster(): void {
-    this.posterSizeSmall = this.castRole.poster_path
-      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.castRole.poster_path}`
-      : 'img/default-images/movie_poster_notavailable_w500.jpg';
-    this.altPosterText = this.castRole.poster_path
+    this.posterSizeSmall.set(this.castRole().poster_path
+      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.castRole().poster_path}`
+      : 'img/default-images/movie_poster_notavailable_w500.jpg');
+    this.altPosterText.set(this.castRole().poster_path
       ? `Poster from the movie ${this.formattedTitle}`
-      : `Poster from the movie ${this.formattedTitle} is not available`;
+      : `Poster from the movie ${this.formattedTitle} is not available`);
   }
 }

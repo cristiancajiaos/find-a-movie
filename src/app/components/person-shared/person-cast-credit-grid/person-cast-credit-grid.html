@@ -1,6 +1,6 @@
 <section class="person-cast-credit-grid">
   <a
-    [routerLink]="['/movie', castRole.id]"
+    [routerLink]="['/movie', castRole().id]"
     placement="bottom"
     [popoverTitle]="castPopTitle"
     [ngbPopover]="castPopContent"
@@ -9,39 +9,39 @@
     triggers="hover"
     >
     <section class="credit-poster">
-      <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
+      <img [src]="posterSizeSmall()" class="w-100" [alt]="altPosterText()" />
     </section>
     <section class="credit-info">
       <div class="credit-formatted-title">
-        {{ formattedTitle }}
+        {{ formattedTitle() }}
       </div>
       <div class="credit-role">
-        @if (castRole.character) {
-          @if (castRole.character == '(uncredited)') {
-            as an uncredited character
+        @if (castRole().character) {
+          @if (castRole().character == '(uncredited)') {
+            {{uncreditedCharacterText()}}
           } @else {
-            as {{ castRole.character }}
+            {{asText()}} {{ castRole().character }}
           }
         }
-        @if (!castRole.character) {
-          as a role not defined
+        @if (!castRole().character) {
+          {{roleNotDefinedText()}}
         }
       </div>
     </section>
   </a>
   <ng-template #castPopTitle>
-    {{ formattedTitle }}
+    {{ formattedTitle() }}
   </ng-template>
   <ng-template #castPopContent>
-    @if (castRole.character) {
-      @if (castRole.character == '(uncredited)') {
-        as an uncredited character
+    @if (castRole().character) {
+      @if (castRole().character == '(uncredited)') {
+        {{uncreditedCharacterText()}}
       } @else {
-        as {{ castRole.character }}
+        {{asText()}} {{ castRole().character }}
       }
     }
-    @if (!castRole.character) {
-      as a role not defined
+    @if (!castRole().character) {
+      {{roleNotDefinedText()}}
     }
   </ng-template>
 </section>
