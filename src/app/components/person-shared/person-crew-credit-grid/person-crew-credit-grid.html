@@ -1,6 +1,6 @@
 <section class="person-crew-credit-grid">
   <a
-    [routerLink]="['/movie', crewRole.id]"
+    [routerLink]="['/movie', crewRole().id]"
     placement="bottom"
     [popoverTitle]="crewPopTitle"
     [ngbPopover]="crewPopContent"
@@ -9,21 +9,21 @@
     triggers="hover"
   >
     <section class="credit-poster">
-      <img [src]="posterSizeSmall" class="w-100" [alt]="altPosterText" />
+      <img [src]="posterSizeSmall()" class="w-100" [alt]="altPosterText()" />
     </section>
     <section class="credit-info">
       <div class="credit-formatted-title">
-        {{formattedTitle}}
+        {{formattedTitle()}}
       </div>
       <div class="credit-job">
-        {{crewRole.job}}
+        {{crewRole().job}}
       </div>
     </section>
   </a>
   <ng-template #crewPopTitle>
-    {{formattedTitle}}
+    {{formattedTitle()}}
   </ng-template>
   <ng-template #crewPopContent>
-    <span>{{ crewRole.job }}</span>
+    <span>{{ crewRole().job }}</span>
   </ng-template>
 </section>

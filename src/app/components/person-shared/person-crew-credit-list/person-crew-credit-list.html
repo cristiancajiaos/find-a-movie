@@ -1,17 +1,17 @@
 <section class="person-crew-credit-list">
-  <a [routerLink]="['/movie', crewRole.id]">
+  <a [routerLink]="['/movie', crewRole().id]">
     <div class="list-content">
-      <img [src]="posterSizeSmall" [alt]="altPosterText" />
+      <img [src]="posterSizeSmall()" [alt]="altPosterText()" />
       <div class="list-detail">
         <span class="list-formatted-title">
-          {{formattedTitle}}
+          {{formattedTitle()}}
         </span>
         <br />
         <span class="person-crew-job">
-          @if (crewRole.job) {
-            {{ crewRole.job }}
+          @if (crewRole().job) {
+            {{ crewRole().job }}
           }
-          @if (!crewRole.job) {
+          @if (!crewRole().job) {
             No Job Defined
           }
         </span>
