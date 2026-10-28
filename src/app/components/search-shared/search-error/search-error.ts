@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, WritableSignal, signal, InputSignal, input, OutputEmitterRef, output } from '@angular/core';
 import { faRepeat, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,8 +12,12 @@ export class SearchError {
 
   public repeatIcon: IconDefinition = faRepeat;
 
-  @Input() errorMessage: string = '';
-  @Output() reload: EventEmitter<boolean> = new EventEmitter<boolean>();
+  errorMessage: InputSignal<string> = input.required<string>();
+  reload: OutputEmitterRef<boolean> = output<boolean>();
+
+  public searchErrorTitle: WritableSignal<string> = signal('Search Service Error');
+  public searchErrorText: WritableSignal<string> = signal('There was an error while performing the search:');
+  public reloadButtonText: WritableSignal<string> = signal('Reload');
 
   public pressReload(): void {
     this.reload.emit(true);
