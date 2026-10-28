@@ -3,7 +3,7 @@
     <app-person-error [errorMessage]="errorMessage()" (reload)="reloadOverview($event)">
     </app-person-error>
   } @else {
-    @if (personFound) {
+    @if (personFound()) {
       <div class="row">
         <div class="col-12 col-lg-8">
           <app-person-biography [person]="person()"></app-person-biography>
