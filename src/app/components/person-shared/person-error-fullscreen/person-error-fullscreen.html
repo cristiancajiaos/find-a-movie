@@ -5,7 +5,9 @@
       {{personErrorTitle()}}
     </h1>
     <hr/>
-    <p>{{personErrorText()}} <strong>{{ errorMessage() }}</strong></p>
+    <p>{{personErrorText()}}</p>
+    <p><strong>{{ errorMessage() }}</strong></p>
+    <hr/>
     <button type="button" class="btn btn-light border-dark" (click)="pressReload()">
       <fa-icon [icon]="repeat"></fa-icon> {{reloadButtonText()}}
     </button>

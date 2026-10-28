@@ -13,7 +13,7 @@ export class PersonError {
   public repeat: IconDefinition = faRepeat;
 
   public personErrorTitle: WritableSignal<string> = signal('Person Service Error');
-  public personErrorText: WritableSignal<string> = signal('There was an error trying to get person info:');
+  public personErrorText: WritableSignal<string> = signal('An error occurred when trying to get person info:');
   public reloadButtonText: WritableSignal<string> = signal('Reload');
 
   errorMessage: InputSignal<string> = input.required<string>();

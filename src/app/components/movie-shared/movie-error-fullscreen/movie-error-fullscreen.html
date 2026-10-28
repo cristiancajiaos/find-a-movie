@@ -5,7 +5,9 @@
       {{movieErrorTitle()}}
     </h1>
     <hr/>
-    <p>{{movieErrorText()}} <strong>{{ errorMessage() }}</strong></p>
+    <p>{{movieErrorText()}}</p>
+    <p><strong>{{ errorMessage() }}</strong></p>
+    <hr/>
     <button type="button" class="btn btn-light border-dark" (click)="pressReload()">
       <fa-icon [icon]="repeat"></fa-icon> {{reloadButtonText()}}
     </button>

@@ -14,7 +14,7 @@ export class SearchErrorFullscreen {
   public circleXIcon: IconDefinition = faCircleXmark;
 
   public searchErrorTitle: WritableSignal<string> = signal('Search Service Error');
-  public searchErrorText: WritableSignal<string> = signal('An error happened when trying to perform a search for');
+  public searchErrorText: WritableSignal<string> = signal('An error occurred when trying to perform a search for');
   public colonText: WritableSignal<string> = signal(':');
   public reloadButtonText: WritableSignal<string> = signal('Reload');
 

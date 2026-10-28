@@ -14,7 +14,7 @@ export class MovieErrorFullscreen {
   public circleXIcon: IconDefinition = faCircleXmark;
 
   public movieErrorTitle: WritableSignal<string> = signal('Movie Service Error');
-  public movieErrorText: WritableSignal<string> = signal('There was an error getting info for the movie:');
+  public movieErrorText: WritableSignal<string> = signal('An error occurred when trying to get movie info:');
   public reloadButtonText: WritableSignal<string> = signal('Reload');
 
   errorMessage: InputSignal<string> = input.required<string>();
