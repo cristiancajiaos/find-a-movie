@@ -11,8 +11,6 @@ import {
   InputSignal,
   AfterViewInit,
   OnDestroy,
-  ViewChildren,
-  QueryList,
 } from '@angular/core';
 import { ResponsePersonCastCredit } from '../../../../classes/person-movie-credits/response-person-cast-credit';
 import { Person } from '../../../../classes/person';

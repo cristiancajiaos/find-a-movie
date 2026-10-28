@@ -118,7 +118,7 @@ export class PersonCastCredits implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
-    this.titleService.setPersonCastCreditsTitle(this.person.name);
+    this.titleService.setPersonCastCreditsTitle(this.person().name);
   }
 
   private getPersonMovieCredits(): void {
