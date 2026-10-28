@@ -1,25 +1,27 @@
 <section class="search-person">
-  <header #header>
-    <h1>
-      <fa-icon [icon]="searchIcon"></fa-icon>
-      {{searchPersonTitle()}}
-    </h1>
-    <h2>
-      <fa-icon [icon]="userIcon"></fa-icon>
-      {{ searchQuery() }}
-    </h2>
-  </header>
-  <main>
-    <div class="container-fluid">
-      @if (searchError()) {
-        <app-search-error [errorMessage]="errorMessage()" (reload)="handleReloadError()">
-        </app-search-error>
-      }
-      @if (!searchError()) {
+  @if (searchError()) {
+    <app-search-error-fullscreen
+      [errorMessage]="errorMessage()"
+      [searchQuery]="searchQuery()"
+      (reload)="handleReloadError()">
+    </app-search-error-fullscreen>
+  } @else {
+    <header #header>
+      <h1>
+        <fa-icon [icon]="searchIcon"></fa-icon>
+        {{ searchPersonTitle() }}
+      </h1>
+      <h2>
+        <fa-icon [icon]="userIcon"></fa-icon>
+        {{ searchQuery() }}
+      </h2>
+    </header>
+    <main>
+      <div class="container-fluid">
         @if (personResults().length == 0) {
           <section class="search-person-no-results">
             <p>
-              <strong>{{ searchQuery() }}</strong> {{noResultsText()}}
+              <strong>{{ searchQuery() }}</strong> {{ noResultsText() }}
             </p>
           </section>
         } @else {
@@ -32,10 +34,11 @@
           </section>
           <section class="search-person-results">
             <p>
-              <strong>{{ searchQuery() }}</strong> {{returnedText()}} {{ totalResults() }} {{resultsText()}}
-              {{showingResults()}} {{ currentPageStart() }}{{hyphenText()}}{{ currentPageEnd() }} {{ofText()}} {{ totalResults() }}{{colonText()}}
+              <strong>{{ searchQuery() }}</strong> {{ returnedText() }} {{ totalResults() }}
+              {{ resultsText() }} {{ showingResults() }} {{ currentPageStart() }}{{ hyphenText()
+              }}{{ currentPageEnd() }} {{ ofText() }} {{ totalResults() }}{{ colonText() }}
             </p>
-            <hr/>
+            <hr />
             @if (displayMode() == 'grid') {
               <section class="search-person-results-grid">
                 <div class="row">
@@ -76,11 +79,11 @@
                 </div>
               </section>
             }
-            <hr/>
+            <hr />
             <app-pagination (pageChange)="changePage($event)"></app-pagination>
           </section>
         }
-      }
-    </div>
-  </main>
+      </div>
+    </main>
+  }
 </section>
