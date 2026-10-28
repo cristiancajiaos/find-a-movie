@@ -21,7 +21,6 @@ import { loadingInterceptor } from './interceptors/loading-interceptor';
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(
-      withFetch(),
       withInterceptors([
         authInterceptor,
         loadingInterceptor
