@@ -10,8 +10,8 @@
     @if (movieFound()) {
       <div class="navbar-cover"></div>
       <app-movie-header [id]="id()" [movie]="movie()" #movieHeader> </app-movie-header>
+      <app-movie-nav></app-movie-nav>
       <main>
-        <app-movie-nav></app-movie-nav>
         <div class="container-fluid">
           <div class="row">
             <div class="col-12 col-lg-2">
