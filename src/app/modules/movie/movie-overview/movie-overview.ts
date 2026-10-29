@@ -54,10 +54,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieDetailsSubscription: Subscription = new Subscription();
 
-  public viewFullCastText: WritableSignal<string> = signal('View Full Cast');
-  public viewFeaturedCrewText: WritableSignal<string> = signal('View Featured Crew');
-  public viewFullCrewText: WritableSignal<string> = signal('View Full Crew');
-
   ngOnInit(): void {
     this.setId();
   }

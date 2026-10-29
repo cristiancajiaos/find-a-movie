@@ -26,6 +26,7 @@ import { MovieOverviewImages } from './movie-overview/movie-overview-images/movi
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MovieOverviewSynopsis } from './movie-overview/movie-overview-synopsis/movie-overview-synopsis';
 import { MovieOverviewExternalLinks } from './movie-overview/movie-overview-external-links/movie-overview-external-links';
+import { MovieOverviewCreditsMenu } from './movie-overview/movie-overview-credits-menu/movie-overview-credits-menu';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MovieOverviewExternalLinks } from './movie-overview/movie-overview-exte
     MovieOverviewImages,
     MovieOverviewSynopsis,
     MovieOverviewExternalLinks,
+    MovieOverviewCreditsMenu,
   ],
   imports: [
     CommonModule,
