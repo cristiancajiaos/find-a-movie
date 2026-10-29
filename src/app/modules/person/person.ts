@@ -56,7 +56,6 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
           this.titleService.setPersonServiceErrorTitle();
         }
       }
-
     });
   }
 
@@ -74,6 +73,7 @@ export class PersonComponent implements OnInit, AfterContentInit, OnDestroy {
         this.sessionStorageService.setItem("person", person);
       },
       error: (error) => {
+        console.error(error);
         this.handleError(error);
       },
       complete: () => {
