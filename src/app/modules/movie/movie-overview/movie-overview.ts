@@ -30,7 +30,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
   private titleService = inject(TitleService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
   public movie: WritableSignal<Movie> = signal(new Movie());
   public credits: WritableSignal<Credits> = signal(new Credits());
@@ -61,7 +61,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
-        this.id = parseInt(params['id']);
+        this.id.set(parseInt(params['id']));
         this.getMovieAndCredits();
       },
     );
@@ -72,13 +72,14 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.credits.set(new Credits());
     this.movieResponseVideo.set(new ResponseVideoResult());
     this.movieImages.set([]);
+    this.movieExternalIds.set(new MovieExternalIds());
     this.movieErrorFound = false;
 
-    const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
-    const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
-    const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id);
-    const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
-    const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id);
+    const getMovie: Observable<Movie> = this.movieService.getMovie(this.id());
+    const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
+    const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id());
+    const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id());
+    const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
 
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
@@ -97,6 +98,7 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.setTitle();
       },
       error: (error) => {
+        console.error(error);
         this.handleError(error);
       },
       complete: () => {},
