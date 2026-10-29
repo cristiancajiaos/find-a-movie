@@ -58,7 +58,7 @@
           <tr>
             <td>{{alsoKnownAsTable()}}</td>
             <td>
-              @for (personAlternateName of this.person().also_known_as; track personAlternateName) {
+              @for (personAlternateName of this.person().also_known_as | sortAlternateNames; track personAlternateName) {
                 {{ personAlternateName }}<br />
               }
             </td>
