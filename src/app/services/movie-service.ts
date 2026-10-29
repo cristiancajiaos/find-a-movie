@@ -13,6 +13,8 @@ import { ResponseMovieResult } from '../classes/response-search-movie/response-m
 import { environment } from '../../environments/environment.development';
 import { ResponseVideoResult } from '../classes/response-video/response-video-result';
 import { MovieExternalIds } from '../classes/movie-external-ids';
+import { MovieKeyword } from '../classes/movie-keyword/movie-keyword';
+import { MovieKeywords } from '../classes/movie-keywords';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,7 @@ export class MovieService {
   private creditsCrew = new Map<string, CrewMember[]>();
   private movieTrailer = new Map<string, ResponseVideoResult>();
   private movieImages = new Map<string, BackdropImage[]>();
+  private movieKeywords = new Map<string, MovieKeyword[]>();
   private movieExternalIds = new Map<string, MovieExternalIds>();
   private movieRecommendations = new Map<string, ResponseMovieResult[]>();
   private movieSimilar = new Map<string, ResponseMovieResult[]>();
@@ -120,6 +123,16 @@ export class MovieService {
         })
       ),
       tap(movieImages => this.movieImages.set(`movieImages-${id}`, movieImages))
+    )
+  }
+
+  public getMovieKeywords(id: number): Observable<MovieKeyword[]> {
+    if (this.movieKeywords.has(`movieKeywords-${id}`)) {
+      return of(this.movieKeywords.get(`movieKeywords-${id}`))
+    }
+    return this.http.get<MovieKeywords>(`/movie/${id}/keywords`).pipe(
+      map(movieKeywords => movieKeywords.keywords),
+      tap(movieKeywords => this.movieKeywords.set(`movieKeywords-${id}`, movieKeywords))
     )
   }
 

@@ -17,6 +17,7 @@ import { BackdropImage } from '../../../classes/response-image/backdrop-image';
 import { TitleService } from '../../../services/title-service';
 import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
 import { MovieExternalIds } from '../../../classes/movie-external-ids';
+import { MovieKeyword } from '../../../classes/movie-keyword/movie-keyword';
 
 @Component({
   selector: 'app-movie-overview',
@@ -36,6 +37,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public credits: WritableSignal<Credits> = signal(new Credits());
   public movieResponseVideo: WritableSignal<ResponseVideoResult> = signal(new ResponseVideoResult());
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
+  public movieKeywords: WritableSignal<MovieKeyword[]> = signal([]);
   public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
 
   public movieTagline: string = null;
@@ -79,20 +81,24 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
     const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id());
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id());
+    const getKeywords: Observable<MovieKeyword[]> = this.movieService.getMovieKeywords(this.id());
     const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
+
 
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
       getCredits,
       getTrailer,
       getImages,
+      getKeywords,
       getExternalIds
     ]).subscribe({
-      next: ([movie, credits, responseVideoResult, movieImages, movieExternalIds]) => {
+      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds]) => {
         this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideoResult);
         this.movieImages.set(movieImages);
+        this.movieKeywords.set(movieKeywords);
         this.movieExternalIds.set(movieExternalIds);
         this.movieFound = true;
         this.setTitle();
