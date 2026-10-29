@@ -76,6 +76,7 @@ export class PersonOverview implements OnInit, OnDestroy {
         this.personFound.set(true);
       },
       error: (error) => {
+        console.error(error);
         this.handleError(error);
       },
       complete: () => {},
