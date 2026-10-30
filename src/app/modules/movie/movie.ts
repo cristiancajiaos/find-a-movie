@@ -33,17 +33,11 @@ export class MovieComponent implements OnInit, OnDestroy {
 
   public formattedTitle: WritableSignal<string> = signal('');
 
-  public altPosterText: WritableSignal<string> = signal('')
-  public posterSizeSmall: WritableSignal<string> = signal('');
-  public posterSizeOriginal: WritableSignal<string> = signal('');
-
   private movieError: WritableSignal<HttpErrorResponse> = signal(null);
   public movieFound: WritableSignal<boolean> = signal(false);
   public movieNotFound: WritableSignal<boolean> = signal(false);
   public movieErrorFound: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string> = signal('');
-
-  public openPosterText: WritableSignal<string> = signal('Open Poster in New Tab');
 
   public routeSubscription: Subscription = new Subscription();
   public getMovieSubscription: Subscription = new Subscription();
@@ -80,7 +74,7 @@ export class MovieComponent implements OnInit, OnDestroy {
         this.movie.set(movie);
         this.sessionStorageService.setItem('movie', movie);
         this.movieFound.set(true);
-        this.setMoviePoster();
+        this.setTitle();
       },
       error: (error) => {
         console.error(error);
@@ -104,17 +98,8 @@ export class MovieComponent implements OnInit, OnDestroy {
     this.getMovie();
   }
 
-  private setMoviePoster(): void {
+  private setTitle(): void {
     this.formattedTitle.set(this.movieService.getFormattedMovieTitle(this.movie().title, this.movie().original_title, this.movie().release_date));
-    this.posterSizeSmall.set(this.movie().poster_path
-      ? `${environment.imgUrl}${environment.posterSizeSmall}${this.movie().poster_path}`
-      : 'img/default-images/movie_poster_notavailable_w500.jpg');
-    this.posterSizeOriginal.set(this.movie().poster_path
-      ? `${environment.imgUrl}${environment.posterSizeOriginal}${this.movie().poster_path}`
-      : '');
-    this.altPosterText.set(this.movie().poster_path
-      ? `Poster from the movie ${this.formattedTitle()}`
-      : `Poster from the movie ${this.formattedTitle()} is not available`);
   }
 
   ngOnDestroy(): void {
