@@ -1,4 +1,4 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, signal, WritableSignal } from '@angular/core';
 import { Movie } from '../../../../classes/movie';
 
 @Component({
@@ -10,4 +10,6 @@ import { Movie } from '../../../../classes/movie';
 export class MovieOverviewSynopsis {
 
   movie: InputSignal<Movie> = input.required();
+
+  public noSynopsisText: WritableSignal<string> = signal('No Synopsis Available');
 }

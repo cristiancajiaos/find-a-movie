@@ -9,7 +9,7 @@
       <p>{{ movie().overview }}</p>
     </section>
   }
-  @if (movie().tagline || movie().overview) {
-    <hr />
+  @if (!movie().tagline && !movie().overview) {
+    <p class="fst-italic">{{ noSynopsisText() }}</p>
   }
 </section>
