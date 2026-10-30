@@ -292,11 +292,7 @@
             @if (executiveProducing().length > 0) {
               <tr>
                 <td>
-                  @if (executiveProducing().length > 1) {
-                    {{executiveProducersText()}}
-                  } @else {
-                    {{executiveProducerText()}}
-                  }
+                  {{executiveProducerText()}}
                 </td>
                 <td>
                   @for (executiveProducer of executiveProducing() | sortCrewMembersByLastName; track executiveProducer.id) {
@@ -311,11 +307,7 @@
             @if (coExecutiveProducing().length > 0) {
               <tr>
                 <td>
-                  @if (coExecutiveProducing().length > 1) {
-                    {{coExecutiveProducersText()}}
-                  } @else {
-                    {{coExecutiveProducerText()}}
-                  }
+                  {{coExecutiveProducerText()}}
                 </td>
                 <td>
                   @for (coExecutiveProducer of coExecutiveProducing() | sortCrewMembersByLastName; track coExecutiveProducer.id) {
@@ -330,11 +322,7 @@
             @if (associateProducing().length > 0) {
               <tr>
                 <td>
-                  @if (associateProducing().length > 1) {
-                    {{associateProducersText()}}
-                  } @else {
-                    {{associateProducerText()}}
-                  }
+                  {{associateProducerText()}}
                 </td>
                 <td>
                   @for (associateProducer of associateProducing() | sortCrewMembersByLastName; track associateProducer.id) {
@@ -349,11 +337,7 @@
             @if (coProducing().length > 0) {
               <tr>
                 <td>
-                  @if (coProducing().length > 1) {
-                    {{coProducersText()}}
-                  } @else {
-                    {{coProducerText()}}
-                  }
+                  {{coProducerText()}}
                 </td>
                 <td>
                   @for (coProducer of coProducing() | sortCrewMembersByLastName; track coProducer.id) {
@@ -368,11 +352,7 @@
             @if (directorsOfPhotography().length > 0) {
               <tr>
                 <td>
-                  @if (directorsOfPhotography().length > 1) {
-                    {{directorsOfPhotographyText()}}
-                  } @else {
-                    {{directorOfPhotographyText()}}
-                  }
+                  {{directorOfPhotographyText()}}
                 </td>
                 <td>
                   @for (
@@ -390,11 +370,7 @@
             @if (productionDesigners().length > 0) {
               <tr>
                 <td>
-                  @if (productionDesigners().length > 1) {
-                    {{productionDesignersText()}}
-                  } @else {
-                    {{productionDesignerText()}}
-                  }
+                  {{productionDesignerText()}}
                 </td>
                 <td>
                   @for (productionDesigner of productionDesigners() | sortCrewMembersByLastName; track productionDesigner.id) {
@@ -409,11 +385,7 @@
             @if (editors().length > 0) {
               <tr>
                 <td>
-                  @if (editors().length > 1) {
-                    {{editorsText()}}
-                  } @else {
-                    {{editorText()}}
-                  }
+                  {{editorText()}}
                 </td>
                 <td>
                   @for (editor of editors() | sortCrewMembersByLastName; track editor.id) {
@@ -489,11 +461,7 @@
             @if (musicSupervisors().length > 0) {
               <tr>
                 <td>
-                  @if (musicSupervisors().length > 1) {
-                    {{musicSupervisorsText()}}
-                  } @else {
-                    {{musicSupervisorText()}}
-                  }
+                  {{musicSupervisorText()}}
                 </td>
                 <td>
                   @for (musicSupervisor of musicSupervisors() | sortCrewMembersByLastName; track musicSupervisor.id) {
@@ -508,11 +476,7 @@
             @if (soundDesigners().length > 0) {
               <tr>
                 <td>
-                  @if (soundDesigners().length > 1) {
-                    {{soundDesignersText()}}
-                  } @else {
-                    {{soundDesignerText()}}
-                  }
+                  {{soundDesignerText()}}
                 </td>
                 <td>
                   @for (soundDesigner of soundDesigners() | sortCrewMembersByLastName; track soundDesigner.id) {
@@ -527,11 +491,7 @@
             @if (visualEffectsSupervisors().length > 0) {
               <tr>
                 <td>
-                  @if (visualEffectsSupervisors().length > 1) {
-                    {{visualEffectsSupervisorsText()}}
-                  } @else {
-                    {{visualEffectsSupervisorText()}}
-                  }
+                  {{visualEffectsSupervisorText()}}
                 </td>
                 <td>
                   @for (
@@ -549,11 +509,7 @@
             @if (costumeDesigners().length > 0) {
               <tr>
                 <td>
-                  @if (costumeDesigners().length > 1) {
-                    {{costumeDesignersText()}}
-                  } @else {
-                    {{costumeDesignerText()}}
-                  }
+                  {{costumeDesignerText()}}
                 </td>
                 <td>
                   @for (costumeDesigner of costumeDesigners() | sortCrewMembersByLastName; track costumeDesigner.id) {
