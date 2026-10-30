@@ -1,54 +1,44 @@
 <section class="movie-overview">
-  @if (errorFound) {
+  @if (errorFound()) {
     <app-movie-error
-      [errorMessage]="errorMessage"
+      [errorMessage]="errorMessage()"
       (reload)="reloadMovieOverview($event)"
     ></app-movie-error>
-  }
-  @if (!errorFound) {
-    @if (movieFound) {
-      <app-movie-overview-synopsis [movie]="movie()"></app-movie-overview-synopsis>
-      @if (movieCreditsFound) {
-        <section class="movie-main-credits">
-          <div class="row">
-            <div class="col-12 col-lg-4">
-              <app-movie-overview-main-cast [movieCast]="credits().cast">
-              </app-movie-overview-main-cast>
-            </div>
-            <div class="col-12 col-lg-8">
-              <section class="movie-main-crew">
-                <app-movie-overview-main-crew [movieCrew]="credits().crew">
-                </app-movie-overview-main-crew>
-              </section>
-            </div>
-          </div>
-          <app-movie-overview-credits-menu [movie]="movie()">
-          </app-movie-overview-credits-menu>
-        </section>
-      }
-      <hr />
+  } @else {
+    <app-movie-overview-synopsis [movie]="movie()"></app-movie-overview-synopsis>
+    <section class="movie-main-credits">
       <div class="row">
-        <div class="col-12 col-lg-6">
-          <app-movie-overview-trailer [responseVideo]="movieResponseVideo()">
-          </app-movie-overview-trailer>
+        <div class="col-12 col-lg-4">
+          <app-movie-overview-main-cast [movieCast]="credits().cast">
+          </app-movie-overview-main-cast>
         </div>
-        <div class="col-12 col-lg-6">
-          <section class="movie-info">
-            <app-movie-overview-infotable [movie]="movie()">
-            </app-movie-overview-infotable>
+        <div class="col-12 col-lg-8">
+          <section class="movie-main-crew">
+            <app-movie-overview-main-crew [movieCrew]="credits().crew">
+            </app-movie-overview-main-crew>
           </section>
         </div>
       </div>
-      <hr/>
-      <app-movie-overview-images [movieImages]="movieImages()">
-      </app-movie-overview-images>
-      <hr/>
-      <app-movie-overview-keywords [movieKeywords]="movieKeywords()">
-      </app-movie-overview-keywords>
-      <hr/>
-      <app-movie-overview-external-links
-        [movie]="movie()" [movieExternalIds]="movieExternalIds()">
-      </app-movie-overview-external-links>
-    }
+      <app-movie-overview-credits-menu [movie]="movie()"> </app-movie-overview-credits-menu>
+    </section>
+    <hr />
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <app-movie-overview-trailer [responseVideo]="movieResponseVideo()">
+        </app-movie-overview-trailer>
+      </div>
+      <div class="col-12 col-lg-6">
+        <section class="movie-info">
+          <app-movie-overview-infotable [movie]="movie()"> </app-movie-overview-infotable>
+        </section>
+      </div>
+    </div>
+    <hr />
+    <app-movie-overview-images [movieImages]="movieImages()"> </app-movie-overview-images>
+    <hr />
+    <app-movie-overview-keywords [movieKeywords]="movieKeywords()"> </app-movie-overview-keywords>
+    <hr />
+    <app-movie-overview-external-links [movie]="movie()" [movieExternalIds]="movieExternalIds()">
+    </app-movie-overview-external-links>
   }
 </section>

@@ -40,18 +40,8 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieKeywords: WritableSignal<MovieKeyword[]> = signal([]);
   public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
 
-  public movieTagline: string = null;
-  public movieOverview: string = null;
-
-  public errorFound: boolean = false;
-  public errorMessage: string = '';
-
-  public movieFound: boolean = false;
-  public movieErrorFound: boolean = false;
-
-  public movieCreditsFound: boolean = true;
-  public movieCreditsErrorFound: boolean = false;
-  public movieCreditsErrorMessage: string = '';
+  public errorFound: WritableSignal<boolean> = signal(false);
+  public errorMessage: WritableSignal<string> = signal('');
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieDetailsSubscription: Subscription = new Subscription();
@@ -75,7 +65,6 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.movieResponseVideo.set(new ResponseVideoResult());
     this.movieImages.set([]);
     this.movieExternalIds.set(new MovieExternalIds());
-    this.movieErrorFound = false;
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id());
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
@@ -100,7 +89,6 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.movieImages.set(movieImages);
         this.movieKeywords.set(movieKeywords);
         this.movieExternalIds.set(movieExternalIds);
-        this.movieFound = true;
         this.setTitle();
       },
       error: (error) => {
@@ -112,8 +100,8 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    this.errorFound = true;
-    this.errorMessage = error.message;
+    this.errorFound.set(true);
+    this.errorMessage.set(error.message);
   }
 
   public reloadMovieOverview(event: boolean) {
