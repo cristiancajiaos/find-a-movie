@@ -1,55 +1,63 @@
-<section class="movie-overview-external-links">
-  <h3>{{externalLinksTitle()}}</h3>
-  <div class="row">
-    @if (movie().imdb_id) {
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="d-grid mb-2">
-          <a [href]="movieImdb()" class="btn btn-light border-dark" target="_blank">
-            <fa-icon [icon]="imdbIcon"></fa-icon>
-            {{ imdbText() }}
-          </a>
+@if (
+  movie().imdb_id ||
+  movie().homepage ||
+  movieExternalIds().facebook_id ||
+  movieExternalIds().instagram_id ||
+  movieExternalIds().twitter_id
+) {
+  <section class="movie-overview-external-links">
+    <h2>{{ externalLinksTitle() }}</h2>
+    <div class="row">
+      @if (movie().imdb_id) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-grid mb-2">
+            <a [href]="movieImdb()" class="btn btn-light border-dark" target="_blank">
+              <fa-icon [icon]="imdbIcon"></fa-icon>
+              {{ imdbText() }}
+            </a>
+          </div>
         </div>
-      </div>
-    }
-    @if (movie().homepage) {
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="d-grid mb-2">
-          <a [href]="movieOfficialWebsite()" class="btn btn-light border-dark" target="_blank">
-            <fa-icon [icon]="globeIcon"></fa-icon>
-            {{ officialWebsiteText() }}
-          </a>
+      }
+      @if (movie().homepage) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-grid mb-2">
+            <a [href]="movieOfficialWebsite()" class="btn btn-light border-dark" target="_blank">
+              <fa-icon [icon]="globeIcon"></fa-icon>
+              {{ officialWebsiteText() }}
+            </a>
+          </div>
         </div>
-      </div>
-    }
-    @if (movieExternalIds().facebook_id) {
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="d-grid mb-2">
-          <a [href]="facebookOfficialPage()" class="btn btn-light border-dark" target="_blank">
-            <fa-icon [icon]="facebookIcon"></fa-icon>
-            {{ facebookPageText() }}
-          </a>
+      }
+      @if (movieExternalIds().facebook_id) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-grid mb-2">
+            <a [href]="facebookOfficialPage()" class="btn btn-light border-dark" target="_blank">
+              <fa-icon [icon]="facebookIcon"></fa-icon>
+              {{ facebookPageText() }}
+            </a>
+          </div>
         </div>
-      </div>
-    }
-    @if (movieExternalIds().instagram_id) {
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="d-grid mb-2">
-          <a [href]="instagramOfficialPage()" class="btn btn-light border-dark" target="_blank">
-            <fa-icon [icon]="instagramIcon"></fa-icon>
-            {{ instagramPageText() }}
-          </a>
+      }
+      @if (movieExternalIds().instagram_id) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-grid mb-2">
+            <a [href]="instagramOfficialPage()" class="btn btn-light border-dark" target="_blank">
+              <fa-icon [icon]="instagramIcon"></fa-icon>
+              {{ instagramPageText() }}
+            </a>
+          </div>
         </div>
-      </div>
-    }
-    @if (movieExternalIds().twitter_id) {
-      <div class="col-12 col-sm-6 col-lg-4">
-        <div class="d-grid mb-2">
-          <a [href]="twitterOfficialPage()" class="btn btn-light border-dark" target="_blank">
-            <fa-icon [icon]="twitterIcon"></fa-icon>
-            {{ twitterPageText() }}
-          </a>
+      }
+      @if (movieExternalIds().twitter_id) {
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="d-grid mb-2">
+            <a [href]="twitterOfficialPage()" class="btn btn-light border-dark" target="_blank">
+              <fa-icon [icon]="twitterIcon"></fa-icon>
+              {{ twitterPageText() }}
+            </a>
+          </div>
         </div>
-      </div>
-    }
-  </div>
-</section>
+      }
+    </div>
+  </section>
+}

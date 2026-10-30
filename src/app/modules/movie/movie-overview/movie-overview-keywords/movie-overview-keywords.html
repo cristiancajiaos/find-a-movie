@@ -1,8 +1,11 @@
-<section class="movie-overview-keywords">
-  <h2>{{ keywordsTitle() }}</h2>
-  <p>
-    @for (keyword of movieKeywords(); track keyword.id) {
-      <span class="badge text-bg-dark me-2">{{keyword.name}}</span>
-    }
-  </p>
-</section>
+@if (movieKeywords().length > 1) {
+  <section class="movie-overview-keywords">
+    <h2>{{ keywordsTitle() }}</h2>
+    <p>
+      @for (keyword of movieKeywords(); track keyword.id) {
+        <span class="badge text-bg-dark me-2">{{ keyword.name }}</span>
+      }
+    </p>
+  </section>
+  <hr/>
+}
