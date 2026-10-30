@@ -6,6 +6,7 @@ import {
   input,
   InputSignal,
   signal,
+  computed,
 } from '@angular/core';
 import { CrewMember } from '../../../../classes/credits/crew-member';
 import { WritableSignal } from '@angular/core';
@@ -79,13 +80,15 @@ export class MovieOverviewMainCrew implements OnChanges {
   public producingText: WritableSignal<string> = signal('Produced By:');
   public producing: WritableSignal<CrewMember[]> = signal([]);
 
-  public executiveProducersText: WritableSignal<string> = signal('Executive Producers:');
-  public executiveProducerText: WritableSignal<string> = signal('Executive Producer:');
   public executiveProducing: WritableSignal<CrewMember[]> = signal([]);
+  public executiveProducerText = computed(() => {
+    return this.executiveProducing().length > 1 ? 'Executive Producers:' : 'Executive Producer:'
+  });
 
-  public coExecutiveProducersText: WritableSignal<string> = signal('Co-Executive Producers:');
-  public coExecutiveProducerText: WritableSignal<string> = signal('Co-Executive Producer:');
   public coExecutiveProducing: WritableSignal<CrewMember[]> = signal([]);
+  public coExecutiveProducerText = computed(() => {
+    return this.coExecutiveProducing().length > 1 ? 'Co-Executive Producers:' : 'Co-Executive Producer:';
+  });
 
   movieCrew: InputSignal<CrewMember[]> = input.required<CrewMember[]>();
 

@@ -257,11 +257,7 @@
           @if (executiveProducing().length > 0) {
             <tr>
               <td>
-                @if (executiveProducing().length > 1) {
-                  {{executiveProducersText()}}
-                } @else {
-                  {{executiveProducerText()}}
-                }
+                {{executiveProducerText()}}
               </td>
               <td class="text-end">
                 @for (executiveProducer of executiveProducing() | sortCrewMembersByLastName; track executiveProducer) {
@@ -276,11 +272,7 @@
           @if (coExecutiveProducing().length > 0) {
             <tr>
               <td>
-                @if (coExecutiveProducing().length > 1) {
-                  {{coExecutiveProducersText()}}
-                } @else {
-                  {{coExecutiveProducerText()}}
-                }
+                {{coExecutiveProducerText()}}
               </td>
               <td class="text-end">
                 @for (coExecutiveProducer of coExecutiveProducing() | sortCrewMembersByLastName; track coExecutiveProducer.id) {
