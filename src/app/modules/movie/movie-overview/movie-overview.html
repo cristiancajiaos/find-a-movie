@@ -22,29 +22,8 @@
               </section>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 col-lg-4">
-              <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie().id, 'cast']" class="btn btn-light border-dark">
-                  {{viewFullCastText()}}
-                </a>
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie().id, 'crew']" class="btn btn-light border-dark">
-                  {{viewFeaturedCrewText()}}
-                </a>
-              </div>
-            </div>
-            <div class="col-12 col-lg-4">
-              <div class="d-grid mb-2">
-                <a [routerLink]="['/movie', movie().id, 'full-crew']" class="btn btn-light border-dark">
-                  {{viewFullCrewText()}}
-                </a>
-              </div>
-            </div>
-          </div>
+          <app-movie-overview-credits-menu [movie]="movie()">
+          </app-movie-overview-credits-menu>
         </section>
       }
       <hr />
@@ -63,6 +42,9 @@
       <hr/>
       <app-movie-overview-images [movieImages]="movieImages()">
       </app-movie-overview-images>
+      <hr/>
+      <app-movie-overview-keywords [movieKeywords]="movieKeywords()">
+      </app-movie-overview-keywords>
       <hr/>
       <app-movie-overview-external-links
         [movie]="movie()" [movieExternalIds]="movieExternalIds()">

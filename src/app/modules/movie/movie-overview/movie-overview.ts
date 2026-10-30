@@ -17,6 +17,7 @@ import { BackdropImage } from '../../../classes/response-image/backdrop-image';
 import { TitleService } from '../../../services/title-service';
 import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
 import { MovieExternalIds } from '../../../classes/movie-external-ids';
+import { MovieKeyword } from '../../../classes/movie-keyword/movie-keyword';
 
 @Component({
   selector: 'app-movie-overview',
@@ -30,12 +31,13 @@ export class MovieOverview implements OnInit, OnDestroy {
   private movieService = inject(MovieService);
   private titleService = inject(TitleService);
 
-  public id: number = 0;
+  public id: WritableSignal<number> = signal(0);
 
   public movie: WritableSignal<Movie> = signal(new Movie());
   public credits: WritableSignal<Credits> = signal(new Credits());
   public movieResponseVideo: WritableSignal<ResponseVideoResult> = signal(new ResponseVideoResult());
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
+  public movieKeywords: WritableSignal<MovieKeyword[]> = signal([]);
   public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
 
   public movieTagline: string = null;
@@ -54,10 +56,6 @@ export class MovieOverview implements OnInit, OnDestroy {
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieDetailsSubscription: Subscription = new Subscription();
 
-  public viewFullCastText: WritableSignal<string> = signal('View Full Cast');
-  public viewFeaturedCrewText: WritableSignal<string> = signal('View Featured Crew');
-  public viewFullCrewText: WritableSignal<string> = signal('View Full Crew');
-
   ngOnInit(): void {
     this.setId();
   }
@@ -65,7 +63,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent?.params.subscribe(
       (params) => {
-        this.id = parseInt(params['id']);
+        this.id.set(parseInt(params['id']));
         this.getMovieAndCredits();
       },
     );
@@ -76,31 +74,37 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.credits.set(new Credits());
     this.movieResponseVideo.set(new ResponseVideoResult());
     this.movieImages.set([]);
+    this.movieExternalIds.set(new MovieExternalIds());
     this.movieErrorFound = false;
 
-    const getMovie: Observable<Movie> = this.movieService.getMovie(this.id);
-    const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id);
-    const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id);
-    const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id);
-    const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id);
+    const getMovie: Observable<Movie> = this.movieService.getMovie(this.id());
+    const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
+    const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id());
+    const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id());
+    const getKeywords: Observable<MovieKeyword[]> = this.movieService.getMovieKeywords(this.id());
+    const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
+
 
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
       getCredits,
       getTrailer,
       getImages,
+      getKeywords,
       getExternalIds
     ]).subscribe({
-      next: ([movie, credits, responseVideoResult, movieImages, movieExternalIds]) => {
+      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds]) => {
         this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideoResult);
         this.movieImages.set(movieImages);
+        this.movieKeywords.set(movieKeywords);
         this.movieExternalIds.set(movieExternalIds);
         this.movieFound = true;
         this.setTitle();
       },
       error: (error) => {
+        console.error(error);
         this.handleError(error);
       },
       complete: () => {},

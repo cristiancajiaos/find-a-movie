@@ -11,6 +11,7 @@ import { SortProductionCountriesByNamePipe } from './sort-production-countries-b
 import { SortGenresByNamePipe } from './sort-genres-by-name.pipe';
 import { SortLanguagesByNamePipe } from './sort-languages-by-name.pipe';
 import { SortCrewMembersByLastNamePipe } from './sort-crew-members-by-last-name.pipe';
+import { SortAlternateNamesPipe } from './sort-alternate-names.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SortCrewMembersByLastNamePipe } from './sort-crew-members-by-last-name.
     SortProductionCountriesByNamePipe,
     SortGenresByNamePipe,
     SortLanguagesByNamePipe,
-    SortCrewMembersByLastNamePipe
+    SortCrewMembersByLastNamePipe,
+    SortAlternateNamesPipe
   ],
   imports: [
     CommonModule
@@ -40,7 +42,8 @@ import { SortCrewMembersByLastNamePipe } from './sort-crew-members-by-last-name.
     SortProductionCountriesByNamePipe,
     SortGenresByNamePipe,
     SortLanguagesByNamePipe,
-    SortCrewMembersByLastNamePipe
+    SortCrewMembersByLastNamePipe,
+    SortAlternateNamesPipe
   ]
 })
 export class PipesModule { }

@@ -83,6 +83,7 @@ export class MovieComponent implements OnInit, OnDestroy {
         this.setMoviePoster();
       },
       error: (error) => {
+        console.error(error);
         this.handleError(error);
       },
       complete: () => {},
@@ -90,11 +91,10 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    console.log(error);
     this.movieErrorFound.set(true);
     this.movieError.set(error);
     if (error.status && error.status === 404) {
-      this.movieNotFound.set(false);
+      this.movieNotFound.set(true);
     } else {
       this.errorMessage.set(error.message);
     }
