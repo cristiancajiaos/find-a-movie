@@ -15,21 +15,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12 col-lg-2">
-              <aside class="aside-1">
-                <img [src]="posterSizeSmall()" [alt]="altPosterText()" class="w-100" />
-                @if (movie().poster_path) {
-                  <div class="d-grid">
-                    <a
-                      [href]="posterSizeOriginal()"
-                      target="_blank"
-                      class="btn btn-light border-dark mb-2"
-                    >
-                      <fa-icon [icon]="imagePortrait"></fa-icon>
-                      {{ openPosterText() }}
-                    </a>
-                  </div>
-                }
-              </aside>
+              <app-movie-poster [movie]="movie()" [formattedTitle]="formattedTitle()"></app-movie-poster>
             </div>
             <div class="col-12 col-lg-10">
               <router-outlet></router-outlet>

@@ -1,0 +1,13 @@
+<section class="movie-poster">
+  <aside class="aside-1">
+    <img [src]="posterSizeSmall()" [alt]="altPosterText()" class="w-100" />
+    @if (movie().poster_path) {
+      <div class="d-grid">
+        <a [href]="posterSizeOriginal()" target="_blank" class="btn btn-light border-dark mb-2">
+          <fa-icon [icon]="imagePortrait"></fa-icon>
+          {{ openPosterText() }}
+        </a>
+      </div>
+    }
+  </aside>
+</section>

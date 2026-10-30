@@ -1,0 +1,12 @@
+.movie-poster {
+  .aside-1 {
+    @media screen and (max-width: 991px) {
+      display: none;
+    }
+    
+    img {
+      margin-bottom: 1rem;
+      border: 1px solid white;
+    }
+  }
+}
