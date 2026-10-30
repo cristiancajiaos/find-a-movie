@@ -1,4 +1,4 @@
-import { Component, OnChanges, ChangeDetectionStrategy, input, WritableSignal, signal, inject, InputSignal } from '@angular/core';
+import { Component, OnChanges, ChangeDetectionStrategy, input, WritableSignal, signal, InputSignal } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
