@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal, WritableSignal, signal } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ChangeDetectionStrategy, input, InputSignal, WritableSignal, signal, computed } from '@angular/core';
 import { Movie } from '../../../../classes/movie';
 import { ProductionCompany } from '../../../../classes/movie/production-company';
 
@@ -15,18 +15,22 @@ export class MovieOverviewInfotable implements OnChanges {
 
   public originalTitleText: WritableSignal<string> = signal('Original Title:');
 
-  public genresText: WritableSignal<string> = signal('Genres:');
-  public genreText: WritableSignal<string> = signal('Genre:');
+  public genreText = computed(() => {
+    return this.movie().genres.length > 1 ? 'Genres:' : 'Genre:';
+  });
 
-  public productionCompaniesText: WritableSignal<string> = signal('Production Companies:');
-  public productionCompanyText: WritableSignal<string> = signal('Production Company:');
   public allProductionCompanies: WritableSignal<ProductionCompany[]> = signal([]);
+  public productionCompanyText = computed(() => {
+    return this.allProductionCompanies().length > 1 ? 'Production Companies:' : 'Production Company:';
+  });
 
-  public productionCountriesText: WritableSignal<string> = signal('Production Countries:');
-  public productionCountryText: WritableSignal<string> = signal('Production Country:');
+  public productionCountryText = computed(() => {
+    return this.movie().production_countries.length > 1 ? 'Production Countries:' : 'Production Country:';
+  });
 
-  public languagesText: WritableSignal<string> = signal('Languages:');
-  public languageText: WritableSignal<string> = signal('Language:');
+  public languageText = computed(() => {
+    return this.movie().spoken_languages.length > 1 ? 'Languages:' : 'Language:';
+  });
 
   public releaseDateText: WritableSignal<string> = signal('Release Date:');
   public movieReleaseDate: WritableSignal<Date> = signal(new Date());

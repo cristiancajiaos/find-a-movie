@@ -2,7 +2,7 @@
   @if (movie()) {
     <h3>{{movieInfoTitle()}}</h3>
     <div class="table-responsive">
-      <table class="table table-striped">
+      <table class="table ">
         <tbody>
           @if (movie().original_language != 'en') {
             <tr>
@@ -13,11 +13,7 @@
           @if (movie().genres.length > 0) {
             <tr>
               <td>
-                @if (movie().genres.length > 1) {
-                  {{genresText()}}
-                } @else {
-                  {{genreText()}}
-                }
+                {{genreText()}}
               </td>
               <td>
                 @for (genres of movie().genres | sortGenresByName; track genres) {
@@ -30,11 +26,7 @@
           @if (allProductionCompanies().length > 0) {
             <tr>
               <td>
-                @if (allProductionCompanies().length > 1) {
-                  {{productionCompaniesText()}}
-                } @else {
-                  {{productionCompanyText()}}
-                }
+                {{productionCompanyText()}}
               </td>
               <td>
                 @for (productionCompany of allProductionCompanies() | sortProductionCompaniesByName; track productionCompany) {
@@ -47,11 +39,7 @@
           @if (movie().production_countries.length > 0) {
             <tr>
               <td>
-                @if (movie().production_countries.length > 1) {
-                  {{productionCountriesText()}}
-                } @else {
-                  {{productionCountryText()}}
-                }
+                {{productionCountryText()}}
               </td>
               <td>
                 @for (productionCountry of movie().production_countries | sortProductionCountriesByName; track productionCountry) {
@@ -64,11 +52,7 @@
           <tr>
             @if (movie().spoken_languages.length > 0) {
             <td>
-              @if (movie().spoken_languages.length > 1) {
-                {{languagesText()}}
-              } @else {
-                {{languageText()}}
-              }
+              {{languageText()}}
             </td>
             <td>
               @for (spokenLanguage of movie().spoken_languages | sortLanguagesByName; track spokenLanguage) {
