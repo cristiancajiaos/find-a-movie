@@ -9,7 +9,7 @@
   } @else {
     @if (movieFound()) {
       <div class="navbar-cover"></div>
-      <app-movie-header [id]="id()" [movie]="movie()" #movieHeader> </app-movie-header>
+      <app-movie-header [movie]="movie()" [formattedTitle]="formattedTitle()" #movieHeader> </app-movie-header>
       <app-movie-nav></app-movie-nav>
       <main>
         <div class="container-fluid">

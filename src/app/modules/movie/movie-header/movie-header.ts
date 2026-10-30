@@ -1,11 +1,10 @@
-import { Component, OnChanges, ChangeDetectionStrategy, input, WritableSignal, signal, inject } from '@angular/core';
+import { Component, OnChanges, ChangeDetectionStrategy, input, WritableSignal, signal, inject, InputSignal } from '@angular/core';
 import { Movie } from '../../../classes/movie';
 import {
   faFilm,
   faClock,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
-import { MovieService } from '../../../services/movie-service';
 
 @Component({
   selector: 'app-movie-header',
@@ -16,26 +15,16 @@ import { MovieService } from '../../../services/movie-service';
 })
 export class MovieHeader implements OnChanges {
 
-  private movieService = inject(MovieService);
-
   public film: IconDefinition = faFilm;
   public clock: IconDefinition = faClock;
 
-  public formattedTitle: WritableSignal<string> = signal('');
   public movieHeaderBg: WritableSignal<Object> = signal('');
 
-  id = input.required<number>();
-  movie = input.required<Movie>();
+  movie: InputSignal<Movie> = input.required<Movie>();
+  formattedTitle: InputSignal<string> = input.required<string>();
 
   ngOnChanges() {
-    this.setFormattedTitle();
     this.setHeaderBg();
-  }
-
-  private setFormattedTitle(): void {
-    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
-      this.movie().title, this.movie().original_title, this.movie().release_date
-    ));
   }
 
   private setHeaderBg(): void {

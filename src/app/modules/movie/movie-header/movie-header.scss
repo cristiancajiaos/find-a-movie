@@ -1,6 +1,11 @@
 .movie-header {
   header {
-    height: 50vh;
+    @media screen and (max-width: 991px) {
+      height: 60vh;
+    }
+    @media screen and (min-width: 992px) {
+      height: 50vh;
+    }
     position: relative;
 
     .header-backdrop {

@@ -4,7 +4,6 @@ import { MovieService } from '../../services/movie-service';
 import { Movie } from '../../classes/movie';
 import { MovieHeader } from './movie-header/movie-header';
 import { TitleService } from '../../services/title-service';
-import { environment } from '../../../environments/environment.development';
 import { faImagePortrait, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
