@@ -18,7 +18,7 @@ export class MovieHeader implements OnChanges {
   public film: IconDefinition = faFilm;
   public clock: IconDefinition = faClock;
 
-  public movieHeaderBg: WritableSignal<Object> = signal('');
+  public movieHeaderBg: WritableSignal<Object> = signal({});
 
   movie: InputSignal<Movie> = input.required<Movie>();
   formattedTitle: InputSignal<string> = input.required<string>();
