@@ -1,25 +1,44 @@
 <section class="person-credits">
-  <h2>{{creditsTitle()}}</h2>
-  <div class="row">
-    <div class="col-12 col-lg-6">
-      <div class="d-grid">
-        <a
-          [routerLink]="['/person', person().id, 'cast-credits']"
-          class="btn btn-light border-dark mb-2"
-        >
-          {{ viewCastCreditsText() }}
-        </a>
-      </div>
+  <h2>{{ creditsTitle() }}</h2>
+  <h3>{{ byCastTitle() }}</h3>
+  @if (personCastCredits().length > 0) {
+    <div class="row">
+      @for (castCredit of personCastCredits() | limitOverviewCastCredits; track castCredit.id) {
+        <div class="col-12 col-sm-6 col-lg-3">
+          <app-person-cast-credit-grid [castRole]="castCredit"></app-person-cast-credit-grid>
+        </div>
+      }
     </div>
-    <div class="col-12 col-lg-6">
-      <div class="d-grid">
-        <a
-          [routerLink]="['/person', person().id, 'crew-credits']"
-          class="btn btn-light border-dark mb-2"
-        >
-          {{ viewCrewCreditsText() }}
-        </a>
-      </div>
+    <div class="d-grid">
+      <a
+        [routerLink]="['/person', person().id, 'cast-credits']"
+        class="btn btn-light border-dark mb-2"
+      >
+        {{ viewCastCreditsText() }}
+      </a>
     </div>
-  </div>
+  } @else {
+    <p>{{ noCastCredits() }}</p>
+  }
+  <hr/>
+  <h3>{{ byCrewTitle() }}</h3>
+  @if (personCrewCredits().length > 0) {
+    <div class="row">
+      @for (crewCredit of personCrewCredits() | limitOverviewCrewCredits; track crewCredit.id) {
+        <div class="col-12 col-sm-6 col-lg-3">
+          <app-person-crew-credit-grid [crewRole]="crewCredit"></app-person-crew-credit-grid>
+        </div>
+      }
+    </div>
+    <div class="d-grid">
+      <a
+        [routerLink]="['/person', person().id, 'crew-credits']"
+        class="btn btn-light border-dark mb-2"
+      >
+        {{ viewCrewCreditsText() }}
+      </a>
+    </div>
+  } @else {
+    <p>{{ noCrewCredits() }}</p>
+  }
 </section>

@@ -12,6 +12,8 @@ import { SortGenresByNamePipe } from './sort-genres-by-name.pipe';
 import { SortLanguagesByNamePipe } from './sort-languages-by-name.pipe';
 import { SortCrewMembersByLastNamePipe } from './sort-crew-members-by-last-name.pipe';
 import { SortAlternateNamesPipe } from './sort-alternate-names.pipe';
+import { LimitOverviewCastCreditsPipe } from './limit-overview-cast-credits.pipe';
+import { LimitOverviewCrewCreditsPipe } from './limit-overview-crew-credits.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { SortAlternateNamesPipe } from './sort-alternate-names.pipe';
     SortGenresByNamePipe,
     SortLanguagesByNamePipe,
     SortCrewMembersByLastNamePipe,
-    SortAlternateNamesPipe
+    SortAlternateNamesPipe,
+    LimitOverviewCastCreditsPipe,
+    LimitOverviewCrewCreditsPipe
   ],
   imports: [
     CommonModule
@@ -43,7 +47,9 @@ import { SortAlternateNamesPipe } from './sort-alternate-names.pipe';
     SortGenresByNamePipe,
     SortLanguagesByNamePipe,
     SortCrewMembersByLastNamePipe,
-    SortAlternateNamesPipe
+    SortAlternateNamesPipe,
+    LimitOverviewCastCreditsPipe,
+    LimitOverviewCrewCreditsPipe
   ]
 })
 export class PipesModule { }
