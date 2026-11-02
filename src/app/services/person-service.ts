@@ -14,6 +14,7 @@ export class PersonService {
   public http = inject(HttpClient);
 
   public person = new Map<string, Person>();
+  public credits = new Map<string, ResponsePersonMovieCredits>();
   public castCredits = new Map<string, ResponsePersonCastCredit[]>();
   public crewCredits = new Map<string, ResponsePersonCrewCredit[]>();
 
@@ -23,6 +24,20 @@ export class PersonService {
     }
     return this.http.get<Person>(`/person/${id}`).pipe(
       tap(person => this.person.set(`person-${id}`, person))
+    )
+  }
+
+  public getCredits(id: number): Observable<ResponsePersonMovieCredits> {
+    if (this.credits.has(`credits-${id}`)) {
+      return of(this.credits.get(`credits-${id}`));
+    }
+    
+    return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
+      tap(movieCredits => {
+        this.credits.set(`credits-${id}`, movieCredits)
+        this.castCredits.set(`castCredits-${id}`, movieCredits.cast);
+        this.crewCredits.set(`crewCredits-${id}`, movieCredits.crew);
+      })
     )
   }
 
