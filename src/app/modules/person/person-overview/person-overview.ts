@@ -17,6 +17,7 @@ import { LoadingService } from '../../../services/loading-service';
 import { ResponsePersonCastCredit } from '../../../classes/person-movie-credits/response-person-cast-credit';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 import { ResponsePersonMovieCredits } from '../../../classes/response-person-movie-credits';
+import { PersonExternalIds } from '../../../classes/person-external-ids';
 
 @Component({
   selector: 'app-person-overview',
@@ -36,6 +37,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   public person: WritableSignal<Person> = signal(null);
   public personCastCredits: WritableSignal<ResponsePersonCastCredit[]> = signal([]);
   public personCrewCredits: WritableSignal<ResponsePersonCrewCredit[]> = signal([]);
+  public personExternalIds: WritableSignal<PersonExternalIds> = signal(null);
 
   public personFound: WritableSignal<boolean> = signal(false);
   public personErrorFound: WritableSignal<boolean> = signal(false);
@@ -75,18 +77,22 @@ export class PersonOverview implements OnInit, OnDestroy {
     this.person.set(null);
     this.personCastCredits.set([]);
     this.personCrewCredits.set([]);
+    this.personExternalIds.set(null);
 
     const getPerson: Observable<Person> = this.personService.getPerson(this.id());
     const getCredits: Observable<ResponsePersonMovieCredits> = this.personService.getCredits(this.id());
+    const getExternalIds: Observable<PersonExternalIds> = this.personService.getExternalIds(this.id());
 
     this.getPersonCreditsSubscription = forkJoin([
       getPerson,
-      getCredits
+      getCredits,
+      getExternalIds
     ]).subscribe({
-      next: ([person, credits]) => {
+      next: ([person, credits, externalIds]) => {
         this.person.set(person);
         this.personCastCredits.set(credits.cast);
         this.personCrewCredits.set(credits.crew);
+        this.personExternalIds.set(externalIds);
         this.personFound.set(true)
       },
       error: (error) => {

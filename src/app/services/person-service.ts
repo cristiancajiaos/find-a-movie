@@ -5,6 +5,7 @@ import { Person } from '../classes/person';
 import { map, Observable, of, tap } from 'rxjs';
 import { ResponsePersonMovieCredits } from '../classes/response-person-movie-credits';
 import { ResponsePersonCastCredit } from '../classes/person-movie-credits/response-person-cast-credit';
+import { PersonExternalIds } from '../classes/person-external-ids';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ export class PersonService {
   public credits = new Map<string, ResponsePersonMovieCredits>();
   public castCredits = new Map<string, ResponsePersonCastCredit[]>();
   public crewCredits = new Map<string, ResponsePersonCrewCredit[]>();
+  public personExternalIds = new Map<string, PersonExternalIds>();
 
   public getPerson(id: number): Observable<Person> {
     if (this.person.has(`person-${id}`)) {
@@ -31,7 +33,7 @@ export class PersonService {
     if (this.credits.has(`credits-${id}`)) {
       return of(this.credits.get(`credits-${id}`));
     }
-    
+
     return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
       tap(movieCredits => {
         this.credits.set(`credits-${id}`, movieCredits)
@@ -58,6 +60,15 @@ export class PersonService {
     return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
       map(movieCredits => movieCredits.crew),
       tap(crewCredits => this.crewCredits.set(`crewCredits-${id}`, crewCredits))
+    )
+  }
+
+  public getExternalIds(id: number): Observable<PersonExternalIds> {
+    if (this.personExternalIds.has(`externalIds-${id}`)) {
+      return of(this.personExternalIds.get(`externalIds-${id}`));
+    }
+    return this.http.get<PersonExternalIds>(`/person/${id}/external_ids`).pipe(
+      tap(externalIds => this.personExternalIds.set(`externalIds-${id}`, externalIds))
     )
   }
 }

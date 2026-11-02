@@ -2,7 +2,7 @@
   <h2>{{ externalLinksTitle() }}</h2>
   <div class="row">
     @if (person().imdb_id) {
-      <div class="col-12 col-lg-6">
+      <div class="col-12 col-sm-6 col-lg-4">
         <div class="d-grid mb-2">
           <a [href]="personIMDBUrl()" class="btn btn-light border-dark" target="_blank">
             <fa-icon [icon]="imdbIcon"></fa-icon> {{ viewIMDBText() }}
@@ -11,10 +11,55 @@
       </div>
     }
     @if (person().homepage) {
-      <div class="col-12 col-lg-6">
+      <div class="col-12 col-sm-6 col-lg-4">
         <div class="d-grid mb-2">
           <a [href]="personHomepageUrl()" class="btn btn-light border-dark" target="_blank">
             <fa-icon [icon]="globeIcon"></fa-icon> {{ viewHomepageText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (personExternalIds().facebook_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="personFacebookUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="facebookIcon"></fa-icon> {{ viewFacebookText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (personExternalIds().instagram_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="personInstagramUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="instagramIcon"></fa-icon> {{ viewInstagramText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (personExternalIds().twitter_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="personTwitterUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="twitterIcon"></fa-icon> {{ viewTwitterText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (personExternalIds().tiktok_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="personTiktokUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="tiktokIcon"></fa-icon> {{ viewTiktokText() }}
+          </a>
+        </div>
+      </div>
+    }
+    @if (personExternalIds().youtube_id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="d-grid mb-2">
+          <a [href]="personYoutubeUrl()" class="btn btn-light border-dark" target="_blank">
+            <fa-icon [icon]="youtubeIcon"></fa-icon> {{ viewYoutubeText() }}
           </a>
         </div>
       </div>

@@ -13,5 +13,7 @@ export const environment = {
   imdbMovieUrl: 'https://www.imdb.com/title/',
   facebookUrl: 'https://www.facebook.com/',
   instagramUrl: 'https://www.instagram.com/',
-  twitterUrl: 'https://x.com/'
+  twitterUrl: 'https://x.com/',
+  tiktokUrl: 'https://www.tiktok.com/@',
+  youtubeUrl: 'https://www.youtube.com/@',
 };
