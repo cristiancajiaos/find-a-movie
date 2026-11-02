@@ -33,11 +33,10 @@ export class PersonOverview implements OnInit, OnDestroy {
 
   public id: WritableSignal<number> = signal(0);
 
-  public person: WritableSignal<Person> = signal(new Person());
+  public person: WritableSignal<Person> = signal(null);
   public personCastCredits: WritableSignal<ResponsePersonCastCredit[]> = signal([]);
   public personCrewCredits: WritableSignal<ResponsePersonCrewCredit[]> = signal([]);
 
-  private personError: WritableSignal<HttpErrorResponse> = signal(null);
   public personFound: WritableSignal<boolean> = signal(false);
   public personErrorFound: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string> = signal('');
@@ -53,10 +52,10 @@ export class PersonOverview implements OnInit, OnDestroy {
   private initPersonOverview(): void {
     this.setId();
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      if (this.person().name != '') {
+      if (this.person()) {
         this.setTitle();
       } else {
-        if (this.personError) {
+        if (this.personErrorFound()) {
           this.titleService.setPersonServiceErrorTitle();
         }
       }
@@ -73,7 +72,7 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private getPersonAndCredits(): void {
-    this.person.set(new Person());
+    this.person.set(null);
     this.personCastCredits.set([]);
     this.personCrewCredits.set([]);
 
@@ -101,13 +100,13 @@ export class PersonOverview implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
+    if (this.person)
     this.titleService.setPersonOverviewTitle(this.person().name);
   }
 
   private handleError(error: HttpErrorResponse) {
     this.personErrorFound.set(true);
     this.errorMessage.set(error.message);
-    this.personError.set(error);
   }
 
   public reloadOverview(event: boolean): void {
