@@ -2,6 +2,10 @@ import { environment } from "../../environments/environment.development";
 
 export class ExternalLinkHelper {
 
+  public setImdbNamePage(imdbId: string): string {
+    return imdbId ? `${environment.imdbPersonUrl}${imdbId}` : '';
+  }
+
   public setFacebookPage(facebookId: string): string {
     return facebookId ? `${environment.facebookUrl}${facebookId}` : '';
   }

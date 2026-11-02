@@ -15,5 +15,5 @@ export const environment = {
   instagramUrl: 'https://www.instagram.com/',
   twitterUrl: 'https://x.com/',
   tiktokUrl: 'https://www.tiktok.com/@',
-  youtubeUrl: 'https://www.youtube.com/@',
+  youtubeUrl: 'https://www.youtube.com/',
 };

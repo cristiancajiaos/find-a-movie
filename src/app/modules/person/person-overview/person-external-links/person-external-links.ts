@@ -62,7 +62,7 @@ export class PersonExternalLinks implements OnChanges {
 
   private setPersonExternalLinks(): void {
     if (this.person().imdb_id) {
-      this.personIMDBUrl.set(`${environment.imdbPersonUrl}${this.person().imdb_id}`);
+      this.personIMDBUrl.set(this.externalLinkHelper.setImdbNamePage(this.person().imdb_id));
     }
     if (this.person().homepage) {
       this.personHomepageUrl.set(`${this.person().homepage}`);
