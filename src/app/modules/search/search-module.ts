@@ -18,9 +18,11 @@ import { SearchMainPerson } from './search-main/search-main-person/search-main-p
 import { LayoutModule } from '../../components/layout/layout-module';
 import { SearchMovieList } from './search-movie/search-movie-list/search-movie-list';
 import { SearchMovieGrid } from './search-movie/search-movie-grid/search-movie-grid';
+import { SearchPersonGrid } from './search-person/search-person-grid/search-person-grid';
+import { SearchPersonList } from './search-person/search-person-list/search-person-list';
 
 @NgModule({
-  declarations: [Search, SearchMovie, SearchPerson, SearchMain, SearchMainMovie, SearchMainPerson, SearchMovieList, SearchMovieGrid],
+  declarations: [Search, SearchMovie, SearchPerson, SearchMain, SearchMainMovie, SearchMainPerson, SearchMovieList, SearchMovieGrid, SearchPersonGrid, SearchPersonList],
   imports: [
     CommonModule,
     SearchRoutingModule,

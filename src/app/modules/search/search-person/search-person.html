@@ -3,7 +3,8 @@
     <app-search-error-fullscreen
       [errorMessage]="errorMessage()"
       [searchQuery]="searchQuery()"
-      (reload)="handleReloadError()">
+      (reload)="handleReloadError()"
+    >
     </app-search-error-fullscreen>
   } @else {
     <header #header>
@@ -40,44 +41,22 @@
             </p>
             <hr />
             @if (displayMode() == 'grid') {
-              <section class="search-person-results-grid">
-                <div class="row">
-                  @for (
-                    personResult of personResults()
-                      | paginate
-                        : {
-                            itemsPerPage: itemsPerPage(),
-                            currentPage: currentPage(),
-                            totalItems: totalResults(),
-                          };
-                    track personResult.id
-                  ) {
-                    <div class="col-12 col-sm-6 col-lg-3">
-                      <app-search-person-result-grid [personResult]="personResult">
-                      </app-search-person-result-grid>
-                    </div>
-                  }
-                </div>
-              </section>
+              <app-search-person-grid
+                [personResults]="personResults()"
+                [itemsPerPage]="itemsPerPage()"
+                [currentPage]="currentPage()"
+                [totalResults]="totalResults()"
+              >
+              </app-search-person-grid>
             }
             @if (displayMode() == 'list') {
-              <section class="search-person-results-list">
-                <div class="row">
-                  @for (
-                    personResult of personResults()
-                      | paginate
-                        : {
-                            itemsPerPage: itemsPerPage(),
-                            currentPage: currentPage(),
-                            totalItems: totalResults(),
-                          };
-                    track personResult.id
-                  ) {
-                    <app-search-person-result-list [personResult]="personResult">
-                    </app-search-person-result-list>
-                  }
-                </div>
-              </section>
+              <app-search-person-list
+                [personResults]="personResults()"
+                [itemsPerPage]="itemsPerPage()"
+                [currentPage]="currentPage()"
+                [totalResults]="totalResults()"
+              >
+              </app-search-person-list>
             }
             <hr />
             <app-pagination (pageChange)="changePage($event)"></app-pagination>

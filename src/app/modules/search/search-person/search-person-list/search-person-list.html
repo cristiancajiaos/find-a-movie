@@ -1,0 +1,16 @@
+<section class="search-person-list">
+  <div class="row">
+    @for (
+      personResult of personResults()
+        | paginate
+          : {
+              itemsPerPage: itemsPerPage(),
+              currentPage: currentPage(),
+              totalItems: totalResults(),
+            };
+      track personResult.id
+    ) {
+      <app-search-person-result-list [personResult]="personResult"> </app-search-person-result-list>
+    }
+  </div>
+</section>
