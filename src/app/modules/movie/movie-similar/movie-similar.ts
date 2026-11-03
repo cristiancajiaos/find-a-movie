@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SessionStorageService } from '../../../services/session-storage-service';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie-similar',
@@ -73,7 +74,7 @@ export class MovieSimilar implements OnInit, OnDestroy {
   }
 
   private setTitle() {
-    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+    const formattedTitle: string = formattedMovieTitle(
       this.movie().title, this.movie().original_title, this.movie().release_date
     );
     this.titleService.setMovieSimilarTitle(formattedTitle);

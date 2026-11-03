@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, EventEmitter, Output, ChangeDetectionStrategy, inject, InputSignal, input, OutputEmitterRef, output, WritableSignal, signal } from '@angular/core';
-import { MovieService } from '../../../../services/movie-service';
+import { Component, OnInit, ChangeDetectionStrategy, InputSignal, input, OutputEmitterRef, output, WritableSignal, signal } from '@angular/core';
 import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
 import { environment } from '../../../../../environments/environment.development';
+import { formattedMovieTitle } from '../../../../helpers/movie-helper';
 
 
 @Component({
@@ -13,13 +13,11 @@ import { environment } from '../../../../../environments/environment.development
 })
 export class SearchInputMovieResult implements OnInit {
 
-  private movieService = inject(MovieService);
-
   public posterBgImage: WritableSignal<Object> = signal({});
   public formattedTitle: WritableSignal<string> = signal('');
 
-  movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
-  clickResult: OutputEmitterRef<boolean> = output<boolean>();
+  public movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
+  public clickResult: OutputEmitterRef<boolean> = output<boolean>();
 
   ngOnInit(): void {
     this.setTitle();
@@ -27,7 +25,7 @@ export class SearchInputMovieResult implements OnInit {
   }
 
   public setTitle() {
-    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+    this.formattedTitle.set(formattedMovieTitle(
       this.movieResult().title,
       this.movieResult().original_title,
       this.movieResult().release_date

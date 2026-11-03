@@ -8,6 +8,7 @@ import { ResponseMovieResult } from '../../../classes/response-search-movie/resp
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SessionStorageService } from '../../../services/session-storage-service';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie-recommendations',
@@ -75,7 +76,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
-    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+    const formattedTitle: string = formattedMovieTitle(
       this.movie().title, this.movie().original_title, this.movie().release_date
     );
     this.titleService.setMovieRecommendedTitle(formattedTitle);

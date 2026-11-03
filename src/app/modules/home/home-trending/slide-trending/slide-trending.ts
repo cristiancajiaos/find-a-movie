@@ -1,6 +1,6 @@
-import { Component, inject, input, InputSignal, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, input, InputSignal, OnInit, signal, WritableSignal } from '@angular/core';
 import { ResponseMovieResult } from '../../../../classes/response-search-movie/response-movie-result';
-import { MovieService } from '../../../../services/movie-service';
+import { formattedMovieTitle } from '../../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-slide-trending',
@@ -10,9 +10,7 @@ import { MovieService } from '../../../../services/movie-service';
 })
 export class SlideTrending implements OnInit {
 
-  private movieService = inject(MovieService);
-
-  movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
+  public movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
 
   public formattedTitle: WritableSignal<string> = signal('');
   public bgSlide: WritableSignal<Object> = signal('');
@@ -23,7 +21,7 @@ export class SlideTrending implements OnInit {
   }
 
   private setFormattedTitle(): void {
-    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+    this.formattedTitle.set(formattedMovieTitle(
       this.movieResult().title, this.movieResult().original_title, this.movieResult().release_date
     ));
   }

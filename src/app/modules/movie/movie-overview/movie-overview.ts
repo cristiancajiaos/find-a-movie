@@ -18,6 +18,7 @@ import { TitleService } from '../../../services/title-service';
 import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
 import { MovieExternalIds } from '../../../classes/movie-external-ids';
 import { MovieKeyword } from '../../../classes/movie-keyword/movie-keyword';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie-overview',
@@ -73,7 +74,6 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getKeywords: Observable<MovieKeyword[]> = this.movieService.getMovieKeywords(this.id());
     const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
 
-
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
       getCredits,
@@ -109,7 +109,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
-    const formattedTitle = this.movieService.getFormattedMovieTitle(
+    const formattedTitle = formattedMovieTitle(
       this.movie().title,
       this.movie().original_title,
       this.movie().release_date,

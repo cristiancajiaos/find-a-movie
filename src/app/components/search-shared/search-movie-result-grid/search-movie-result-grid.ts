@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, InputSignal, input, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, InputSignal, input, WritableSignal, signal } from '@angular/core';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 import { environment } from '../../../../environments/environment.development';
-import { MovieService } from '../../../services/movie-service';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-search-movie-result-grid',
@@ -12,13 +12,11 @@ import { MovieService } from '../../../services/movie-service';
 })
 export class SearchMovieResultGrid implements OnInit {
 
-  private movieService = inject(MovieService);
-
   public posterSizeSmall: WritableSignal<string> = signal('');
   public formattedTitle: WritableSignal<string> = signal('');
   public altPosterText: WritableSignal<string> = signal('');
 
-  movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
+  public movieResult: InputSignal<ResponseMovieResult> = input.required<ResponseMovieResult>();
 
   ngOnInit(): void {
     this.setTitle();
@@ -26,7 +24,7 @@ export class SearchMovieResultGrid implements OnInit {
   }
 
   public setTitle(): void {
-    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+    this.formattedTitle.set(formattedMovieTitle(
       this.movieResult().title,
       this.movieResult().original_title,
       this.movieResult().release_date

@@ -18,6 +18,7 @@ import { Movie } from '../../../classes/movie';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
 import { compileFunction } from 'node:vm';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie-crew',
@@ -213,7 +214,7 @@ export class MovieCrew implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
-    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+    const formattedTitle: string = formattedMovieTitle(
       this.movie().title,
       this.movie().original_title,
       this.movie().release_date,

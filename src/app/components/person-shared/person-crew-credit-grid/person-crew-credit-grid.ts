@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, WritableSignal, signal, InputSignal, input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal, InputSignal, input } from '@angular/core';
 import { ResponsePersonCrewCredit } from '../../../classes/person-movie-credits/response-person-crew-credit';
 import { environment } from '../../../../environments/environment.development';
-import { MovieService } from '../../../services/movie-service';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-person-crew-credit-grid',
@@ -12,9 +12,7 @@ import { MovieService } from '../../../services/movie-service';
 })
 export class PersonCrewCreditGrid implements OnInit {
 
-  private movieService = inject(MovieService);
-
-  crewRole: InputSignal<ResponsePersonCrewCredit> = input.required<ResponsePersonCrewCredit>();
+  public crewRole: InputSignal<ResponsePersonCrewCredit> = input.required<ResponsePersonCrewCredit>();
 
   public posterSizeSmall: WritableSignal<string> = signal('');
   public formattedTitle: WritableSignal<string> = signal('');
@@ -26,7 +24,7 @@ export class PersonCrewCreditGrid implements OnInit {
   }
 
   public setTitle(): void {
-    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(
+    this.formattedTitle.set(formattedMovieTitle(
       this.crewRole().title,
       this.crewRole().original_title,
       this.crewRole().release_date

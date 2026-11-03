@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../../services/loading-service';
 import { SessionStorageService } from '../../services/session-storage-service';
+import { formattedMovieTitle } from '../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie',
@@ -98,7 +99,7 @@ export class MovieComponent implements OnInit, OnDestroy {
   }
 
   private setTitle(): void {
-    this.formattedTitle.set(this.movieService.getFormattedMovieTitle(this.movie().title, this.movie().original_title, this.movie().release_date));
+    this.formattedTitle.set(formattedMovieTitle(this.movie().title, this.movie().original_title, this.movie().release_date));
   }
 
   ngOnDestroy(): void {

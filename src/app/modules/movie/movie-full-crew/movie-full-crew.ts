@@ -12,6 +12,7 @@ import { ShowXResults } from '../../../components/shared/show-x-results/show-x-r
 import { Sort } from '../../../enums/sort';
 import { SortCriteria } from '../../../interfaces/sort-criteria';
 import { SortSelect } from '../../../components/shared/sort-select/sort-select';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie-full-crew',
@@ -151,7 +152,7 @@ export class MovieFullCrew implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private setTitle(): void {
-    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+    const formattedTitle: string = formattedMovieTitle(
       this.movie().title, this.movie().original_title, this.movie().release_date
     );
     this.titleService.setMovieFullCrewTitle(formattedTitle);

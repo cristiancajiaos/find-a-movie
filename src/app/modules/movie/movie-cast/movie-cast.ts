@@ -25,6 +25,7 @@ import { ShowXResults } from '../../../components/shared/show-x-results/show-x-r
 import { SortCriteria } from '../../../interfaces/sort-criteria';
 import { Sort } from '../../../enums/sort';
 import { SortSelect } from '../../../components/shared/sort-select/sort-select';
+import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
   selector: 'app-movie-cast',
@@ -133,7 +134,7 @@ export class MovieCast implements OnInit, AfterViewInit, OnDestroy {
   }
 
    private setTitle() {
-    const formattedTitle: string = this.movieService.getFormattedMovieTitle(
+    const formattedTitle: string = formattedMovieTitle(
       this.movie().title,
       this.movie().original_title,
       this.movie().release_date,
