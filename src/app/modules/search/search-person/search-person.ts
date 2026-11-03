@@ -45,7 +45,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   public currentPageEnd = computed(() => this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
         ? this.currentPage() * this.itemsPerPage()
         : this.totalResults());
-        
+
   public personResults: WritableSignal<ResponsePersonResult[]> = signal([]);
 
   public searchPersonTitle: WritableSignal<string> = signal('Search Person');
@@ -150,7 +150,7 @@ export class SearchPerson implements OnInit, OnDestroy {
   }
 
   private setSearchPersonTitle() {
-    this.titleService.setTitle(`Search Person: ${this.searchQuery()}`);
+    this.titleService.setSearchPersonTitle(this.searchQuery())
   }
 
   ngOnDestroy(): void {

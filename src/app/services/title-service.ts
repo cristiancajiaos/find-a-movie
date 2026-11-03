@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Injectable({
@@ -8,65 +8,73 @@ export class TitleService {
 
   private title = inject(Title);
 
-  private defaultTitle: string = 'Find a Movie';
+  private defaultTitle: WritableSignal<string> = signal('Find a Movie');
 
   public setDefaultTitle(): void {
-    this.title.setTitle(this.defaultTitle);
+    this.title.setTitle(this.defaultTitle());
   }
 
   public setTitle(title: string): void {
-    this.title.setTitle(`${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieOverviewTitle(title: string): void {
-    this.title.setTitle(`${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieCastTitle(title: string): void {
-    this.title.setTitle(`Cast of ${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`Cast of ${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieFeaturedCrewTitle(title: string): void {
-    this.title.setTitle(`Featured Crew of ${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`Featured Crew of ${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieFullCrewTitle(title: string): void {
-    this.title.setTitle(`Full Crew of ${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`Full Crew of ${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieRecommendedTitle(title: string) {
-    this.title.setTitle(`Recommended titles if you saw ${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`Recommended titles if you saw ${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieSimilarTitle(title: string): void {
-    this.title.setTitle(`Similar titles to ${title} | ${this.defaultTitle}`);
+    this.title.setTitle(`Similar titles to ${title} | ${this.defaultTitle()}`);
   }
 
   public setMovieNotFoundTitle(): void {
-    this.title.setTitle(`Movie Not Found | ${this.defaultTitle}`);
+    this.title.setTitle(`Movie Not Found | ${this.defaultTitle()}`);
   }
 
   public setMovieServiceErrorTitle(): void {
-    this.title.setTitle(`MovieService Error | ${this.defaultTitle}`);
+    this.title.setTitle(`MovieService Error | ${this.defaultTitle()}`);
   }
 
   public setPersonOverviewTitle(name: string): void {
-    this.title.setTitle(`${name} | ${this.defaultTitle}`);
+    this.title.setTitle(`${name} | ${this.defaultTitle()}`);
   }
 
   public setPersonCastCreditsTitle(name: string): void  {
-    this.title.setTitle(`Cast Credits of ${name} | ${this.defaultTitle}`);
+    this.title.setTitle(`Cast Credits of ${name} | ${this.defaultTitle()}`);
   }
 
   public setPersonCrewCreditsTitle(name: string): void  {
-    this.title.setTitle(`Crew Credits of ${name} | ${this.defaultTitle}`);
+    this.title.setTitle(`Crew Credits of ${name} | ${this.defaultTitle()}`);
   }
 
   public setPersonNotFoundTitle(): void {
-    this.title.setTitle(`Person Not Found | ${this.defaultTitle}`);
+    this.title.setTitle(`Person Not Found | ${this.defaultTitle()}`);
   }
 
   public setPersonServiceErrorTitle(): void {
-    this.title.setTitle(`PersonService Error | ${this.defaultTitle}`);
+    this.title.setTitle(`PersonService Error | ${this.defaultTitle()}`);
+  }
+
+  public setSearchMovieTitle(query: string): void {
+    this.title.setTitle(`Search Movie: ${query} | ${this.defaultTitle()}`);
+  }
+
+  public setSearchPersonTitle(query: string): void {
+    this.title.setTitle(`Search Person: ${query} | ${this.defaultTitle()}`);
   }
 }

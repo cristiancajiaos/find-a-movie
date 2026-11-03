@@ -143,7 +143,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   }
 
   private setSearchMovieTitle() {
-    this.titleService.setTitle(`Search Movie: ${this.searchQuery()}`);
+    this.titleService.setSearchMovieTitle(this.searchQuery())
   }
 
   ngOnDestroy(): void {
