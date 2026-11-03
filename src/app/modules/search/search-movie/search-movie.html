@@ -32,11 +32,7 @@
             </div>
           </section>
           <section class="search-movie-results">
-            <p>
-              <strong>{{ searchQuery() }}</strong> {{ returnedText() }} {{ totalResults() }}
-              {{ resultsText() }} {{ showingResults() }} {{ currentPageStart() }}{{ hyphenText()
-              }}{{ currentPageEnd() }} {{ ofText() }} {{ totalResults() }}{{ colonText() }}
-            </p>
+            <p><strong>{{searchQuery()}}</strong> {{currentResultText()}}</p>
             <hr />
             @if (displayMode() == 'grid') {
               <app-search-movie-grid
