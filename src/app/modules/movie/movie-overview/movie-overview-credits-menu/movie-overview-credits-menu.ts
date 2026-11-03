@@ -13,5 +13,5 @@ export class MovieOverviewCreditsMenu {
   public viewFeaturedCrewText: WritableSignal<string> = signal('View Featured Crew');
   public viewFullCrewText: WritableSignal<string> = signal('View Full Crew');
 
-  movie: InputSignal<Movie> = input.required<Movie>();
+  public movie: InputSignal<Movie> = input.required<Movie>();
 }

@@ -9,7 +9,7 @@ import { Movie } from '../../../../classes/movie';
 })
 export class MovieOverviewSynopsis {
 
-  movie: InputSignal<Movie> = input.required();
+  public movie: InputSignal<Movie> = input.required();
 
   public noSynopsisText: WritableSignal<string> = signal('No Synopsis Available');
 }

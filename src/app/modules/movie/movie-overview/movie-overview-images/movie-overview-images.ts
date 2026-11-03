@@ -10,8 +10,8 @@ import { BackdropImage } from '../../../../classes/response-image/backdrop-image
 })
 export class MovieOverviewImages {
 
-  movieImages: InputSignal<BackdropImage[]> = input.required<BackdropImage[]>();
+  public movieImages: InputSignal<BackdropImage[]> = input.required<BackdropImage[]>();
 
-  imagesGalleryTitle: WritableSignal<string> = signal('Images Gallery');
+  public imagesGalleryTitle: WritableSignal<string> = signal('Images Gallery');
 
 }

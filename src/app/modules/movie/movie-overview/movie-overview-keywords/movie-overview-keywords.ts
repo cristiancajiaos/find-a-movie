@@ -11,6 +11,6 @@ export class MovieOverviewKeywords {
 
   public keywordsTitle: WritableSignal<string> = signal('Keywords');
 
-  movieKeywords: InputSignal<MovieKeyword[]> = input.required<MovieKeyword[]>();
+  public movieKeywords: InputSignal<MovieKeyword[]> = input.required<MovieKeyword[]>();
 
 }

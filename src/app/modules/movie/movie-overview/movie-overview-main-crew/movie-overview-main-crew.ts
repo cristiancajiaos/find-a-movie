@@ -90,7 +90,7 @@ export class MovieOverviewMainCrew implements OnChanges {
     return this.coExecutiveProducing().length > 1 ? 'Co-Executive Producers:' : 'Co-Executive Producer:';
   });
 
-  movieCrew: InputSignal<CrewMember[]> = input.required<CrewMember[]>();
+  public movieCrew: InputSignal<CrewMember[]> = input.required<CrewMember[]>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.filterMainCrew();

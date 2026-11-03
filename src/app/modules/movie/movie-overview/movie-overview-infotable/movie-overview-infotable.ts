@@ -41,7 +41,7 @@ export class MovieOverviewInfotable implements OnChanges {
   public usdText: WritableSignal<string> = signal('USD');
   public boxOfficeText: WritableSignal<string> = signal('Box Office:');
 
-  movie: InputSignal<Movie> = input.required<Movie>();
+  public movie: InputSignal<Movie> = input.required<Movie>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setProductionCompanies();

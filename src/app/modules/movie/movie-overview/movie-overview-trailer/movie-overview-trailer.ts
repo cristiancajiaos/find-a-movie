@@ -22,7 +22,7 @@ export class MovieOverviewTrailer implements OnChanges {
   public movieTrailerUrl: WritableSignal<string> = signal('');
   public movieTrailerKey: WritableSignal<string> = signal('');
 
-  responseVideo: InputSignal<ResponseVideoResult> = input<ResponseVideoResult>();
+  public responseVideo: InputSignal<ResponseVideoResult> = input.required<ResponseVideoResult>();
 
   public trailerTitle: WritableSignal<string> = signal('Trailer');
 

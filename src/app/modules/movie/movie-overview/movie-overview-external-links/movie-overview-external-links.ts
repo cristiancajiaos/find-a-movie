@@ -42,8 +42,8 @@ export class MovieOverviewExternalLinks implements OnChanges {
   public twitterIcon: IconDefinition = faXTwitter;
   public twitterPageText: WritableSignal<string> = signal('Official X (formerly Twitter) Page');
 
-  movie: InputSignal<Movie> = input.required<Movie>();
-  movieExternalIds: InputSignal<MovieExternalIds> = input.required<MovieExternalIds>();
+  public movie: InputSignal<Movie> = input.required<Movie>();
+  public movieExternalIds: InputSignal<MovieExternalIds> = input.required<MovieExternalIds>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setMovieIMDB();

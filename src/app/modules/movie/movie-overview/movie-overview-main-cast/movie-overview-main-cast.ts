@@ -12,7 +12,7 @@ export class MovieOverviewMainCast implements OnChanges {
 
   public movieMainCast: WritableSignal<CastMember[]> = signal([]);
 
-  movieCast: InputSignal<CastMember[]> = input.required<CastMember[]>();
+  public movieCast: InputSignal<CastMember[]> = input.required<CastMember[]>();
 
   public mainCastTitle: WritableSignal<string> = signal('Main Cast');
   public noCastText: WritableSignal<string> = signal('This movie has no recognizable cast');
