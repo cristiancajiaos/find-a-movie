@@ -66,8 +66,8 @@ export class PersonMovieCreditsCrew implements OnInit, AfterViewInit {
   public itemsPerPage: WritableSignal<number> = signal(20);
   public currentPage: WritableSignal<number> = signal(1);
 
-  crewCredits: InputSignal<ResponsePersonCrewCredit[]> = input.required<ResponsePersonCrewCredit[]>();
-  personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
+  public crewCredits: InputSignal<ResponsePersonCrewCredit[]> = input.required<ResponsePersonCrewCredit[]>();
+  public personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('crewParagraph') crewParagraph!: ElementRef;
 

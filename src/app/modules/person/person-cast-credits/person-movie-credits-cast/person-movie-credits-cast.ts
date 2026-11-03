@@ -77,9 +77,9 @@ export class PersonMovieCreditsCast implements OnInit, AfterViewInit, OnDestroy 
   public itemsPerPage: WritableSignal<number> = signal(20);
   public currentPage: WritableSignal<number> = signal(1);
 
-  castCredits: InputSignal<ResponsePersonCastCredit[]> =
+  public castCredits: InputSignal<ResponsePersonCastCredit[]> =
     input.required<ResponsePersonCastCredit[]>();
-  personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
+  public personCreditsQuery: InputSignal<PersonCreditsQuery> = input.required<PersonCreditsQuery>();
 
   @ViewChild('castParagraph') castParagraph!: ElementRef;
 

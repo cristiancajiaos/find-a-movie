@@ -17,16 +17,11 @@ export class PersonHeader implements OnChanges {
 
   public bgImage: string = 'img/default-images/bg_person_header.jpg';
 
-  public name: string = '';
-  public birthYear: number = 0;
-  public deathYear: number = 0;
-  public knownFor: string = '';
-  public profileImg: string = '';
+  public profileImg: WritableSignal<string> = signal('');
+  public profileImgAltText: WritableSignal<string> = signal('');
 
-  public profileImgAltText: string = '';
-
-  id: InputSignal<number> = input.required<number>();
-  person: InputSignal<Person> = input.required<Person>();
+  public id: InputSignal<number> = input.required<number>();
+  public person: InputSignal<Person> = input.required<Person>();
 
   public knownForText: WritableSignal<string> = signal('Known for:');
 
@@ -35,8 +30,8 @@ export class PersonHeader implements OnChanges {
   }
 
   public setProfileImg(): void {
-    this.profileImg = this.person().profile_path ? `${environment.imgUrl}${environment.profileSizeSmall}${this.person().profile_path}` : 'img/default-images/profile_image_notavailable_w185.jpg'
-    this.profileImgAltText = this.person().profile_path ? `Profile path for ${this.person.name}` : `Profile path for ${this.person().name} is not available`;
+    this.profileImg.set(this.person().profile_path ? `${environment.imgUrl}${environment.profileSizeSmall}${this.person().profile_path}` : 'img/default-images/profile_image_notavailable_w185.jpg');
+    this.profileImgAltText.set(this.person().profile_path ? `Profile path for ${this.person().name}` : `Profile path for ${this.person().name} is not available`);
   }
 
 }
