@@ -10,9 +10,8 @@ import {
 import { Person } from '../../../../classes/person';
 import { faGlobe, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faImdb, faInstagram, faTiktok, faXTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { environment } from '../../../../../environments/environment.development';
 import { PersonExternalIds } from '../../../../classes/person-external-ids';
-import { ExternalLinkHelper } from '../../../../helpers/external-link-helper';
+import { setFacebookPage, setImdbNamePage, setInstagramPage, setTiktokPage, setTwitterPage, setYouTubePage } from '../../../../helpers/external-link-helper';
 
 @Component({
   selector: 'app-person-external-links',
@@ -54,33 +53,31 @@ export class PersonExternalLinks implements OnChanges {
   public viewYoutubeText: WritableSignal<string> = signal('Official YouTube Channel');
   public personYoutubeUrl: WritableSignal<string> = signal('');
 
-  private externalLinkHelper = new ExternalLinkHelper();
-
   ngOnChanges(changes: SimpleChanges): void {
     this.setPersonExternalLinks();
   }
 
   private setPersonExternalLinks(): void {
     if (this.person().imdb_id) {
-      this.personIMDBUrl.set(this.externalLinkHelper.setImdbNamePage(this.person().imdb_id));
+      this.personIMDBUrl.set(setImdbNamePage(this.person().imdb_id));
     }
     if (this.person().homepage) {
       this.personHomepageUrl.set(`${this.person().homepage}`);
     }
     if (this.personExternalIds().facebook_id) {
-      this.personFacebookUrl.set(this.externalLinkHelper.setFacebookPage(this.personExternalIds().facebook_id));
+      this.personFacebookUrl.set(setFacebookPage(this.personExternalIds().facebook_id));
     }
     if (this.personExternalIds().instagram_id) {
-      this.personInstagramUrl.set(this.externalLinkHelper.setInstagramPage(this.personExternalIds().instagram_id));
+      this.personInstagramUrl.set(setInstagramPage(this.personExternalIds().instagram_id));
     }
     if (this.personExternalIds().twitter_id) {
-      this.personTwitterUrl.set(this.externalLinkHelper.setTwitterPage(this.personExternalIds().twitter_id));
+      this.personTwitterUrl.set(setTwitterPage(this.personExternalIds().twitter_id));
     }
     if (this.personExternalIds().tiktok_id) {
-      this.personTiktokUrl.set(this.externalLinkHelper.setTiktokPage(this.personExternalIds().tiktok_id));
+      this.personTiktokUrl.set(setTiktokPage(this.personExternalIds().tiktok_id));
     }
     if (this.personExternalIds().youtube_id) {
-      this.personYoutubeUrl.set(this.externalLinkHelper.setYouTubePage(this.personExternalIds().youtube_id));
+      this.personYoutubeUrl.set(setYouTubePage(this.personExternalIds().youtube_id));
     }
   }
 }
