@@ -1,0 +1,18 @@
+<section class="search-movie-list">
+  <div class="row">
+    @for (
+      movieResult of movieResults()
+        | paginate
+          : {
+              itemsPerPage: itemsPerPage(),
+              currentPage: currentPage(),
+              totalItems: totalResults(),
+            };
+      track movieResult.id
+    ) {
+      <div class="col-12">
+        <app-search-movie-result-list [movieResult]="movieResult"> </app-search-movie-result-list>
+      </div>
+    }
+  </div>
+</section>

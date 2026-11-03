@@ -16,9 +16,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SearchMainMovie } from './search-main/search-main-movie/search-main-movie';
 import { SearchMainPerson } from './search-main/search-main-person/search-main-person';
 import { LayoutModule } from '../../components/layout/layout-module';
+import { SearchMovieList } from './search-movie/search-movie-list/search-movie-list';
+import { SearchMovieGrid } from './search-movie/search-movie-grid/search-movie-grid';
 
 @NgModule({
-  declarations: [Search, SearchMovie, SearchPerson, SearchMain, SearchMainMovie, SearchMainPerson],
+  declarations: [Search, SearchMovie, SearchPerson, SearchMain, SearchMainMovie, SearchMainPerson, SearchMovieList, SearchMovieGrid],
   imports: [
     CommonModule,
     SearchRoutingModule,

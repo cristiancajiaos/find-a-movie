@@ -3,7 +3,8 @@
     <app-search-error-fullscreen
       [errorMessage]="errorMessage()"
       [searchQuery]="searchQuery()"
-      (reload)="handleReloadError()">
+      (reload)="handleReloadError()"
+    >
     </app-search-error-fullscreen>
   } @else {
     <header #header>
@@ -38,46 +39,22 @@
             </p>
             <hr />
             @if (displayMode() == 'grid') {
-              <section class="search-movie-results-grid">
-                <div class="row">
-                  @for (
-                    movieResult of movieResults()
-                      | paginate
-                        : {
-                            itemsPerPage: itemsPerPage(),
-                            currentPage: currentPage(),
-                            totalItems: totalResults(),
-                          };
-                    track movieResult.id
-                  ) {
-                    <div class="col-12 col-sm-6 col-lg-3">
-                      <app-search-movie-result-grid [movieResult]="movieResult">
-                      </app-search-movie-result-grid>
-                    </div>
-                  }
-                </div>
-              </section>
+              <app-search-movie-grid
+                [movieResults]="movieResults()"
+                [itemsPerPage]="itemsPerPage()"
+                [currentPage]="currentPage()"
+                [totalResults]="totalResults()"
+              >
+              </app-search-movie-grid>
             }
             @if (displayMode() == 'list') {
-              <section class="search-movie-results-list">
-                <div class="row">
-                  @for (
-                    movieResult of movieResults()
-                      | paginate
-                        : {
-                            itemsPerPage: itemsPerPage(),
-                            currentPage: currentPage(),
-                            totalItems: totalResults(),
-                          };
-                    track movieResult.id
-                  ) {
-                    <div class="col-12">
-                      <app-search-movie-result-list [movieResult]="movieResult">
-                      </app-search-movie-result-list>
-                    </div>
-                  }
-                </div>
-              </section>
+              <app-search-movie-list
+                [movieResults]="movieResults()"
+                [itemsPerPage]="itemsPerPage()"
+                [currentPage]="currentPage()"
+                [totalResults]="totalResults()"
+              >
+              </app-search-movie-list>
             }
           </section>
           <hr />
