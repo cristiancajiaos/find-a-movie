@@ -8,6 +8,7 @@ import {
   inject,
   signal,
   WritableSignal,
+  computed,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faSearch, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -40,21 +41,18 @@ export class SearchPerson implements OnInit, OnDestroy {
   public itemsPerPage: WritableSignal<number> = signal(20);
   public totalResults: WritableSignal<number> = signal(0);
 
-  public currentPageStart: WritableSignal<number> = signal(0);
-  public currentPageEnd: WritableSignal<number> = signal(0);
-
+  public currentPageStart = computed(() => 1 + (this.currentPage() - 1) * this.itemsPerPage());
+  public currentPageEnd = computed(() => this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
+        ? this.currentPage() * this.itemsPerPage()
+        : this.totalResults());
+        
   public personResults: WritableSignal<ResponsePersonResult[]> = signal([]);
 
   public searchPersonTitle: WritableSignal<string> = signal('Search Person');
 
   public noResultsText: WritableSignal<string> = signal('returned no results.');
 
-  public returnedText: WritableSignal<string> = signal('returned');
-  public resultsText: WritableSignal<string> = signal('results.');
-  public showingResults: WritableSignal<string> = signal('Showing results');
-  public hyphenText: WritableSignal<string> = signal('-');
-  public ofText: WritableSignal<string> = signal('of');
-  public colonText: WritableSignal<string> = signal(':');
+  public currentResultText = computed(() => ` returned ${this.totalResults()} results. Showing results ${this.currentPageStart()}-${this.currentPageEnd()} of ${this.totalResults()}:`);
 
   public displayMode = signal('grid');
 
@@ -140,16 +138,6 @@ export class SearchPerson implements OnInit, OnDestroy {
     this.personResults.set(responseSearchPerson.results);
     this.totalResults.set(responseSearchPerson.total_results);
     this.currentPage.set(responseSearchPerson.page);
-    this.calculatePageLimits();
-  }
-
-  private calculatePageLimits(): void {
-    this.currentPageStart.set(1 + (this.currentPage() - 1) * this.itemsPerPage());
-    this.currentPageEnd.set(
-      this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
-        ? this.currentPage() * this.itemsPerPage()
-        : this.totalResults(),
-    );
   }
 
   private handleError(error: HttpErrorResponse): void {

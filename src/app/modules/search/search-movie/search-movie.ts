@@ -34,7 +34,7 @@ export class SearchMovie implements OnInit, OnDestroy {
   public currentPageStart = computed(() => 1 + (this.currentPage() - 1) * this.itemsPerPage());
   public currentPageEnd = computed(() => this.totalResults() - this.currentPage() * this.itemsPerPage() > 0
         ? this.currentPage() * this.itemsPerPage()
-        : this.totalResults())
+        : this.totalResults());
 
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
