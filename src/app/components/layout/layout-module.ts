@@ -9,12 +9,14 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared-module';
 import { SearchSharedModule } from '../search-shared/search-shared-module';
 import { PipesModule } from '../../pipes/pipes-module';
+import { ToggleDarkMode } from './navbar/toggle-dark-mode/toggle-dark-mode';
 
 @NgModule({
   declarations: [
     Layout,
     Navbar,
-    Footer
+    Footer,
+    ToggleDarkMode
   ],
   imports: [
     CommonModule,

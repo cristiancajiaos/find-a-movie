@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, inject, OnDestroy, Writable
 import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { LightDarkService } from '../../../services/light-dark-service';
 import { Observable, Subscription } from 'rxjs';
-import { Writable } from 'node:stream';
 
 @Component({
   selector: 'app-navbar',
@@ -19,9 +18,6 @@ export class Navbar implements OnInit, OnDestroy {
   public userIcon: IconDefinition = faUser;
   public barsIcon: IconDefinition = faBars;
   public searchIcon: IconDefinition = faMagnifyingGlass;
-
-  public lightIcon: IconDefinition = faSun;
-  public darkIcon: IconDefinition = faMoon;
 
   public appTitle: WritableSignal<string> = signal('Find a Movie');
   public movieButtonText: WritableSignal<string> = signal('Movie');
@@ -40,13 +36,6 @@ export class Navbar implements OnInit, OnDestroy {
     }
   });
 
-  public setButtonClass = computed(() => {
-    return {
-      'border-white text-dark dark-mode':!this.isLight(),
-      'border-dark text-dark':this.isLight()
-    }
-  });
-
   public setSearchTypeClass = computed(() => {
     return {
       'border-white text-dark dark-mode':!this.isLight(),
@@ -59,7 +48,6 @@ export class Navbar implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.changeLightDarkSubscription = this.isLight$.subscribe({
       next: (status) => {
-        console.log(status);
         this.isLight.set(status);
       }
     });

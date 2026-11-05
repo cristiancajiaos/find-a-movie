@@ -9,19 +9,7 @@
       [ngbCollapse]="isMenuCollapsed()"
     >
       <div ngbDropdown class="search-dropdown d-flex">
-        <button
-          class="btn me-2"
-          [ngClass]="setButtonClass()"
-          (click)="toggleLightDark()"
-          ngbTooltip="Toggle Dark Mode"
-          tooltipClass="btn-tooltip"
-        >
-          @if (isLight$ | async) {
-            <fa-icon [icon]="darkIcon"></fa-icon>
-          } @else {
-            <fa-icon [icon]="lightIcon"></fa-icon>
-          }
-        </button>
+        <app-toggle-dark-mode></app-toggle-dark-mode>
         <button
           type="button"
           class="btn btn-select-search-type border-end-0"

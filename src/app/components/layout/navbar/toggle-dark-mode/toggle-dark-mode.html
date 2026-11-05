@@ -1,0 +1,15 @@
+<section class="toggle-dark-mode">
+  <button
+    class="btn me-2"
+    [ngClass]="setButtonClass()"
+    (click)="toggleLightDark()"
+    [ngbTooltip]="toggleTooltip()"
+    tooltipClass="btn-tooltip"
+  >
+    @if (isLight$ | async) {
+      <fa-icon [icon]="darkIcon"></fa-icon>
+    } @else {
+      <fa-icon [icon]="lightIcon"></fa-icon>
+    }
+  </button>
+</section>
