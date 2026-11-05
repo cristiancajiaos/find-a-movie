@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, WritableSignal, signal, computed } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 
 @Component({
