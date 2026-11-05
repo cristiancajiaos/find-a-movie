@@ -14,7 +14,7 @@ import { SortCrewMembersByLastNamePipe } from './sort-crew-members-by-last-name.
 import { SortAlternateNamesPipe } from './sort-alternate-names.pipe';
 import { LimitOverviewCastCreditsPipe } from './limit-overview-cast-credits.pipe';
 import { LimitOverviewCrewCreditsPipe } from './limit-overview-crew-credits.pipe';
-import { LimitMovieRecommendationsPipe } from './limit-movie-recommendations-pipe';
+import { LimitMoviesPipe } from './limit-movies.pipe';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { LimitMovieRecommendationsPipe } from './limit-movie-recommendations-pip
     SortAlternateNamesPipe,
     LimitOverviewCastCreditsPipe,
     LimitOverviewCrewCreditsPipe,
-    LimitMovieRecommendationsPipe
+    LimitMoviesPipe
   ],
   imports: [
     CommonModule
@@ -52,7 +52,7 @@ import { LimitMovieRecommendationsPipe } from './limit-movie-recommendations-pip
     SortAlternateNamesPipe,
     LimitOverviewCastCreditsPipe,
     LimitOverviewCrewCreditsPipe,
-    LimitMovieRecommendationsPipe
+    LimitMoviesPipe
   ]
 })
 export class PipesModule { }
