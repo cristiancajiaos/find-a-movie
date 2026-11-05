@@ -1,4 +1,17 @@
-import { Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input, WritableSignal, signal } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+  input,
+  WritableSignal,
+  signal,
+  InputSignal,
+  computed,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
@@ -12,10 +25,9 @@ import { ResponseMovieResult } from '../../../classes/response-search-movie/resp
   standalone: false,
   templateUrl: './search-input-movie.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './search-input-movie.scss'
+  styleUrl: './search-input-movie.scss',
 })
 export class SearchInputMovie implements OnInit, OnDestroy {
-
   private router = inject(Router);
   private searchService = inject(SearchService);
 
@@ -25,8 +37,9 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public originalMovieResults: ResponseMovieResult[] = [];
   public movieResults: ResponseMovieResult[] = [];
 
-  enableBorderRadius = input<boolean>(false);
-  dropdownMenuEnd = input<boolean>(true);
+  public enableBorderRadius: InputSignal<boolean> = input<boolean>(false);
+  public dropdownMenuEnd: InputSignal<boolean> = input<boolean>(true);
+  public isLight: InputSignal<boolean> = input.required<boolean>();
 
   public movieInput: FormControl = new FormControl('');
   public placeholder: WritableSignal<string> = signal('Eg. Star Wars');
@@ -38,7 +51,22 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
   @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;
 
-  private movieResultsSubscription: Subscription;
+  public setInputClass = computed(() => {
+    return {
+      'hide-border-radius':!this.enableBorderRadius(),
+      'border-white border-end-0': !this.isLight(),
+      'border-dark border-end-0': this.isLight(),
+    };
+  });
+
+  public setButtonClass = computed(() => {
+    return {
+      'border-white text-white': !this.isLight(),
+      'border-dark text-dark': this.isLight(),
+    };
+  });
+
+  private movieResultsSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.listenMovieInputChanges();
@@ -52,8 +80,7 @@ export class SearchInputMovie implements OnInit, OnDestroy {
         switchMap((movieInput) => {
           return this.searchService.searchMovieInput(movieInput);
         }),
-        finalize (() => {
-        }),
+        finalize(() => {}),
       )
       .subscribe((results) => {
         this.originalMovieResults = results;

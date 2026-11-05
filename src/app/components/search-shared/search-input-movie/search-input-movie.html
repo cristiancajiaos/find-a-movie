@@ -5,7 +5,7 @@
         <input
           #searchMovieInput
           class="input-movie form-control"
-          [ngClass]="{'hide-border-radius':!enableBorderRadius()}"
+          [ngClass]="setInputClass()"
           type="search"
           (search)="toggleMovieSearchDropdownBySearch()"
           (focus)="toggleMovieSearchDropdownByFocus()"
@@ -14,7 +14,7 @@
           [formControl]="movieInput"
         />
         <button
-          class="btn border text-light"
+          class="btn border" [ngClass]="setButtonClass()"
           type="submit">
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>

@@ -1,8 +1,9 @@
 nav {
   &.navbar {
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid rgba(33, 37, 41, 1);
 
-    .navbar-brand, .search-dropdown {
+    .navbar-brand,
+    .search-dropdown {
       font-family: 'Oswald', 'Arial', sans-serif;
     }
 
@@ -14,6 +15,10 @@ nav {
 
     .btn-search {
       margin-right: 3rem;
+    }
+
+    &.dark-mode {
+      border-bottom: 1px solid white;
     }
   }
 }

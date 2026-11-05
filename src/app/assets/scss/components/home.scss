@@ -10,13 +10,11 @@
       justify-content: center;
       height: 100vh;
       .search-box {
-        border: 1px solid black;
         padding: 1rem 2rem;
         @media screen and (min-width: 992px) {
           width: 30vw;
         }
         box-shadow: 3px 3px 10px black;
-        color: white;
       }
     }
   }

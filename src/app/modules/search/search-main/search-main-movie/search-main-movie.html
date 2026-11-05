@@ -1,10 +1,7 @@
-<section
-  class="search-main-section search-main-movie"
-  [ngStyle]="styleBg()"
->
+<section class="search-main-section search-main-movie" [ngStyle]="styleBg()">
   <div class="container-fluid">
     <div class="search-container">
-      <div class="search-box search-movie-box bg-dark">
+      <div class="search-box search-movie-box border" [ngClass]="setBoxClass()">
         <h2 class="text-center">
           <fa-icon [icon]="movieIcon"></fa-icon>
           {{searchMovieText()}}
@@ -13,7 +10,8 @@
         <div class="d-flex justify-content-center">
           <app-search-input-movie
             [enableBorderRadius]="enableBorderRadius()"
-            [dropdownMenuEnd]="dropdownMenuEnd()">
+            [dropdownMenuEnd]="dropdownMenuEnd()"
+            [isLight]="isLight()">
           </app-search-input-movie>
         </div>
       </div>

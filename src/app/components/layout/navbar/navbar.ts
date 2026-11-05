@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, OnDestroy, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, OnDestroy, WritableSignal, signal, computed } from '@angular/core';
 import { faFilm, faUser, faBars, faMagnifyingGlass, IconDefinition, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { LightDarkService } from '../../../services/light-dark-service';
 import { Observable, Subscription } from 'rxjs';
+import { Writable } from 'node:stream';
 
 @Component({
   selector: 'app-navbar',
@@ -26,18 +27,40 @@ export class Navbar implements OnInit, OnDestroy {
   public movieButtonText: WritableSignal<string> = signal('Movie');
   public personButtonText: WritableSignal<string> = signal('Person');
 
-  public isMenuCollapsed: boolean = false;
+  public isMenuCollapsed: WritableSignal<boolean> = signal(false);
   public searchType: WritableSignal<string> = signal('movie');
 
-  public isLight: boolean = true;
+  public isLight: WritableSignal<boolean> = signal(true);
   public isLight$: Observable<boolean> = this.lightDarkService.isLight;
+
+  public setNavbarClass = computed(() => {
+    return {
+      'navbar-dark bg-dark dark-mode':!this.isLight(),
+      'bg-light':this.isLight()
+    }
+  });
+
+  public setButtonClass = computed(() => {
+    return {
+      'border-white text-dark dark-mode':!this.isLight(),
+      'border-dark text-dark':this.isLight()
+    }
+  });
+
+  public setSearchTypeClass = computed(() => {
+    return {
+      'border-white text-dark dark-mode':!this.isLight(),
+      'border-dark text-dark':this.isLight()
+    }
+  });
 
   public changeLightDarkSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.changeLightDarkSubscription = this.isLight$.subscribe({
       next: (status) => {
-        this.isLight = status;
+        console.log(status);
+        this.isLight.set(status);
       }
     });
   }
@@ -47,7 +70,7 @@ export class Navbar implements OnInit, OnDestroy {
   }
 
   public toggleLightDark() {
-    if (this.isLight) {
+    if (this.isLight()) {
       this.lightDarkService.changeToDark();
     } else {
       this.lightDarkService.changeToLight();
