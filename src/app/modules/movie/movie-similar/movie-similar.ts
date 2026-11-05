@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { LoadingService } from '../../../services/loading-service';
@@ -35,12 +35,15 @@ export class MovieSimilar implements OnInit, OnDestroy {
 
   public similarMoviesTitle: WritableSignal<string> = signal('Similar Movies');
 
-  public similarMoviesText: WritableSignal<string> = signal('These movies are similar to');
-  public colonText: WritableSignal<string> = signal(':');
+  public similarMoviesText = computed(() => {
+    return `These movies are similar to ${this.movie()?.title}:`;
+  });
 
   public displayMode = signal('grid');
 
-  public noSimilarMoviesText: WritableSignal<string> = signal('There are no similar movies to');
+  public noSimilarMoviesText = computed(() => {
+    return `There are no similar movies to ${this.movie()?.title}.`;
+  });
 
   private endLoadingSubscription: Subscription = new Subscription();
   private activatedRouteParentSubscription: Subscription = new Subscription();

@@ -6,8 +6,7 @@
     @if (movieResults().length > 0) {
       <h2>{{similarMoviesTitle()}}</h2>
       <p>
-        {{similarMoviesText()}} <strong>{{ movie().title }}</strong
-        >{{colonText()}}
+        {{similarMoviesText()}}
       </p>
       <app-display-selector
         [displayMode]="displayMode()"
@@ -29,7 +28,7 @@
         }
       }
     } @else {
-      <p>{{noSimilarMoviesText()}} <strong>{{movie().title}}</strong>.</p>
+      <p>{{noSimilarMoviesText()}}.</p>
     }
   }
 </section>
