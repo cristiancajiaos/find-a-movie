@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MovieService } from '../../../services/movie-service';
 import { TitleService } from '../../../services/title-service';
@@ -35,12 +35,15 @@ export class MovieRecommendations implements OnInit, OnDestroy {
 
   public movieRecommendationsTitle: WritableSignal<string> = signal('Movie Recommendations');
 
-  public ifYouLikedText: WritableSignal<string> = signal('If you liked');
-  public youWouldLikeText: WritableSignal<string> = signal(', you would like also the following movies:');
+  public movieRecommendationsText = computed(() => {
+    return `If you liked ${this.movie()?.title}, you would like also the following movies:'`;
+  });
 
   public displayMode: WritableSignal<string> = signal('grid');
 
-  public noRecommendedMovies: WritableSignal<string> = signal('There are no recommended movies to');
+  public noRecommendedMoviesText = computed(() => {
+    return `There are no recommended movies to ${this.movie()?.title}.`;
+  });
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieRecommendedSubscription: Subscription = new Subscription();

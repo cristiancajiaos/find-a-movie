@@ -6,8 +6,7 @@
     @if (movieResults().length > 0) {
       <h2>{{ movieRecommendationsTitle() }}</h2>
       <p>
-        {{ ifYouLikedText() }} <strong>{{ movie().title }}</strong
-        >{{ youWouldLikeText() }}
+        {{movieRecommendationsText()}}
       </p>
       <app-display-selector [displayMode]="displayMode()" (onDisplayChange)="changeDisplay($event)">
       </app-display-selector>
@@ -27,7 +26,7 @@
         }
       }
     } @else {
-      <p>{{ noRecommendedMovies() }} {{ movie().title }}.</p>
+      <p>{{ noRecommendedMoviesText() }}</p>
     }
   }
 </section>
