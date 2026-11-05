@@ -42,6 +42,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieKeywords: WritableSignal<MovieKeyword[]> = signal([]);
   public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
   public movieRecommendations: WritableSignal<ResponseMovieResult[]> = signal([]);
+  public similarMovies: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public errorFound: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string> = signal('');
@@ -69,6 +70,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.movieImages.set([]);
     this.movieExternalIds.set(new MovieExternalIds());
     this.movieRecommendations.set([]);
+    this.similarMovies.set([]);
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id());
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
@@ -77,6 +79,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getKeywords: Observable<MovieKeyword[]> = this.movieService.getMovieKeywords(this.id());
     const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
     const getMovieRecommendations: Observable<ResponseMovieResult[]> = this.movieService.getMovieRecommendedMovies(this.id());
+    const getSimilarMovies: Observable<ResponseMovieResult[]> = this.movieService.getMovieSimilarMovies(this.id());
 
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
@@ -85,9 +88,10 @@ export class MovieOverview implements OnInit, OnDestroy {
       getImages,
       getKeywords,
       getExternalIds,
-      getMovieRecommendations
+      getMovieRecommendations,
+      getSimilarMovies
     ]).subscribe({
-      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds, movieRecommendations]) => {
+      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds, movieRecommendations, similarMovies]) => {
         this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideoResult);
@@ -95,6 +99,7 @@ export class MovieOverview implements OnInit, OnDestroy {
         this.movieKeywords.set(movieKeywords);
         this.movieExternalIds.set(movieExternalIds);
         this.movieRecommendations.set(movieRecommendations);
+        this.similarMovies.set(similarMovies);
         this.setTitle();
       },
       error: (error) => {

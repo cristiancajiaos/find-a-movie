@@ -30,6 +30,7 @@ import { MovieOverviewCreditsMenu } from './movie-overview/movie-overview-credit
 import { MovieOverviewKeywords } from './movie-overview/movie-overview-keywords/movie-overview-keywords';
 import { MoviePoster } from './movie-poster/movie-poster';
 import { MovieOverviewRecommendations } from './movie-overview/movie-overview-recommendations/movie-overview-recommendations';
+import { MovieOverviewSimilar } from './movie-overview/movie-overview-similar/movie-overview-similar';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MovieOverviewRecommendations } from './movie-overview/movie-overview-re
     MovieOverviewKeywords,
     MoviePoster,
     MovieOverviewRecommendations,
+    MovieOverviewSimilar,
   ],
   imports: [
     CommonModule,
