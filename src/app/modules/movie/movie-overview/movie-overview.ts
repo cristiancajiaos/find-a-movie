@@ -19,6 +19,7 @@ import { ResponseVideoResult } from '../../../classes/response-video/response-vi
 import { MovieExternalIds } from '../../../classes/movie-external-ids';
 import { MovieKeyword } from '../../../classes/movie-keyword/movie-keyword';
 import { formattedMovieTitle } from '../../../helpers/movie-helper';
+import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 
 @Component({
   selector: 'app-movie-overview',
@@ -40,6 +41,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
   public movieKeywords: WritableSignal<MovieKeyword[]> = signal([]);
   public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
+  public movieRecommendations: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public errorFound: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string> = signal('');
@@ -66,6 +68,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.movieResponseVideo.set(new ResponseVideoResult());
     this.movieImages.set([]);
     this.movieExternalIds.set(new MovieExternalIds());
+    this.movieRecommendations.set([]);
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id());
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
@@ -73,6 +76,7 @@ export class MovieOverview implements OnInit, OnDestroy {
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id());
     const getKeywords: Observable<MovieKeyword[]> = this.movieService.getMovieKeywords(this.id());
     const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
+    const getMovieRecommendations: Observable<ResponseMovieResult[]> = this.movieService.getMovieRecommendedMovies(this.id());
 
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
@@ -80,15 +84,17 @@ export class MovieOverview implements OnInit, OnDestroy {
       getTrailer,
       getImages,
       getKeywords,
-      getExternalIds
+      getExternalIds,
+      getMovieRecommendations
     ]).subscribe({
-      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds]) => {
+      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds, movieRecommendations]) => {
         this.movie.set(movie);
         this.credits.set(credits);
         this.movieResponseVideo.set(responseVideoResult);
         this.movieImages.set(movieImages);
         this.movieKeywords.set(movieKeywords);
         this.movieExternalIds.set(movieExternalIds);
+        this.movieRecommendations.set(movieRecommendations);
         this.setTitle();
       },
       error: (error) => {
