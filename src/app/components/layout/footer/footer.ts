@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, signal, computed } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 
 @Component({
@@ -8,25 +8,19 @@ import { environment } from '../../../../environments/environment.development';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './footer.scss'
 })
-export class Footer implements OnInit {
+export class Footer {
 
-  public creationYear: WritableSignal<number> = signal(0);
-  public currentYear: WritableSignal<number> = signal(0);
+  public creationYear: WritableSignal<number> = signal(new Date (2025, 9, 3).getFullYear());
+  public currentYear: WritableSignal<number> = signal(new Date().getFullYear());
 
-  public authorText: WritableSignal<string> = signal('Cristian Cajiao Skarnic, ');
+  public usesAPIOneText: WritableSignal<string> = signal('Uses the');
+  public tmdbUrl: WritableSignal<string> = signal('https://www.themoviedb.org/');
+  public tmdbImg: WritableSignal<string> = signal('img/tmdb-logo.svg');
+  public usesAPITwoText: WritableSignal<string> = signal('API');
 
-  public usesAPIOne: WritableSignal<string> = signal('Uses the');
-  public usesAPITwo: WritableSignal<string> = signal('API');
+  public appVersionText: WritableSignal<string> = signal(`App version: ${environment.appVersion}`);
 
-  public appVersionText: WritableSignal<string> = signal('App version: ');
-  public appVersion: WritableSignal<string> = signal(environment.appVersion);
-
-  ngOnInit(): void {
-    const creationDate: Date = new Date (2025, 9, 3);
-    const currentDate = new Date();
-
-    this.creationYear.set(creationDate.getFullYear());
-    this.currentYear.set(currentDate.getFullYear());
-  }
-
+  public authorText = computed(() => {
+    return `Cristian Cajiao Skarnic, ${this.creationYear()} - ${this.currentYear()}`;
+  });
 }
