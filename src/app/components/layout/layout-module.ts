@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared-module';
 import { SearchSharedModule } from '../search-shared/search-shared-module';
+import { PipesModule } from '../../pipes/pipes-module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SearchSharedModule } from '../search-shared/search-shared-module';
     FontAwesomeModule,
     RouterModule,
     SharedModule,
-    SearchSharedModule
+    SearchSharedModule,
+    PipesModule
   ],
   exports: [
     Layout,

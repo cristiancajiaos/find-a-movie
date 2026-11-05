@@ -4,7 +4,7 @@
       &#169; {{authorText()}}
       <br />
       {{usesAPIOneText()}}
-      <a [href]="tmdbUrl" target="_blank">
+      <a [href]="tmdbUrl() | safeUrl" target="_blank">
         <img class="tmdb-logo" [src]="tmdbImg()" alt="TMDB Logo" />
       </a>
       {{usesAPITwoText()}}
