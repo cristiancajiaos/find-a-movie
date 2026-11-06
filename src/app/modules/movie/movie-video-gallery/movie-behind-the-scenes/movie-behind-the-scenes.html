@@ -1,1 +1,12 @@
-<p>movie-behind-the-scenes works!</p>
+@if (movieBehindTheScenesVideos().length > 0) {
+  <section class="movie-behind-the-scenes">
+    <h2>{{movieBehindTheScenesTitle()}}</h2>
+    <div class="row">
+      @for (behindTheScenesVideo of movieBehindTheScenesVideos(); track behindTheScenesVideo.id) {
+        <div class="col-12 col-sm-6">
+          <app-movie-video [video]="behindTheScenesVideo"></app-movie-video>
+        </div>
+      }
+    </div>
+  </section>
+}

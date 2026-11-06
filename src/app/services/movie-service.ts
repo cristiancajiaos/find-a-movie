@@ -111,6 +111,7 @@ export class MovieService {
     }
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
       map(responseVideoResult => responseVideoResult.results),
+      tap(foo => console.log(foo)),
       tap(videos => this.movieVideos.set(`movieVideos-${id}`, videos))
     );
   }

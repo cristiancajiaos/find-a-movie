@@ -10,7 +10,7 @@
       <app-movie-trailers [movieVideos]="movieVideos()"></app-movie-trailers>
       <app-movie-teasers [movieVideos]="movieVideos()"></app-movie-teasers>
       <app-movie-featurettes [movieVideos]="movieVideos()"></app-movie-featurettes>
-      <app-movie-behind-the-scenes></app-movie-behind-the-scenes>
+      <app-movie-behind-the-scenes [movieVideos]="movieVideos()"></app-movie-behind-the-scenes>
     } @else {
       <p>{{noMovieVideosText()}}</p>
     }
