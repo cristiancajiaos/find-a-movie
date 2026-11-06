@@ -15,14 +15,10 @@ export class Navbar implements OnInit, OnDestroy {
   private lightDarkService = inject(LightDarkService);
 
   public filmIcon: IconDefinition = faFilm;
-  public userIcon: IconDefinition = faUser;
 
   public appTitle: WritableSignal<string> = signal('Find a Movie');
-  public movieButtonText: WritableSignal<string> = signal('Movie');
-  public personButtonText: WritableSignal<string> = signal('Person');
 
   public isMenuCollapsed: WritableSignal<boolean> = signal(false);
-  public searchType: WritableSignal<string> = signal('movie');
 
   public isLight: WritableSignal<boolean> = signal(true);
   public isLight$: Observable<boolean> = this.lightDarkService.isLight;
@@ -34,13 +30,6 @@ export class Navbar implements OnInit, OnDestroy {
     }
   });
 
-  public setSearchTypeClass = computed(() => {
-    return {
-      'border-white text-dark dark-mode':!this.isLight(),
-      'border-dark text-dark':this.isLight()
-    }
-  });
-
   public changeLightDarkSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
@@ -49,18 +38,6 @@ export class Navbar implements OnInit, OnDestroy {
         this.isLight.set(status);
       }
     });
-  }
-
-  public selectSearchType(searchType: string): void {
-    this.searchType.set(searchType);
-  }
-
-  public toggleLightDark() {
-    if (this.isLight()) {
-      this.lightDarkService.changeToDark();
-    } else {
-      this.lightDarkService.changeToLight();
-    }
   }
 
   ngOnDestroy(): void {
