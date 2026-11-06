@@ -8,11 +8,8 @@
     <hr />
     @if (movieVideos().length > 0) {
       <app-movie-trailers [movieVideos]="movieVideos()"></app-movie-trailers>
-      <hr />
-      <app-movie-teasers></app-movie-teasers>
-      <hr />
+      <app-movie-teasers [movieVideos]="movieVideos()"></app-movie-teasers>
       <app-movie-featurettes></app-movie-featurettes>
-      <hr />
       <app-movie-behind-the-scenes></app-movie-behind-the-scenes>
     } @else {
       <p>{{noMovieVideosText()}}</p>

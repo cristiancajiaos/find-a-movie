@@ -1,6 +1,6 @@
-<section class="movie-trailers">
-  <h2>{{ movieTrailersTitle() }}</h2>
-  @if (movieTrailers().length > 0) {
+@if (movieTrailers().length > 0) {
+  <section class="movie-trailers">
+    <h2>{{ movieTrailersTitle() }}</h2>
     <div class="row">
       @for (trailer of movieTrailers(); track trailer.id) {
         <div class="col-12 col-sm-6">
@@ -8,5 +8,6 @@
         </div>
       }
     </div>
-  }
-</section>
+  </section>
+  <hr/>
+}

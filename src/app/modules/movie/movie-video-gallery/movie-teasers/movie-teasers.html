@@ -1,1 +1,12 @@
-<p>movie-teasers works!</p>
+@if (movieTeasers().length > 0) {
+  <section class="movie-teasers">
+    <h2>{{ movieTeasersTitle() }}</h2>
+    <div class="row">
+      @for (teaser of movieTeasers(); track teaser.id) {
+        <div class="col-12 col-sm-6">
+          <app-movie-video [video]="teaser"></app-movie-video>
+        </div>
+      }
+    </div>
+  </section>
+}
