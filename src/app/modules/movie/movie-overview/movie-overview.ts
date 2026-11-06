@@ -37,7 +37,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
   public movie: WritableSignal<Movie> = signal(new Movie());
   public credits: WritableSignal<Credits> = signal(new Credits());
-  public movieResponseVideo: WritableSignal<ResponseVideoResult> = signal(new ResponseVideoResult());
+  public movieVideos: WritableSignal<ResponseVideoResult[]> = signal([]);
   public movieImages: WritableSignal<BackdropImage[]> = signal([]);
   public movieKeywords: WritableSignal<MovieKeyword[]> = signal([]);
   public movieExternalIds: WritableSignal<MovieExternalIds> = signal(new MovieExternalIds());
@@ -66,7 +66,7 @@ export class MovieOverview implements OnInit, OnDestroy {
   private getMovieAndCredits() {
     this.movie.set(new Movie());
     this.credits.set(new Credits());
-    this.movieResponseVideo.set(new ResponseVideoResult());
+    this.movieVideos.set([]);
     this.movieImages.set([]);
     this.movieExternalIds.set(new MovieExternalIds());
     this.movieRecommendations.set([]);
@@ -74,7 +74,7 @@ export class MovieOverview implements OnInit, OnDestroy {
 
     const getMovie: Observable<Movie> = this.movieService.getMovie(this.id());
     const getCredits: Observable<Credits> = this.movieService.getMovieCredits(this.id());
-    const getTrailer: Observable<ResponseVideoResult> = this.movieService.getMovieTrailer(this.id());
+    const getMovieVideos: Observable<ResponseVideoResult[]> = this.movieService.getMovieVideos(this.id());
     const getImages: Observable<BackdropImage[]> = this.movieService.getMovieImages(this.id());
     const getKeywords: Observable<MovieKeyword[]> = this.movieService.getMovieKeywords(this.id());
     const getExternalIds: Observable<MovieExternalIds> = this.movieService.getMovieExternalIds(this.id());
@@ -84,17 +84,17 @@ export class MovieOverview implements OnInit, OnDestroy {
     this.getMovieDetailsSubscription = forkJoin([
       getMovie,
       getCredits,
-      getTrailer,
+      getMovieVideos,
       getImages,
       getKeywords,
       getExternalIds,
       getMovieRecommendations,
       getSimilarMovies
     ]).subscribe({
-      next: ([movie, credits, responseVideoResult, movieImages, movieKeywords, movieExternalIds, movieRecommendations, similarMovies]) => {
+      next: ([movie, credits, movieVideos, movieImages, movieKeywords, movieExternalIds, movieRecommendations, similarMovies]) => {
         this.movie.set(movie);
         this.credits.set(credits);
-        this.movieResponseVideo.set(responseVideoResult);
+        this.movieVideos.set(movieVideos);
         this.movieImages.set(movieImages);
         this.movieKeywords.set(movieKeywords);
         this.movieExternalIds.set(movieExternalIds);

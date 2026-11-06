@@ -28,6 +28,7 @@ export class MovieService {
   private creditsCast = new Map<string, CastMember[]>();
   private creditsCrew = new Map<string, CrewMember[]>();
   private movieTrailer = new Map<string, ResponseVideoResult>();
+  private movieVideos = new Map<string, ResponseVideoResult[]>();
   private movieImages = new Map<string, BackdropImage[]>();
   private movieKeywords = new Map<string, MovieKeyword[]>();
   private movieExternalIds = new Map<string, MovieExternalIds>();
@@ -102,6 +103,16 @@ export class MovieService {
       })[0]),
       tap(responseVideo => this.movieTrailer.set(`movieTrailer-${id}`, responseVideo))
     )
+  }
+
+  public getMovieVideos(id: number): Observable<ResponseVideoResult[]> {
+    if (this.movieVideos.has(`movieVideos-${id}`)) {
+      return of(this.movieVideos.get(`movieVideos-${id}`));
+    }
+    return this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
+      map(responseVideoResult => responseVideoResult.results),
+      tap(videos => this.movieVideos.set(`movieVideos-${id}`, videos))
+    );
   }
 
   public getMovieImages(id: number): Observable<BackdropImage[]> {

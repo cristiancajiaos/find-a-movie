@@ -11,8 +11,8 @@
   } @else {
     <section class="no-trailer-available">
       <img
-        src="img/default-images/movie_trailer_not_available.jpg"
-        alt="No trailer available"
+        [src]="noTrailerAvailableImgUrl()"
+        [alt]="noTrailerAvailableImgText()"
         class="img-fluid"
       />
     </section>

@@ -22,18 +22,24 @@ export class MovieOverviewTrailer implements OnChanges {
   public movieTrailerUrl: WritableSignal<string> = signal('');
   public movieTrailerKey: WritableSignal<string> = signal('');
 
-  public responseVideo: InputSignal<ResponseVideoResult> = input.required<ResponseVideoResult>();
+  public movieVideos: InputSignal<ResponseVideoResult[]> = input.required<ResponseVideoResult[]>();
 
   public trailerTitle: WritableSignal<string> = signal('Trailer');
+  public noTrailerAvailableImgText: WritableSignal<string> = signal('No trailer available');
+  public noTrailerAvailableImgUrl: WritableSignal<string> = signal('img/default-images/movie_trailer_not_available.jpg');
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setMovieTrailer();
   }
 
   private setMovieTrailer(): void {
-    if (this.responseVideo()) {
-      const key: string = this.responseVideo().key;
-      this.movieTrailerKey.set(this.responseVideo().key ? this.responseVideo().key : '');
+    const movieTrailer: ResponseVideoResult = this.movieVideos().filter(video => {
+      return video.type == 'Trailer'
+    })[0];
+
+    if (movieTrailer) {
+      const key: string = movieTrailer.key;
+      this.movieTrailerKey.set(movieTrailer.key ? movieTrailer.key : '');
       this.movieTrailerUrl.set(`${environment.youtubeEmbedUrl}${key}`);
     }
   }
