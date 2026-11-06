@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input, InputSignal, OnChanges, signal, SimpleChanges, WritableSignal } from '@angular/core';
+import { ResponseVideoResult } from '../../../../classes/response-video/response-video-result';
 
 @Component({
   selector: 'app-movie-featurettes',
@@ -6,6 +7,22 @@ import { Component } from '@angular/core';
   templateUrl: './movie-featurettes.html',
   styleUrl: './movie-featurettes.scss',
 })
-export class MovieFeaturettes {
+export class MovieFeaturettes implements OnChanges {
+
+  public movieVideos: InputSignal<ResponseVideoResult[]> = input.required<ResponseVideoResult[]>();
+
+  public movieFeaturettes: WritableSignal<ResponseVideoResult[]> = signal([]);
+
+  public movieFeaturettesTitle: WritableSignal<string> = signal('Featurettes');
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setMovieFeaturettes();
+  }
+
+  private setMovieFeaturettes(): void {
+    this.movieFeaturettes.set(this.movieVideos().filter(video => {
+      return video.type == 'Featurette'
+    }));
+  }
 
 }

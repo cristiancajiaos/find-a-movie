@@ -14,6 +14,7 @@ export class MovieTeasers implements OnChanges {
   public movieTeasers: WritableSignal<ResponseVideoResult[]> = signal([]);
 
   public movieTeasersTitle: WritableSignal<string> = signal('Teasers');
+
   ngOnChanges(changes: SimpleChanges): void {
     this.setMovieTeasers();
   }

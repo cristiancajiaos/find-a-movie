@@ -1,1 +1,13 @@
-<p>movie-featurettes works!</p>
+@if (movieFeaturettes().length > 0) {
+  <section class="movie-featurettes">
+    <h2>{{movieFeaturettesTitle()}}</h2>
+    <div class="row">
+      @for (featurette of movieFeaturettes(); track featurette.id) {
+        <div class="col-12 col-sm-6">
+          <app-movie-video [video]="featurette"></app-movie-video>
+        </div>
+      }
+    </div>
+  </section>
+  <hr/>
+}
