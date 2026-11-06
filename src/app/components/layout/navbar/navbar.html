@@ -10,40 +10,7 @@
     >
       <div ngbDropdown class="search-dropdown d-flex">
         <app-toggle-dark-mode></app-toggle-dark-mode>
-        <button
-          type="button"
-          class="btn btn-select-search-type border-end-0"
-          [ngClass]="setSearchTypeClass()"
-          id="selectSearchType"
-          ngbDropdownToggle
-        >
-          @switch (searchType()) {
-            @case ('movie') {
-              <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon> {{movieButtonText()}}
-            }
-            @case ('person') {
-              <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon> {{personButtonText()}}
-            }
-          }
-        </button>
-        <div ngbDropdownMenu aria-labelledby="selectSearchType">
-          <button ngbDropdownItem (click)="selectSearchType('movie')">
-            <fa-icon [icon]="filmIcon" [fixedWidth]="true"></fa-icon>
-            {{movieButtonText()}}
-          </button>
-          <button ngbDropdownItem (click)="selectSearchType('person')">
-            <fa-icon [icon]="userIcon" [fixedWidth]="true"></fa-icon>
-            {{personButtonText()}}
-          </button>
-        </div>
-        @switch (searchType()) {
-          @case ('movie') {
-            <app-search-input-movie [isLight]="isLight()"></app-search-input-movie>
-          }
-          @case ('person') {
-            <app-search-input-person [isLight]="isLight()"></app-search-input-person>
-          }
-        }
+        <app-select-input-search></app-select-input-search>
       </div>
     </div>
   </div>

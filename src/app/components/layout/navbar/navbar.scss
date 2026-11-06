@@ -2,8 +2,7 @@ nav {
   &.navbar {
     border-bottom: 1px solid rgba(33, 37, 41, 1);
 
-    .navbar-brand,
-    .search-dropdown {
+    .navbar-brand {
       font-family: 'Oswald', 'Arial', sans-serif;
     }
 
@@ -11,10 +10,6 @@ nav {
       .btn-select-search-type {
         border-radius: 0.375rem 0 0 0.375rem;
       }
-    }
-
-    .btn-search {
-      margin-right: 3rem;
     }
 
     &.dark-mode {

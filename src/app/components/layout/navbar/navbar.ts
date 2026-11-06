@@ -16,8 +16,6 @@ export class Navbar implements OnInit, OnDestroy {
 
   public filmIcon: IconDefinition = faFilm;
   public userIcon: IconDefinition = faUser;
-  public barsIcon: IconDefinition = faBars;
-  public searchIcon: IconDefinition = faMagnifyingGlass;
 
   public appTitle: WritableSignal<string> = signal('Find a Movie');
   public movieButtonText: WritableSignal<string> = signal('Movie');
