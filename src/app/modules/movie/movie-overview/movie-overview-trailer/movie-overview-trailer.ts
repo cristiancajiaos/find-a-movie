@@ -10,6 +10,7 @@ import {
 import { ResponseVideoResult } from '../../../../classes/response-video/response-video-result';
 import { environment } from '../../../../../environments/environment.development';
 import { WritableSignal } from '@angular/core';
+import { Movie } from '../../../../classes/movie';
 @Component({
   selector: 'app-movie-overview-trailer',
   standalone: false,
@@ -22,9 +23,13 @@ export class MovieOverviewTrailer implements OnChanges {
   public movieTrailerUrl: WritableSignal<string> = signal('');
   public movieTrailerKey: WritableSignal<string> = signal('');
 
+  public movie: InputSignal<Movie> = input.required<Movie>();
   public movieVideos: InputSignal<ResponseVideoResult[]> = input.required<ResponseVideoResult[]>();
 
   public trailerTitle: WritableSignal<string> = signal('Trailer');
+
+  public viewVideoGalleryText: WritableSignal<string> = signal('View Video Gallery');
+
   public noTrailerAvailableImgText: WritableSignal<string> = signal('No trailer available');
   public noTrailerAvailableImgUrl: WritableSignal<string> = signal('img/default-images/movie_trailer_not_available.jpg');
 

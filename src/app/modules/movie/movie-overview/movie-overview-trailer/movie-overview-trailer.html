@@ -1,7 +1,7 @@
 <section class="movie-overview-trailer">
-  <h3>{{trailerTitle()}}</h3>
+  <h3>{{ trailerTitle() }}</h3>
   @if (movieTrailerKey()) {
-    <section class="movie-trailer">
+    <section class="movie-trailer mb-2">
       <div class="row">
         <div class="col-12">
           <iframe [src]="movieTrailerUrl() | safeUrl"></iframe>
@@ -9,7 +9,7 @@
       </div>
     </section>
   } @else {
-    <section class="no-trailer-available">
+    <section class="no-trailer-available mb-2">
       <img
         [src]="noTrailerAvailableImgUrl()"
         [alt]="noTrailerAvailableImgText()"
@@ -17,4 +17,9 @@
       />
     </section>
   }
+  <div class="d-grid mb-2">
+    <a [routerLink]="['/movie', movie().id, 'video-gallery']" class="btn btn-light border-dark">
+      {{viewVideoGalleryText()}}
+    </a>
+  </div>
 </section>
