@@ -1,0 +1,13 @@
+<section class="movie-video">
+  <div class="row">
+    <div class="col-12">
+      <iframe [src]="movieVideoUrl() | safeUrl"></iframe>
+      <p>
+        @if (video().official) {
+          <span class="badge text-bg-dark"> {{officialBadge()}} </span>
+        }
+        {{ video().name }}
+      </p>
+    </div>
+  </div>
+</section>

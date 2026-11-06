@@ -1,0 +1,12 @@
+<section class="movie-trailers">
+  <h2>{{ movieTrailersTitle() }}</h2>
+  @if (movieTrailers().length > 0) {
+    <div class="row">
+      @for (trailer of movieTrailers(); track trailer.id) {
+        <div class="col-12 col-sm-6">
+          <app-movie-video [video]="trailer"></app-movie-video>
+        </div>
+      }
+    </div>
+  }
+</section>

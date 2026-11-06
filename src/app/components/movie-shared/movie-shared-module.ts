@@ -4,21 +4,26 @@ import { MovieNotFound } from './movie-not-found/movie-not-found';
 import { MovieError } from './movie-error/movie-error';
 import { MovieErrorFullscreen } from './movie-error-fullscreen/movie-error-fullscreen';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MovieVideo } from './movie-video/movie-video';
+import { PipesModule } from '../../pipes/pipes-module';
 
 @NgModule({
   declarations: [
     MovieNotFound,
     MovieError,
-    MovieErrorFullscreen
+    MovieErrorFullscreen,
+    MovieVideo
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PipesModule
   ],
   exports: [
     MovieNotFound,
     MovieError,
-    MovieErrorFullscreen
+    MovieErrorFullscreen,
+    MovieVideo
   ]
 })
 export class MovieSharedModule { }

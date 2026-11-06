@@ -7,6 +7,8 @@ import { LoadingService } from '../../../services/loading-service';
 import { Movie } from '../../../classes/movie';
 import { Subscription } from 'rxjs';
 import { formattedMovieTitle } from '../../../helpers/movie-helper';
+import { ResponseVideoResult } from '../../../classes/response-video/response-video-result';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-movie-video-gallery',
@@ -26,6 +28,7 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
   public id: WritableSignal<number> = signal(0);
 
   public movie: WritableSignal<Movie> = signal(null);
+  public movieVideos: WritableSignal<ResponseVideoResult[]> = signal([]);
 
   public movieVideoGalleryError: WritableSignal<boolean> = signal(false);
   public errorMessage: WritableSignal<string> = signal('');
@@ -41,7 +44,10 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
   public movieFeaturettesTitle: WritableSignal<string> = signal('Featurettes');
   public movieBethindTheScenesTitle: WritableSignal<string> = signal('Bethind The Scenes Videos');
 
+  public noMovieVideosText: WritableSignal<string> = signal('No movie videos are available');
+
   private activatedRouteParentSubscription: Subscription = new Subscription();
+  private getMovieVideoGallerySubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.setId();
@@ -51,8 +57,8 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
   private setId(): void {
     this.activatedRouteParentSubscription = this.activatedRoute.parent.params?.subscribe(
       (params) => {
-        this.id.set(parseInt(params['id']
-        ))
+        this.id.set(parseInt(params['id']));
+        this.getVideoGallery();
       }
     );
   }
@@ -63,7 +69,21 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
   }
 
   private getVideoGallery(): void {
+    this.movieVideoGalleryError.set(false);
+    this.getMovieVideoGallerySubscription = this.movieService.getMovieVideos(this.id()).subscribe({
+      next: (movieVideos) => {
+        this.movieVideos.set(movieVideos);
+      },
+      error: (error) => {
+        this.handleError(error);
+      },
+      complete: () => {}
+    });
+  }
 
+  private handleError(error: HttpErrorResponse) {
+    this.movieVideoGalleryError.set(true);
+    this.errorMessage.set(error.message);
   }
 
   private setTitle(): void {
@@ -82,6 +102,9 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.activatedRouteParentSubscription) {
       this.activatedRouteParentSubscription.unsubscribe();
+    }
+    if (this.getMovieVideoGallerySubscription) {
+      this.getMovieVideoGallerySubscription.unsubscribe();
     }
   }
 }
