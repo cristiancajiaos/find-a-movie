@@ -31,6 +31,7 @@ import { MovieOverviewKeywords } from './movie-overview/movie-overview-keywords/
 import { MoviePoster } from './movie-poster/movie-poster';
 import { MovieOverviewRecommendations } from './movie-overview/movie-overview-recommendations/movie-overview-recommendations';
 import { MovieOverviewSimilar } from './movie-overview/movie-overview-similar/movie-overview-similar';
+import { MovieVideoGallery } from './movie-video-gallery/movie-video-gallery';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MovieOverviewSimilar } from './movie-overview/movie-overview-similar/mo
     MoviePoster,
     MovieOverviewRecommendations,
     MovieOverviewSimilar,
+    MovieVideoGallery,
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { MovieFullCrew } from './movie-full-crew/movie-full-crew';
 import { MovieOverview } from './movie-overview/movie-overview';
 import { MovieSimilar } from './movie-similar/movie-similar';
 import { MovieRecommendations } from './movie-recommendations/movie-recommendations';
+import { MovieVideoGallery } from './movie-video-gallery/movie-video-gallery';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path: 'cast', component: MovieCast, pathMatch: 'full'},
       {path: 'crew', component: MovieCrew, pathMatch: 'full'},
       {path: 'full-crew', component: MovieFullCrew, pathMatch: 'full'},
+      {path: 'video-gallery', component: MovieVideoGallery, pathMatch: 'full'},
       {path: 'recommendations', component: MovieRecommendations, pathMatch: 'full'},
       {path: 'similar', component: MovieSimilar, pathMatch: 'full'},
       {path: '', redirectTo: 'overview', pathMatch: 'full'}

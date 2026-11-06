@@ -1,0 +1,13 @@
+<section class="movie-video-gallery">
+  @if (movieVideoGalleryError()) {
+    <app-movie-error [errorMessage]="errorMessage()" (reload)="reloadVideoGallery($event)">
+    </app-movie-error>
+  } @else {
+    <h2>{{movieVideoGalleryTitle()}}</h2>
+    <p>{{movieVideoGalleryText()}}</p>
+    <hr/>
+    <p>id: {{id()}}</p>
+    <p>movie: {{movie() | json}}</p>
+  }
+</section>
+

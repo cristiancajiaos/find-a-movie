@@ -8,10 +8,11 @@ import { Component, signal, WritableSignal } from '@angular/core';
 })
 export class MovieNav {
 
-  public overviewMenu: WritableSignal<string> = signal('Overview');
-  public castMenu: WritableSignal<string> = signal('Cast');
-  public featuredCrewMenu: WritableSignal<string> = signal('Featured Crew');
-  public fullCrewMenu: WritableSignal<string> = signal('Full Crew');
-  public recommendationsMenu: WritableSignal<string> = signal('Recommendations');
-  public similarMenu: WritableSignal<string> = signal('Similar');
+  public overviewMenuText: WritableSignal<string> = signal('Overview');
+  public castMenuText: WritableSignal<string> = signal('Cast');
+  public featuredCrewMenuText: WritableSignal<string> = signal('Featured Crew');
+  public fullCrewMenuText: WritableSignal<string> = signal('Full Crew');
+  public videoGalleryMenuText: WritableSignal<string> = signal('Video Gallery');
+  public recommendationsMenuText: WritableSignal<string> = signal('Recommendations');
+  public similarMenuText: WritableSignal<string> = signal('Similar');
 }

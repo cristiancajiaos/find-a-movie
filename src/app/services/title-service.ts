@@ -34,6 +34,10 @@ export class TitleService {
     this.title.setTitle(`Full Crew of ${title} | ${this.defaultTitle()}`);
   }
 
+  public setMovieVideoGalleryTitle(title: string): void {
+    this.title.setTitle(`Video Gallery of ${title} | ${this.defaultTitle()}`);
+  }
+
   public setMovieRecommendedTitle(title: string) {
     this.title.setTitle(`Recommended titles if you saw ${title} | ${this.defaultTitle()}`);
   }
