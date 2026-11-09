@@ -33,8 +33,6 @@ import { MovieOverviewRecommendations } from './movie-overview/movie-overview-re
 import { MovieOverviewSimilar } from './movie-overview/movie-overview-similar/movie-overview-similar';
 import { MovieVideoGallery } from './movie-video-gallery/movie-video-gallery';
 import { MovieTrailers } from './movie-video-gallery/movie-trailers/movie-trailers';
-import { MovieTeasers } from './movie-video-gallery/movie-teasers/movie-teasers';
-import { MovieFeaturettes } from './movie-video-gallery/movie-featurettes/movie-featurettes';
 import { MovieBehindTheScenes } from './movie-video-gallery/movie-behind-the-scenes/movie-behind-the-scenes';
 import { MovieClips } from './movie-video-gallery/movie-clips/movie-clips';
 
@@ -63,8 +61,6 @@ import { MovieClips } from './movie-video-gallery/movie-clips/movie-clips';
     MovieOverviewSimilar,
     MovieVideoGallery,
     MovieTrailers,
-    MovieTeasers,
-    MovieFeaturettes,
     MovieBehindTheScenes,
     MovieClips,
   ],
