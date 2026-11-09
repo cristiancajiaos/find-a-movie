@@ -48,10 +48,16 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
 
   private activatedRouteParentSubscription: Subscription = new Subscription();
   private getMovieVideoGallerySubscription: Subscription = new Subscription();
+  private endLoadingSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.setId();
     this.getMovie();
+    this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
+      if (this.movie()) {
+        this.setTitle();
+      }
+    });
   }
 
   private setId(): void {
@@ -105,6 +111,9 @@ export class MovieVideoGallery implements OnInit, OnDestroy {
     }
     if (this.getMovieVideoGallerySubscription) {
       this.getMovieVideoGallerySubscription.unsubscribe();
+    }
+    if (this.endLoadingSubscription) {
+      this.endLoadingSubscription.unsubscribe();
     }
   }
 }
