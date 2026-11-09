@@ -36,6 +36,7 @@ import { MovieTrailers } from './movie-video-gallery/movie-trailers/movie-traile
 import { MovieTeasers } from './movie-video-gallery/movie-teasers/movie-teasers';
 import { MovieFeaturettes } from './movie-video-gallery/movie-featurettes/movie-featurettes';
 import { MovieBehindTheScenes } from './movie-video-gallery/movie-behind-the-scenes/movie-behind-the-scenes';
+import { MovieClips } from './movie-video-gallery/movie-clips/movie-clips';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { MovieBehindTheScenes } from './movie-video-gallery/movie-behind-the-sce
     MovieTeasers,
     MovieFeaturettes,
     MovieBehindTheScenes,
+    MovieClips,
   ],
   imports: [
     CommonModule,

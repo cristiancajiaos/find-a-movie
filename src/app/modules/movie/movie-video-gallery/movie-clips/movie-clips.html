@@ -1,0 +1,12 @@
+@if (movieClipVideos().length > 0) {
+  <section class="movie-clips">
+    <h2>{{movieClipsTitle()}}</h2>
+    <div class="row">
+      @for (movieClipVideo of movieClipVideos(); track movieClipVideo.id) {
+        <div class="col-12 col-sm-6">
+          <app-movie-video [video]="movieClipVideo"></app-movie-video>
+        </div>
+      }
+    </div>
+  </section>
+}
