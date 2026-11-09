@@ -60,7 +60,7 @@ export class MovieRecommendations implements OnInit, OnDestroy {
       }
     });
     this.endLoadingSubscription = this.loadingService.isEndLoading.subscribe((bool) => {
-      if (this.movie) {
+      if (this.movie()) {
         this.setTitle();
       }
     });
