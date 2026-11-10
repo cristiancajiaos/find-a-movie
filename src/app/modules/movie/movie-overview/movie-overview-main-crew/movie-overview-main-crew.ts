@@ -97,6 +97,28 @@ export class MovieOverviewMainCrew implements OnChanges {
   }
 
   private filterMainCrew(): void {
+    this.direction.set([]);
+    this.coDirection.set([]);
+    this.allWriters.set([]);
+    this.writing.set([]);
+    this.teleplay.set([]);
+    this.story.set([]);
+    this.screenstory.set([]);
+    this.basedOnPoemBy.set([]);
+    this.basedOnNovelBy.set([]);
+    this.basedOnStoryBy.set([]);
+    this.basedOnCharactersBy.set([]);
+    this.basedOnBookBy.set([]);
+    this.basedOnComicBookBy.set([]);
+    this.basedOnFilmWrittenBy.set([]);
+    this.basedOnTVSeriesCreatedBy.set([]);
+    this.basedOnTheatrePlayBy.set([]);
+    this.basedOnMusicalBy.set([]);
+    this.basedOnVideoGameBy.set([]);
+    this.originalConceptBy.set([]);
+    this.executiveProducing.set([]);
+    this.coExecutiveProducing.set([]);
+
     if (this.movieCrew().length > 0) {
       this.direction.set(this.movieCrew().filter((crewMember) => crewMember.job == 'Director'));
 
