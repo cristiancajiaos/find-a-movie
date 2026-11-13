@@ -71,7 +71,7 @@
           @if (movie().runtime && movie().runtime > 0) {
             <tr>
               <td>{{runtimeText()}}</td>
-              <td>{{ movie().runtime }} min</td>
+              <td>{{ movie().runtime | movieOverviewInfotableRuntime}} </td>
             </tr>
           }
           @if (movie().budget && movie().budget > 0) {
