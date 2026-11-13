@@ -8,21 +8,12 @@ import { CastMember } from '../../../../classes/credits/cast-member';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './movie-overview-main-cast.scss',
 })
-export class MovieOverviewMainCast implements OnChanges {
-
-  public movieMainCast: WritableSignal<CastMember[]> = signal([]);
+export class MovieOverviewMainCast {
 
   public movieCast: InputSignal<CastMember[]> = input.required<CastMember[]>();
 
   public mainCastTitle: WritableSignal<string> = signal('Main Cast');
   public noCastText: WritableSignal<string> = signal('This movie has no recognizable cast');
   public starringText: WritableSignal<string> = signal('Starring:');
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.setMainCast();
-  }
-
-  private setMainCast(): void {
-    this.movieMainCast.set(this.movieCast().slice(0, 7));
-  }
+  
 }

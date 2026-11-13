@@ -1,16 +1,16 @@
 <section class="movie-overview-main-cast">
   <h3>{{mainCastTitle()}}</h3>
-  @if (movieMainCast().length == 0) {
+  @if (movieCast().length == 0) {
     <p>{{noCastText()}}</p>
   }
-  @if (movieMainCast().length > 0) {
+  @if (movieCast().length > 0) {
     <div class="table-responsive">
       <table class="table">
         <tbody>
           <tr>
             <td>{{starringText()}}</td>
             <td class="text-end">
-              @for (cast of movieMainCast(); track cast.id) {
+              @for (cast of movieCast() | limitMovieOverviewMainCast; track cast.id) {
                 <a [routerLink]="['/person', cast.id]">
                   {{ cast.name }}
                 </a>
