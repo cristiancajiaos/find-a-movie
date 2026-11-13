@@ -66,8 +66,9 @@ export class SearchInputPerson implements OnInit, OnDestroy {
   public listenPersonInputChanges(): void {
     this.personResultsSubscription = this.personInput.valueChanges.pipe(
       tap(inputValue => {
-        this.personResults.set([]);
         this.loadingResults.set(true);
+        this.personResults.set([]);
+        this.showPersonDropdownBasedOnPersonInput();
       }),
       debounceTime(500),
       switchMap((personInput) => {
@@ -76,7 +77,6 @@ export class SearchInputPerson implements OnInit, OnDestroy {
       finalize(() => {})
     ).subscribe(results => {
       this.personResults.set(results);
-      this.showPersonDropdownBasedOnPersonInput();
       this.loadingResults.set(false);
     });
   }

@@ -39,9 +39,13 @@
           </a>
         }
         @if (movieResults().length == 0) {
-          <a ngbDropdownItem class="no-results-obtained">
-            {{ noResultsObtainedText() }}
-          </a>
+          @if (loadingResults()) {
+            <app-search-input-loading></app-search-input-loading>
+          } @else {
+            <a ngbDropdownItem class="no-results-obtained">
+              {{ noResultsObtainedText() }}
+            </a>
+          }
         }
       </div>
     </div>

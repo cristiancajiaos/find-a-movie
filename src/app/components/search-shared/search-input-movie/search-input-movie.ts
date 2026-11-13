@@ -36,6 +36,8 @@ export class SearchInputMovie implements OnInit, OnDestroy {
 
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
+  public loadingResults: WritableSignal<boolean> = signal(false);
+
   public enableBorderRadius: InputSignal<boolean> = input<boolean>(false);
   public dropdownMenuEnd: InputSignal<boolean> = input<boolean>(true);
   public isLight: InputSignal<boolean> = input.required<boolean>();
@@ -74,6 +76,12 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public listenMovieInputChanges(): void {
     this.movieResultsSubscription = this.movieInput.valueChanges
       .pipe(
+        tap(inputValue => {
+          console.log(inputValue);
+          this.loadingResults.set(true);
+          this.movieResults.set([]);
+          this.showMovieDropdownBasedOnMovieInput();
+        }),
         debounceTime(500),
         switchMap((movieInput) => {
           return this.searchService.searchMovieInput(movieInput);
@@ -82,7 +90,7 @@ export class SearchInputMovie implements OnInit, OnDestroy {
       )
       .subscribe((results) => {
         this.movieResults.set(results);
-        this.showMovieDropdownBasedOnMovieInput();
+        this.loadingResults.set(false);
       });
   }
 
