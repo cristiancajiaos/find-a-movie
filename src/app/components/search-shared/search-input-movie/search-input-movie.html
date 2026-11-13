@@ -13,18 +13,17 @@
           [aria-label]="ariaLabel()"
           [formControl]="movieInput"
         />
-        <button
-          class="btn border" [ngClass]="setButtonClass()"
-          type="submit">
+        <button class="btn border" [ngClass]="setButtonClass()" type="submit">
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>
       </div>
       <div
         ngbDropdownMenu
         class="dropdown-menu dropdown-search-movie"
-        [ngClass]="{'dropdown-menu-end': dropdownMenuEnd()}">
-        @if (movieResults.length > 0) {
-          @for (movie of movieResults; track movie.id) {
+        [ngClass]="{ 'dropdown-menu-end': dropdownMenuEnd() }"
+      >
+        @if (movieResults().length > 0) {
+          @for (movie of movieResults() | limitSearchMovieResults: 5; track movie.id) {
             <app-search-input-movie-result
               [movieResult]="movie"
               (clickResult)="goToMovieClose($event)"
@@ -32,16 +31,16 @@
             </app-search-input-movie-result>
           }
         }
-        @if (originalMovieResults.length > 5) {
+        @if (movieResults().length > 5) {
           <div class="dropdown-divider"></div>
           <a ngbDropdownItem class="view-all-results text-dark" (click)="processMovieSearch()">
             <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
-            {{viewAllResultsText()}}
+            {{ viewAllResultsText() }}
           </a>
         }
-        @if (movieResults.length == 0) {
+        @if (movieResults().length == 0) {
           <a ngbDropdownItem class="no-results-obtained">
-            {{noResultsObtainedText()}}
+            {{ noResultsObtainedText() }}
           </a>
         }
       </div>

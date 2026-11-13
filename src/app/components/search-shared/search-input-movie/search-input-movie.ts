@@ -16,7 +16,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
+import { debounceTime, finalize, Subscription, switchMap, tap } from 'rxjs';
 import { SearchService } from '../../../services/search-service';
 import { ResponseMovieResult } from '../../../classes/response-search-movie/response-movie-result';
 
@@ -34,8 +34,7 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public searchIcon: IconDefinition = faMagnifyingGlass;
   public resultsIcon: IconDefinition = faList;
 
-  public originalMovieResults: ResponseMovieResult[] = [];
-  public movieResults: ResponseMovieResult[] = [];
+  public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public enableBorderRadius: InputSignal<boolean> = input<boolean>(false);
   public dropdownMenuEnd: InputSignal<boolean> = input<boolean>(true);
@@ -75,16 +74,14 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public listenMovieInputChanges(): void {
     this.movieResultsSubscription = this.movieInput.valueChanges
       .pipe(
-        startWith(''),
-        debounceTime(300),
+        debounceTime(500),
         switchMap((movieInput) => {
           return this.searchService.searchMovieInput(movieInput);
         }),
         finalize(() => {}),
       )
       .subscribe((results) => {
-        this.originalMovieResults = results;
-        this.movieResults = results.slice(0, 5);
+        this.movieResults.set(results);
         this.showMovieDropdownBasedOnMovieInput();
       });
   }

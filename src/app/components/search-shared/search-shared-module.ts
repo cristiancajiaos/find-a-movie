@@ -13,6 +13,7 @@ import { SearchInputMovieResult } from './search-input-movie/search-input-movie-
 import { SearchInputPerson } from './search-input-person/search-input-person';
 import { SearchInputPersonResult } from './search-input-person/search-input-person-result/search-input-person-result';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipesModule } from '../../pipes/pipes-module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgbModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   exports: [
     SearchErrorFullscreen,

@@ -17,6 +17,7 @@ import { LimitOverviewCrewCreditsPipe } from './limit-overview-crew-credits.pipe
 import { LimitMoviesPipe } from './limit-movies.pipe';
 import { LimitMovieOverviewMainCastPipe } from './limit-movie-overview-main-cast.pipe';
 import { MovieOverviewInfotableRuntimePipe } from './movie-overview-infotable-runtime-pipe';
+import { LimitSearchMovieResultsPipe } from './limit-search-movie-results.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MovieOverviewInfotableRuntimePipe } from './movie-overview-infotable-ru
     LimitOverviewCrewCreditsPipe,
     LimitMoviesPipe,
     LimitMovieOverviewMainCastPipe,
-    MovieOverviewInfotableRuntimePipe
+    MovieOverviewInfotableRuntimePipe,
+    LimitSearchMovieResultsPipe
   ],
   imports: [
     CommonModule
@@ -58,7 +60,8 @@ import { MovieOverviewInfotableRuntimePipe } from './movie-overview-infotable-ru
     LimitOverviewCrewCreditsPipe,
     LimitMoviesPipe,
     LimitMovieOverviewMainCastPipe,
-    MovieOverviewInfotableRuntimePipe
+    MovieOverviewInfotableRuntimePipe,
+    LimitSearchMovieResultsPipe
   ]
 })
 export class PipesModule { }
