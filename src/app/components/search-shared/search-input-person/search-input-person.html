@@ -20,9 +20,10 @@
       <div
         ngbDropdownMenu
         class="dropdown-menu dropdown-search-movie"
-        [ngClass]="{'dropdown-menu-end': dropdownMenuEnd()}">
-        @if (personResults.length > 0) {
-          @for (person of personResults; track person.id) {
+        [ngClass]="{ 'dropdown-menu-end': dropdownMenuEnd() }"
+      >
+        @if (personResults().length > 0) {
+          @for (person of personResults() | limitSearchPersonResults: 5; track person.id) {
             <app-search-input-person-result
               [personResult]="person"
               (clickResult)="goToPersonClose($event)"
@@ -30,17 +31,21 @@
             </app-search-input-person-result>
           }
         }
-        @if (originalPersonResults.length > 5) {
+        @if (personResults().length > 5) {
           <div class="dropdown-divider"></div>
           <a ngbDropdownItem class="view-all-results text-dark" (click)="processPersonSearch()">
             <fa-icon [icon]="resultsIcon" [fixedWidth]="true"></fa-icon>
-            {{viewAllResultsText()}}
+            {{ viewAllResultsText() }}
           </a>
         }
-        @if (personResults.length == 0) {
-          <a ngbDropdownItem class="no-results-obtained">
-            {{noResultsObtainedText()}}
+        @if (personResults().length == 0) {
+          @if (loadingResults()) {
+            <app-search-input-loading></app-search-input-loading>
+          } @else {
+            <a ngbDropdownItem class="no-results-obtained">
+            {{ noResultsObtainedText() }}
           </a>
+          }
         }
       </div>
     </div>

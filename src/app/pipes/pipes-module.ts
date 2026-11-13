@@ -18,6 +18,7 @@ import { LimitMoviesPipe } from './limit-movies.pipe';
 import { LimitMovieOverviewMainCastPipe } from './limit-movie-overview-main-cast.pipe';
 import { MovieOverviewInfotableRuntimePipe } from './movie-overview-infotable-runtime-pipe';
 import { LimitSearchMovieResultsPipe } from './limit-search-movie-results.pipe';
+import { LimitSearchPersonResultsPipe } from './limit-search-person-results.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LimitSearchMovieResultsPipe } from './limit-search-movie-results.pipe';
     LimitMoviesPipe,
     LimitMovieOverviewMainCastPipe,
     MovieOverviewInfotableRuntimePipe,
-    LimitSearchMovieResultsPipe
+    LimitSearchMovieResultsPipe,
+    LimitSearchPersonResultsPipe
   ],
   imports: [
     CommonModule
@@ -61,7 +63,8 @@ import { LimitSearchMovieResultsPipe } from './limit-search-movie-results.pipe';
     LimitMoviesPipe,
     LimitMovieOverviewMainCastPipe,
     MovieOverviewInfotableRuntimePipe,
-    LimitSearchMovieResultsPipe
+    LimitSearchMovieResultsPipe,
+    LimitSearchPersonResultsPipe
   ]
 })
 export class PipesModule { }

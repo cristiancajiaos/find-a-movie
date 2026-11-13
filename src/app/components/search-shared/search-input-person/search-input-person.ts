@@ -1,9 +1,9 @@
 import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input, WritableSignal, signal, InputSignal, computed } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faList, faMagnifyingGlass, faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { debounceTime, finalize, startWith, Subscription, switchMap } from 'rxjs';
+import { debounceTime, finalize, startWith, Subscription, switchMap, tap } from 'rxjs';
 import { SearchService } from '../../../services/search-service';
 import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
 
@@ -21,9 +21,11 @@ export class SearchInputPerson implements OnInit, OnDestroy {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
   public resultsIcon: IconDefinition = faList;
+  public spinnerIcon: IconDefinition = faSpinner;
 
-  public originalPersonResults: ResponsePersonResult[] = [];
-  public personResults: ResponsePersonResult[] = [];
+  public personResults: WritableSignal<ResponsePersonResult[]> = signal([]);
+
+  public loadingResults: WritableSignal<boolean> = signal(false);
 
   public enableBorderRadius: InputSignal<boolean> = input<boolean>(false);
   public dropdownMenuEnd: InputSignal<boolean> = input<boolean>(true);
@@ -63,16 +65,19 @@ export class SearchInputPerson implements OnInit, OnDestroy {
 
   public listenPersonInputChanges(): void {
     this.personResultsSubscription = this.personInput.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
+      tap(inputValue => {
+        this.personResults.set([]);
+        this.loadingResults.set(true);
+      }),
+      debounceTime(500),
       switchMap((personInput) => {
         return this.searchService.searchPersonInput(personInput)
       }),
       finalize(() => {})
     ).subscribe(results => {
-      this.originalPersonResults = results;
-      this.personResults = results.slice(0,5);
+      this.personResults.set(results);
       this.showPersonDropdownBasedOnPersonInput();
+      this.loadingResults.set(false);
     });
   }
 

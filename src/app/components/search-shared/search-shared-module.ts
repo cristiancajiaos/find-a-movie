@@ -14,6 +14,7 @@ import { SearchInputPerson } from './search-input-person/search-input-person';
 import { SearchInputPersonResult } from './search-input-person/search-input-person-result/search-input-person-result';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../pipes/pipes-module';
+import { SearchInputLoading } from './search-input-loading/search-input-loading';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PipesModule } from '../../pipes/pipes-module';
     SearchInputMovie,
     SearchInputMovieResult,
     SearchInputPerson,
-    SearchInputPersonResult
+    SearchInputPersonResult,
+    SearchInputLoading
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { PipesModule } from '../../pipes/pipes-module';
     SearchInputMovie,
     SearchInputMovieResult,
     SearchInputPerson,
-    SearchInputPersonResult
+    SearchInputPersonResult,
+    SearchInputLoading
   ]
 })
 export class SearchSharedModule { }
