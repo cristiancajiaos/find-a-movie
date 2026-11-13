@@ -77,13 +77,13 @@
           @if (movie().budget && movie().budget > 0) {
             <tr>
               <td>{{budgetText()}}</td>
-              <td>{{ movie().budget | currency: 'USD' : 'code' : '1.0-2': 'en-US' }}</td>
+              <td>{{ movie().budget | currency: 'USD' : 'code' : '1.0-2' : 'en-US' }}</td>
             </tr>
           }
           @if (movie().revenue && movie().revenue > 0) {
             <tr>
               <td>{{boxOfficeText()}}</td>
-              <td>{{ movie().revenue | currency: 'USD' : 'code' : '1.0' }}</td>
+              <td>{{ movie().revenue | currency: 'USD' : 'code' : '1.0-2': 'en-US' }}</td>
             </tr>
           }
         </tbody>
