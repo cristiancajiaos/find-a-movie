@@ -10,7 +10,7 @@
           <tr>
             <td>{{starringText()}}</td>
             <td class="text-end">
-              @for (cast of movieCast() | limitMovieOverviewMainCast; track cast.id) {
+              @for (cast of movieCast() | limitMovieOverviewMainCast: 7; track cast.id) {
                 <a [routerLink]="['/person', cast.id]">
                   {{ cast.name }}
                 </a>

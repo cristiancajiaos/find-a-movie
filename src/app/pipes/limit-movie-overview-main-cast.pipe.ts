@@ -6,7 +6,7 @@ import { CastMember } from '../classes/credits/cast-member';
   standalone: false
 })
 export class LimitMovieOverviewMainCastPipe implements PipeTransform {
-  transform(cast: CastMember[]): CastMember[] {
-    return cast.slice(0,7);
+  transform(cast: CastMember[], limit: number): CastMember[] {
+    return cast.slice(0,limit);
   }
 }
