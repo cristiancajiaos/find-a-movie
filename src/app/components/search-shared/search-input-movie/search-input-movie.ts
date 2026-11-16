@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faList, faMagnifyingGlass, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faList, faMagnifyingGlass, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, finalize, Subscription, switchMap, tap } from 'rxjs';
 import { SearchService } from '../../../services/search-service';
@@ -33,7 +33,9 @@ export class SearchInputMovie implements OnInit, OnDestroy {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
   public resultsIcon: IconDefinition = faList;
+  public deleteQueryIcon: IconDefinition = faTimes;
 
+  public searchMovieQuery: WritableSignal<string> = signal('');
   public movieResults: WritableSignal<ResponseMovieResult[]> = signal([]);
 
   public loadingResults: WritableSignal<boolean> = signal(false);
@@ -49,6 +51,14 @@ export class SearchInputMovie implements OnInit, OnDestroy {
   public viewAllResultsText: WritableSignal<string> = signal('View all results');
   public noResultsObtainedText: WritableSignal<string> = signal('No results obtained');
 
+  public styleDeleteQuery = computed(() => {
+    if (this.searchMovieQuery().length > 0) {
+      return {};
+    } else {
+      return {display: 'none'};
+    }
+  });
+
   @ViewChild('searchMovieInput') searchMovieInput: ElementRef;
   @ViewChild('movieSearchDropdown') movieSearchDropdown: NgbDropdown;
 
@@ -60,9 +70,16 @@ export class SearchInputMovie implements OnInit, OnDestroy {
     };
   });
 
-  public setButtonClass = computed(() => {
+  public setButtonDeleteQueryClass = computed(() => {
     return {
-      'border-white text-white': !this.isLight(),
+      'bg-dark border-light text-light': !this.isLight(),
+      'bg-light border-dark text-dark': this.isLight(),
+    };
+  });
+
+  public setButtonSubmitClass = computed(() => {
+    return {
+      'border-light text-light': !this.isLight(),
       'border-dark text-dark': this.isLight(),
     };
   });
@@ -77,7 +94,7 @@ export class SearchInputMovie implements OnInit, OnDestroy {
     this.movieResultsSubscription = this.movieInput.valueChanges
       .pipe(
         tap(inputValue => {
-          console.log(inputValue);
+          this.searchMovieQuery.set(inputValue);
           this.loadingResults.set(true);
           this.movieResults.set([]);
           this.showMovieDropdownBasedOnMovieInput();
@@ -101,6 +118,11 @@ export class SearchInputMovie implements OnInit, OnDestroy {
     } else {
       this.closeMovieSearchDropdown();
     }
+  }
+
+  public clearMovieQuery(): void {
+    this.searchMovieQuery.set('');
+    this.movieInput.setValue(this.searchMovieQuery());
   }
 
   public processMovieSearch(): void {
