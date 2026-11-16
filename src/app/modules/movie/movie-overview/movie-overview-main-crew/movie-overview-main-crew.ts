@@ -74,6 +74,9 @@ export class MovieOverviewMainCrew implements OnChanges {
   public basedOnVideoGameText: WritableSignal<string> = signal('Based on a Video Game By:');
   public basedOnVideoGameBy: WritableSignal<CrewMember[]> = signal([]);
 
+  public basedOnShortStoryText: WritableSignal<string> = signal('Based on a Short Story By:');
+  public basedOnShortStoryBy: WritableSignal<CrewMember[]> = signal([]);
+
   public originalConceptText: WritableSignal<string> = signal('Original Concept By:');
   public originalConceptBy: WritableSignal<CrewMember[]> = signal([]);
 
@@ -191,6 +194,10 @@ export class MovieOverviewMainCrew implements OnChanges {
 
       this.basedOnVideoGameBy.set(
         this.movieCrew().filter((crewMember) => crewMember.job == 'Video Game'),
+      );
+
+      this.basedOnShortStoryBy.set(
+        this.movieCrew().filter((crewMember) => crewMember.job == 'Short Story')
       );
 
       this.originalConceptBy.set(

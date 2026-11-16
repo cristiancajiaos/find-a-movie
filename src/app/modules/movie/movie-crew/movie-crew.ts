@@ -17,7 +17,6 @@ import { TitleService } from '../../../services/title-service';
 import { Movie } from '../../../classes/movie';
 import { LoadingService } from '../../../services/loading-service';
 import { SessionStorageService } from '../../../services/session-storage-service';
-import { compileFunction } from 'node:vm';
 import { formattedMovieTitle } from '../../../helpers/movie-helper';
 
 @Component({
@@ -96,6 +95,9 @@ export class MovieCrew implements OnInit, OnDestroy {
   public basedOnVideoGameText: WritableSignal<string> = signal('Based on a Video Game By:');
   public basedOnVideoGameBy: WritableSignal<CrewMember[]> = signal([]);
 
+  public basedOnShortStoryText: WritableSignal<string> = signal('Based on a Short Story By:');
+  public basedOnShortStoryBy: WritableSignal<CrewMember[]> = signal([]);
+
   public originalConceptText: WritableSignal<string> = signal('Original Concept By:');
   public originalConceptBy: WritableSignal<CrewMember[]> = signal([]);
 
@@ -126,7 +128,9 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public directorsOfPhotography: WritableSignal<CrewMember[]> = signal([]);
   public directorOfPhotographyText = computed(() => {
-    return this.directorsOfPhotography().length > 1 ? 'Directors of Photography:' : 'Director of Photography:';
+    return this.directorsOfPhotography().length > 1
+      ? 'Directors of Photography:'
+      : 'Director of Photography:';
   });
 
   public productionDesigners: WritableSignal<CrewMember[]> = signal([]);
@@ -152,7 +156,6 @@ export class MovieCrew implements OnInit, OnDestroy {
   public lyricsText: WritableSignal<string> = signal('Lyrics By:');
   public lyricsBy: WritableSignal<CrewMember[]> = signal([]);
 
-
   public musicSupervisors: WritableSignal<CrewMember[]> = signal([]);
   public musicSupervisorText = computed(() => {
     return this.musicSupervisors().length > 1 ? 'Music Supervisors:' : 'Music Supervisor:';
@@ -165,7 +168,9 @@ export class MovieCrew implements OnInit, OnDestroy {
 
   public visualEffectsSupervisors: WritableSignal<CrewMember[]> = signal([]);
   public visualEffectsSupervisorText = computed(() => {
-    return this.visualEffectsSupervisors().length > 1 ? 'Visual Effects Supervisors:' : 'Visual Effects Supervisor:';
+    return this.visualEffectsSupervisors().length > 1
+      ? 'Visual Effects Supervisors:'
+      : 'Visual Effects Supervisor:';
   });
 
   public costumeDesigners: WritableSignal<CrewMember[]> = signal([]);
@@ -311,6 +316,10 @@ export class MovieCrew implements OnInit, OnDestroy {
 
     this.basedOnVideoGameBy.set(
       this.movieCrew().filter((crewMember) => crewMember.job == 'Video Game'),
+    );
+
+    this.basedOnShortStoryBy.set(
+      this.movieCrew().filter((crewMember) => crewMember.job == 'Short Story'),
     );
 
     this.originalConceptBy.set(
