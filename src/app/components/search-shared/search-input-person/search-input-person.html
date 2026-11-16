@@ -6,14 +6,18 @@
           #searchPersonInput
           class="input-person form-control"
           [ngClass]="setInputClass()"
-          type="search"
+          type="text"
           (search)="togglePersonSearchDropdownBySearch()"
           (focus)="togglePersonSearchDropdownByFocus()"
           [placeholder]="placeholder()"
           [aria-label]="ariaLabel()"
           [formControl]="personInput"
         />
-        <button class="btn border" [ngClass]="setButtonClass()" type="submit">
+        <button class="btn border button-clear-query" 
+        [ngStyle]="styleDeleteQuery()" [ngClass]="setButtonDeleteQueryClass()" (click)="clearPersonQuery()" type="button">
+          <fa-icon [icon]="deleteQueryIcon" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button class="btn border" [ngClass]="setButtonSubmitClass()" type="submit">
           <fa-icon [icon]="searchIcon" [fixedWidth]="true"></fa-icon>
         </button>
       </div>

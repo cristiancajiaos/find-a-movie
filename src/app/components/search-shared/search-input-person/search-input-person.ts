@@ -1,9 +1,9 @@
 import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, input, WritableSignal, signal, InputSignal, computed } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faList, faMagnifyingGlass, faSpinner, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faList, faMagnifyingGlass, faSpinner, faTimes, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { debounceTime, finalize, startWith, Subscription, switchMap, tap } from 'rxjs';
+import { debounceTime, finalize, Subscription, switchMap, tap } from 'rxjs';
 import { SearchService } from '../../../services/search-service';
 import { ResponsePersonResult } from '../../../classes/response-search-person/response-person-result';
 
@@ -21,8 +21,9 @@ export class SearchInputPerson implements OnInit, OnDestroy {
 
   public searchIcon: IconDefinition = faMagnifyingGlass;
   public resultsIcon: IconDefinition = faList;
-  public spinnerIcon: IconDefinition = faSpinner;
+  public deleteQueryIcon: IconDefinition = faTimes;
 
+  public searchPersonQuery: WritableSignal<string> = signal('');
   public personResults: WritableSignal<ResponsePersonResult[]> = signal([]);
 
   public loadingResults: WritableSignal<boolean> = signal(false);
@@ -39,8 +40,15 @@ export class SearchInputPerson implements OnInit, OnDestroy {
   public noResultsObtainedText: WritableSignal<string> = signal('No results obtained');
 
   @ViewChild('searchPersonInput') searchPersonInput: ElementRef;
-
   @ViewChild('personSearchDropdown') personSearchDropdown: NgbDropdown;
+
+  public styleDeleteQuery = computed(() => {
+    if (this.searchPersonQuery().length > 0) {
+      return {};
+    } else {
+      return {display: 'none'};
+    }
+  });
 
   public setInputClass = computed(() => {
     return {
@@ -50,7 +58,14 @@ export class SearchInputPerson implements OnInit, OnDestroy {
     };
   });
 
-  public setButtonClass = computed(() => {
+  public setButtonDeleteQueryClass = computed(() => {
+    return {
+      'bg-dark border-light text-light': !this.isLight(),
+      'bg-light border-dark text-dark': this.isLight(),
+    };
+  });
+
+  public setButtonSubmitClass = computed(() => {
     return {
       'border-white text-white':!this.isLight(),
       'border-dark text-dark':this.isLight()
@@ -66,6 +81,7 @@ export class SearchInputPerson implements OnInit, OnDestroy {
   public listenPersonInputChanges(): void {
     this.personResultsSubscription = this.personInput.valueChanges.pipe(
       tap(inputValue => {
+        this.searchPersonQuery.set(inputValue);
         this.loadingResults.set(true);
         this.personResults.set([]);
         this.showPersonDropdownBasedOnPersonInput();
@@ -88,6 +104,11 @@ export class SearchInputPerson implements OnInit, OnDestroy {
     } else {
       this.closePersonSearchDropdown();
     }
+  }
+
+  public clearPersonQuery(): void {
+    this.searchPersonQuery.set('');
+    this.personInput.setValue(this.searchPersonQuery());
   }
 
   public processPersonSearch(): void {
