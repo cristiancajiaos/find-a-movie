@@ -35,6 +35,26 @@ export class PersonService {
     }
 
     return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
+      map(movieCredits => {
+        movieCredits.cast.forEach((castCredit) => {
+          if (castCredit.character) {
+            switch(castCredit.character) {
+              case '(uncredited)': {
+                castCredit.character = 'An uncredited character';
+                break;
+              }
+              case '(voice)': {
+                castCredit.character = 'Voice of an uncredited character';
+                break;
+              }
+            }
+          } else {
+            castCredit.character = 'A character not defined';
+          }
+          return castCredit;
+        });
+        return movieCredits;
+      }),
       tap(movieCredits => {
         this.credits.set(`credits-${id}`, movieCredits)
         this.castCredits.set(`castCredits-${id}`, movieCredits.cast);
@@ -49,6 +69,26 @@ export class PersonService {
     }
     return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
       map(movieCredits => movieCredits.cast),
+      map(castCredits => {
+        castCredits.forEach((castCredit) => {
+          if (castCredit.character) {
+            switch(castCredit.character) {
+              case '(uncredited)': {
+                castCredit.character = 'An uncredited character';
+                break;
+              }
+              case '(voice)': {
+                castCredit.character = 'Voice of an uncredited character';
+                break;
+              }
+            }
+          } else {
+            castCredit.character = 'A character not defined';
+          }
+          return castCredit;
+        });
+        return castCredits;
+      }),
       tap(castCredits => this.castCredits.set(`castCredits-${id}`, castCredits))
     )
   }

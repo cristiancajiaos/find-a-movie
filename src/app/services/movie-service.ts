@@ -17,10 +17,9 @@ import { MovieKeyword } from '../classes/movie-keyword/movie-keyword';
 import { MovieKeywords } from '../classes/movie-keywords';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MovieService {
-
   private trendingMovies = new Map<string, ResponseMovieResult[]>();
 
   private movie = new Map<string, Movie>();
@@ -42,15 +41,15 @@ export class MovieService {
       return of(this.movie.get(`movie-${id}`));
     }
 
-    return this.http.get<Movie>((`/movie/${id}`)).pipe(
+    return this.http.get<Movie>(`/movie/${id}`).pipe(
       map((movie) => {
-        movie.backdrop_path = movie.backdrop_path ? `${environment.imgUrl}${environment.backdropSize}${movie.backdrop_path}` : 'img/default-images/movie_backdrop_notavailable_w1280.jpg';
+        movie.backdrop_path = movie.backdrop_path
+          ? `${environment.imgUrl}${environment.backdropSize}${movie.backdrop_path}`
+          : 'img/default-images/movie_backdrop_notavailable_w1280.jpg';
         return movie;
       }),
-      tap(
-        movie => this.movie.set(`movie-${id}`, movie)
-      )
-    )
+      tap((movie) => this.movie.set(`movie-${id}`, movie)),
+    );
   }
 
   public getMovieCredits(id: number): Observable<Credits> {
@@ -58,13 +57,13 @@ export class MovieService {
       return of(this.credits.get(`credits-${id}`));
     }
 
-    return this.http.get<Credits>((`/movie/${id}/credits`)).pipe(
-      tap(credits => {
+    return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
+      tap((credits) => {
         this.credits.set(`credits-${id}`, credits);
         this.creditsCast.set(`creditsCast-${id}`, credits.cast);
         this.creditsCrew.set(`creditsCrew-${id}`, credits.crew);
-      })
-    )
+      }),
+    );
   }
 
   public getMovieCast(id: number): Observable<CastMember[]> {
@@ -73,11 +72,31 @@ export class MovieService {
     }
 
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
-      map(credits => credits.cast),
-      tap(castCredits => {
+      map((credits) => credits.cast),
+      map((credits) => {
+        credits.forEach((credit) => {
+          if (credit.character) {
+            switch(credit.character) {
+              case '(uncredited)': {
+                credit.character = 'An uncredited character';
+                break;
+              }
+              case '(voice)': {
+                credit.character = 'Voice of an uncredited character';
+                break;
+              }
+            }
+          } else {
+            credit.character = 'A character not defined';
+          }
+          return credit;
+        });
+        return credits;
+      }),
+      tap((castCredits) => {
         this.creditsCast.set(`creditsCast-${id}`, castCredits);
-      })
-    )
+      }),
+    );
   }
 
   public getMovieCrew(id: number): Observable<CrewMember[]> {
@@ -86,11 +105,11 @@ export class MovieService {
     }
 
     return this.http.get<Credits>(`/movie/${id}/credits`).pipe(
-      map(credits => credits.crew),
-      tap(crewCredits => {
+      map((credits) => credits.crew),
+      tap((crewCredits) => {
         this.creditsCrew.set(`creditsCrew-${id}`, crewCredits);
-      })
-    )
+      }),
+    );
   }
 
   public getMovieTrailer(id: number): Observable<ResponseVideoResult> {
@@ -98,11 +117,14 @@ export class MovieService {
       return of(this.movieTrailer.get(`movieTrailer-${id}`));
     }
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
-      map(responseVideoResult => responseVideoResult.results.filter((responseVideos) => {
-        return responseVideos.type == 'Trailer'
-      })[0]),
-      tap(responseVideo => this.movieTrailer.set(`movieTrailer-${id}`, responseVideo))
-    )
+      map(
+        (responseVideoResult) =>
+          responseVideoResult.results.filter((responseVideos) => {
+            return responseVideos.type == 'Trailer';
+          })[0],
+      ),
+      tap((responseVideo) => this.movieTrailer.set(`movieTrailer-${id}`, responseVideo)),
+    );
   }
 
   public getMovieVideos(id: number): Observable<ResponseVideoResult[]> {
@@ -110,41 +132,37 @@ export class MovieService {
       return of(this.movieVideos.get(`movieVideos-${id}`));
     }
     return this.http.get<ResponseVideo>(`/movie/${id}/videos`).pipe(
-      map(responseVideoResult => responseVideoResult.results),
-      tap(videos => this.movieVideos.set(`movieVideos-${id}`, videos))
+      map((responseVideoResult) => responseVideoResult.results),
+      tap((videos) => this.movieVideos.set(`movieVideos-${id}`, videos)),
     );
   }
 
   public getMovieImages(id: number): Observable<BackdropImage[]> {
     if (this.movieImages.has(`movieImages-${id}`)) {
-      return of(this.movieImages.get(`movieImages-${id}`))
+      return of(this.movieImages.get(`movieImages-${id}`));
     }
 
     return this.http.get<ResponseImage>(`/movie/${id}/images`).pipe(
-      map(
-        (responseImage) => responseImage.backdrops
-      ),
-      map(
-        movieImages => movieImages.slice(0,10)
-      ),
-      map(
-        movieImages => movieImages.map(movieImage => {
+      map((responseImage) => responseImage.backdrops),
+      map((movieImages) => movieImages.slice(0, 10)),
+      map((movieImages) =>
+        movieImages.map((movieImage) => {
           movieImage.file_path = `${environment.imgUrl}${environment.backdropSize}${movieImage.file_path}`;
           return movieImage;
-        })
+        }),
       ),
-      tap(movieImages => this.movieImages.set(`movieImages-${id}`, movieImages))
-    )
+      tap((movieImages) => this.movieImages.set(`movieImages-${id}`, movieImages)),
+    );
   }
 
   public getMovieKeywords(id: number): Observable<MovieKeyword[]> {
     if (this.movieKeywords.has(`movieKeywords-${id}`)) {
-      return of(this.movieKeywords.get(`movieKeywords-${id}`))
+      return of(this.movieKeywords.get(`movieKeywords-${id}`));
     }
     return this.http.get<MovieKeywords>(`/movie/${id}/keywords`).pipe(
-      map(movieKeywords => movieKeywords.keywords),
-      tap(movieKeywords => this.movieKeywords.set(`movieKeywords-${id}`, movieKeywords))
-    )
+      map((movieKeywords) => movieKeywords.keywords),
+      tap((movieKeywords) => this.movieKeywords.set(`movieKeywords-${id}`, movieKeywords)),
+    );
   }
 
   public getMovieExternalIds(id: number): Observable<MovieExternalIds> {
@@ -152,9 +170,13 @@ export class MovieService {
       return of(this.movieExternalIds.get(`movieExternalIds-${id}`));
     }
 
-    return this.http.get<MovieExternalIds>(`/movie/${id}/external_ids`).pipe(
-      tap(movieExternalIds => this.movieExternalIds.set(`movieExternalIds-${id}`, movieExternalIds))
-    );
+    return this.http
+      .get<MovieExternalIds>(`/movie/${id}/external_ids`)
+      .pipe(
+        tap((movieExternalIds) =>
+          this.movieExternalIds.set(`movieExternalIds-${id}`, movieExternalIds),
+        ),
+      );
   }
 
   public getMovieRecommendedMovies(id: number): Observable<ResponseMovieResult[]> {
@@ -162,9 +184,11 @@ export class MovieService {
       return of(this.movieRecommendations.get(`movieRecommendations-${id}`));
     }
     return this.http.get<ResponseSearchMovie>(`/movie/${id}/recommendations`).pipe(
-      map(responseMovieResult => responseMovieResult.results),
-      tap(movieResults => this.movieRecommendations.set(`movieRecommendations-${id}`, movieResults))
-    )
+      map((responseMovieResult) => responseMovieResult.results),
+      tap((movieResults) =>
+        this.movieRecommendations.set(`movieRecommendations-${id}`, movieResults),
+      ),
+    );
   }
 
   public getMovieSimilarMovies(id: number): Observable<ResponseMovieResult[]> {
@@ -172,9 +196,9 @@ export class MovieService {
       return of(this.movieSimilar.get(`movieSimilar-${id}`));
     }
     return this.http.get<ResponseSearchMovie>(`/movie/${id}/similar`).pipe(
-      map(responseMovieResult => responseMovieResult.results),
-      tap(movieResults => this.movieSimilar.set(`movieSimilar-${id}`, movieResults))
-    )
+      map((responseMovieResult) => responseMovieResult.results),
+      tap((movieResults) => this.movieSimilar.set(`movieSimilar-${id}`, movieResults)),
+    );
   }
 
   public getTrendingMovies(): Observable<ResponseMovieResult[]> {
@@ -183,13 +207,13 @@ export class MovieService {
     }
 
     return this.http.get<ResponseSearchMovie>(`/trending/movie/day`).pipe(
-      map(
-        responseSearchMovie => responseSearchMovie.results.slice(0,10).map(movie => {
-          movie.backdrop_path = `${environment.imgUrl}${environment.backdropSize}${movie.backdrop_path}`
+      map((responseSearchMovie) =>
+        responseSearchMovie.results.slice(0, 10).map((movie) => {
+          movie.backdrop_path = `${environment.imgUrl}${environment.backdropSize}${movie.backdrop_path}`;
           return movie;
-        })
+        }),
       ),
-      tap(movieResults => this.trendingMovies.set('trendingMovies', movieResults))
-    )
+      tap((movieResults) => this.trendingMovies.set('trendingMovies', movieResults)),
+    );
   }
 }

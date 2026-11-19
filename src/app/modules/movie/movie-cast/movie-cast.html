@@ -54,19 +54,7 @@
                   </a>
                 </td>
                 <td>{{ asText() }}</td>
-                @if (castMember.character) {
-                  @if (castMember.character == '(uncredited)') {
-                    <td>
-                      <i>{{ uncreditedCharacterText() }}</i>
-                    </td>
-                  } @else {
-                    <td>{{ castMember.character }}</td>
-                  }
-                } @else {
-                  <td>
-                    <i>{{ characterNotDefinedText() }}</i>
-                  </td>
-                }
+                <td>{{ castMember.character }}</td>
               </tr>
             } @empty {
               <tr>
