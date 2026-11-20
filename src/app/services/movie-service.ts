@@ -75,7 +75,7 @@ export class MovieService {
       map((credits) => credits.cast),
       map((credits) => {
         credits.forEach((credit) => {
-          if (credit.character) {
+          if (credit.character.length > 0) {
             switch(credit.character) {
               case '(uncredited)': {
                 credit.character = 'An uncredited character';

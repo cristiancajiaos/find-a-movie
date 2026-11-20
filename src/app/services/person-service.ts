@@ -37,7 +37,7 @@ export class PersonService {
     return this.http.get<ResponsePersonMovieCredits>(`/person/${id}/movie_credits`).pipe(
       map(movieCredits => {
         movieCredits.cast.forEach((castCredit) => {
-          if (castCredit.character) {
+          if (castCredit.character.length > 0) {
             switch(castCredit.character) {
               case '(uncredited)': {
                 castCredit.character = 'An uncredited character';
